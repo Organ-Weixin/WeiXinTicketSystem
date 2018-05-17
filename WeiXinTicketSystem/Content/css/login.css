@@ -1,0 +1,21 @@
+﻿.bkgImg {
+    background-image: url(/Content/img/login.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
+
+.login-box, .register-box {
+    margin: 15% 0 0 55%;
+    width: 360px;
+}
+
+.login-box-body-extra {
+    opacity: 0.8;
+    border-radius: 20px;
+}
+
+.error-tip {
+    color: red;
+    margin-bottom: 10px;
+    display: none;
+}

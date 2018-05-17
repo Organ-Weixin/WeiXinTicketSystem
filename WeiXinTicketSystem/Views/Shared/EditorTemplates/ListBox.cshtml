@@ -1,0 +1,75 @@
+﻿@model object
+
+@{
+    var selectList = ViewData[ViewData.ModelMetadata.PropertyName + ViewData.ModelMetadata.AdditionalValues["Suffix"]] as IEnumerable<SelectListItem>;
+    var multiple = Convert.ToBoolean(ViewData.ModelMetadata.AdditionalValues["Multiple"]);
+    var checkboxListStyle = Convert.ToBoolean(ViewData.ModelMetadata.AdditionalValues["CheckBoxListStyle"]);
+    if (Model != null)
+    {
+        if (multiple)
+        {
+            var vList = new List<string>();
+            var intList = Model as IList<int>;
+            if (intList != null)
+            {
+                vList.AddRange(intList.Select(x => x.ToString()));
+            }
+            else
+            {
+                vList = Model as List<string>;
+            }
+
+            selectList = selectList.Select(x => new SelectListItem
+            {
+                Text = x.Text,
+                Value = x.Value,
+                Selected = vList.Any(v => v.Equals(x.Value, StringComparison.Ordinal))
+            });
+        }
+        else
+        {
+            selectList = selectList.Select(x => new SelectListItem
+            {
+                Text = x.Text,
+                Value = x.Value,
+                Selected = x.Value.Equals(Model.ToString(), StringComparison.Ordinal)||x.Text.Equals(Model.ToString(), StringComparison.Ordinal)
+            });
+        }
+    }
+}
+
+<div class="form-group">
+    @Html.LabelFor(x => x, new { @class = "col-sm-3 control-label " + (ViewData.ModelMetadata.IsRequired ? "required" : null) })
+    <div class="col-sm-7">
+        @if (multiple)
+        {
+            if (checkboxListStyle)
+            {
+                var items = selectList.ToArray();
+                for (var i = 0; i < items.Length; i++)
+                {
+                    var item = items[i];
+                    <label class="checkbox-inline">
+                        <input name="@ViewData.ModelMetadata.PropertyName" type="checkbox" @(item.Selected ? "checked" : null) value="@item.Value" />@item.Text
+                    </label>
+
+                    if (i > 0 && items.Length > 10 && (i % 8 == 0))
+                    {
+                        <br />
+                    }
+                }
+            }
+            else
+            {
+                @Html.ListBoxFor(x => x, selectList, new { @class = "form-control", data_toggle = "select2" })
+            }
+        }
+        else
+        {
+            @Html.DropDownListFor(x => x, selectList, "请选择...", new { @class = "form-control", data_toggle = "select2_" })
+        }
+
+        @Html.ValidationMessageFor(x => x, "", new { @class = "text-danger" })
+    </div>
+</div>
+

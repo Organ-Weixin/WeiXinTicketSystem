@@ -1,0 +1,63 @@
+﻿@model CreateUserViewModel
+
+@{
+    ViewData["System"] = "active";
+    ViewData["User"] = "active";
+    ViewBag.Title = "新建用户";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        新建用户
+        <small>用户管理</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 系统管理</a></li>
+        <li><a href="@Url.Action(MvcNames.User.Index)"><i class="fa fa-user"></i> 用户管理</a></li>
+        <li class="active">新建用户</li>
+    </ol>
+</section>
+
+@using (Ajax.BeginForm(null, null, null, new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "App.onOperationSuccessSimple",
+    OnBegin = "App.onFormCommitBegin",
+    OnComplete = "App.onFormCommitComplete"
+}, new { @class = "form-horizontal" }))
+{
+    <!-- Main content -->
+    <section class="content">
+        <!-- Your Page Content Here -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">基础信息</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.EditorFor(x => x.Username)
+                        @Html.EditorFor(x => x.Password)
+                        @Html.EditorFor(x => x.ConfirmPassword)
+                        @Html.EditorFor(x => x.CinemaCode)
+                        @Html.EditorFor(x => x.RealName)
+                    </div>
+                </div>
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">角色信息</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.EditorFor(x => x.RoleId)
+                    </div>
+                </div>
+                <fieldset>
+                    <button type="submit" class="btn btn-primary col-xs-2 col-xs-offset-3">保存</button>
+                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.User.Index)">取消</a>
+                </fieldset>
+            </div>
+        </div>
+    </section>
+}

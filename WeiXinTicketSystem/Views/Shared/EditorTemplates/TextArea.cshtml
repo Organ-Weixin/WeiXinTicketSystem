@@ -1,0 +1,32 @@
+﻿
+@model object
+
+@if (ViewData.ModelMetadata.HideSurroundingHtml)
+{
+    if (Convert.ToBoolean(ViewData.ModelMetadata.AdditionalValues["IsEditor"]))
+    {
+        @Html.TextAreaFor(x => x, new { rows = ViewData.ModelMetadata.AdditionalValues["Rows"], data_toggle = "umeditor", data_height = "280", @class = "width-100" })
+    }
+    else
+    {
+        @Html.TextAreaFor(x => x, new { rows = ViewData.ModelMetadata.AdditionalValues["Rows"], cols = ViewData.ModelMetadata.AdditionalValues["Cols"], @class = "form-control" })
+    }
+}
+else
+{
+    <div class="form-group">
+        @Html.LabelFor(x => x, new { @class = "col-sm-3 control-label " + (ViewData.ModelMetadata.IsRequired ? "required" : null) })
+        <div class="col-sm-7">
+            @if (Convert.ToBoolean(ViewData.ModelMetadata.AdditionalValues["IsEditor"]))
+            {
+                @Html.TextAreaFor(x => x, new { rows = ViewData.ModelMetadata.AdditionalValues["Rows"], data_toggle = "umeditor", data_height = "280", @class = "width-100" })
+            }
+            else
+            {
+                @Html.TextAreaFor(x => x, new { rows = ViewData.ModelMetadata.AdditionalValues["Rows"], cols = ViewData.ModelMetadata.AdditionalValues["Cols"], @class = "form-control" })
+            }
+            @Html.ValidationMessageFor(x => x, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+

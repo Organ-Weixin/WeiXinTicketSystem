@@ -1,0 +1,41 @@
+﻿@{
+    bool IsAdmin = ViewBag.IsAdmin;
+    List<SystemMenuViewEntity> CurrentSystemMenu = ViewBag.CurrentSystemMenu;
+    List<SystemMenuViewEntity> MainMenus = CurrentSystemMenu.Where(x => x.ModuleParentId == 0).ToList();
+}
+
+<!-- 添加新菜单时请注意权限控制：在SystemPermissionEnum中添加新权限，然后在此处进行控制即可 -->
+
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">首页</li>
+            <li class="@ViewBag.Home"><a href="@Url.Action(MvcNames.Home.Index, MvcNames.Home.Name)"><i class="fa fa-home"></i> <span>首页</span></a></li>
+            @foreach (var mainmenu in MainMenus)
+            {
+                <li class="header">@mainmenu.ModuleName</li>
+                <li class="@ViewData[mainmenu.ModuleFlag] treeview">
+                    <a href="javascript:;">
+                        <i class="fa @mainmenu.ModuleIcon"></i> <span>@mainmenu.ModuleName</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @{
+                            List<SystemMenuViewEntity> SubMenus = CurrentSystemMenu.Where(x => x.ModuleParentId == mainmenu.Id).OrderBy(x=>x.ModuleSequence).ToList();
+                        }
+
+                        @foreach (var submenu in SubMenus)
+                        {
+                            <li class="@ViewData[submenu.ModuleFlag]"><a href="@Url.Action("Index",submenu.ModuleFlag)"><i class="fa @submenu.ModuleIcon"></i>@submenu.ModuleName</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
