@@ -136,6 +136,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string Permissions { get; set; }
 		public virtual string ModuleName { get; set; }
 		public virtual string ModuleIcon { get; set; }
+		public virtual int ModuleId { get; set; }
 		public virtual int ModuleParentId { get; set; }
 		public virtual int? ModuleSequence { get; set; }
 		public virtual string ModuleFlag { get; set; }

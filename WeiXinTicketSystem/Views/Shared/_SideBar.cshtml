@@ -25,7 +25,7 @@
                     </a>
                     <ul class="treeview-menu">
                         @{
-                            List<SystemMenuViewEntity> SubMenus = CurrentSystemMenu.Where(x => x.ModuleParentId == mainmenu.Id).OrderBy(x=>x.ModuleSequence).ToList();
+                            List<SystemMenuViewEntity> SubMenus = CurrentSystemMenu.Where(x => x.ModuleParentId == mainmenu.ModuleId).OrderBy(x=>x.ModuleSequence).ToList();
                         }
 
                         @foreach (var submenu in SubMenus)
