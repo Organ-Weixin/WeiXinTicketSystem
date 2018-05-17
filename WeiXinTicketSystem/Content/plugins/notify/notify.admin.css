@@ -1,0 +1,9 @@
+﻿.notifyjs-corner {
+    width: 80%;
+    text-align: center;
+    left: 25% !important;
+}
+
+    .notifyjs-corner, .notifyjs-corner .notifyjs-wrapper, .notifyjs-corner .notifyjs-container {
+        margin: 0 !important;
+    }

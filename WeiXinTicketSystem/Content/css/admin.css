@@ -1,0 +1,125 @@
+﻿.skin-blue .content-header {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.dynatable-custom-filter .select2-container {
+    margin-right: 8px;
+}
+
+.dataTables_wrapper input[type=text], .dataTables_wrapper input[type=search], .dataTables_wrapper select {
+    margin-bottom: 0 !important;
+    /*margin: 0 4px;*/
+}
+
+.table > thead > tr {
+    color: #707070;
+    font-weight: 400;
+    background: #F2F2F2;
+}
+
+.dynatable-pagination-links li:nth-child(1) {
+    display: none;
+}
+
+.dynatable-search {
+    float: left;
+}
+
+    .dynatable-search input {
+        width: 250px;
+        padding-left: 8px;
+    }
+
+    .dynatable-search i.fa-search {
+        left: 21px !important;
+        top: 10px !important;
+        height: 30px;
+    }
+
+.dataTables_paginate {
+    text-align: right;
+}
+
+.dynatable-custom-filter {
+    display: none;
+    float: left;
+    padding-right: 10px;
+}
+
+    .dynatable-custom-filter input, .dynatable-custom-filter select {
+        height: 34px;
+        line-height: 34px;
+        width: 116px;
+    }
+
+    .dynatable-custom-filter select {
+        cursor: pointer;
+    }
+
+.dynatable-operation {
+    display: none;
+    float: right;
+}
+
+    .dynatable-operation .btn {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        font-size: 12px;
+    }
+
+.dynatable-active-page {
+    background: #428bca none repeat scroll 0 0;
+}
+
+.dataTables_wrapper .row:nth-child(2) {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.dynatable-record-count b {
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.control-label.required::after {
+    content: "*";
+    color: red;
+}
+
+.table-bordered-edge {
+    border: 1px solid #d2d6de /*#ddd*/;
+}
+
+.table.table-bordered-edge > thead > tr > th,
+.table.table-bordered-edge > tbody > tr > th,
+.table.table-bordered-edge > tfoot > tr > th,
+.table.table-bordered-edge > thead > tr > td,
+.table.table-bordered-edge > tbody > tr > td,
+.table.table-bordered-edge > tfoot > tr > td {
+    padding: 9px;
+    border-top: 1px solid #d2d6de;
+}
+
+.table.table-bordered-edge > thead > tr > th {
+    border-bottom: inherit;
+    font-weight: normal;
+    color: #333;
+    background: none;
+}
+
+.table.table-bordered-edge > thead > tr {
+    background-image: none;
+}
+
+.dataTables_wrapper .table-bordered-edge + .row:last-child {
+    background-color: initial;
+    border-bottom: none;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.select2-container{
+    vertical-align:top;
+}

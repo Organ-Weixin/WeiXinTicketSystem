@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewData["System"] = "active";
+    ViewData["Role"] = "active";
+    ViewBag.Title = "角色权限管理";
+    int RoleId = ViewBag.RoleId;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        角色权限管理
+        <small>管理系统角色并分配权限</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 系统管理</a></li>
+        <li class="active">角色权限管理</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.Role.List)"
+                       data-row-template="role-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">角色名</th>
+                            <th data-dynatable-no-sort="true">模块名</th>
+                            <th data-dynatable-no-sort="true">查询</th>
+                            <th data-dynatable-no-sort="true">添加</th>
+                            <th data-dynatable-no-sort="true">编缉</th>
+                            <th data-dynatable-no-sort="true">删除</th>
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="dynatable-custom-filter">
+                    <div>
+
+                    </div>
+                </div>
+                <div class="dynatable-operation">
+                    <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Role.Create)?RoleId=@RoleId">
+                        <i class="fa fa-plus"></i>
+                        新建角色权限
+                    </a>
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="role-row-template">
+                <tr>
+                    <td style="text-align: left;">{{row}}</td>
+                    <td style="text-align: left; vertical-align: top;">{{RoleName}}</td>
+                    <td style="text-align: left;">{{ModuleName}}</td>
+                    <td style="font-size:14px;font-weight:bold;color:{{canRetrieveClass}}">{{canRetrieve}}</td>
+                    <td style="font-size:14px;font-weight:bold;color:{{canCreateClass}}">{{canCreate}}</td>
+                    <td style="font-size:14px;font-weight:bold;color:{{canUpdateClass}}">{{canUpdate}}</td>
+                    <td style="font-size:14px;font-weight:bold;color:{{canDeleteClass}}">{{canDelete}}</td>
+                    <td style="text-align: left;">
+                        <a href="@Url.Action(MvcNames.RolePermissions.Update)/{{id}}">编辑</a>
+                        |
+                        <a href="javascript:void(0)"
+                           data-href="@Url.Action(MvcNames.RolePermissions.Delete)/{{id}}" data-toggle="popover"
+                           data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                           data-message="确认删除?" data-type="confirm" data-placement="left"
+                           data-content-template="#delete-confirm-template">
+                            删除
+                        </a>
+                        
+                    </td>
+                </tr>
+            </script>
+
+        </div>
+    </div>
+</section>

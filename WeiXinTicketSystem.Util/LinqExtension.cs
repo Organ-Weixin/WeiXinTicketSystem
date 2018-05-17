@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace WeiXinTicketSystem.Util
+{
+    public static class LinqExtension
+    {
+        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector)
+        {
+            return source.Distinct(new CommonEqualityComparer<T, V>(keySelector));
+        }
+
+        public static IEnumerable<TResult> FullOuterGroupJoin<TA, TB, TKey, TResult>(
+            this IEnumerable<TA> a,
+            IEnumerable<TB> b,
+            Func<TA, TKey> selectKeyA,
+            Func<TB, TKey> selectKeyB,
+            Func<IEnumerable<TA>, IEnumerable<TB>, TKey, TResult> projection,
+            IEqualityComparer<TKey> cmp = null)
+        {
+            cmp = cmp ?? EqualityComparer<TKey>.Default;
+            var alookup = a.ToLookup(selectKeyA, cmp);
+            var blookup = b.ToLookup(selectKeyB, cmp);
+
+            var keys = new HashSet<TKey>(alookup.Select(p => p.Key), cmp);
+            keys.UnionWith(blookup.Select(p => p.Key));
+
+            var join = from key in keys
+                       let xa = alookup[key]
+                       let xb = blookup[key]
+                       select projection(xa, xb, key);
+
+            return join;
+        }
+
+        public static IEnumerable<TResult> FullOuterJoin<TA, TB, TKey, TResult>(
+            this IEnumerable<TA> a,
+            IEnumerable<TB> b,
+            Func<TA, TKey> selectKeyA,
+            Func<TB, TKey> selectKeyB,
+            Func<TA, TB, TKey, TResult> projection,
+            TA defaultA = default(TA),
+            TB defaultB = default(TB),
+            IEqualityComparer<TKey> cmp = null)
+        {
+            cmp = cmp ?? EqualityComparer<TKey>.Default;
+            var alookup = a.ToLookup(selectKeyA, cmp);
+            var blookup = b.ToLookup(selectKeyB, cmp);
+
+            var keys = new HashSet<TKey>(alookup.Select(p => p.Key), cmp);
+            keys.UnionWith(blookup.Select(p => p.Key));
+
+            var join = from key in keys
+                       from xa in alookup[key].DefaultIfEmpty(defaultA)
+                       from xb in blookup[key].DefaultIfEmpty(defaultB)
+                       select projection(xa, xb, key);
+
+            return join;
+        }
+    }
+}
