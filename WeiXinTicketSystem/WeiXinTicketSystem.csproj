@@ -236,6 +236,7 @@
     <Compile Include="Attributes\UI\ListBoxAttribute.cs" />
     <Compile Include="Attributes\UI\PasswordAttribute.cs" />
     <Compile Include="Attributes\UI\TextAreaAttribute.cs" />
+    <Compile Include="Controllers\CinemaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
@@ -247,6 +248,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cinema\CreateOrUpdateCinemaViewModel.cs" />
+    <Compile Include="Models\Cinema\ModelMapper.cs" />
     <Compile Include="Models\DynatablePageModel.cs" />
     <Compile Include="Models\DynatableResultModel.cs" />
     <Compile Include="Models\Login\SysUserLoginViewModel.cs" />
@@ -1228,6 +1231,8 @@
     <Content Include="Views\RolePermissions\CreateOrUpdate.cshtml" />
     <Content Include="Views\Module\Index.cshtml" />
     <Content Include="Views\Module\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Cinema\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Cinema\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

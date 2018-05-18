@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Cinema"] = "active";
+    ViewBag.Title = "影院管理";
+    List<int> CurrentPermissions = ViewBag.CurrentPermissions;
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        影院管理
+        <small>管理系统模块</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 系统管理</a></li>
+        <li class="active">影院管理</li>
+    </ol>
+</section>
+
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.Cinema.List)"
+                       data-row-template="cinema-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">影院编码</th>
+                            <th data-dynatable-no-sort="true">影院名称</th>
+                            <th data-dynatable-no-sort="true">地址</th>
+                            <th data-dynatable-no-sort="true">售票系统</th>
+                            <th data-dynatable-no-sort="true">开通状态</th>
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="dynatable-custom-filter">
+                    <div>
+
+                    </div>
+                </div>
+                <div class="dynatable-operation">
+                    @if (CurrentPermissions.Contains(2))
+                    {
+                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Cinema.Create)">
+                            <i class="fa fa-plus"></i>
+                            新建影院
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="cinema-row-template">
+                <tr>
+                    <td style="text-align: left;">{{row}}</td>
+                    <td style="text-align: left; vertical-align: top;">{{CinemaCode}}</td>
+                    <td style="text-align: left;">{{CinemaName}}</td>
+                    <td style="text-align: left;">{{Address}}</td>
+                    <td style="text-align: left;">{{TicketSystem}}</td>
+                    <td style="text-align: left;">{{Status}}</td>
+                    <td style="text-align: left;">
+
+                        @if (CurrentPermissions.Contains(3))
+                        {
+                            <a href="@Url.Action(MvcNames.Cinema.Update)/{{id}}">编辑</a>
+                        }
+
+                        @if (CurrentPermissions.Contains(4))
+                        {
+                            <span>|</span>
+                            <a href="javascript:void(0)"
+                               data-href="@Url.Action(MvcNames.Cinema.Delete)/{{id}}" data-toggle="popover"
+                               data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                               data-message="确认删除?" data-type="confirm" data-placement="left"
+                               data-content-template="#delete-confirm-template">
+                                删除
+                            </a>
+                        }
+                    </td>
+                </tr>
+            </script>
+
+        </div>
+    </div>
+</section>
