@@ -239,10 +239,15 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PricePlanController.cs" />
+    <Compile Include="Controllers\PriceSettingsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RolePermissionsController.cs" />
     <Compile Include="Controllers\RootBaseController.cs" />
     <Compile Include="Controllers\RootExraController.cs" />
+    <Compile Include="Controllers\ScreenController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -252,11 +257,24 @@
     <Compile Include="Models\Login\SysUserLoginViewModel.cs" />
     <Compile Include="Models\Module\CreateOrUpdateModuleViewModel.cs" />
     <Compile Include="Models\Module\ModelMapper.cs" />
+    <Compile Include="Models\Order\ModelMapper.cs" />
+    <Compile Include="Models\Order\OrderPageQueryModel.cs" />
+    <Compile Include="Models\PricePlan\ModelMapper.cs" />
+    <Compile Include="Models\PriceSettings\CreateOrUpdatePriceSettingViewModel.cs" />
+    <Compile Include="Models\PriceSettings\ModelMapper.cs" />
     <Compile Include="Models\RolePermission\CreateOrUpdateRolePermissionViewModel.cs" />
     <Compile Include="Models\RolePermission\ModelMapper.cs" />
     <Compile Include="Models\RolePermission\RolePermissionQueryModel.cs" />
     <Compile Include="Models\Role\CreateOrUpdateRoleViewModel.cs" />
     <Compile Include="Models\Role\ModelMapper.cs" />
+    <Compile Include="Models\Screen\ModelMapper.cs" />
+    <Compile Include="Models\Screen\ScreenInfoQueryModel.cs" />
+    <Compile Include="Models\Screen\UpdateScreenViewModel.cs" />
+    <Compile Include="Models\Session\ModelMapper.cs" />
+    <Compile Include="Models\Session\SessionInfoResponse.cs" />
+    <Compile Include="Models\Session\SessionPageQueryModel.cs" />
+    <Compile Include="Models\Session\SetPriceViewModel.cs" />
+    <Compile Include="Models\Session\UpdateSessionViewModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\CreateUserViewModel.cs" />
     <Compile Include="Models\User\ModelMapper.cs" />
@@ -1228,6 +1246,15 @@
     <Content Include="Views\RolePermissions\CreateOrUpdate.cshtml" />
     <Content Include="Views\Module\Index.cshtml" />
     <Content Include="Views\Module\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Screen\Index.cshtml" />
+    <Content Include="Views\Screen\Update.cshtml" />
+    <Content Include="Views\Session\Index.cshtml" />
+    <Content Include="Views\Session\PricePlan.cshtml" />
+    <Content Include="Views\Session\Update.cshtml" />
+    <Content Include="Views\PricePlan\Index.cshtml" />
+    <Content Include="Views\PriceSettings\Index.cshtml" />
+    <Content Include="Views\PriceSettings\CreateOrUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

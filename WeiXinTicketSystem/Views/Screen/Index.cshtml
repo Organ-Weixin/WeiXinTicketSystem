@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.CinemaManage = "active";
+    ViewBag.Screen = "active";
+    ViewBag.Title = "影厅管理";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        影厅管理
+        <small>查看并管理影厅信息</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cine"></i> 影院管理</a></li>
+        <li class="active">影厅管理</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <!---表头-->
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.Screen.List)"
+                       data-row-template="cinem-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">影院</th>
+                            <th data-dynatable-no-sort="true">影厅编号</th>
+                            <th data-dynatable-no-sort="true">影厅名称</th>
+                            <th data-dynatable-no-sort="true">更新时间</th>
+                            <th data-dynatable-no-sort="true">座位数</th>
+                            <th data-dynatable-no-sort="true">影厅类型</th>
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!---查询条件-->
+                <div class="dynatable-custom-filter">
+                    @Html.DropDownList("CinemaCode_dd", null, "影院", new { style = "width:175px;", @class = "dynatable-query", data_toggle = "select2" })
+                </div>
+                <!---添加按钮-->
+                <div class="dynatable-operation">
+                    <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Screen.Update)">
+                        <i class="fa fa-plus"></i>
+                        重新获取影厅
+                    </a>
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="cinem-row-template">
+                <tr>
+                    <td style="text-align: left;overflow:hidden;">{{row}}</td>
+                    <td style="text-align: left;overflow:hidden; ">{{cinemaName}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{screenCode}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{screenName}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{updateTime}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{seatCount}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{type}}</td>
+                    <td style="text-align: left;overflow:hidden;">
+                        <a href="javascript:void(0)"
+                           data-href="@Url.Action(MvcNames.Screen.UdateScreenSeat)/{{id}}" data-toggle="popover"
+                           data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                           data-message="确认重新获取?" data-type="confirm" data-placement="left"
+                           data-content-template="#delete-confirm-template">
+                            重新获取影厅座位
+                        </a>
+                    </td>
+                </tr>
+            </script>
+        </div>
+    </div>
+</section>

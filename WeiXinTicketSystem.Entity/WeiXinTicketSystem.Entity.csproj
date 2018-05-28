@@ -68,12 +68,13 @@
     <Compile Include="Enum\CustomMenuTypeEnum.cs" />
     <Compile Include="Enum\CustomMenuReTypeEnum.cs" />
     <Compile Include="Enum\DefaultActionTypeEnum.cs" />
+    <Compile Include="Enum\LoveFlagEnum.cs" />
     <Compile Include="Enum\MemberCardGradeEnum.cs" />
     <Compile Include="Enum\MemberCardTypeEnum.cs" />
     <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PayTypeEnum.cs" />
     <Compile Include="Enum\PricePlanTypeEnum.cs" />
-    <Compile Include="Enum\PrintStatusEnum.cs" />
+    <Compile Include="Enum\YesOrNoEnum.cs" />
     <Compile Include="Enum\RoleTypeEnum.cs" />
     <Compile Include="Enum\SystemPermissionEnum.cs" />
     <Compile Include="Enum\SystemRoleTypeEnum.cs" />
@@ -87,8 +88,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Order\OrderViewEntity.cs" />
     <Compile Include="Models\PageList\Impl\PageList.cs" />
     <Compile Include="Models\PageList\IPageList.cs" />
+    <Compile Include="Models\ReturnData.cs" />
+    <Compile Include="Models\SessionInfo\SessionInfoWithCustomPrice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DBConnectionFactory.cs" />
     <Compile Include="Repository\Impl\Repository.cs" />

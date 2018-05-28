@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\PostSharp.5.0.49\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.5.0.49\build\PostSharp.props')" />
+  <Import Project="..\packages\PostSharp.5.0.51\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.5.0.51\build\PostSharp.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DA17B70A-16E1-4634-B761-8B8BFF9F4C27}</ProjectGuid>
+    <ProjectGuid>{66B25E09-B94B-4E92-A7BE-D00B8CDD61C1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WeiXinTicketSystem.Util</RootNamespace>
-    <AssemblyName>WeiXinTicketSystem.Util</AssemblyName>
+    <RootNamespace>WeiXinTicketSystem.NetSale</RootNamespace>
+    <AssemblyName>WeiXinTicketSystem.NetSale</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -33,14 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PostSharp, Version=5.0.49.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <HintPath>..\packages\PostSharp.Redist.5.0.49\lib\net45\PostSharp.dll</HintPath>
+    <Reference Include="NetSaleSvc.Api">
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp, Version=5.0.51.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.Redist.5.0.51\lib\net45\PostSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,19 +50,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aspect\CheckForNullArgumentsAspect.cs" />
-    <Compile Include="CommonEqualityComparer.cs" />
-    <Compile Include="DateTimeExtension.cs" />
-    <Compile Include="EnumExtension.cs" />
-    <Compile Include="HttpHelper.cs" />
-    <Compile Include="ImageHelper.cs" />
-    <Compile Include="LinqExtension.cs" />
-    <Compile Include="ListExtension.cs" />
-    <Compile Include="MD5Helper.cs" />
+    <Compile Include="NetSaleSvcApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XMLExtension.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WeiXinTicketSystem.Entity\WeiXinTicketSystem.Entity.csproj">
+      <Project>{1cb80679-6add-44ea-a670-89939291be48}</Project>
+      <Name>WeiXinTicketSystem.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeiXinTicketSystem.Util\WeiXinTicketSystem.Util.csproj">
+      <Project>{da17b70a-16e1-4634-b761-8b8bff9f4c27}</Project>
+      <Name>WeiXinTicketSystem.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -69,10 +72,10 @@
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\PostSharp.5.0.49\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.49\build\PostSharp.props'))" />
-    <Error Condition="!Exists('..\packages\PostSharp.5.0.49\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.49\build\PostSharp.targets'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.5.0.51\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.51\build\PostSharp.props'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.5.0.51\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.51\build\PostSharp.targets'))" />
   </Target>
-  <Import Project="..\packages\PostSharp.5.0.49\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.5.0.49\build\PostSharp.targets')" />
+  <Import Project="..\packages\PostSharp.5.0.51\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.5.0.51\build\PostSharp.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

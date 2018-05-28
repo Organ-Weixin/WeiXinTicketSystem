@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeiXinTicketSystem.Service"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeiXinTicketSystem.Util", "WeiXinTicketSystem.Util\WeiXinTicketSystem.Util.csproj", "{DA17B70A-16E1-4634-B761-8B8BFF9F4C27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeiXinTicketSystem.NetSale", "WeiXinTicketSystem.NetSale\WeiXinTicketSystem.NetSale.csproj", "{66B25E09-B94B-4E92-A7BE-D00B8CDD61C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DA17B70A-16E1-4634-B761-8B8BFF9F4C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA17B70A-16E1-4634-B761-8B8BFF9F4C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA17B70A-16E1-4634-B761-8B8BFF9F4C27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B25E09-B94B-4E92-A7BE-D00B8CDD61C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B25E09-B94B-4E92-A7BE-D00B8CDD61C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B25E09-B94B-4E92-A7BE-D00B8CDD61C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B25E09-B94B-4E92-A7BE-D00B8CDD61C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

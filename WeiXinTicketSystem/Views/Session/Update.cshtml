@@ -1,0 +1,64 @@
+﻿@model UpdateSessionViewModel
+@{
+    ViewBag.CinemaManage = "active";
+    ViewBag.Session = "active";
+    ViewBag.Title = "重新获取排期";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        重新获取排期
+        <small>排期管理</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
+        <li><a href="@Url.Action(MvcNames.Screen.Index)"><i class="fa fa-group"></i> 排期管理</a></li>
+        <li class="active">重新获取排期</li>
+    </ol>
+</section>
+
+@using (Ajax.BeginForm(MvcNames.Session._Update, null, null, new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "App.onOperationSuccessSimple",
+    OnBegin = "App.onFormCommitBegin",
+    OnComplete = "App.onFormCommitComplete"
+}, new { @class = "form-horizontal" }))
+{
+    <!-- Main content -->
+    <section class="content">
+        <!-- Your Page Content Here -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">基础信息</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.EditorFor(x => x.CinemaCode)
+                        @Html.EditorFor(x => x.SessionDateRange, new { htmlAttributes = new { @class = "daterange" } })
+                    </div>
+                </div>
+                <fieldset>
+                    <button type="submit" class="btn btn-primary col-xs-2 col-xs-offset-3">重新获取</button>
+                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.Session.Index)">取消</a>
+                </fieldset>
+            </div>
+        </div>
+    </section>
+
+    @section scripts{
+        <script type="text/javascript">
+            $('#SessionDateRange').daterangepicker({
+            "locale": App.dateRangePickerLocal,
+            'autoUpdateInput': false
+        }).on('cancel.daterangepicker', function () {
+            $(this).val(null).trigger('change')
+        }).on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY')).trigger('change')
+        })
+        </script>
+    }
+}

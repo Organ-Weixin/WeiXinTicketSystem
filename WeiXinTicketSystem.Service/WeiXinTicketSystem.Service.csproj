@@ -33,11 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NetSaleSvc.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.dll</HintPath>
+    </Reference>
     <Reference Include="PostSharp, Version=5.0.49.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.Redist.5.0.49\lib\net45\PostSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,9 +52,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CinemaPriceSettingService.cs" />
     <Compile Include="CinemaService.cs" />
     <Compile Include="HomeService.cs" />
+    <Compile Include="ModelMapper.cs" />
+    <Compile Include="OrderService.cs" />
+    <Compile Include="SessionPriceSettingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenInfoService.cs" />
+    <Compile Include="SeatInfoService.cs" />
+    <Compile Include="SessionInfoService.cs" />
     <Compile Include="SystemModuleService.cs" />
     <Compile Include="SystemRolePermissionService.cs" />
     <Compile Include="SystemRoleService.cs" />
@@ -60,12 +72,17 @@
       <Project>{1cb80679-6add-44ea-a670-89939291be48}</Project>
       <Name>WeiXinTicketSystem.Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WeiXinTicketSystem.NetSale\WeiXinTicketSystem.NetSale.csproj">
+      <Project>{66b25e09-b94b-4e92-a7be-d00b8cdd61c1}</Project>
+      <Name>WeiXinTicketSystem.NetSale</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WeiXinTicketSystem.Util\WeiXinTicketSystem.Util.csproj">
       <Project>{da17b70a-16e1-4634-b761-8b8bff9f4c27}</Project>
       <Name>WeiXinTicketSystem.Util</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

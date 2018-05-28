@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewData["CinemaConfig"] = "active";
+    ViewData["PriceSettings"] = "active";
+    ViewBag.Title = "影院价格设置";
+    List<int> CurrentPermissions = ViewBag.CurrentPermissions;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        影院配置
+        <small>管理系统模块</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院配置</a></li>
+        <li class="active">影院价格设置</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.PriceSettings.List)"
+                       data-row-template="role-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">影院编码</th>
+                            <th data-dynatable-no-sort="true">影院名称</th>
+                            <th data-dynatable-no-sort="true">微信折扣</th>
+                            <th data-dynatable-no-sort="true">活动价上限</th>
+                            <th data-dynatable-no-sort="true">服务费</th>
+                            <th data-dynatable-no-sort="true">会员服务费</th>
+                            <th data-dynatable-no-sort="true">服务费支付方式</th>
+                            <th data-dynatable-no-sort="true">服务费收取方式</th>
+
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="dynatable-custom-filter">
+                    <div>
+
+                    </div>
+                </div>
+                <div class="dynatable-operation">
+                    @if (CurrentPermissions.Contains(2))
+                    {
+                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.PriceSettings.Create)">
+                            <i class="fa fa-plus"></i>
+                            新建影院支付配置
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="role-row-template">
+                <tr>
+                    <td style="text-align: left;">{{row}}</td>
+                    <td style="text-align: left; vertical-align: top;">{{CinemaCode}}</td>
+                    <td style="text-align: left;">{{CinemaName}}</td>
+                    <td style="text-align: left;">{{WeChatDiscount}}</td>
+                    <td style="text-align: left;">{{FackPriceUpperLimit}}</td>
+                    <td style="text-align: left;">{{Fee}}</td>
+                    <td style="text-align: left;">{{MemberFee}}</td>
+                    <td style="text-align: left;">{{FeePayType}}</td>
+                    <td style="text-align: left;">{{FeeGatherType}}</td>
+                    <td style="text-align: left;">
+
+                        @if (CurrentPermissions.Contains(3))
+                        {
+                            <a href="@Url.Action(MvcNames.PriceSettings.Update)/{{id}}">编辑</a>
+                        }
+
+                        @if (CurrentPermissions.Contains(4))
+                        {
+                            <span>|</span>
+                            <a href="javascript:void(0)"
+                               data-href="@Url.Action(MvcNames.PriceSettings.Delete)/{{id}}" data-toggle="popover"
+                               data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                               data-message="确认删除?" data-type="confirm" data-placement="left"
+                               data-content-template="#delete-confirm-template">
+                                删除
+                            </a>
+                        }
+                    </td>
+                </tr>
+            </script>
+
+        </div>
+    </div>
+</section>

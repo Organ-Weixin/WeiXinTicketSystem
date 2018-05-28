@@ -57,6 +57,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["CinemaMemberCardSettings"]["CardType"].PropertyType="MemberCardTypeEnum";
 	tables["CinemaPriceSettings"]["FeePayType"].PropertyType="CinemaFeePayTypeEnum";
 	tables["CinemaPriceSettings"]["FeeGatherType"].PropertyType="CinemaFeeGatherTypeEnum";
+	tables["CinemaPriceSettings"]["IsSellByStandardPrice"].PropertyType="YesOrNoEnum";
 	tables["CinemaTicketSystemAccounts"]["TicketSystem"].PropertyType="CinemaTypeEnum";
 	tables["CinemaWeChatOfficialAccounts"]["AccountType"].PropertyType="WeChatOfficialAccountTypeEnum";
 	tables["DefaultActions"]["ActionType"].PropertyType="DefaultActionTypeEnum";
@@ -68,6 +69,9 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["SessionPriceSettings"]["Type"].PropertyType="PricePlanTypeEnum";
 	tables["SystemRoles"]["Type"].PropertyType="SystemRoleTypeEnum";
 	tables["TicketUsers"]["Sex"].PropertyType="UserSexEnum";
+	tables["AdminOrderView"]["OrderStatus"].PropertyType="OrderStatusEnum";
+	tables["AdminSessionView"]["PriceSettingType"].PropertyType="PricePlanTypeEnum";
+	
 #>
 using System;
 using System.ComponentModel.DataAnnotations;
