@@ -19,13 +19,14 @@ namespace WeiXinTicketSystem.Models.Cinema
                 id = module.Id,
                 CinemaCode = module.CinemaCode,
                 CinemaName = module.CinemaName,
-                TicketSystem = module.TicketSystem,
+                TicketSystem = module.TicketSystem.GetDescription(),
+                
 
                 ContactName = module.ContactName,
                 ContactMobile = module.ContactMobile,
                 TheaterChain = module.TheaterChain,
                 Address = module.Address,
-                Status = module.Status,
+                Status = module.Status.GetDescription(),
                 Latitude = module.Latitude,
                 Longitude = module.Longitude,
 

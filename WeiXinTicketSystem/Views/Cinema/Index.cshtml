@@ -41,10 +41,11 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                <!---查询条件-->
                 <div class="dynatable-custom-filter">
-                    <div>
-
-                    </div>
+                    <input type="text" placeholder="影院编码" name="CinemaCode" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                    <input type="text" placeholder="影院名称" name="CinemaName" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                    @Html.DropDownList("IsOpen", null, "开通状态", new { style = "width:175px;", @class = "dynatable-query", data_toggle = "select2" })
                 </div>
                 <div class="dynatable-operation">
                     @if (CurrentPermissions.Contains(2))

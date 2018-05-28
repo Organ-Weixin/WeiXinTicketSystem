@@ -68,6 +68,14 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["SessionPriceSettings"]["Type"].PropertyType="PricePlanTypeEnum";
 	tables["SystemRoles"]["Type"].PropertyType="SystemRoleTypeEnum";
 	tables["TicketUsers"]["Sex"].PropertyType="UserSexEnum";
+	tables["CinemaPaymentSettings"]["IsUseAlipay"].PropertyType="YesOrNoEnum";
+	tables["CinemaPaymentSettings"]["IsUseBfbpay"].PropertyType="YesOrNoEnum";
+	tables["CinemaPaymentSettings"]["IsUseWxpay"].PropertyType="YesOrNoEnum";
+	tables["CinemaPaymentSettings"]["IsUserMemberCard"].PropertyType="YesOrNoEnum";
+	tables["CinemaPrePaySettings"]["IsPrePay"].PropertyType="YesOrNoEnum";
+	tables["MemberCard"]["Status"].PropertyType="MemberCardStatusEnum";
+	tables["TicketUsers"]["IsActive"].PropertyType="YesOrNoEnum";
+	tables["FilmInfo"]["Status"].PropertyType="YesOrNoEnum";
 #>
 using System;
 using System.ComponentModel.DataAnnotations;

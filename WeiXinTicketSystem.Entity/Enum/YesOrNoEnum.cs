@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace WeiXinTicketSystem.Entity.Enum
 {
@@ -8,12 +9,14 @@ namespace WeiXinTicketSystem.Entity.Enum
         /// No
         /// </summary>
         [XmlEnum("No")]
+        [Description("否")]
         No = 0,
 
         /// <summary>
         /// Yes
         /// </summary>
         [XmlEnum("Yes")]
+        [Description("是")]
         Yes = 1
     }
 }

@@ -73,7 +73,7 @@ namespace WeiXinTicketSystem.Service
             //其他数据
             if (!string.IsNullOrEmpty(keyword))
             {
-                query.Where(x => x.Address.Contains(keyword) || x.DingXinId.ToString().Contains(keyword)||x.ContactName.ToString().Contains(keyword)||x.ContactMobile.Contains(keyword)||x.YueKeId.Contains(keyword));
+                query.Where(x => x.Address.Contains(keyword) || x.DingXinId.Contains(keyword) || x.ContactName.Contains(keyword) || x.ContactMobile.Contains(keyword) || x.YueKeId.Contains(keyword));
             }
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();

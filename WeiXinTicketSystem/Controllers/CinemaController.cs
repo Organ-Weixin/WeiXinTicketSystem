@@ -36,35 +36,36 @@ namespace WeiXinTicketSystem.Controllers
             var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Cinema").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
+            PrepareIndexViewData();
             return View();
         }
 
-        /// <summary>
-        /// 影院列表
-        /// </summary>
-        /// <param name="pageModel"></param>
-        /// <returns></returns>
-        public async Task<ActionResult> List(DynatablePageModel<DynatablePageQueryModel> pageModel)
+        ///// <summary>
+        ///// 影院列表
+        ///// </summary>
+        ///// <param name="pageModel"></param>
+        ///// <returns></returns>
+        public async Task<ActionResult> List(DynatablePageModel<CinemaQueryModel> pageModel)
         {
-            var cinema = await _cinemaService.GetCinemasPagedAsync(CurrentUser.CinemaCode, CurrentUser.CinemaName, CinemaStatusEnum.On, pageModel.Query.Search,
-                 pageModel.Offset,
-                 pageModel.PerPage
-                 );
-
-            return DynatableResult(cinema.ToDynatableModel(
-                cinema.TotalCount,
+            var Cinemas = await _cinemaService.GetCinemasPagedAsync(
+                pageModel.Query.CinemaCode,
+                pageModel.Query.CinemaName,
+                pageModel.Query.IsOpen,
+                pageModel.Query.Search,
                 pageModel.Offset,
-                x => x.ToDynatableItem()));
+                pageModel.PerPage
+            );
+            return DynatableResult(Cinemas.ToDynatableModel(Cinemas.TotalCount, pageModel.Offset, x => x.ToDynatableItem()));
         }
 
         /// <summary>
         /// 添加影院
         /// </summary>
         /// <returns></returns>
-        public async Task<ActionResult> Create()
+        public ActionResult Create()
         {
             CreateOrUpdateCinemaViewModel model = new CreateOrUpdateCinemaViewModel();
-            await PreparyCreateOrEditViewData();
+            PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -82,7 +83,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             CreateOrUpdateCinemaViewModel model = new CreateOrUpdateCinemaViewModel();
             model.MapFrom(cinema);
-            await PreparyCreateOrEditViewData();
+            PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -150,61 +151,26 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
-        private async Task PreparyCreateOrEditViewData()
+        private void PreparyCreateOrEditViewData()
         {
             //绑定售票系统枚举
-            List<SelectListItem> cinemaTypeList = new List<SelectListItem>();
-            Type enumType = typeof(CinemaTypeEnum); // 获取类型对象  
-            FieldInfo[] enumFields = enumType.GetFields();    //获取字段信息对象集合  
-                                                              //遍历集合  
-            foreach (FieldInfo field in enumFields)
-            {
-                if (!field.IsSpecialName)
-                {
-                    
-                    //row[1] = (int)Enum.Parse(enumType, field.Name); 也可以这样  
-                    cinemaTypeList.Add(new SelectListItem { Text=field.Name,Value=field.GetRawConstantValue().ToString() });
-                }
-            }
-
-            ViewBag.TicketSystem_dd = cinemaTypeList;
+            ViewBag.TicketSystem_dd = EnumUtil.GetSelectList<CinemaTypeEnum>();
 
             //绑定所属院线枚举
-            List<SelectListItem> theaterChainList = new List<SelectListItem>();
-            Type enumType1 = typeof(TheaterChainEnum); // 获取类型对象  
-            FieldInfo[] enumFields1 = enumType1.GetFields();    //获取字段信息对象集合  
-                                                              //遍历集合  
-            foreach (FieldInfo field1 in enumFields1)
-            {
-                if (!field1.IsSpecialName)
-                {
-
-                    //row[1] = (int)Enum.Parse(enumType, field.Name); 也可以这样  
-                    theaterChainList.Add(new SelectListItem { Text = field1.Name, Value = field1.GetRawConstantValue().ToString() });
-                }
-            }
-
-            ViewBag.TheaterChain_dd = theaterChainList;
+            ViewBag.TheaterChain_dd = EnumUtil.GetSelectList<TheaterChainEnum>();
 
             //绑定状态(0-未开通，1-已开通)枚举
-            List<SelectListItem> StatusList = new List<SelectListItem>();
-            Type enumType2 = typeof(CinemaStatusEnum); // 获取类型对象  
-            FieldInfo[] enumFields2 = enumType2.GetFields();    //获取字段信息对象集合  
-                                                                //遍历集合  
-            foreach (FieldInfo field2 in enumFields2)
-            {
-                if (!field2.IsSpecialName)
-                {
-
-                    //row[1] = (int)Enum.Parse(enumType, field.Name); 也可以这样  
-                    StatusList.Add(new SelectListItem { Text = field2.Name, Value = field2.GetRawConstantValue().ToString() });
-                }
-            }
+            ViewBag.Status_dd = EnumUtil.GetSelectList<CinemaStatusEnum>();
 
 
-
-            ViewBag.Status_dd = StatusList;
 
         }
+
+        private void PrepareIndexViewData()
+        {
+            ViewBag.IsOpen = EnumUtil.GetSelectList<CinemaStatusEnum>();
+        }
+
+
     }
 }

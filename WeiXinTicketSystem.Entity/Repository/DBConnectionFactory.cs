@@ -13,7 +13,7 @@ namespace WeiXinTicketSystem.Entity.Repository
     {
         public static SqlConnection OpenSqlConnection()
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["ConnectionString2"].ConnectionString;
             var conn = new SqlConnection(connectionString);
             conn.Open();
 
@@ -26,7 +26,7 @@ namespace WeiXinTicketSystem.Entity.Repository
         /// <returns></returns>
         public static IDbConnection OpenConnection()
         {
-            var connection = ConfigurationManager.ConnectionStrings["ConnectionString"];
+            var connection = ConfigurationManager.ConnectionStrings["ConnectionString2"];
             return OpenConnection(connection.ProviderName, connection.ConnectionString);
         }
 
@@ -51,7 +51,7 @@ namespace WeiXinTicketSystem.Entity.Repository
         /// <returns></returns>
         public static async Task<IDbConnection> OpenConnectionAsync()
         {
-            var connection = ConfigurationManager.ConnectionStrings["ConnectionString"];
+            var connection = ConfigurationManager.ConnectionStrings["ConnectionString2"];
             return await OpenConnectionAsync(connection.ProviderName, connection.ConnectionString);
         }
 

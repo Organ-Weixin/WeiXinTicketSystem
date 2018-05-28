@@ -17,6 +17,7 @@ namespace WeiXinTicketSystem.Models
         public string CinemaCode { get; set; }
 
         [Display(Name = "影院名称")]
+        [Required(ErrorMessage = "{0}不能为空")]
         [StringLength(50, ErrorMessage = "{0}最多50个字符")]
         public string CinemaName { get; set; }
 
@@ -41,7 +42,7 @@ namespace WeiXinTicketSystem.Models
         public string Address { get; set; }
 
         [ListBox("_dd", Multiple = false)]
-        [Display(Name = "状态(0-未开通，1-已开通)")]
+        [Display(Name = "状态")]
         public int Status { get; set; }
 
         [Display(Name = "影院所在位置纬度")]

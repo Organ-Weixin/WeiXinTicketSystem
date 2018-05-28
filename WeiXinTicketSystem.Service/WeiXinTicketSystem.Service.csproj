@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,13 +48,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CinemaPrePaySettingsService.cs" />
     <Compile Include="CinemaService.cs" />
+    <Compile Include="CinemaTicketSystemAccountService.cs" />
+    <Compile Include="FilmInfoService.cs" />
     <Compile Include="HomeService.cs" />
+    <Compile Include="CinemaPaySettingsService.cs" />
+    <Compile Include="MemberCardService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemModuleService.cs" />
     <Compile Include="SystemRolePermissionService.cs" />
     <Compile Include="SystemRoleService.cs" />
     <Compile Include="SystemUserService.cs" />
+    <Compile Include="TicketUsersService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeiXinTicketSystem.Entity\WeiXinTicketSystem.Entity.csproj">

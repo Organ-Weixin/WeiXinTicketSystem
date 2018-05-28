@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["OtherManage"] = "active";
+    ViewData["TicketUsers"] = "active";
+    ViewBag.Title = "购票用户管理";
+    List<int> CurrentPermissions = ViewBag.CurrentPermissions;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        购票用户管理
+        <small>管理系统模块</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 其它管理</a></li>
+        <li class="active">购票用户管理</li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.TicketUsers.List)"
+                       data-row-template="paySettings-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">手机号</th>
+                            <th data-dynatable-no-sort="true">是否通过验证</th>
+                            <th data-dynatable-no-sort="true">用户昵称</th>
+                            <th data-dynatable-no-sort="true">用户性别</th>
+                            <th data-dynatable-no-sort="true">用户所在国家</th>
+                            <th data-dynatable-no-sort="true">用户所在省份</th>
+                            <th data-dynatable-no-sort="true">用户所在城市</th>
+                            <th data-dynatable-no-sort="true">用户头像</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!---查询条件-->
+                <div class="dynatable-custom-filter">
+                    <input type="text" placeholder="手机号" name="MobilePhone" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                    <input type="text" placeholder="用户昵称" name="NickName" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                </div>
+                <div class="dynatable-operation">
+                   
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="paySettings-row-template">
+                <tr>
+                    <td style="text-align: left;">{{row}}</td>
+                    <td style="text-align: left; vertical-align: top;">{{MobilePhone}}</td>
+                    <td style="text-align: left;">{{IsActive}}</td>
+                    <td style="text-align: left;">{{NickName}}</td>
+                    <td style="text-align: left;">{{Sex}}</td>
+                    <td style="text-align: left;">{{Country}}</td>
+                    <td style="text-align: left;">{{Province}}</td>
+                    <td style="text-align: left;">{{City}}</td>
+                    <td style="text-align: left;">{{HeadImgUrl}}</td>
+                    <td style="text-align: left;">
+
+                       
+                    </td>
+                </tr>
+            </script>
+
+        </div>
+    </div>
+</section>

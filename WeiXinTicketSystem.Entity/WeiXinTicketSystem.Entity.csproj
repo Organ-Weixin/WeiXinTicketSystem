@@ -69,11 +69,12 @@
     <Compile Include="Enum\CustomMenuReTypeEnum.cs" />
     <Compile Include="Enum\DefaultActionTypeEnum.cs" />
     <Compile Include="Enum\MemberCardGradeEnum.cs" />
+    <Compile Include="Enum\MemberCardStatusEnum.cs" />
     <Compile Include="Enum\MemberCardTypeEnum.cs" />
     <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PayTypeEnum.cs" />
     <Compile Include="Enum\PricePlanTypeEnum.cs" />
-    <Compile Include="Enum\PrintStatusEnum.cs" />
+    <Compile Include="Enum\YesOrNoEnum.cs" />
     <Compile Include="Enum\RoleTypeEnum.cs" />
     <Compile Include="Enum\SystemPermissionEnum.cs" />
     <Compile Include="Enum\SystemRoleTypeEnum.cs" />
