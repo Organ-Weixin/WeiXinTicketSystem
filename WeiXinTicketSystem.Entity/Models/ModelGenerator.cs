@@ -119,7 +119,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string Area { get; set; }
 		public virtual string Type { get; set; }
 		public virtual string Language { get; set; }
-		public virtual bool? Status { get; set; }
+		public virtual bool Status { get; set; }
 		public virtual string Image { get; set; }
 		public virtual string Trailer { get; set; }
 		public virtual bool IsDel { get; set; }
