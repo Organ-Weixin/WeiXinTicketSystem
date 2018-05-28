@@ -52,9 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CinemaPaySettingsService.cs" />
+    <Compile Include="CinemaPrePaySettingsService.cs" />
     <Compile Include="CinemaPriceSettingService.cs" />
     <Compile Include="CinemaService.cs" />
+    <Compile Include="CinemaTicketSystemAccountService.cs" />
+    <Compile Include="FilmInfoService.cs" />
     <Compile Include="HomeService.cs" />
+    <Compile Include="MemberCardService.cs" />
     <Compile Include="ModelMapper.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="SessionPriceSettingService.cs" />
@@ -66,6 +71,7 @@
     <Compile Include="SystemRolePermissionService.cs" />
     <Compile Include="SystemRoleService.cs" />
     <Compile Include="SystemUserService.cs" />
+    <Compile Include="TicketUsersService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeiXinTicketSystem.Entity\WeiXinTicketSystem.Entity.csproj">

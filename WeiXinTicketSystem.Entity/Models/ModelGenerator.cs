@@ -32,7 +32,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual decimal? Balance { get; set; }
 		public virtual int? Score { get; set; }
 		public virtual MemberCardGradeEnum MemberGrade { get; set; }
-		public virtual byte Status { get; set; }
+		public virtual MemberCardStatusEnum Status { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool IsDel { get; set; }
@@ -65,7 +65,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string MobilePhone { get; set; }
 		public virtual string OpenID { get; set; }
 		public virtual string VerifyCode { get; set; }
-		public virtual bool IsActive { get; set; }
+		public virtual YesOrNoEnum IsActive { get; set; }
 		public virtual DateTime? Created { get; set; }
 		public virtual string NickName { get; set; }
 		public virtual UserSexEnum Sex { get; set; }
@@ -119,7 +119,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string Area { get; set; }
 		public virtual string Type { get; set; }
 		public virtual string Language { get; set; }
-		public virtual bool Status { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
 		public virtual string Image { get; set; }
 		public virtual string Trailer { get; set; }
 		public virtual bool IsDel { get; set; }
@@ -516,19 +516,19 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Id { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string CinemaName { get; set; }
-		public virtual bool IsUseAlipay { get; set; }
+		public virtual YesOrNoEnum IsUseAlipay { get; set; }
 		public virtual string AlipaySellerEmail { get; set; }
 		public virtual string AlipayPartner { get; set; }
 		public virtual string AlipayKey { get; set; }
 		public virtual string AlipayAPPID { get; set; }
-		public virtual bool IsUseBfbpay { get; set; }
+		public virtual YesOrNoEnum IsUseBfbpay { get; set; }
 		public virtual string BfbpaySpno { get; set; }
 		public virtual string BfbpayKey { get; set; }
-		public virtual bool IsUseWxpay { get; set; }
+		public virtual YesOrNoEnum IsUseWxpay { get; set; }
 		public virtual string WxpayMchId { get; set; }
 		public virtual string WxpayKey { get; set; }
 		public virtual string WxpayRefundCert { get; set; }
-		public virtual bool IsUserMemberCard { get; set; }
+		public virtual YesOrNoEnum IsUserMemberCard { get; set; }
 		public virtual bool IsDel { get; set; }
 	}
 
@@ -543,7 +543,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Id { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string CinemaName { get; set; }
-		public virtual bool IsPrePay { get; set; }
+		public virtual YesOrNoEnum IsPrePay { get; set; }
 		public virtual decimal? SurplusPayment { get; set; }
 		public virtual decimal? LowestPrePayment { get; set; }
 		public virtual bool IsDel { get; set; }

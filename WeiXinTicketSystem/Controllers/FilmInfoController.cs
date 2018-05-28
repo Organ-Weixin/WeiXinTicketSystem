@@ -13,7 +13,6 @@ using System.Web.Mvc;
 using System.Reflection;
 using System.Web;
 using System.IO;
-using NetSaleSvc.Util;
 using System.Drawing.Imaging;
 using System.Net;
 using System.Xml.Linq;

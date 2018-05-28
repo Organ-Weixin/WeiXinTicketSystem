@@ -62,6 +62,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["CinemaWeChatOfficialAccounts"]["AccountType"].PropertyType="WeChatOfficialAccountTypeEnum";
 	tables["DefaultActions"]["ActionType"].PropertyType="DefaultActionTypeEnum";
 	tables["MemberCard"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
+	tables["MemberCard"]["Status"].PropertyType="MemberCardStatusEnum";
 	tables["MemberCardChargeRecords"]["ChargeType"].PropertyType="PayTypeEnum";
 	tables["Orders"]["FeePayType"].PropertyType="CinemaFeePayTypeEnum";
 	tables["Orders"]["OrderStatus"].PropertyType="OrderStatusEnum";
@@ -69,8 +70,15 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["SessionPriceSettings"]["Type"].PropertyType="PricePlanTypeEnum";
 	tables["SystemRoles"]["Type"].PropertyType="SystemRoleTypeEnum";
 	tables["TicketUsers"]["Sex"].PropertyType="UserSexEnum";
+	tables["TicketUsers"]["IsActive"].PropertyType="YesOrNoEnum";
 	tables["AdminOrderView"]["OrderStatus"].PropertyType="OrderStatusEnum";
 	tables["AdminSessionView"]["PriceSettingType"].PropertyType="PricePlanTypeEnum";
+	tables["CinemaPaymentSettings"]["IsUseAlipay"].PropertyType="YesOrNoEnum";
+	tables["CinemaPaymentSettings"]["IsUseBfbpay"].PropertyType="YesOrNoEnum";
+	tables["CinemaPaymentSettings"]["IsUseWxpay"].PropertyType="YesOrNoEnum";
+	tables["CinemaPaymentSettings"]["IsUserMemberCard"].PropertyType="YesOrNoEnum";
+	tables["CinemaPrePaySettings"]["IsPrePay"].PropertyType="YesOrNoEnum";
+	tables["FilmInfo"]["Status"].PropertyType="YesOrNoEnum";
 	
 #>
 using System;
