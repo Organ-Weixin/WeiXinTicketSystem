@@ -1,0 +1,59 @@
+﻿@model CreateOrUpdateTicketSystemAccountViewModel
+@{
+    ViewData["Cinema"] = "active";
+    ViewData["TicketSystemAccount"] = "active";
+    ViewBag.Title = Model.Id > 0 ? "影院系统对接账号配置编辑" : "影院系统对接账号配置添加";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @(Model.Id > 0 ? "影院系统对接账号配置编辑" : "影院系统对接账号配置添加")
+        <small>影院系统对接账号配置管理</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 系统管理</a></li>
+        <li><a href="@Url.Action(MvcNames.TicketSystemAccount.Index)"><i class="fa fa-group"></i> 影院系统对接账号配置管理</a></li>
+        <li class="active">@(Model.Id > 0 ? "影院系统对接账号配置编辑" : "影院系统对接账号配置添加")</li>
+    </ol>
+</section>
+
+
+@using (Ajax.BeginForm(MvcNames.TicketSystemAccount._CreateOrUpdate, null, null, new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "App.onOperationSuccessSimple",
+    OnBegin = "App.onFormCommitBegin",
+    OnComplete = "App.onFormCommitComplete"
+}, new { @class = "form-horizontal" }))
+{
+    <!-- Main content -->
+    <section class="content">
+        <!-- Your Page Content Here -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">基础信息</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.EditorFor(x => x.Id)
+                        @Html.EditorFor(x => x.CinemaCode)
+                        @Html.EditorFor(x => x.CinemaName)
+                        @Html.EditorFor(x => x.Url)
+                        @Html.EditorFor(x => x.UserName)
+                        @Html.EditorFor(x => x.Password)
+                        @Html.EditorFor(x => x.PayType)
+                        @Html.EditorFor(x => x.TicketSystem)
+                    </div>
+                </div>
+                <fieldset>
+                    <button type="submit" class="btn btn-primary col-xs-2 col-xs-offset-3">保存</button>
+                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.TicketSystemAccount.Index)">取消</a>
+                </fieldset>
+            </div>
+        </div>
+    </section>
+}
+

@@ -11,40 +11,40 @@ using WeiXinTicketSystem.Entity.Enum;
 
 namespace WeiXinTicketSystem.Service
 {
-    public class CinemaService
+    public class CinemaPrePaySettingsService
     {
         #region ctor
-        //private readonly IRepository<CinemaViewEntity> _cinemaViewRepository;
-        private readonly IRepository<CinemaEntity> _cinemaRepository;
+        private readonly IRepository<CinemaPrePaySettingEntity> _cinemaPrePayRepository;
 
-        public CinemaService()
+        public CinemaPrePaySettingsService()
         {
             //TODO: 移除内部依赖
-            //_cinemaViewRepository = new Repository<CinemaViewEntity>();
-            _cinemaRepository = new Repository<CinemaEntity>();
+            _cinemaPrePayRepository = new Repository<CinemaPrePaySettingEntity>();
         }
         #endregion
 
+
         /// <summary>
-        /// 根据影院编码获取影院信息
+        /// 根据影院编码获取影院预付款配置信息
         /// </summary>
         /// <param name="CinemaCode"></param>
         /// <returns></returns>
-        public CinemaEntity GetCinemaByCinemaCode(string CinemaCode)
+        public CinemaPrePaySettingEntity GetCinemaPrePaySettingsByCinemaCode(string CinemaCode)
         {
-            return _cinemaRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefault();
+            return _cinemaPrePayRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefault();
         }
 
         /// <summary>
-        /// 获取所有影院列表
+        /// 获取所有影院预付款配置列表
         /// </summary>
         /// <returns></returns>
-        public async Task<IList<CinemaEntity>> GetAllCinemasAsync()
+        public async Task<IList<CinemaPrePaySettingEntity>> GetAllCinemaPrePaySettingsAsync()
         {
-            return await _cinemaRepository.Query.Where(x => !x.IsDel).ToListAsync();
+            return await _cinemaPrePayRepository.Query.Where(x => !x.IsDel).ToListAsync();
         }
+
         /// <summary>
-        /// 后台分页读取影院信息
+        /// 后台分页读取影院预付款配置信息
         /// </summary>
         /// <param name="cinemaCode"></param>
         /// <param name="CinemaName"></param>
@@ -52,9 +52,9 @@ namespace WeiXinTicketSystem.Service
         /// <param name="offset"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public async Task<IPageList<CinemaEntity>> GetCinemasPagedAsync(string cinemaCode, string CinemaName,CinemaStatusEnum? IsOpen, string keyword, int offset, int perPage)
+        public async Task<IPageList<CinemaPrePaySettingEntity>> GetCinemaPrePaySettingsPagedAsync(string cinemaCode, string CinemaName, string keyword, int offset, int perPage)
         {
-            var query = _cinemaRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
+            var query = _cinemaPrePayRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
             //影院编码
             if (!string.IsNullOrEmpty(cinemaCode))
             {
@@ -65,65 +65,63 @@ namespace WeiXinTicketSystem.Service
             {
                 query.Where(x => x.CinemaName.Contains(CinemaName));
             }
-            //是否开通接口
-            if (IsOpen.HasValue)
-            {
-                query.Where(x => x.Status == IsOpen.Value);
-            }
             //其他数据
             if (!string.IsNullOrEmpty(keyword))
             {
-                query.Where(x => x.Address.Contains(keyword) || x.DingXinId.Contains(keyword) || x.ContactName.Contains(keyword) || x.ContactMobile.Contains(keyword) || x.YueKeId.Contains(keyword));
+                query.Where(x => x.CinemaName.Contains(keyword));
             }
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();
         }
 
         /// <summary>
-        /// 获取Cinema实体
+        /// 获取CinemaPrePaymentSetting实体
         /// </summary>
         /// <param name="CinemaCode"></param>
         /// <returns></returns>
-        public async Task<CinemaEntity> GetCinemaByCinemaCodeAsync(string CinemaCode)
+        public async Task<CinemaPrePaySettingEntity> GetCinemaPrePaySettingsByCinemaCodeAsync(string CinemaCode)
         {
-            return await _cinemaRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefaultAsync();
+            return await _cinemaPrePayRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefaultAsync();
         }
+
         /// <summary>
-        /// 根据影院ID获取影院
+        /// 根据影院预付款配置ID获取影院预付款配置信息
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public async Task<CinemaEntity> GetCinemaByIdAsync(int Id)
+        public async Task<CinemaPrePaySettingEntity> GetCinemaPrePaySettingsByIdAsync(int Id)
         {
-            return await _cinemaRepository.Query.Where(x => x.Id == Id).SingleOrDefaultAsync();
+            return await _cinemaPrePayRepository.Query.Where(x => x.Id == Id).SingleOrDefaultAsync();
         }
+
         /// <summary>
         /// 更新
         /// </summary>
         /// <param name="entity"></param>
-        public void Update(CinemaEntity entity)
+        public void Update(CinemaPrePaySettingEntity entity)
         {
-            _cinemaRepository.Update(entity);
+            _cinemaPrePayRepository.Update(entity);
         }
 
         /// <summary>
-        /// 更新影院
+        /// 更新影院预付款配置
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task UpdateAsync(CinemaEntity entity)
+        public async Task UpdateAsync(CinemaPrePaySettingEntity entity)
         {
-            await _cinemaRepository.UpdateAsync(entity);
+            await _cinemaPrePayRepository.UpdateAsync(entity);
         }
 
+
         /// <summary>
-        /// 新增影院
+        /// 新增影院预付款配置
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task InsertAsync(CinemaEntity entity)
+        public async Task InsertAsync(CinemaPrePaySettingEntity entity)
         {
-            await _cinemaRepository.InsertAsync(entity);
+            await _cinemaPrePayRepository.InsertAsync(entity);
         }
     }
 }

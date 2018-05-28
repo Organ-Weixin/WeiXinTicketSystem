@@ -70,6 +70,7 @@
     <Compile Include="Enum\DefaultActionTypeEnum.cs" />
     <Compile Include="Enum\LoveFlagEnum.cs" />
     <Compile Include="Enum\MemberCardGradeEnum.cs" />
+    <Compile Include="Enum\MemberCardStatusEnum.cs" />
     <Compile Include="Enum\MemberCardTypeEnum.cs" />
     <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PayTypeEnum.cs" />
