@@ -350,6 +350,8 @@ namespace WeiXinTicketSystem.Controllers
                     filmInfo.Score = entity.Score;
                     filmInfo.Area = entity.Area;
                     filmInfo.Type = entity.Type;
+
+
                     filmInfo.Image = entity.Image;
                     _filmInfoService.Update(filmInfo);
                 }
