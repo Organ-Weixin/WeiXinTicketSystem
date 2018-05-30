@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CinemaMemberCardSettingService.cs" />
     <Compile Include="CinemaPaySettingsService.cs" />
     <Compile Include="CinemaPrePaySettingsService.cs" />
     <Compile Include="CinemaPriceSettingService.cs" />

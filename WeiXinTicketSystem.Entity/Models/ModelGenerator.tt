@@ -79,6 +79,9 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["CinemaPaymentSettings"]["IsUserMemberCard"].PropertyType="YesOrNoEnum";
 	tables["CinemaPrePaySettings"]["IsPrePay"].PropertyType="YesOrNoEnum";
 	tables["FilmInfo"]["Status"].PropertyType="YesOrNoEnum";
+	tables["CinemaMemberCardSettings"]["IsCardUse"].PropertyType="YesOrNoEnum";
+	tables["CinemaMemberCardSettings"]["IsCardRegister"].PropertyType="YesOrNoEnum";
+	tables["CinemaMemberCardSettings"]["IsCardReCharge"].PropertyType="YesOrNoEnum";
 	
 #>
 using System;

@@ -194,13 +194,14 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Id { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string CinemaName { get; set; }
-		public virtual bool? IsCardUse { get; set; }
-		public virtual bool? IsCardRegister { get; set; }
-		public virtual bool? IsCardReCharge { get; set; }
-		public virtual MemberCardTypeEnum? CardType { get; set; }
+		public virtual YesOrNoEnum IsCardUse { get; set; }
+		public virtual YesOrNoEnum IsCardRegister { get; set; }
+		public virtual YesOrNoEnum IsCardReCharge { get; set; }
+		public virtual MemberCardTypeEnum CardType { get; set; }
 		public virtual string ThirdMemberUrl { get; set; }
 		public virtual string InitialCardPassword { get; set; }
 		public virtual int? OscarDiscount { get; set; }
+		public virtual bool IsDel { get; set; }
 	}
 
     /// <summary>

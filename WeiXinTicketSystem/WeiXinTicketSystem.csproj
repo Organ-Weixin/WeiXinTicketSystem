@@ -90,6 +90,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NetSaleSvc.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NetSaleSvc.Api.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI">
       <HintPath>bin\NPOI\NPOI.dll</HintPath>
     </Reference>
@@ -241,6 +245,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberCardController.cs" />
+    <Compile Include="Controllers\MemberCardSettingController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PaySettingsController.cs" />
@@ -259,6 +264,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CinemaMemberCardSetting\CinemaMemberCardSettingQueryModel.cs" />
+    <Compile Include="Models\CinemaMemberCardSetting\CreateOrUpdateCinemaMemberCardSettingViewModel.cs" />
+    <Compile Include="Models\CinemaMemberCardSetting\ModelMapper.cs" />
     <Compile Include="Models\CinemaPaySettings\CinemaPaySettingsQueryModel.cs" />
     <Compile Include="Models\CinemaPaySettings\CreateOrUpdateCinemaPaySettingsViewModel.cs" />
     <Compile Include="Models\CinemaPaySettings\ModelMapper.cs" />
@@ -1356,6 +1364,10 @@
     <ProjectReference Include="..\WeiXinTicketSystem.Entity\WeiXinTicketSystem.Entity.csproj">
       <Project>{1cb80679-6add-44ea-a670-89939291be48}</Project>
       <Name>WeiXinTicketSystem.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeiXinTicketSystem.NetSale\WeiXinTicketSystem.NetSale.csproj">
+      <Project>{66b25e09-b94b-4e92-a7be-d00b8cdd61c1}</Project>
+      <Name>WeiXinTicketSystem.NetSale</Name>
     </ProjectReference>
     <ProjectReference Include="..\WeiXinTicketSystem.Service\WeiXinTicketSystem.Service.csproj">
       <Project>{78b46f03-b652-4ed7-82cf-7171e4839390}</Project>
