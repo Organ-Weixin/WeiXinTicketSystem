@@ -1,26 +1,26 @@
-﻿@model CreateOrUpdateCinemaViewModel
+﻿@model CreateOrUpdateCinemaMemberCardSettingViewModel
 @{
     ViewData["Cinema"] = "active";
-    ViewBag.Title = Model.Id > 0 ? "影院编辑" : "影院添加";
+    ViewData["MemberCardSetting"] = "active";
+    ViewBag.Title = Model.Id > 0 ? "影城会员卡设置编辑" : "影城会员卡设置添加";
 }
-
 
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        @(Model.Id > 0 ? "影院编辑" : "影院添加")
-        <small>影院管理</small>
+        @(Model.Id > 0 ? "影城会员卡设置编辑" : "影城会员卡设置添加")
+        <small>影城会员卡设置管理</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院配置</a></li>
-        <li><a href="@Url.Action(MvcNames.Cinema.Index)"><i class="fa fa-group"></i> 影院管理</a></li>
-        <li class="active">@(Model.Id > 0 ? "影院编辑" : "影院添加")</li>
+        <li><a href="@Url.Action(MvcNames.MemberCardSetting.Index)"><i class="fa fa-group"></i> 影城会员卡设置管理</a></li>
+        <li class="active">@(Model.Id > 0 ? "影城会员卡设置编辑" : "影城会员卡设置添加")</li>
     </ol>
 </section>
 
 
-@using (Ajax.BeginForm(MvcNames.Cinema._CreateOrUpdate, null, null, new AjaxOptions
+@using (Ajax.BeginForm(MvcNames.MemberCardSetting._CreateOrUpdate, null, null, new AjaxOptions
 {
     HttpMethod = "POST",
     OnSuccess = "App.onOperationSuccessSimple",
@@ -42,21 +42,22 @@
                         @Html.EditorFor(x => x.Id)
                         @Html.EditorFor(x => x.CinemaCode)
                         @Html.EditorFor(x => x.CinemaName)
-                        @Html.EditorFor(x => x.TicketSystem)
-                        @Html.EditorFor(x => x.ContactName)
-                        @Html.EditorFor(x => x.ContactMobile)
-                        @Html.EditorFor(x => x.TheaterChain)
-                        @Html.EditorFor(x => x.Address)
-                        @Html.EditorFor(x => x.Status)
-                        @Html.EditorFor(x => x.Latitude)
-                        @Html.EditorFor(x => x.Longitude)
+                        @Html.EditorFor(x => x.IsCardUse)
+                        @Html.EditorFor(x => x.IsCardRegister)
+                        @Html.EditorFor(x => x.IsCardReCharge)
+                        @Html.EditorFor(x => x.CardType)
+                        @Html.EditorFor(x => x.ThirdMemberUrl)
+                        @Html.EditorFor(x => x.InitialCardPassword)
+                        @Html.EditorFor(x => x.OscarDiscount)
+                       
                     </div>
                 </div>
                 <fieldset>
                     <button type="submit" class="btn btn-primary col-xs-2 col-xs-offset-3">保存</button>
-                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.Cinema.Index)">取消</a>
+                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.MemberCardSetting.Index)">取消</a>
                 </fieldset>
             </div>
         </div>
     </section>
 }
+

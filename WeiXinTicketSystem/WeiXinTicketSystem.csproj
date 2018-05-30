@@ -1342,6 +1342,8 @@
     <Content Include="Views\TicketUsers\Index.cshtml" />
     <Content Include="Views\MemberCard\CreateOrUpdate.cshtml" />
     <Content Include="Views\MemberCard\Index.cshtml" />
+    <Content Include="Views\MemberCardSetting\CreateOrUpdate.cshtml" />
+    <Content Include="Views\MemberCardSetting\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

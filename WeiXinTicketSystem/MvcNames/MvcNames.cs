@@ -223,5 +223,19 @@ namespace WeiXinTicketSystem
             public static string _CreateOrUpdate { get { return nameof(FilmInfoController._CreateOrUpdate); } }
             public static string UpdateFilm { get { return nameof(FilmInfoController.UpdateFilm); } }
         }
+
+        /// <summary>
+        /// 影城会员卡设置
+        /// </summary>
+        public static class MemberCardSetting
+        {
+            public static string Name { get { return nameof(MemberCardSetting); } }
+            public static string Index { get { return nameof(MemberCardSettingController.Index); } }
+            public static string List { get { return nameof(MemberCardSettingController.List); } }
+            public static string Create { get { return nameof(MemberCardSettingController.Create); } }
+            public static string Update { get { return nameof(MemberCardSettingController.Update); } }
+            public static string Delete { get { return nameof(MemberCardSettingController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(MemberCardSettingController._CreateOrUpdate); } }
+        }
     }
 }
