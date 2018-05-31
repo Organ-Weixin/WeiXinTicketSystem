@@ -150,22 +150,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the CinemaPrintSettings table.
-    /// </summary>
-    [Table("CinemaPrintSettings")]
-    [SqlLamTable(Name = "CinemaPrintSettings")]
-    public partial class CinemaPrintSettingEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string CinemaName { get; set; }
-		public virtual bool? IsPrintName { get; set; }
-		public virtual bool? IsCustomTicketTemplet { get; set; }
-		public virtual bool? IsCustomPackageTemplet { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the SystemMenuView view.
     /// </summary>
     [Table("SystemMenuView")]
@@ -201,6 +185,23 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string ThirdMemberUrl { get; set; }
 		public virtual string InitialCardPassword { get; set; }
 		public virtual int? OscarDiscount { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the CinemaPrintSettings table.
+    /// </summary>
+    [Table("CinemaPrintSettings")]
+    [SqlLamTable(Name = "CinemaPrintSettings")]
+    public partial class CinemaPrintSettingEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string CinemaName { get; set; }
+		public virtual YesOrNoEnum IsPrintName { get; set; }
+		public virtual YesOrNoEnum IsCustomTicketTemplet { get; set; }
+		public virtual YesOrNoEnum IsCustomPackageTemplet { get; set; }
 		public virtual bool IsDel { get; set; }
 	}
 
