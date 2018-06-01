@@ -1,0 +1,55 @@
+﻿@model CreateOrUpdateSnackTypeViewModel
+@{
+    ViewBag.CinemaManage = "active";
+    ViewBag.SnackType = "active";
+    ViewBag.Title = Model.Id > 0 ? "套餐类型编辑" : "套餐类型添加";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @(Model.Id > 0 ? "套餐类型编辑" : "套餐类型添加")
+        <small>套餐类型管理</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
+        <li><a href="@Url.Action(MvcNames.SnackType.Index)"><i class="fa fa-group"></i> 套餐类型管理</a></li>
+        <li class="active">@(Model.Id > 0 ? "套餐类型编辑" : "套餐类型添加")</li>
+    </ol>
+</section>
+
+@using (Html.BeginForm(MvcNames.SnackType._CreateOrUpdate, MvcNames.SnackType.Name, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+{
+    <!-- Main content -->
+    <section class="content">
+        <!-- Your Page Content Here -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">基础信息</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.EditorFor(x => x.Id)
+                        @Html.EditorFor(x => x.CinemaCode)
+                        @Html.EditorFor(x => x.TypeName)
+                        @Html.EditorFor(x => x.Remark)
+                    </div>
+                </div>
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">上传套餐类型图片(若无改动不用重新上传)</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.EditorFor(x => x.Image)
+                    </div>
+                </div>
+                <fieldset>
+                    <button type="submit" class="btn btn-primary col-xs-2 col-xs-offset-3">保存</button>
+                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.SnackType.Index)">取消</a>
+                </fieldset>
+            </div>
+        </div>
+    </section>
+}

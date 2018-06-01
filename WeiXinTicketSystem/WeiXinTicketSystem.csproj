@@ -94,6 +94,26 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\NetSaleSvc.Api.dll</HintPath>
     </Reference>
+    <Reference Include="NetSaleSvc.Api.CTMS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NetSaleSvc.Api.CTMS.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Api.CTMS.XmlSerializers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NetSaleSvc.Api.CTMS.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Entity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NetSaleSvc.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NetSaleSvc.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NetSaleSvc.Util.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI">
       <HintPath>bin\NPOI\NPOI.dll</HintPath>
     </Reference>
@@ -258,6 +278,9 @@
     <Compile Include="Controllers\RootExraController.cs" />
     <Compile Include="Controllers\ScreenController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
+    <Compile Include="Controllers\SnackController.cs" />
+    <Compile Include="Controllers\SnackOrderController.cs" />
+    <Compile Include="Controllers\SnackTypeController.cs" />
     <Compile Include="Controllers\TicketSystemAccountController.cs" />
     <Compile Include="Controllers\TicketUsersController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -311,6 +334,13 @@
     <Compile Include="Models\Session\SessionPageQueryModel.cs" />
     <Compile Include="Models\Session\SetPriceViewModel.cs" />
     <Compile Include="Models\Session\UpdateSessionViewModel.cs" />
+    <Compile Include="Models\SnackOrder\ModelMapper.cs" />
+    <Compile Include="Models\SnackOrder\SnacksOrderPageQueryModel.cs" />
+    <Compile Include="Models\SnackType\CreateOrUpdateSnackTypeViewModel.cs" />
+    <Compile Include="Models\SnackType\ModelMapper.cs" />
+    <Compile Include="Models\Snack\CreateOrUpdateSnackViewModel.cs" />
+    <Compile Include="Models\Snack\ModelMapper.cs" />
+    <Compile Include="Models\Snack\SnackPageQueryModel.cs" />
     <Compile Include="Models\TicketUsers\ModelMapper.cs" />
     <Compile Include="Models\TicketUsers\TicketUsersQueryModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
@@ -1342,6 +1372,11 @@
     <Content Include="Views\TicketUsers\Index.cshtml" />
     <Content Include="Views\MemberCard\CreateOrUpdate.cshtml" />
     <Content Include="Views\MemberCard\Index.cshtml" />
+    <Content Include="Views\Snack\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Snack\Index.cshtml" />
+    <Content Include="Views\SnackOrder\Index.cshtml" />
+    <Content Include="Views\SnackType\CreateOrUpdate.cshtml" />
+    <Content Include="Views\SnackType\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

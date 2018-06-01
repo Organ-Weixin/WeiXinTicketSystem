@@ -223,5 +223,41 @@ namespace WeiXinTicketSystem
             public static string _CreateOrUpdate { get { return nameof(FilmInfoController._CreateOrUpdate); } }
             public static string UpdateFilm { get { return nameof(FilmInfoController.UpdateFilm); } }
         }
+
+        /// <summary>
+        /// 套餐
+        /// </summary>
+        public static class Snack
+        {
+            public static string Name { get { return nameof(Snack); } }
+            public static string Index { get { return nameof(SnackController.Index); } }
+            public static string List { get { return nameof(SnackController.List); } }
+            public static string Create { get { return nameof(SnackController.Create); } }
+            public static string Update { get { return nameof(SnackController.Update); } }
+            public static string Delete { get { return nameof(SnackController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(SnackController._CreateOrUpdate); } }
+        }
+
+        public static class SnackType
+        {
+            public static string Name { get { return nameof(SnackType); } }
+            public static string Index { get { return nameof(SnackTypeController.Index); } }
+            public static string List { get { return nameof(SnackTypeController.List); } }
+            public static string Create { get { return nameof(SnackTypeController.Create); } }
+            public static string Update { get { return nameof(SnackTypeController.Update); } }
+            public static string Delete { get { return nameof(SnackTypeController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(SnackTypeController._CreateOrUpdate); } }
+        }
+        /// <summary>
+        /// 套餐订单
+        /// </summary>
+        public static class SnackOrder
+        {
+            public static string Name { get { return nameof(SnackOrder); } }
+            public static string Index { get { return nameof(SnackOrderController.Index); } }
+            public static string List { get { return nameof(SnackOrderController.List); } }
+
+            public static string ExportExcelDetail { get { return nameof(SnackOrderController.ExportExcelDetail); } }
+        }
     }
 }

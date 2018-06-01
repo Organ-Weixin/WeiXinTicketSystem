@@ -68,6 +68,9 @@
     <Compile Include="ScreenInfoService.cs" />
     <Compile Include="SeatInfoService.cs" />
     <Compile Include="SessionInfoService.cs" />
+    <Compile Include="SnackService.cs" />
+    <Compile Include="SnackOrderService.cs" />
+    <Compile Include="SnackTypeService.cs" />
     <Compile Include="SystemModuleService.cs" />
     <Compile Include="SystemRolePermissionService.cs" />
     <Compile Include="SystemRoleService.cs" />

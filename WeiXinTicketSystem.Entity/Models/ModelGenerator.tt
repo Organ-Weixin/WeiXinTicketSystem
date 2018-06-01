@@ -82,6 +82,10 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["CinemaMemberCardSettings"]["IsCardUse"].PropertyType="YesOrNoEnum";
 	tables["CinemaMemberCardSettings"]["IsCardRegister"].PropertyType="YesOrNoEnum";
 	tables["CinemaMemberCardSettings"]["IsCardReCharge"].PropertyType="YesOrNoEnum";
+	tables["Snacks"]["Status"].PropertyType="SnackStatusEnum";
+	tables["SnackOrders"]["OrderStatus"].PropertyType="SnackOrderStatusEnum";
+	tables["AdminSnacksView"]["Status"].PropertyType="SnackStatusEnum";
+	tables["AdminSnackOrdersView"]["OrderStatus"].PropertyType="SnackOrderStatusEnum";
 	
 #>
 using System;

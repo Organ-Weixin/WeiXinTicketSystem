@@ -37,6 +37,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.dll</HintPath>
     </Reference>
+    <Reference Include="NetSaleSvc.Api.CTMS">
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.CTMS.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Api.CTMS.XmlSerializers">
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.CTMS.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Entity">
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Service">
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Util">
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Util.dll</HintPath>
+    </Reference>
     <Reference Include="PostSharp, Version=5.0.51.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.Redist.5.0.51\lib\net45\PostSharp.dll</HintPath>
       <Private>True</Private>

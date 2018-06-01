@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.CinemaManage = "active";
+    ViewBag.Snack = "active";
+    ViewBag.Title = "套餐管理";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        套餐管理
+        <small>查看并管理套餐</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cine"></i> 影院管理</a></li>
+        <li class="active">套餐管理</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <!---表头-->
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.Snack.List)"
+                       data-row-template="cinem-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">影院名称</th>
+                            <th data-dynatable-no-sort="true">编码</th>
+                            <th data-dynatable-no-sort="true">名称</th>
+                            <th data-dynatable-no-sort="true">类型</th>
+                            <th data-dynatable-no-sort="true">标准价</th>
+                            <th data-dynatable-no-sort="true">销售价</th>
+                            <th data-dynatable-no-sort="true">库存</th>
+                            <th data-dynatable-no-sort="true">状态</th>
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!---查询条件-->
+                <div class="dynatable-custom-filter">
+                    @Html.DropDownList("CinemaCode_dd", null, "影院", new { style = "width:175px;", @class = "dynatable-query", data_toggle = "select2" })
+                    @Html.DropDownList("TypeId_dd", null, "类型", new { style = "width:125px;", @class = "dynatable-query", data_toggle = "select2" })
+                    <input type="text" placeholder="编号" name="Code" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                </div>
+                <!---添加按钮-->
+                <div class="dynatable-operation">
+                    <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Snack.Create)">
+                        <i class="fa fa-plus"></i>
+                        添加套餐
+                    </a>
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="cinem-row-template">
+                <tr>
+                    <td style="text-align: left;overflow:hidden;">{{row}}</td>
+                    <td style="text-align: left;overflow:hidden; ">{{cinemaName}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{code}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{name}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{type}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{standardPrice}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{salePrice}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{stock}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{status}}</td>
+                    <td style="text-align: left;overflow:hidden;">
+                        <a href="@Url.Action(MvcNames.Snack.Update)/{{id}}">编辑</a>
+                        |
+                        <a href="javascript:void(0)"
+                           data-href="@Url.Action(MvcNames.Snack.Delete)/{{id}}" data-toggle="popover"
+                           data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                           data-message="确认删除?" data-type="confirm" data-placement="left"
+                           data-content-template="#delete-confirm-template">
+                            删除
+                        </a>
+                    </td>
+                </tr>
+            </script>
+        </div>
+    </div>
+</section>

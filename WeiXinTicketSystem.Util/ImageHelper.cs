@@ -51,6 +51,37 @@ namespace WeiXinTicketSystem.Util
                 return buffer;
             }
         }
+        public static string SaveImageToDisk(string filePath, string fileName, Image image)
+        {
+            string file = fileName;
+            ImageFormat format = image.RawFormat;
+            if (format.Equals(ImageFormat.Jpeg))
+            {
+                file += ".jpeg";
+            }
+            else if (format.Equals(ImageFormat.Png))
+            {
+                file += ".png";
+            }
+            else if (format.Equals(ImageFormat.Bmp))
+            {
+                file += ".bmp";
+            }
+            else if (format.Equals(ImageFormat.Gif))
+            {
+                file += ".gif";
+            }
+            else if (format.Equals(ImageFormat.Icon))
+            {
+                file += ".icon";
+            }
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+            image.Save(filePath + file);
+            return file;
+        }
 
         /// <summary>
         /// Convert Byte[] to Image
