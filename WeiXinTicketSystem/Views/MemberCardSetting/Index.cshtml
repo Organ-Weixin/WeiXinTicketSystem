@@ -1,19 +1,19 @@
 ﻿@{
     ViewData["Cinema"] = "active";
-    ViewData["TicketSystemAccount"] = "active";
-    ViewBag.Title = "影院系统对接账号配置管理";
+    ViewData["MemberCardSetting"] = "active";
+    ViewBag.Title = "影城会员卡设置管理";
     List<int> CurrentPermissions = ViewBag.CurrentPermissions;
 }
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        影院系统对接账号配置管理
+        影城会员卡设置管理
         <small>管理系统模块</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院配置</a></li>
-        <li class="active">影院系统对接账号配置管理</li>
+        <li class="active">影城会员卡设置管理</li>
     </ol>
 </section>
 
@@ -25,18 +25,18 @@
             <div class="dataTables_wrapper table-responsive no-padding">
                 <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
                        data-toggle="dynatable-paged"
-                       data-url="@Url.Action(MvcNames.TicketSystemAccount.List)"
-                       data-row-template="ticketSystemAccount-row-template">
+                       data-url="@Url.Action(MvcNames.MemberCardSetting.List)"
+                       data-row-template="memberCardSetting-row-template">
                     <thead>
                         <tr>
                             <th data-dynatable-no-sort="true">#</th>
                             <th data-dynatable-no-sort="true">影院编码</th>
                             <th data-dynatable-no-sort="true">影院名称</th>
-                            <th data-dynatable-no-sort="true">影院系统对接UrL</th>
-                            <th data-dynatable-no-sort="true">对接账号</th>
-                            <th data-dynatable-no-sort="true">对接密码</th>
-                            <th data-dynatable-no-sort="true">支付类型</th>
-                            <th data-dynatable-no-sort="true">影院系统</th>
+                            <th data-dynatable-no-sort="true">是否使用会员卡</th>
+                            <th data-dynatable-no-sort="true">是否使用会员卡注册</th>
+                            <th data-dynatable-no-sort="true">是否使用会员卡充值</th>
+                            <th data-dynatable-no-sort="true">会员卡类型</th>
+                            <th data-dynatable-no-sort="true">奥斯卡会员卡折扣</th>
                             <th data-dynatable-no-sort="true" width="180px">操作</th>
                         </tr>
                     </thead>
@@ -50,36 +50,36 @@
                 <div class="dynatable-operation">
                     @if (CurrentPermissions.Contains(2))
                     {
-                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.TicketSystemAccount.Create)">
+                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.MemberCardSetting.Create)">
                             <i class="fa fa-plus"></i>
-                            新建影院系统对接账号配置
+                            新建影城会员卡设置
                         </a>
                     }
                 </div>
             </div>
 
-            <script type="text/x-handlebars-template" id="ticketSystemAccount-row-template">
+            <script type="text/x-handlebars-template" id="memberCardSetting-row-template">
                 <tr>
                     <td style="text-align: left;">{{row}}</td>
                     <td style="text-align: left; vertical-align: top;">{{CinemaCode}}</td>
                     <td style="text-align: left;">{{CinemaName}}</td>
-                    <td style="text-align: left;">{{Url}}</td>
-                    <td style="text-align: left;">{{UserName}}</td>
-                    <td style="text-align: left;">{{Password}}</td>
-                    <td style="text-align: left;">{{PayType}}</td>
-                    <td style="text-align: left;">{{TicketSystem}}</td>
+                    <td style="text-align: left;">{{IsCardUse}}</td>
+                    <td style="text-align: left;">{{IsCardRegister}}</td>
+                    <td style="text-align: left;">{{IsCardReCharge}}</td>
+                    <td style="text-align: left;">{{CardType}}</td>
+                    <td style="text-align: left;">{{OscarDiscount}}</td>
                     <td style="text-align: left;">
 
                         @if (CurrentPermissions.Contains(3))
                         {
-                            <a href="@Url.Action(MvcNames.TicketSystemAccount.Update)/{{id}}">编辑</a>
+                            <a href="@Url.Action(MvcNames.MemberCardSetting.Update)/{{id}}">编辑</a>
                         }
 
                         @if (CurrentPermissions.Contains(4))
                         {
                             <span>|</span>
                             <a href="javascript:void(0)"
-                               data-href="@Url.Action(MvcNames.TicketSystemAccount.Delete)/{{id}}" data-toggle="popover"
+                               data-href="@Url.Action(MvcNames.MemberCardSetting.Delete)/{{id}}" data-toggle="popover"
                                data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
                                data-message="确认删除?" data-type="confirm" data-placement="left"
                                data-content-template="#delete-confirm-template">
@@ -93,4 +93,3 @@
         </div>
     </div>
 </section>
-
