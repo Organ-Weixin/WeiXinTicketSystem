@@ -19,7 +19,6 @@ namespace WeiXinTicketSystem.Controllers
 {
     public class SnackController : RootExraController
     {
-
         private SnackService _snackService;
         private CinemaService _cinemaService;
         private SnackTypeService _snacksTypeService;
@@ -29,12 +28,15 @@ namespace WeiXinTicketSystem.Controllers
             _snackService = new SnackService();
             _cinemaService = new CinemaService();
             _snacksTypeService = new SnackTypeService();
+            
         }
         #endregion
         public async Task<ActionResult> Index()
         {
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Snack").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             await PrepareIndexViewData();
-
+            ViewBag.CurrentPermissions = CurrentPermissions;
             return View();
         }
 
@@ -135,6 +137,10 @@ namespace WeiXinTicketSystem.Controllers
             if (Image != null)
             {
                 string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+                if(snack.Image!=null&& System.IO.File.Exists(rootPath + snack.Image))
+                {
+                    System.IO.File.Delete(rootPath + snack.Image);
+                }
                 string savePath = @"upload\SnackImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
                 System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
                 string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath,DateTime.Now.ToString("yyyyMMddHHmmss"), image);
@@ -160,6 +166,9 @@ namespace WeiXinTicketSystem.Controllers
                 await _snackService.UpdateAsync(snack);
             }
             //return RedirectObject(Url.Action(nameof(Index)));
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Snack").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
+            ViewBag.CurrentPermissions = CurrentPermissions;
             await PrepareIndexViewData();
             return View(nameof(Index));
         }

@@ -26,8 +26,10 @@ namespace WeiXinTicketSystem.Controllers
 
         public ActionResult Index()
         {
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Order").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             PrepareIndexViewData();
-
+            ViewBag.CurrentPermissions = CurrentPermissions;
             return View();
         }
 
