@@ -199,9 +199,9 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Id { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string CinemaName { get; set; }
-		public virtual bool IsPrintName { get; set; }
-		public virtual bool IsCustomTicketTemplet { get; set; }
-		public virtual bool IsCustomPackageTemplet { get; set; }
+		public virtual YesOrNoEnum IsPrintName { get; set; }
+		public virtual YesOrNoEnum IsCustomTicketTemplet { get; set; }
+		public virtual YesOrNoEnum IsCustomPackageTemplet { get; set; }
 		public virtual bool IsDel { get; set; }
 	}
 

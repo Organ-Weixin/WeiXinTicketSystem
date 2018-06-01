@@ -237,7 +237,9 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(SnackController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(SnackController._CreateOrUpdate); } }
         }
-
+        /// <summary>
+        /// 套餐类型
+        /// </summary>
         public static class SnackType
         {
             public static string Name { get { return nameof(SnackType); } }
@@ -258,6 +260,32 @@ namespace WeiXinTicketSystem
             public static string List { get { return nameof(SnackOrderController.List); } }
 
             public static string ExportExcelDetail { get { return nameof(SnackOrderController.ExportExcelDetail); } }
+        }
+		/// <summary>
+        /// 影城会员卡设置
+        /// </summary>
+        public static class MemberCardSetting
+        {
+            public static string Name { get { return nameof(MemberCardSetting); } }
+            public static string Index { get { return nameof(MemberCardSettingController.Index); } }
+            public static string List { get { return nameof(MemberCardSettingController.List); } }
+            public static string Create { get { return nameof(MemberCardSettingController.Create); } }
+            public static string Update { get { return nameof(MemberCardSettingController.Update); } }
+            public static string Delete { get { return nameof(MemberCardSettingController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(MemberCardSettingController._CreateOrUpdate); } }
+        }
+		/// <summary>
+        /// 影院打印设置
+        /// </summary>
+        public static class PrintSetting
+        {
+            public static string Name { get { return nameof(PrintSetting); } }
+            public static string Index { get { return nameof(PrintSettingController.Index); } }
+            public static string List { get { return nameof(PrintSettingController.List); } }
+            public static string Create { get { return nameof(PrintSettingController.Create); } }
+            public static string Update { get { return nameof(PrintSettingController.Update); } }
+            public static string Delete { get { return nameof(PrintSettingController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(PrintSettingController._CreateOrUpdate); } }
         }
     }
 }

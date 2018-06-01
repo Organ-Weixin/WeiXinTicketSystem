@@ -272,6 +272,7 @@
     <Compile Include="Controllers\PrePaySettingsController.cs" />
     <Compile Include="Controllers\PricePlanController.cs" />
     <Compile Include="Controllers\PriceSettingsController.cs" />
+    <Compile Include="Controllers\PrintSettingController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RolePermissionsController.cs" />
     <Compile Include="Controllers\RootBaseController.cs" />
@@ -296,6 +297,9 @@
     <Compile Include="Models\CinemaPrePay\CinemaPrePayQueryModel.cs" />
     <Compile Include="Models\CinemaPrePay\CreateOrUpdateCinemaPrePayViewModel.cs" />
     <Compile Include="Models\CinemaPrePay\ModelMapper.cs" />
+    <Compile Include="Models\CinemaPrintSetting\CinemaPrintSettingQueryModel.cs" />
+    <Compile Include="Models\CinemaPrintSetting\CreateOrUpdateCinemaPrintSettingViewModel.cs" />
+    <Compile Include="Models\CinemaPrintSetting\ModelMapper.cs" />
     <Compile Include="Models\CinemaTicketSystemAccount\CinemaTicketSystemAccountQueryModel.cs" />
     <Compile Include="Models\CinemaTicketSystemAccount\CreateOrUpdateTicketSystemAccountViewModel.cs" />
     <Compile Include="Models\CinemaTicketSystemAccount\ModelMapper.cs" />
@@ -1377,6 +1381,10 @@
     <Content Include="Views\SnackOrder\Index.cshtml" />
     <Content Include="Views\SnackType\CreateOrUpdate.cshtml" />
     <Content Include="Views\SnackType\Index.cshtml" />
+    <Content Include="Views\MemberCardSetting\CreateOrUpdate.cshtml" />
+    <Content Include="Views\MemberCardSetting\Index.cshtml" />
+    <Content Include="Views\PrintSetting\CreateOrUpdate.cshtml" />
+    <Content Include="Views\PrintSetting\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

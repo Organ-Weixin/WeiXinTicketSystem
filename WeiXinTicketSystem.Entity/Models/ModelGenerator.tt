@@ -86,6 +86,9 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["SnackOrders"]["OrderStatus"].PropertyType="SnackOrderStatusEnum";
 	tables["AdminSnacksView"]["Status"].PropertyType="SnackStatusEnum";
 	tables["AdminSnackOrdersView"]["OrderStatus"].PropertyType="SnackOrderStatusEnum";
+	tables["CinemaPrintSettings"]["IsPrintName"].PropertyType="YesOrNoEnum";
+	tables["CinemaPrintSettings"]["IsCustomTicketTemplet"].PropertyType="YesOrNoEnum";
+	tables["CinemaPrintSettings"]["IsCustomPackageTemplet"].PropertyType="YesOrNoEnum";
 	
 #>
 using System;
