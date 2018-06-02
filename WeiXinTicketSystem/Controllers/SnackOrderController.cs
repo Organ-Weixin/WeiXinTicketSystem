@@ -26,6 +26,9 @@ namespace WeiXinTicketSystem.Controllers
 
         public async Task<ActionResult> Index()
         {
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "SnackOrder").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
+            ViewBag.CurrentPermissions = CurrentPermissions;
             PrepareIndexViewData();
             return View();
         }

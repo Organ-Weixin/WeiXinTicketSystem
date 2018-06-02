@@ -33,6 +33,9 @@ namespace WeiXinTicketSystem.Controllers
         /// <returns></returns>
         public async Task<ActionResult> Index()
         {
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Screen").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
+            ViewBag.CurrentPermissions = CurrentPermissions;
             await PrepareIndexViewData();
             return View();
         }

@@ -33,6 +33,9 @@ namespace WeiXinTicketSystem.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "SnackType").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
+            ViewBag.CurrentPermissions = CurrentPermissions;
             return View();
         }
 
@@ -125,6 +128,10 @@ namespace WeiXinTicketSystem.Controllers
             if (Image != null)
             {
                 string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+                if (type.Image != null && System.IO.File.Exists(rootPath + type.Image))
+                {
+                    System.IO.File.Delete(rootPath + type.Image);
+                }
                 string savePath = @"upload\SnackTypeImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
                 System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
                 string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
@@ -142,6 +149,9 @@ namespace WeiXinTicketSystem.Controllers
             }
 
             //return RedirectObject(Url.Action(nameof(Index)));
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "SnackType").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
+            ViewBag.CurrentPermissions = CurrentPermissions;
             return View(nameof(Index));
         }
 

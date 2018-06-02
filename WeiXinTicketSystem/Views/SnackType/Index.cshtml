@@ -3,6 +3,7 @@
     ViewBag.CinemaManage = "active";
     ViewBag.SnackType = "active";
     ViewBag.Title = "套餐类型管理";
+    List<int> CurrentPermissions = ViewBag.CurrentPermissions;
 }
 
 <!-- Content Header (Page header) -->
@@ -44,10 +45,13 @@
                     </div>
                 </div>
                 <div class="dynatable-operation">
+                @if (CurrentPermissions.Contains(2))
+                {
                     <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.SnackType.Create)">
                         <i class="fa fa-plus"></i>
                         新建类型
                     </a>
+               }
                 </div>
             </div>
 
@@ -63,9 +67,16 @@
                         {{snacksCount}}
                     </td>
                     <td style="text-align: left;">
+                        @if (CurrentPermissions.Contains(3))
+                        {
                         <a href="@Url.Action(MvcNames.SnackType.Update)/{{id}}">编辑</a>
+                        }
+
                         {{#if candelete}}
-                        |
+                        
+                        @if (CurrentPermissions.Contains(4))
+                        {
+                           <span>|</span>
                         <a href="javascript:void(0)"
                            data-href="@Url.Action(MvcNames.SnackType.Delete)/{{id}}" data-toggle="popover"
                            data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
@@ -73,7 +84,9 @@
                            data-content-template="#delete-confirm-template">
                             删除
                         </a>
+                        }
                         {{/if}}
+               
                     </td>
                 </tr>
             </script>
