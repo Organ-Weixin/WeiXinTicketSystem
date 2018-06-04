@@ -89,6 +89,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["CinemaPrintSettings"]["IsPrintName"].PropertyType="YesOrNoEnum";
 	tables["CinemaPrintSettings"]["IsCustomTicketTemplet"].PropertyType="YesOrNoEnum";
 	tables["CinemaPrintSettings"]["IsCustomPackageTemplet"].PropertyType="YesOrNoEnum";
+	tables["Activity"]["Status"].PropertyType="YesOrNoEnum";
 	
 #>
 using System;

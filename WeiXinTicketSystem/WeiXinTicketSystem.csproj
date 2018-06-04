@@ -260,6 +260,7 @@
     <Compile Include="Attributes\UI\ListBoxAttribute.cs" />
     <Compile Include="Attributes\UI\PasswordAttribute.cs" />
     <Compile Include="Attributes\UI\TextAreaAttribute.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\CinemaController.cs" />
     <Compile Include="Controllers\FilmInfoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -288,6 +289,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Activity\ActivityQueryModel.cs" />
+    <Compile Include="Models\Activity\CreateOrUpdateActivityViewModel.cs" />
+    <Compile Include="Models\Activity\ModelMapper.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\CinemaMemberCardSettingQueryModel.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\CreateOrUpdateCinemaMemberCardSettingViewModel.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\ModelMapper.cs" />
@@ -1385,6 +1389,8 @@
     <Content Include="Views\MemberCardSetting\Index.cshtml" />
     <Content Include="Views\PrintSetting\CreateOrUpdate.cshtml" />
     <Content Include="Views\PrintSetting\Index.cshtml" />
+    <Content Include="Views\Activity\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

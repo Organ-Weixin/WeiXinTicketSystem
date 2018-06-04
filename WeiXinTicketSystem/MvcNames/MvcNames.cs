@@ -287,5 +287,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(PrintSettingController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(PrintSettingController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 活动表
+        /// </summary>
+        public static class Activity
+        {
+            public static string Name { get { return nameof(Activity); } }
+            public static string Index { get { return nameof(ActivityController.Index); } }
+            public static string List { get { return nameof(ActivityController.List); } }
+            public static string Create { get { return nameof(ActivityController.Create); } }
+            public static string Update { get { return nameof(ActivityController.Update); } }
+            public static string Delete { get { return nameof(ActivityController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(ActivityController._CreateOrUpdate); } }
+        }
     }
 }

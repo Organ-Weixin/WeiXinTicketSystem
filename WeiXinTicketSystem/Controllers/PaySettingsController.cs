@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Reflection;
 using System.Web;
+using WeiXinTicketSystem.Properties;
 
 namespace WeiXinTicketSystem.Controllers
 {
@@ -47,7 +48,7 @@ namespace WeiXinTicketSystem.Controllers
         public async Task<ActionResult> List(DynatablePageModel<CinemaPaySettingsQueryModel> pageModel)
         {
             var paySettings = await _paySettingsService.GetCinemaPaySettingsPagedAsync(
-                pageModel.Query.CinemaCode,
+                CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? pageModel.Query.CinemaCode : CurrentUser.CinemaCode,
                 pageModel.Query.CinemaName,
                 pageModel.Query.Search,
                 pageModel.Offset,

@@ -557,6 +557,25 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the Activity table.
+    /// </summary>
+    [Table("Activity")]
+    [SqlLamTable(Name = "Activity")]
+    public partial class ActivityEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
+		public virtual string ActivityContent { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the SystemModule table.
     /// </summary>
     [Table("SystemModule")]
