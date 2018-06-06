@@ -301,5 +301,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(ActivityController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(ActivityController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 图片上传
+        /// </summary>
+        public static class Bnanner
+        {
+            public static string Name { get { return nameof(Bnanner); } }
+            public static string Index { get { return nameof(BnannerController.Index); } }
+            public static string List { get { return nameof(BnannerController.List); } }
+            public static string Create { get { return nameof(BnannerController.Create); } }
+            public static string Update { get { return nameof(BnannerController.Update); } }
+            public static string Delete { get { return nameof(BnannerController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(BnannerController._CreateOrUpdate); } }
+        }
     }
 }

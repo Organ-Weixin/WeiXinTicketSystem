@@ -1,5 +1,5 @@
 ﻿using WeiXinTicketSystem.Models;
-using WeiXinTicketSystem.Models.Activity;
+using WeiXinTicketSystem.Models.Bnanner;
 using WeiXinTicketSystem.Utils;
 using WeiXinTicketSystem.Entity.Enum;
 using WeiXinTicketSystem.Entity.Models;
@@ -21,38 +21,37 @@ using WeiXinTicketSystem.Properties;
 
 namespace WeiXinTicketSystem.Controllers
 {
-    public class ActivityController : RootExraController
+    public class BnannerController : RootExraController
     {
-        private ActivityService _activityService;
+        private BnannerService _bnannerService;
 
         #region ctor
-        public ActivityController()
+        public BnannerController()
         {
-            _activityService = new ActivityService();
+            _bnannerService = new BnannerService();
         }
         #endregion
 
         /// <summary>
-        /// 活动表管理首页
+        /// 图片上传管理首页
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
         {
-            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Activity").SingleOrDefault();
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Bnanner").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
             return View();
         }
 
-
         ///// <summary>
-        ///// 活动表列表
+        ///// 图片上传列表
         ///// </summary>
         ///// <param name="pageModel"></param>
         ///// <returns></returns>
-        public async Task<ActionResult> List(DynatablePageModel<ActivityQueryModel> pageModel)
+        public async Task<ActionResult> List(DynatablePageModel<BnannerQueryModel> pageModel)
         {
-            var paySettings = await _activityService.GetActivityPagedAsync(
+            var paySettings = await _bnannerService.GetBnannerPagedAsync(
                 CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? pageModel.Query.CinemaCode : CurrentUser.CinemaCode,
                 pageModel.Query.Search,
                 pageModel.Offset,
@@ -63,53 +62,52 @@ namespace WeiXinTicketSystem.Controllers
 
 
         /// <summary>
-        /// 添加活动表
+        /// 添加图片上传
         /// </summary>
         /// <returns></returns>
         public ActionResult Create()
         {
-            CreateOrUpdateActivityViewModel model = new CreateOrUpdateActivityViewModel();
+            CreateOrUpdateBnannerViewModel model = new CreateOrUpdateBnannerViewModel();
             PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
 
         /// <summary>
-        /// 修改影院支付方式配置
+        /// 修改图片上传
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<ActionResult> Update(int id)
         {
-            var activity = await _activityService.GetActivityByIdAsync(id);
-            if (activity == null)
+            var bnanner = await _bnannerService.GetBnannerByIdAsync(id);
+            if (bnanner == null)
             {
                 return HttpBadRequest();
             }
-            CreateOrUpdateActivityViewModel model = new CreateOrUpdateActivityViewModel();
-            model.MapFrom(activity);
+            CreateOrUpdateBnannerViewModel model = new CreateOrUpdateBnannerViewModel();
+            model.MapFrom(bnanner);
             PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
         /// <summary>
-        /// 添加或修改影院支付方式配置
+        /// 添加或修改图片上传
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public ActionResult CreateOrUpdate(CreateOrUpdateActivityViewModel model)
+        public ActionResult CreateOrUpdate(CreateOrUpdateBnannerViewModel model)
         {
             return View(nameof(CreateOrUpdate), model);
         }
 
-
         /// <summary>
-        /// 添加或修改影院支付方式配置
+        /// 添加或修改图片上传
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> _CreateOrUpdate(CreateOrUpdateActivityViewModel model, HttpPostedFileBase Image)
+        public async Task<ActionResult> _CreateOrUpdate(CreateOrUpdateBnannerViewModel model, HttpPostedFileBase Image)
         {
             if (!ModelState.IsValid)
             {
@@ -117,39 +115,38 @@ namespace WeiXinTicketSystem.Controllers
                 return ErrorObject(string.Join("/n", errorMessages));
             }
 
-            ActivityEntity activity = new ActivityEntity();
+            BnannerEntity bnanner = new BnannerEntity();
             if (model.Id > 0)
             {
-                activity = await _activityService.GetActivityByIdAsync(model.Id);
+                bnanner = await _bnannerService.GetBnannerByIdAsync(model.Id);
             }
 
 
-            activity.MapFrom(model);
+            bnanner.MapFrom(model);
 
 
 
-            if (activity.Id == 0)
+            if (bnanner.Id == 0)
             {
                 //图片处理
                 if (Image != null)
                 {
                     string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\ActivityImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                    string savePath = @"upload\BnannerImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
                     System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
                     string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    activity.Image = savePath + fileName;
+                    bnanner.Image = savePath + fileName;
+                    bnanner.Created = DateTime.Now;
                 }
 
-                await _activityService.InsertAsync(activity);
+                await _bnannerService.InsertAsync(bnanner);
             }
             else
             {
-               
-
                 //图片处理
                 if (Image != null)
                 {
-                    string file = Server.MapPath("~/") + activity.Image;
+                    string file = Server.MapPath("~/") + bnanner.Image;
                     if (!string.IsNullOrEmpty(file))
                     {
                         if (System.IO.File.Exists(file))
@@ -159,35 +156,35 @@ namespace WeiXinTicketSystem.Controllers
                         }
                     }
                     string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\ActivityImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                    string savePath = @"upload\BnannerImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
                     System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
                     string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    activity.Image = savePath + fileName;
+                    bnanner.Image = savePath + fileName;
                 }
 
-                await _activityService.UpdateAsync(activity);
+                await _bnannerService.UpdateAsync(bnanner);
             }
 
             //return RedirectObject(Url.Action(nameof(Index)));
-            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Activity").SingleOrDefault();
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Bnanner").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
             return View(nameof(Index));
         }
 
         /// <summary>
-        /// 删除影院支付方式配置
+        /// 删除图片上传
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<ActionResult> Delete(int id)
         {
-            var activity = await _activityService.GetActivityByIdAsync(id);
+            var bnanner = await _bnannerService.GetBnannerByIdAsync(id);
 
-            if (activity != null)
+            if (bnanner != null)
             {
-                activity.IsDel = true;
-                await _activityService.UpdateAsync(activity);
+                bnanner.IsDel = true;
+                await _bnannerService.UpdateAsync(bnanner);
             }
             return Object();
         }
@@ -198,6 +195,7 @@ namespace WeiXinTicketSystem.Controllers
             ViewBag.Status_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
 
         }
+
 
     }
 }

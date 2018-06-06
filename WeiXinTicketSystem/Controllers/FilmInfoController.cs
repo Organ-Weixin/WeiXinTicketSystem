@@ -182,13 +182,16 @@ namespace WeiXinTicketSystem.Controllers
             }
             else
             {
-                string file = Server.MapPath("~/") + filmInfo.Image;
-                if (!string.IsNullOrEmpty(file))
+                if (Image != null)
                 {
-                    if (System.IO.File.Exists(file))
+                    string file = Server.MapPath("~/") + filmInfo.Image;
+                    if (!string.IsNullOrEmpty(file))
                     {
-                        //如果存在则删除
-                        System.IO.File.Delete(file);
+                        if (System.IO.File.Exists(file))
+                        {
+                            //如果存在则删除
+                            System.IO.File.Delete(file);
+                        }
                     }
                 }
 

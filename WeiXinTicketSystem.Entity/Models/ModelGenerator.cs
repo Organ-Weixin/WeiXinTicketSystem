@@ -596,6 +596,25 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the Bnanner table.
+    /// </summary>
+    [Table("Bnanner")]
+    [SqlLamTable(Name = "Bnanner")]
+    public partial class BnannerEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the Cinema table.
     /// </summary>
     [Table("Cinema")]
