@@ -8,7 +8,7 @@ using System.Web;
 
 namespace WeiXinTicketSystem.Models
 {
-    public class CreateOrUpdateMemberCardViewModel
+    public class CreateOrUpdateConponViewModel
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
@@ -19,32 +19,31 @@ namespace WeiXinTicketSystem.Models
         public string CinemaCode { get; set; }
 
         [ListBox("_dd", Multiple = false)]
-        [Display(Name = "购票用户")]
+        [Display(Name = "优惠券类型")]
+        public int ConponType { get; set; }
+
+        [ListBox("_dd", Multiple = false)]
+        [Display(Name = "用户")]
+        [Required(ErrorMessage = "{0}不能为空")]
         public string OpenID { get; set; }
 
+        [Display(Name = "价格")]
+        public decimal? Price { get; set; }
 
-        [Display(Name = "卡号")]
+
+        [Display(Name = "优惠券编码")]
         [Required(ErrorMessage = "{0}不能为空")]
         [StringLength(50, ErrorMessage = "{0}最多50个字符")]
-        public string CardNo { get; set; }
+        public string ConponCode { get; set; }
 
-        [Display(Name = "密码")]
-        [Required(ErrorMessage = "{0}不能为空")]
-        [StringLength(50, ErrorMessage = "{0}最多50个字符")]
-        public string CardPassword { get; set; }
-
-        [Display(Name = "会员卡余额")]
-        public decimal? Balance { get; set; }
-
-        [Display(Name = "会员卡积分")]
-        public double? Score { get; set; }
+        [Display(Name = "有效期")]
+        public string ValidityDate { get; set; }
 
         [ListBox("_dd", Multiple = false)]
-        [Display(Name = "会员卡等级")]
-        public int MemberGrade { get; set; }
+        [Display(Name = "是否使用")]
+        public int IfUse { get; set; }
 
-        [ListBox("_dd", Multiple = false)]
-        [Display(Name = "状态")]
-        public int Status { get; set; }
+        [Display(Name = "使用时间")]
+        public string UseDate { get; set; }
     }
 }

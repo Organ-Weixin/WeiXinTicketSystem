@@ -91,6 +91,12 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["CinemaPrintSettings"]["IsCustomPackageTemplet"].PropertyType="YesOrNoEnum";
 	tables["Activity"]["Status"].PropertyType="YesOrNoEnum";
 	tables["Bnanner"]["Status"].PropertyType="YesOrNoEnum";
+	tables["AdminMemberCardView"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
+	tables["AdminMemberCardView"]["Status"].PropertyType="MemberCardStatusEnum";
+	tables["Conpons"]["ConponType"].PropertyType="ConponTypeEnum";
+	tables["Conpons"]["IfUse"].PropertyType="YesOrNoEnum";
+	tables["AdminConponView"]["ConponType"].PropertyType="ConponTypeEnum";
+	tables["AdminConponView"]["IfUse"].PropertyType="YesOrNoEnum";
 	
 #>
 using System;

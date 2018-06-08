@@ -315,5 +315,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(BnannerController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(BnannerController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 优惠券
+        /// </summary>
+        public static class Conpon
+        {
+            public static string Name { get { return nameof(Conpon); } }
+            public static string Index { get { return nameof(ConponController.Index); } }
+            public static string List { get { return nameof(ConponController.List); } }
+            public static string Create { get { return nameof(ConponController.Create); } }
+            public static string Update { get { return nameof(ConponController.Update); } }
+            public static string Delete { get { return nameof(ConponController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(ConponController._CreateOrUpdate); } }
+        }
     }
 }

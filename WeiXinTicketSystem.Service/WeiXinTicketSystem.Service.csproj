@@ -60,6 +60,7 @@
     <Compile Include="CinemaPrintSettingService.cs" />
     <Compile Include="CinemaService.cs" />
     <Compile Include="CinemaTicketSystemAccountService.cs" />
+    <Compile Include="ConponService.cs" />
     <Compile Include="FilmInfoService.cs" />
     <Compile Include="HomeService.cs" />
     <Compile Include="MemberCardService.cs" />

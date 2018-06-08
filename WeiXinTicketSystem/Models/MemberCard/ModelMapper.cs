@@ -15,13 +15,13 @@ namespace WeiXinTicketSystem.Models.MemberCard
         /// </summary>
         /// <param name="MemberCard"></param>
         /// <returns></returns>
-        public static dynamic ToDynatableItem(this MemberCardEntity module)
+        public static dynamic ToDynatableItem(this AdminMemberCardViewEntity module)
         {
             return new
             {
                 id = module.Id,
                 CinemaCode = module.CinemaCode,
-                TicketUserId = module.TicketUserId,
+                NickName = module.NickName,
                 CardNo = module.CardNo,
                 CardPassword = module.CardPassword,
                 Balance = module.Balance,
@@ -41,7 +41,7 @@ namespace WeiXinTicketSystem.Models.MemberCard
         public static void MapFrom(this MemberCardEntity module, CreateOrUpdateMemberCardViewModel model)
         {
             module.CinemaCode = model.CinemaCode;
-            module.TicketUserId =(int?)model.TicketUserId;
+            module.OpenID = model.OpenID;
             module.CardNo = model.CardNo;
             module.CardPassword = model.CardPassword;
             module.Balance = model.Balance;
@@ -60,7 +60,7 @@ namespace WeiXinTicketSystem.Models.MemberCard
         {
             model.Id = module.Id;
             model.CinemaCode = module.CinemaCode;
-            model.TicketUserId = module.TicketUserId;
+            model.OpenID = module.OpenID;
             model.CardNo = module.CardNo;
             model.CardPassword = module.CardPassword;
             model.Balance = module.Balance;
