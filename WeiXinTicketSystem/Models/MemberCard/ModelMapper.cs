@@ -15,20 +15,20 @@ namespace WeiXinTicketSystem.Models.MemberCard
         /// </summary>
         /// <param name="MemberCard"></param>
         /// <returns></returns>
-        public static dynamic ToDynatableItem(this MemberCardEntity membercard)
+        public static dynamic ToDynatableItem(this AdminMemberCardViewEntity module)
         {
             return new
             {
-                id = membercard.Id,
-                CinemaCode = membercard.CinemaCode,
-                Openid = membercard.OpenID,
-                CardNo = membercard.CardNo,
-                CardPassword = membercard.CardPassword,
-                Balance = membercard.Balance,
-                Score = membercard.Score,
-                MemberGrade = membercard.MemberGrade.GetDescription(),
-                Status = membercard.Status.GetDescription(),
-                Created = membercard.Created.ToFormatString()
+                id = module.Id,
+                CinemaCode = module.CinemaCode,
+                NickName = module.NickName,
+                CardNo = module.CardNo,
+                CardPassword = module.CardPassword,
+                Balance = module.Balance,
+                Score = module.Score,
+                MemberGrade = module.MemberGrade.GetDescription(),
+                Status = module.Status.GetDescription(),
+                Created = module.Created.ToFormatString()
 
             };
         }
