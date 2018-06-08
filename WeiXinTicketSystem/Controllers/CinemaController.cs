@@ -163,7 +163,8 @@ namespace WeiXinTicketSystem.Controllers
             //绑定状态(0-未开通，1-已开通)枚举
             ViewBag.Status_dd = EnumUtil.GetSelectList<CinemaStatusEnum>();
 
-
+            //绑定是否开通套餐枚举
+            ViewBag.OpenSnacks_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
 
         }
 

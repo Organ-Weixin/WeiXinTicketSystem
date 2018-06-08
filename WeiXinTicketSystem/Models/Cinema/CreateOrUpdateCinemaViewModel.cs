@@ -51,6 +51,9 @@ namespace WeiXinTicketSystem.Models
         [Display(Name = "影院所在位置经度")]
         public double? Longitude { get; set; }
 
-       
+        [ListBox("_dd", Multiple = false)]
+        [Display(Name = "是否开通套餐")]
+        public int OpenSnacks { get; set; }
+
     }
 }
