@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="gb2312"?>
-<Data Version="1.0" Type="FilmInfomation" Datetime="2018-05-28 15:25:42" SourceCode="00000000" DestinationCode="00000000">
+<Data Version="1.0" Type="FilmInfomation" Datetime="2018-06-01 13:50:58" SourceCode="00000000" DestinationCode="00000000">
   <FilmInfomation>
     <ID>001102172018</ID>
     <Name>狄仁杰之四大天王</Name>
@@ -61,6 +61,16 @@
     <Brief>Unkown</Brief>
   </FilmInfomation>
   <FilmInfomation>
+    <ID>001104442018</ID>
+    <Name>猛虫过江</Name>
+    <PublishDate>2018-06-15</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>星皓影业有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
     <ID>051401022018</ID>
     <Name>侏罗纪世界2（数字IMAX3D）</Name>
     <PublishDate>2018-06-15</PublishDate>
@@ -103,6 +113,36 @@
     <Cast>克里斯·帕拉特,布莱丝·达拉斯·霍华德,贾斯蒂斯·史密斯,拉菲·斯波</Cast>
     <Brief>侏罗纪世界主题公园及豪华度假村被失控的恐龙们摧毁已有四年。如今，纳布拉尔岛已经被人类遗弃，岛上幸存的恐龙们在丛林中自给自足。
 当岛上的休眠火山开始活跃以后，欧文（克里斯·帕拉特 饰）与克莱尔（布莱丝·达拉斯·霍华德 饰）发起了一场运动，想要保护岛上幸存的恐龙们免于灭绝。欧文一心想要找到自己依然失踪在野外的迅猛龙首领布鲁，克莱尔如今也尊重起这些生物，以保护它们为己任。两人在熔岩开始喷发时来到了危险的小岛，他们的冒险也揭开了一个可能让地球回到史前时代般混乱秩序的阴谋。</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>051101002018</ID>
+    <Name>深海越狱（数字）</Name>
+    <PublishDate>2018-06-08</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>Unkown</Producer>
+    <Director />
+    <Cast />
+    <Brief />
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>012801032018</ID>
+    <Name>哆啦A梦：大雄的金银岛（中国巨幕）</Name>
+    <PublishDate>2018-06-01</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>日本SHIN-EI动画株式会社</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104322018</ID>
+    <Name>情暖童年</Name>
+    <PublishDate>2018-06-01</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>山东螭龙影视文化传媒有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
   </FilmInfomation>
   <FilmInfomation>
     <ID>001c03982018</ID>
@@ -155,6 +195,36 @@
     <Brief>Unkown</Brief>
   </FilmInfomation>
   <FilmInfomation>
+    <ID>001104312018</ID>
+    <Name>未择之路</Name>
+    <PublishDate>2018-05-31</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>沈阳伟世兄弟文化传播有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>000001092018</ID>
+    <Name>第21届上海国际电影节</Name>
+    <PublishDate>2018-05-31</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>暂空</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>000001062018</ID>
+    <Name>福建省第十届海峡影视季·首届闽台电影周</Name>
+    <PublishDate>2018-05-31</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>暂空</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
     <ID>035100992018</ID>
     <Name>我的宠物恐龙（数字）</Name>
     <PublishDate>2018-05-31</PublishDate>
@@ -163,6 +233,56 @@
     <Director>Unkown</Director>
     <Cast>Unkown</Cast>
     <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>066201082018</ID>
+    <Name>玛雅蜜蜂历险记（数字3D）</Name>
+    <PublishDate>2018-05-30</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>德国壹佰电影公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>066101082018</ID>
+    <Name>玛雅蜜蜂历险记（数字）</Name>
+    <PublishDate>2018-05-30</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>德国壹佰电影公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>014101072018</ID>
+    <Name>暹罗决：九神战甲（数字）</Name>
+    <PublishDate>2018-05-30</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>泰国精品形式影业</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>019101052018</ID>
+    <Name>厕所英雄（数字）</Name>
+    <PublishDate>2018-05-30</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>印度维亚康姆18影业</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104082011</ID>
+    <Name>赛尔号</Name>
+    <PublishDate>2018-05-30</PublishDate>
+    <Publisher>中国电影集团公司</Publisher>
+    <Producer />
+    <Director />
+    <Cast />
+    <Brief />
   </FilmInfomation>
   <FilmInfomation>
     <ID>051900982018</ID>
@@ -220,6 +340,266 @@
     <PublishDate>2018-05-25</PublishDate>
     <Publisher>暂空</Publisher>
     <Producer>暂空</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104292018</ID>
+    <Name>冰封侠 时空行者</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>西部电影集团有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104302018</ID>
+    <Name>青春至上</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>电影频道节目中心</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104282018</ID>
+    <Name>西溪传奇</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>东台西溪文化传媒股份有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104272018</ID>
+    <Name>夺宝同盟</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>北京佳锐奇文化传播有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104262018</ID>
+    <Name>我们在一起的31天</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>艺玺国际文化传媒（北京）有限公?</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104252018</ID>
+    <Name>只想和你在一起</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>西安泽艺影视文化有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104242018</ID>
+    <Name>杜丽群</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>国悦文化传播有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104232018</ID>
+    <Name>冻不住的心</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>北京翼达九州影视文化有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104222018</ID>
+    <Name>云上之爱</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>贵州翰韵文化传媒有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104212018</ID>
+    <Name>相亲时代</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>桂林爱派文化传播有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104202018</ID>
+    <Name>天眼风云</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>八一电影制片厂</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104192018</ID>
+    <Name>镜像人·明日青春</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>大地时代文化传播（北京）有限公?</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104182018</ID>
+    <Name>造梦游戏</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>北京幻画影业有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104172018</ID>
+    <Name>红旗渠之恋</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>河北东方视野文化传播股份有限公?</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104152018</ID>
+    <Name>打开心中的门</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>东阳市宇皇影视文化有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104162018</ID>
+    <Name>功夫双雄</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>北京之善文化传媒有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104142018</ID>
+    <Name>美人记·昭君</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>九头鸟文化产业有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104132018</ID>
+    <Name>笑忘书</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>北京古吉万向文化传播有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104122018</ID>
+    <Name>神探袁可立</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>北京巴音文化传媒有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104112018</ID>
+    <Name>迷失的彩虹 古坠归来</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>古城区十和兄弟文化产业有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104102018</ID>
+    <Name>看不见的小孩</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>北京家乐影业有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104092018</ID>
+    <Name>我是检察官</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>最高人民检察院影视中心</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104082018</ID>
+    <Name>剩女大逃亡</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>湖北中盟影视有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104072018</ID>
+    <Name>夜山明的野子</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>合肥五分钟文化传媒有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104062018</ID>
+    <Name>天慕</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>格尔木领航数字影业有限公司</Producer>
+    <Director>Unkown</Director>
+    <Cast>Unkown</Cast>
+    <Brief>Unkown</Brief>
+  </FilmInfomation>
+  <FilmInfomation>
+    <ID>001104052018</ID>
+    <Name>九门提督</Name>
+    <PublishDate>2018-05-24</PublishDate>
+    <Publisher>暂空</Publisher>
+    <Producer>北京新片场传媒股份有限公司</Producer>
     <Director>Unkown</Director>
     <Cast>Unkown</Cast>
     <Brief>Unkown</Brief>

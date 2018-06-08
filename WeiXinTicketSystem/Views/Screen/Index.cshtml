@@ -3,6 +3,7 @@
     ViewBag.CinemaManage = "active";
     ViewBag.Screen = "active";
     ViewBag.Title = "影厅管理";
+    List<int> CurrentPermissions = ViewBag.CurrentPermissions;
 }
 
 <!-- Content Header (Page header) -->
@@ -47,10 +48,13 @@
                 </div>
                 <!---添加按钮-->
                 <div class="dynatable-operation">
+                   @if (CurrentPermissions.Contains(2))
+                    {
                     <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Screen.Update)">
                         <i class="fa fa-plus"></i>
                         重新获取影厅
                     </a>
+                   }
                 </div>
             </div>
 
@@ -64,6 +68,8 @@
                     <td style="text-align: left;overflow:hidden;">{{seatCount}}</td>
                     <td style="text-align: left;overflow:hidden;">{{type}}</td>
                     <td style="text-align: left;overflow:hidden;">
+                    @if (CurrentPermissions.Contains(3))
+                    {
                         <a href="javascript:void(0)"
                            data-href="@Url.Action(MvcNames.Screen.UdateScreenSeat)/{{id}}" data-toggle="popover"
                            data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
@@ -71,6 +77,7 @@
                            data-content-template="#delete-confirm-template">
                             重新获取影厅座位
                         </a>
+                    }
                     </td>
                 </tr>
             </script>

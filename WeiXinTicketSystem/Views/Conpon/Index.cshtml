@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["CinemaManage"] = "active";
+    ViewData["Conpon"] = "active";
+    ViewBag.Title = "优惠券管理";
+    List<int> CurrentPermissions = ViewBag.CurrentPermissions;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        优惠券管理
+        <small>管理系统模块</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
+        <li class="active">优惠券管理</li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.Conpon.List)"
+                       data-row-template="conpon-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">影院编码</th>
+                            <th data-dynatable-no-sort="true">优惠券类型</th>
+                            <th data-dynatable-no-sort="true">用户</th>
+                            <th data-dynatable-no-sort="true">价格</th>
+                            <th data-dynatable-no-sort="true">优惠券编码</th>
+                            <th data-dynatable-no-sort="true">有效期</th>
+                            <th data-dynatable-no-sort="true">是否使用</th>
+                            <th data-dynatable-no-sort="true">使用时间</th>
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!---查询条件-->
+                <div class="dynatable-custom-filter">
+                    <input type="text" placeholder="影院编码" name="CinemaCode" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                    <input type="text" placeholder="优惠券编码" name="ConponCode" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                </div>
+                <div class="dynatable-operation">
+                    @if (CurrentPermissions.Contains(2))
+                    {
+                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Conpon.Create)">
+                            <i class="fa fa-plus"></i>
+                            新建优惠券
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="conpon-row-template">
+                <tr>
+                    <td style="text-align: left;">{{row}}</td>
+                    <td style="text-align: left; vertical-align: top;">{{CinemaCode}}</td>
+                    <td style="text-align: left;">{{ConponType}}</td>
+                    <td style="text-align: left;">{{NickName}}</td>
+                    <td style="text-align: left;">{{Price}}</td>
+                    <td style="text-align: left;">{{ConponCode}}</td>
+                    <td style="text-align: left;">{{ValidityDate}}</td>
+                    <td style="text-align: left;">{{IfUse}}</td>
+                    <td style="text-align: left;">{{UseDate}}</td>
+                    <td style="text-align: left;">
+
+                        @if (CurrentPermissions.Contains(3))
+                        {
+                            <a href="@Url.Action(MvcNames.Conpon.Update)/{{id}}">编辑</a>
+                        }
+
+                        @if (CurrentPermissions.Contains(4))
+                        {
+                            <span>|</span>
+                            <a href="javascript:void(0)"
+                               data-href="@Url.Action(MvcNames.Conpon.Delete)/{{id}}" data-toggle="popover"
+                               data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                               data-message="确认删除?" data-type="confirm" data-placement="left"
+                               data-content-template="#delete-confirm-template">
+                                删除
+                            </a>
+                        }
+                    </td>
+                </tr>
+            </script>
+
+        </div>
+    </div>
+</section>
+
+

@@ -287,5 +287,47 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(PrintSettingController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(PrintSettingController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 活动表
+        /// </summary>
+        public static class Activity
+        {
+            public static string Name { get { return nameof(Activity); } }
+            public static string Index { get { return nameof(ActivityController.Index); } }
+            public static string List { get { return nameof(ActivityController.List); } }
+            public static string Create { get { return nameof(ActivityController.Create); } }
+            public static string Update { get { return nameof(ActivityController.Update); } }
+            public static string Delete { get { return nameof(ActivityController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(ActivityController._CreateOrUpdate); } }
+        }
+
+        /// <summary>
+        /// 图片上传
+        /// </summary>
+        public static class Bnanner
+        {
+            public static string Name { get { return nameof(Bnanner); } }
+            public static string Index { get { return nameof(BnannerController.Index); } }
+            public static string List { get { return nameof(BnannerController.List); } }
+            public static string Create { get { return nameof(BnannerController.Create); } }
+            public static string Update { get { return nameof(BnannerController.Update); } }
+            public static string Delete { get { return nameof(BnannerController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(BnannerController._CreateOrUpdate); } }
+        }
+
+        /// <summary>
+        /// 优惠券
+        /// </summary>
+        public static class Conpon
+        {
+            public static string Name { get { return nameof(Conpon); } }
+            public static string Index { get { return nameof(ConponController.Index); } }
+            public static string List { get { return nameof(ConponController.List); } }
+            public static string Create { get { return nameof(ConponController.Create); } }
+            public static string Update { get { return nameof(ConponController.Update); } }
+            public static string Delete { get { return nameof(ConponController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(ConponController._CreateOrUpdate); } }
+        }
     }
 }

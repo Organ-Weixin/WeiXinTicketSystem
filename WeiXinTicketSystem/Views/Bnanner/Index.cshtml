@@ -1,0 +1,190 @@
+﻿@{
+    ViewData["Cinema"] = "active";
+    ViewData["Bnanner"] = "active";
+    ViewBag.Title = "图片管理";
+    List<int> CurrentPermissions = ViewBag.CurrentPermissions;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+    <style>
+        .black_overlay {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: .80;
+            filter: alpha(opacity=80);
+        }
+
+        .white_content {
+            display: none;
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            border: 16px solid lightblue;
+            background-color: white;
+            z-index: 1002;
+            overflow: auto;
+        }
+
+        .white_content_small {
+            display: none;
+            position: absolute;
+            top: 20%;
+            left: 30%;
+            width: 40%;
+            height: 50%;
+            border: 16px solid lightblue;
+            background-color: white;
+            z-index: 1002;
+            overflow: auto;
+        }
+    </style> 
+
+
+
+
+    <h1>
+        图片管理
+        <small>管理系统模块</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
+        <li class="active">图片管理</li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.Bnanner.List)"
+                       data-row-template="bnanner-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">影院编码</th>
+                            <th data-dynatable-no-sort="true">标题</th>
+                            <th data-dynatable-no-sort="true">图片</th>
+                            <th data-dynatable-no-sort="true">上传时间</th>
+                            <th data-dynatable-no-sort="true">开始时间</th>
+                            <th data-dynatable-no-sort="true">结束时间</th>
+                            <th data-dynatable-no-sort="true">是否启用</th>
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!---查询条件-->
+                <div class="dynatable-custom-filter">
+                    <input type="text" placeholder="影院编码" name="CinemaCode" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                </div>
+                <div class="dynatable-operation">
+                    @if (CurrentPermissions.Contains(2))
+                    {
+                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Bnanner.Create)">
+                            <i class="fa fa-plus"></i>
+                            新建图片
+                        </a>
+                    }
+                </div>
+            </div>
+            
+            <script type="text/x-handlebars-template" id="bnanner-row-template">
+                <tr>
+                    <td style="text-align: left;">{{row}}</td>
+                    <td style="text-align: left; vertical-align: top;">{{CinemaCode}}</td>
+                    <td style="text-align: left;">{{Title}}</td>
+                    <td style="text-align: left;"><img id="{{FileName}}"  style="width:102px;height: 126px;" src="{{Image}}" onclick="PreviewImg({{FileName}},'{{Image}}')"/></td>
+                    <td style="text-align: left;">{{Created}}</td>
+                    <td style="text-align: left;">{{StartDate}}</td>
+                    <td style="text-align: left;">{{EndDate}}</td>
+                    <td style="text-align: left;">{{Status}}</td>
+                    <td style="text-align: left;">
+
+                        @if (CurrentPermissions.Contains(3))
+                        {
+                            <a href="@Url.Action(MvcNames.Bnanner.Update)/{{id}}">编辑</a>
+                        }
+
+                        @if (CurrentPermissions.Contains(4))
+                        {
+                            <span>|</span>
+                            <a href="javascript:void(0)"
+                               data-href="@Url.Action(MvcNames.Bnanner.Delete)/{{id}}" data-toggle="popover"
+                               data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                               data-message="确认删除?" data-type="confirm" data-placement="left"
+                               data-content-template="#delete-confirm-template">
+                                删除
+                            </a>
+                        }
+                    </td>
+                </tr>
+            </script>
+
+        </div>
+    </div>
+
+
+
+    <!--弹出层时背景层DIV-->
+    <div id="fade" class="black_overlay">
+    </div>
+    <div id="MyDiv" class="white_content">
+        <div style="text-align: right; cursor: default; height: 40px;">
+            <span style="font-size: 16px;" onclick="CloseDiv('MyDiv','fade')">关闭</span>
+        </div>
+        <img id="personcardimage2" style="width:99%;height: 94%;" src="javaScript:PreviewImg('E:\\PPAA\\20180605140255.jpeg')" />
+    </div>  
+
+
+</section>
+
+
+@section scripts{
+    <script type="text/javascript">
+        function PreviewImg(id,imgFile) {
+            //alert('E:\\PPAA\\20180605140255.jpeg')
+          // document.getElementById("personcardimage").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod = scale)";
+            //document.getElementById("personcardimage").filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgFile;
+            //document.getElementById("personcardimage").filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = "~/Content/img/login.jpg";
+            ShowDiv('MyDiv', 'fade');
+            document.getElementById("personcardimage2").src = imgFile;
+        }
+
+
+
+        //弹出隐藏层  
+        function ShowDiv(show_div, bg_div) {
+            document.getElementById(show_div).style.display = 'block';
+            document.getElementById(bg_div).style.display = 'block';
+            var bgdiv = document.getElementById(bg_div);
+            bgdiv.style.width = document.body.scrollWidth;
+            // bgdiv.style.height = $(document).height();  
+            $("#" + bg_div).height($(document).height());
+        };
+        //关闭弹出层  
+        function CloseDiv(show_div, bg_div) {
+            document.getElementById(show_div).style.display = 'none';
+            document.getElementById(bg_div).style.display = 'none';
+        };
+
+
+
+    </script>
+}
+
+

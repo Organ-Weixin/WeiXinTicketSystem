@@ -12,17 +12,20 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Reflection;
 using System.Web;
+using WeiXinTicketSystem.Properties;
 
 namespace WeiXinTicketSystem.Controllers
 {
     public class MemberCardController : RootExraController
     {
         private MemberCardService _memberCardService;
+        private TicketUsersService _ticketUsersService;
 
         #region ctor
         public MemberCardController()
         {
             _memberCardService = new MemberCardService();
+            _ticketUsersService = new TicketUsersService();
         }
         #endregion
 
@@ -48,7 +51,7 @@ namespace WeiXinTicketSystem.Controllers
         public async Task<ActionResult> List(DynatablePageModel<MemberCardQueryModel> pageModel)
         {
             var memberCard = await _memberCardService.GetMemberCardPagedAsync(
-                pageModel.Query.CinemaCode,
+                 CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? pageModel.Query.CinemaCode : CurrentUser.CinemaCode,
                 pageModel.Query.CardNo,
                 pageModel.Query.Search,
                 pageModel.Offset,
@@ -62,10 +65,10 @@ namespace WeiXinTicketSystem.Controllers
         /// 添加会员卡
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             CreateOrUpdateMemberCardViewModel model = new CreateOrUpdateMemberCardViewModel();
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -83,7 +86,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             CreateOrUpdateMemberCardViewModel model = new CreateOrUpdateMemberCardViewModel();
             model.MapFrom(memberCard);
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -152,13 +155,19 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
-        private void PreparyCreateOrEditViewData()
+        private async Task PreparyCreateOrEditViewData()
         {
             //绑定会员卡等级枚举
             ViewBag.MemberGrade_dd = EnumUtil.GetSelectList<MemberCardGradeEnum>();
 
             //绑定状态枚举
             ViewBag.Status_dd = EnumUtil.GetSelectList<MemberCardStatusEnum>();
+
+
+            //绑定购票用户
+            List<TicketUserEntity> ticketUsers = new List<TicketUserEntity>();
+            ticketUsers.AddRange(await _ticketUsersService.GetAllTicketUserAsync());
+            ViewBag.OpenID_dd = ticketUsers.Select(x => new SelectListItem { Text = x.NickName, Value = x.OpenID });
 
         }
 

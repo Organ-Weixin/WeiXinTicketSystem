@@ -498,7 +498,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string ActivityContent { get; set; }
 		public virtual DateTime? StartDate { get; set; }
 		public virtual DateTime? EndDate { get; set; }
-		public virtual byte Status { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
 		public virtual bool IsDel { get; set; }
 	}
 
@@ -537,7 +537,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime? Created { get; set; }
 		public virtual DateTime? StartDate { get; set; }
 		public virtual DateTime? EndDate { get; set; }
-		public virtual byte Status { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
 		public virtual bool IsDel { get; set; }
 	}
 
@@ -629,8 +629,8 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string CardPassword { get; set; }
 		public virtual decimal? Balance { get; set; }
 		public virtual int? Score { get; set; }
-		public virtual byte MemberGrade { get; set; }
-		public virtual byte Status { get; set; }
+		public virtual MemberCardGradeEnum MemberGrade { get; set; }
+		public virtual MemberCardStatusEnum Status { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool IsDel { get; set; }
@@ -645,44 +645,17 @@ namespace WeiXinTicketSystem.Entity.Models
     {
 		[Key]
 		public virtual int Id { get; set; }
-		public virtual byte ConponType { get; set; }
+		public virtual ConponTypeEnum ConponType { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string OpenID { get; set; }
 		public virtual decimal? Price { get; set; }
 		public virtual string ConponCode { get; set; }
 		public virtual DateTime? ValidityDate { get; set; }
-		public virtual bool IfUse { get; set; }
+		public virtual YesOrNoEnum IfUse { get; set; }
 		public virtual DateTime? UseDate { get; set; }
 		public virtual DateTime? Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool Deleted { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the Cinema table.
-    /// </summary>
-    [Table("Cinema")]
-    [SqlLamTable(Name = "Cinema")]
-    public partial class CinemaEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string CinemaName { get; set; }
-		public virtual CinemaTypeEnum TicketSystem { get; set; }
-		public virtual string ContactName { get; set; }
-		public virtual string ContactMobile { get; set; }
-		public virtual TheaterChainEnum? TheaterChain { get; set; }
-		public virtual string Address { get; set; }
-		public virtual DateTime? Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual bool IsDel { get; set; }
-		public virtual CinemaStatusEnum Status { get; set; }
-		public virtual string DingXinId { get; set; }
-		public virtual string YueKeId { get; set; }
-		public virtual double? Latitude { get; set; }
-		public virtual double? Longitude { get; set; }
-		public virtual YesOrNoEnum? OpenSnacks { get; set; }
 	}
 
     /// <summary>
@@ -692,13 +665,13 @@ namespace WeiXinTicketSystem.Entity.Models
     [SqlLamTable(Name = "AdminConponView")]
     public partial class AdminConponViewEntity : EntityBase
     {
-		public virtual byte ConponType { get; set; }
+		public virtual ConponTypeEnum ConponType { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string OpenID { get; set; }
 		public virtual decimal? Price { get; set; }
 		public virtual string ConponCode { get; set; }
 		public virtual DateTime? ValidityDate { get; set; }
-		public virtual bool IfUse { get; set; }
+		public virtual YesOrNoEnum IfUse { get; set; }
 		public virtual DateTime? UseDate { get; set; }
 		public virtual DateTime? Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
@@ -869,6 +842,33 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual decimal? SurplusPayment { get; set; }
 		public virtual decimal? LowestPrePayment { get; set; }
 		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the Cinema table.
+    /// </summary>
+    [Table("Cinema")]
+    [SqlLamTable(Name = "Cinema")]
+    public partial class CinemaEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string CinemaName { get; set; }
+		public virtual CinemaTypeEnum TicketSystem { get; set; }
+		public virtual string ContactName { get; set; }
+		public virtual string ContactMobile { get; set; }
+		public virtual TheaterChainEnum? TheaterChain { get; set; }
+		public virtual string Address { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool IsDel { get; set; }
+		public virtual CinemaStatusEnum Status { get; set; }
+		public virtual string DingXinId { get; set; }
+		public virtual string YueKeId { get; set; }
+		public virtual double? Latitude { get; set; }
+		public virtual double? Longitude { get; set; }
+		public virtual YesOrNoEnum OpenSnacks { get; set; }
 	}
 
     /// <summary>

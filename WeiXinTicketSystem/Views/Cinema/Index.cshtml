@@ -36,6 +36,7 @@
                             <th data-dynatable-no-sort="true">地址</th>
                             <th data-dynatable-no-sort="true">售票系统</th>
                             <th data-dynatable-no-sort="true">开通状态</th>
+                            <th data-dynatable-no-sort="true">是否开通套餐</th>
                             <th data-dynatable-no-sort="true" width="180px">操作</th>
                         </tr>
                     </thead>
@@ -66,6 +67,7 @@
                     <td style="text-align: left;">{{Address}}</td>
                     <td style="text-align: left;">{{TicketSystem}}</td>
                     <td style="text-align: left;">{{Status}}</td>
+                    <td style="text-align: left;">{{OpenSnacks}}</td>
                     <td style="text-align: left;">
 
                         @if (CurrentPermissions.Contains(3))

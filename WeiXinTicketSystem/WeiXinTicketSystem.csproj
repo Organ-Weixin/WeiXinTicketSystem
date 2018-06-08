@@ -260,7 +260,10 @@
     <Compile Include="Attributes\UI\ListBoxAttribute.cs" />
     <Compile Include="Attributes\UI\PasswordAttribute.cs" />
     <Compile Include="Attributes\UI\TextAreaAttribute.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\BnannerController.cs" />
     <Compile Include="Controllers\CinemaController.cs" />
+    <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmInfoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -288,6 +291,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Activity\ActivityQueryModel.cs" />
+    <Compile Include="Models\Activity\CreateOrUpdateActivityViewModel.cs" />
+    <Compile Include="Models\Activity\ModelMapper.cs" />
+    <Compile Include="Models\Bnanner\BnannerQueryModel.cs" />
+    <Compile Include="Models\Bnanner\CreateOrUpdateBnannerViewModel.cs" />
+    <Compile Include="Models\Bnanner\ModelMapper.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\CinemaMemberCardSettingQueryModel.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\CreateOrUpdateCinemaMemberCardSettingViewModel.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\ModelMapper.cs" />
@@ -306,6 +315,9 @@
     <Compile Include="Models\Cinema\CinemaQueryModel.cs" />
     <Compile Include="Models\Cinema\CreateOrUpdateCinemaViewModel.cs" />
     <Compile Include="Models\Cinema\ModelMapper.cs" />
+    <Compile Include="Models\Conpon\ConponQueryModel.cs" />
+    <Compile Include="Models\Conpon\CreateOrUpdateConponViewModel.cs" />
+    <Compile Include="Models\Conpon\ModelMapper.cs" />
     <Compile Include="Models\DynatablePageModel.cs" />
     <Compile Include="Models\DynatableResultModel.cs" />
     <Compile Include="Models\FilmInfo\CreateOrUpdateFilmInfoViewModel.cs" />
@@ -1385,6 +1397,12 @@
     <Content Include="Views\MemberCardSetting\Index.cshtml" />
     <Content Include="Views\PrintSetting\CreateOrUpdate.cshtml" />
     <Content Include="Views\PrintSetting\Index.cshtml" />
+    <Content Include="Views\Activity\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
+    <Content Include="Views\Bnanner\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Bnanner\Index.cshtml" />
+    <Content Include="Views\Conpon\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Conpon\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

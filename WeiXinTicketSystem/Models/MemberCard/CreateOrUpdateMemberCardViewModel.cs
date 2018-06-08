@@ -18,7 +18,8 @@ namespace WeiXinTicketSystem.Models
         [StringLength(8, ErrorMessage = "{0}最多8个字符")]
         public string CinemaCode { get; set; }
 
-        [Display(Name = "购票用户Id")]
+        [ListBox("_dd", Multiple = false)]
+        [Display(Name = "购票用户")]
         public string OpenID { get; set; }
 
 

@@ -2,6 +2,7 @@
     ViewBag.CinemaManage = "active";
     ViewBag.SnackOrder = "active";
     ViewBag.Title = "套餐订单管理";
+    List<int> CurrentPermissions = ViewBag.CurrentPermissions;
 }
 
 <!-- Content Header (Page header) -->
@@ -49,10 +50,13 @@
                     </div>
                 </div>
                 <div class="dynatable-operation">
+                @if (CurrentPermissions.Contains(2))
+                {
                     <a class="btn btn-success btn-sm" href="javascript:ExportExcel();">
                         <i class="fa fa-download"></i>
                         导出
                     </a>
+                }
                 </div>
             </div>
 

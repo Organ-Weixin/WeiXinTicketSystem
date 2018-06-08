@@ -15,11 +15,12 @@ namespace WeiXinTicketSystem.Service
     {
         #region ctor
         private readonly IRepository<MemberCardEntity> _memberCardRepository;
-
+        private readonly IRepository<AdminMemberCardViewEntity> _memberCardViewRepository;
         public MemberCardService()
         {
             //TODO: 移除内部依赖
             _memberCardRepository = new Repository<MemberCardEntity>();
+            _memberCardViewRepository = new Repository<AdminMemberCardViewEntity>();
         }
         #endregion
 
@@ -52,9 +53,9 @@ namespace WeiXinTicketSystem.Service
         /// <param name="offset"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public async Task<IPageList<MemberCardEntity>> GetMemberCardPagedAsync(string cinemaCode, string cardNo, string keyword, int offset, int perPage)
+        public async Task<IPageList<AdminMemberCardViewEntity>> GetMemberCardPagedAsync(string cinemaCode, string cardNo, string keyword, int offset, int perPage)
         {
-            var query = _memberCardRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
+            var query = _memberCardViewRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
             //影院编码
             if (!string.IsNullOrEmpty(cinemaCode))
             {
@@ -68,7 +69,7 @@ namespace WeiXinTicketSystem.Service
             //其他数据
             if (!string.IsNullOrEmpty(keyword))
             {
-                query.Where(x => x.CardNo.Contains(keyword) );
+                query.Where(x => x.CardNo.Contains(keyword) || x.NickName.Contains(keyword));
             }
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();
