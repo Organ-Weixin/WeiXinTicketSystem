@@ -98,6 +98,17 @@ namespace WeiXinTicketSystem.Service
                     && x.Password == passwordMD5).SingleOrDefaultAsync();
             }
         }
+        /// <summary>
+        /// 根据用户名和密码获取用户信息（同步）
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <returns></returns>
+        public SystemUserEntity GetUserInfoByUserCredential(string Username, string Password)
+        {
+            return _systemUserRepository.Query.Where(
+                x => x.UserName == Username && x.Password == Password && !x.Deleted).SingleOrDefault();
+        }
 
         /// <summary>
         /// 更改密码

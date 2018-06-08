@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\PostSharp.5.0.51\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.5.0.51\build\PostSharp.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -77,6 +78,38 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NetSaleSvc.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Api.CTMS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.CTMS.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Api.CTMS.XmlSerializers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.CTMS.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Entity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PostSharp, Version=5.0.51.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.Redist.5.0.51\lib\net45\PostSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -95,9 +128,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
@@ -200,15 +230,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\SnackController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Extension\ReplyExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Query\BookSnacksQueryJson.cs" />
+    <Compile Include="Models\Reply\BaseReply.cs" />
+    <Compile Include="Models\Reply\BookSnacksReply.cs" />
+    <Compile Include="Models\Reply\ErrorCodeEnum.cs" />
+    <Compile Include="Models\Reply\ModelMapper.cs" />
+    <Compile Include="Models\Reply\QuerySnacksReply.cs" />
+    <Compile Include="Models\Reply\QuerySnackTypesReply.cs" />
+    <Compile Include="Models\Reply\StatusEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Test.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -224,6 +265,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WeiXinTicketSystem.Entity\WeiXinTicketSystem.Entity.csproj">
+      <Project>{1cb80679-6add-44ea-a670-89939291be48}</Project>
+      <Name>WeiXinTicketSystem.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeiXinTicketSystem.Service\WeiXinTicketSystem.Service.csproj">
+      <Project>{78b46f03-b652-4ed7-82cf-7171e4839390}</Project>
+      <Name>WeiXinTicketSystem.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeiXinTicketSystem.Util\WeiXinTicketSystem.Util.csproj">
+      <Project>{da17b70a-16e1-4634-b761-8b8bff9f4c27}</Project>
+      <Name>WeiXinTicketSystem.Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -259,7 +314,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.5.0.51\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.51\build\PostSharp.props'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.5.0.51\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.51\build\PostSharp.targets'))" />
   </Target>
+  <Import Project="..\packages\PostSharp.5.0.51\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.5.0.51\build\PostSharp.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

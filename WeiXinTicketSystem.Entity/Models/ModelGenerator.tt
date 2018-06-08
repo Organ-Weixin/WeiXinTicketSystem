@@ -52,6 +52,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["Cinema"]["TicketSystem"].PropertyType="CinemaTypeEnum";
 	tables["Cinema"]["TheaterChain"].PropertyType="TheaterChainEnum";
 	tables["Cinema"]["Status"].PropertyType="CinemaStatusEnum";
+	tables["Cinema"]["OpenSnacks"].PropertyType="YesOrNoEnum";
 	tables["CinemaCustomMenu"]["MenuType"].PropertyType="CustomMenuTypeEnum";
 	tables["CinemaCustomMenu"]["MenuReType"].PropertyType="CustomMenuReTypeEnum";
 	tables["CinemaMemberCardSettings"]["CardType"].PropertyType="MemberCardTypeEnum";

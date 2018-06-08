@@ -68,6 +68,25 @@ namespace WeiXinTicketSystem.Service
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();
         }
+        public async Task<IPageList<SnackEntity>> QuerySnacksPagedAsync(string cinemaCode, string typeid, int currentpage, int pagesize)
+        {
+            int offset = (currentpage - 1) * pagesize;
+            var query = _snackRepository.Query
+                .OrderByDescending(x => x.Id)
+                .Skip(offset)
+                .Take(pagesize);
+
+            if (!string.IsNullOrEmpty(cinemaCode))
+            {
+                query.Where(x => x.CinemaCode == cinemaCode);
+            }
+            if (!string.IsNullOrEmpty(typeid))
+            {
+                query.Where(x => x.TypeId == int.Parse(typeid));
+            }
+            query.Where(x => !x.IsDel);
+            return await query.ToPageListAsync();
+        }
 
         /// <summary>
         /// 根据Id获取套餐

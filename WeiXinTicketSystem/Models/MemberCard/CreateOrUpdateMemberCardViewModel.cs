@@ -19,7 +19,7 @@ namespace WeiXinTicketSystem.Models
         public string CinemaCode { get; set; }
 
         [Display(Name = "购票用户Id")]
-        public double? TicketUserId { get; set; }
+        public string OpenID { get; set; }
 
 
         [Display(Name = "卡号")]
