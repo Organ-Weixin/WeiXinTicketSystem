@@ -107,7 +107,7 @@ namespace WeiXinTicketSystem.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> _CreateOrUpdate(CreateOrUpdateConponViewModel model)
+        public async Task<ActionResult> _CreateOrUpdate(CreateOrUpdateConponViewModel model, HttpPostedFileBase Image)
         {
             if (!ModelState.IsValid)
             {
@@ -122,6 +122,19 @@ namespace WeiXinTicketSystem.Controllers
             }
 
             conpon.MapFrom(model);
+            //图片处理
+            if (Image != null)
+            {
+                string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+                if (conpon.Image != null && System.IO.File.Exists(rootPath + conpon.Image))
+                {
+                    System.IO.File.Delete(rootPath + conpon.Image);
+                }
+                string savePath = @"upload\ConponImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
+                conpon.Image = savePath + fileName;
+            }
 
             if (conpon.Id == 0)
             {
@@ -134,7 +147,10 @@ namespace WeiXinTicketSystem.Controllers
                 await _conponService.UpdateAsync(conpon);
             }
 
-            return RedirectObject(Url.Action(nameof(Index)));
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
+            ViewBag.CurrentPermissions = CurrentPermissions;
+            return View(nameof(Index));
         }
 
 

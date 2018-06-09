@@ -20,13 +20,7 @@
 </section>
 
 
-@using (Ajax.BeginForm(MvcNames.Conpon._CreateOrUpdate, null, null, new AjaxOptions
-{
-    HttpMethod = "POST",
-    OnSuccess = "App.onOperationSuccessSimple",
-    OnBegin = "App.onFormCommitBegin",
-    OnComplete = "App.onFormCommitComplete"
-}, new { @class = "form-horizontal" }))
+@using (Html.BeginForm(MvcNames.Conpon._CreateOrUpdate, MvcNames.Conpon.Name, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
 {
     <!-- Main content -->
     <section class="content">
@@ -45,6 +39,8 @@
                         @Html.EditorFor(x => x.OpenID)
                         @Html.EditorFor(x => x.Price)
                         @Html.EditorFor(x => x.ConponCode)
+                        @Html.EditorFor(x => x.Title)
+                        @Html.EditorFor(x => x.Image)
                         @Html.EditorFor(x => x.ValidityDate, new { htmlAttributes = new { @class = "datepicker" } })
                         @Html.EditorFor(x => x.IfUse)
                         @Html.EditorFor(x => x.UseDate, new { htmlAttributes = new { @class = "datepicker" } })

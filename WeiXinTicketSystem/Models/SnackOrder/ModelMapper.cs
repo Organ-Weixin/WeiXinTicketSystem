@@ -42,11 +42,17 @@ namespace WeiXinTicketSystem.Models.SnackOrder
             switch (status)
             {
                 case SnackOrderStatusEnum.Created:
-                case SnackOrderStatusEnum.Payed:
+                case SnackOrderStatusEnum.PayFail:
+                case SnackOrderStatusEnum.BookFail:
+                case SnackOrderStatusEnum.SubmitFail:
+                case SnackOrderStatusEnum.Refund:
                     return "darkorange";
                 case SnackOrderStatusEnum.Complete:
                 case SnackOrderStatusEnum.Fetched:
-                    return "green";
+                case SnackOrderStatusEnum.Booked:
+                case SnackOrderStatusEnum.Payed:
+                case SnackOrderStatusEnum.Submited:
+                      return "green";
                 default:
                     return "darkorange";
             }
