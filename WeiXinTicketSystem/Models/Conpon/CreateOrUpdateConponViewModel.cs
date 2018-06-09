@@ -36,6 +36,17 @@ namespace WeiXinTicketSystem.Models
         [StringLength(50, ErrorMessage = "{0}最多50个字符")]
         public string ConponCode { get; set; }
 
+        [Display(Name = "优惠券名称")]
+        [Required(ErrorMessage = "{0}不能为空")]
+        [StringLength(300, ErrorMessage = "{0}最多300个字符")]
+        public string Title { get; set; }
+
+        [File]
+        [Display(Name = "优惠券图标")]
+        [Required(ErrorMessage = "{0}不能为空")]
+        [StringLength(300, ErrorMessage = "{0}最多300个字符")]
+        public string Image { get; set; }
+
         [Display(Name = "有效期")]
         public string ValidityDate { get; set; }
 

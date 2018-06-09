@@ -656,6 +656,8 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime? Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool Deleted { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
 	}
 
     /// <summary>
@@ -678,6 +680,8 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual bool Deleted { get; set; }
 		public virtual string NickName { get; set; }
 		public virtual int Id { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
 	}
 
     /// <summary>
@@ -796,38 +800,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the SnackOrders table.
-    /// </summary>
-    [Table("SnackOrders")]
-    [SqlLamTable(Name = "SnackOrders")]
-    public partial class SnackOrderEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string OrderCode { get; set; }
-		public virtual string MobilePhone { get; set; }
-		public virtual int SnacksCount { get; set; }
-		public virtual decimal TotalPrice { get; set; }
-		public virtual DateTime? SubmitTime { get; set; }
-		public virtual string VoucherCode { get; set; }
-		public virtual SnackOrderStatusEnum OrderStatus { get; set; }
-		public virtual DateTime? RevokeTime { get; set; }
-		public virtual DateTime? PickupTime { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual DateTime AutoUnLockDateTime { get; set; }
-		public virtual string DeliveryAddress { get; set; }
-		public virtual DateTime SendTime { get; set; }
-		public virtual bool? OrderPayFlag { get; set; }
-		public virtual byte? OrderPayType { get; set; }
-		public virtual DateTime? OrderPayTime { get; set; }
-		public virtual string OrderTradeNo { get; set; }
-		public virtual bool? IsUseConpons { get; set; }
-		public virtual string ConponsID { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the CinemaPrePaySettings table.
     /// </summary>
     [Table("CinemaPrePaySettings")]
@@ -888,6 +860,40 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string TradeNo { get; set; }
 		public virtual bool? Status { get; set; }
 		public virtual DateTime? Created { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the SnackOrders table.
+    /// </summary>
+    [Table("SnackOrders")]
+    [SqlLamTable(Name = "SnackOrders")]
+    public partial class SnackOrderEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OrderCode { get; set; }
+		public virtual string MobilePhone { get; set; }
+		public virtual int SnacksCount { get; set; }
+		public virtual decimal TotalPrice { get; set; }
+		public virtual DateTime? SubmitTime { get; set; }
+		public virtual string VoucherCode { get; set; }
+		public virtual SnackOrderStatusEnum OrderStatus { get; set; }
+		public virtual DateTime? RevokeTime { get; set; }
+		public virtual DateTime? PickupTime { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime AutoUnLockDateTime { get; set; }
+		public virtual string DeliveryAddress { get; set; }
+		public virtual DateTime SendTime { get; set; }
+		public virtual bool? OrderPayFlag { get; set; }
+		public virtual byte? OrderPayType { get; set; }
+		public virtual DateTime? OrderPayTime { get; set; }
+		public virtual string OrderTradeNo { get; set; }
+		public virtual bool? IsUseConpons { get; set; }
+		public virtual string ConponCode { get; set; }
+		public virtual decimal? ConponPrice { get; set; }
+		public virtual string OpenID { get; set; }
 	}
 
     /// <summary>

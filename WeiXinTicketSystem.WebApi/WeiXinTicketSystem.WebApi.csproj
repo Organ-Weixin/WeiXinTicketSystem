@@ -230,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\SnackController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Extension\ReplyExtension.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Models\Reply\BookSnacksReply.cs" />
     <Compile Include="Models\Reply\ErrorCodeEnum.cs" />
     <Compile Include="Models\Reply\ModelMapper.cs" />
+    <Compile Include="Models\Reply\QueryActivityReply.cs" />
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />
     <Compile Include="Models\Reply\QuerySnackTypesReply.cs" />
     <Compile Include="Models\Reply\StatusEnum.cs" />

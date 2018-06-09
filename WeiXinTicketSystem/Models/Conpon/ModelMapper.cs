@@ -27,7 +27,8 @@ namespace WeiXinTicketSystem.Models.Conpon
                 ConponCode = module.ConponCode,
                 ValidityDate = module.ValidityDate.ToFormatDateString(),
                 IfUse = module.IfUse.GetDescription(),
-                UseDate = module.UseDate.ToFormatDateString()
+                UseDate = module.UseDate.ToFormatDateString(),
+                Title = module.Title
 
             };
         }
@@ -55,7 +56,8 @@ namespace WeiXinTicketSystem.Models.Conpon
             {
                 module.UseDate =DateTime.Parse(model.UseDate);
             }
-            
+            module.Title = model.Title;
+
         }
 
 
@@ -75,6 +77,7 @@ namespace WeiXinTicketSystem.Models.Conpon
             model.ValidityDate = module.ValidityDate.ToFormatDateString();
             model.IfUse = (int)module.IfUse;
             model.UseDate = module.UseDate.ToFormatDateString();
+            model.Title = module.Title;
 
         }
 

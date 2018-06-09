@@ -69,6 +69,22 @@ namespace WeiXinTicketSystem.Service
             return await query.ToPageListAsync();
         }
 
+        public async Task<IPageList<ActivityEntity>> QueryActivitysPagedAsync(string cinemaCode, int currentpage, int pagesize)
+        {
+            int offset = (currentpage - 1) * pagesize;
+            var query = _activityRepository.Query
+                .OrderByDescending(x => x.Id)
+                .Skip(offset)
+                .Take(pagesize);
+
+            if (!string.IsNullOrEmpty(cinemaCode))
+            {
+                query.Where(x => x.CinemaCode == cinemaCode);
+            }
+            query.Where(x => !x.IsDel);
+            return await query.ToPageListAsync();
+        }
+
 
         /// <summary>
         /// 获取ActivityEntity实体

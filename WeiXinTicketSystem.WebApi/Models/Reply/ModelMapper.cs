@@ -100,5 +100,21 @@ namespace WeiXinTicketSystem.WebApi.Models
 
             return order;
         }
+
+
+        public static QueryActivityReplyActivity MapFrom(this QueryActivityReplyActivity activity, ActivityEntity entity)
+        {
+            activity.Id = entity.Id;
+            activity.CinemaCode = entity.CinemaCode;
+            activity.Title = entity.Title;
+            activity.Image = entity.Image;
+            activity.ActivityContent = entity.ActivityContent;
+            activity.StartDate = entity.StartDate.Value;
+            activity.EndDate = entity.EndDate.Value;
+            activity.Status = entity.Status.GetDescription();
+            activity.IsDel = entity.IsDel;
+            return activity;
+
+        }
     }
 }
