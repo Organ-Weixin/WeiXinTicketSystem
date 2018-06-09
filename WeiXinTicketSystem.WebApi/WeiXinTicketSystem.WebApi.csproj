@@ -239,15 +239,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Query\BookSnacksQueryJson.cs" />
+    <Compile Include="Models\Query\PayOrderQueryJson.cs" />
+    <Compile Include="Models\Query\SubmitSnacksQueryJson.cs" />
     <Compile Include="Models\Reply\BaseReply.cs" />
     <Compile Include="Models\Reply\BookSnacksReply.cs" />
     <Compile Include="Models\Reply\ErrorCodeEnum.cs" />
     <Compile Include="Models\Reply\ModelMapper.cs" />
+    <Compile Include="Models\Reply\PayOrderReply.cs" />
     <Compile Include="Models\Reply\QueryActivityReply.cs" />
     <Compile Include="Models\Reply\QueryConponsReply.cs" />
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />
     <Compile Include="Models\Reply\QuerySnackTypesReply.cs" />
+    <Compile Include="Models\Reply\ReleaseSnacksReply.cs" />
     <Compile Include="Models\Reply\StatusEnum.cs" />
+    <Compile Include="Models\Reply\SubmitSnacksReply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
   </ItemGroup>
