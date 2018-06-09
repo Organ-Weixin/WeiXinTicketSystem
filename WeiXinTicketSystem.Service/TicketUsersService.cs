@@ -33,6 +33,15 @@ namespace WeiXinTicketSystem.Service
         {
             return _ticketUsersRepository.Query.Where(x => x.MobilePhone == mobilePhone).SingleOrDefault();
         }
+        /// <summary>
+        /// 根据openid获取购票用户信息
+        /// </summary>
+        /// <param name="OpenID"></param>
+        /// <returns></returns>
+        public TicketUserEntity GetTicketUserByOpenID(string OpenID)
+        {
+            return _ticketUsersRepository.Query.Where(x => x.OpenID == OpenID).SingleOrDefault();
+        }
 
         /// <summary>
         /// 获取所有用户信息列表

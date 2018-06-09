@@ -141,6 +141,12 @@ namespace WeiXinTicketSystem.WebApi.Models
         /// 每页数量不合法
         /// </summary>
         [Description("每页数量非法，合法的取值应是数字！")]
-        PageSizeInvalid = 10000021
+        PageSizeInvalid = 10000021,
+
+        /// <summary>
+        /// 用户openid不存在
+        /// </summary>
+        [Description("用户OpenID不存在或不合法！")]
+        OpenIDNotExist = 10000022,
     }
 }

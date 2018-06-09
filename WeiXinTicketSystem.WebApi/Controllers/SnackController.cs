@@ -22,6 +22,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         SystemUserService _userService;
         CinemaService _cinemaService;
         SnackOrderService _snacksOrderService;
+        TicketUsersService _ticketUserService;
         #region ctor
         public SnackController()
         {
@@ -30,11 +31,13 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             _userService = new SystemUserService();
             _cinemaService = new CinemaService();
             _snacksOrderService = new SnackOrderService();
+            _ticketUserService = new TicketUsersService();
         }
         #endregion
 
+        #region 查询套餐类别
         [HttpGet]
-        public async Task<QuerySnackTypesReply> QuerySnackType(string UserName, string Password,string CinemaCode)
+        public async Task<QuerySnackTypesReply> QuerySnackType(string UserName, string Password, string CinemaCode)
         {
             QuerySnackTypesReply querySnackTypesReply = new QuerySnackTypesReply();
 
@@ -60,7 +63,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
 
             var SnackTypes = await _snackTypeService.GetAllSnacksTypesAsync(CinemaCode);
             querySnackTypesReply.data = new QuerySnackTypesReplyTypes();
-            if(SnackTypes==null||SnackTypes.Count==0)
+            if (SnackTypes == null || SnackTypes.Count == 0)
             {
                 querySnackTypesReply.data.TypeCount = 0;
             }
@@ -72,13 +75,15 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             querySnackTypesReply.SetSuccessReply();
             return querySnackTypesReply;
         }
+        #endregion
 
+        #region 查询套餐
         [HttpGet]
-        public async Task<QuerySnacksReply> QuerySnacks(string UserName, string Password, string CinemaCode,string TypeId,string CurrentPage,string PageSize)
+        public async Task<QuerySnacksReply> QuerySnacks(string UserName, string Password, string CinemaCode, string TypeId, string CurrentPage, string PageSize)
         {
             QuerySnacksReply querySnacksReply = new QuerySnacksReply();
             //校验参数
-            if (!querySnacksReply.RequestInfoGuard(UserName, Password, CinemaCode,TypeId,CurrentPage,PageSize))
+            if (!querySnacksReply.RequestInfoGuard(UserName, Password, CinemaCode, TypeId, CurrentPage, PageSize))
             {
                 return querySnacksReply;
             }
@@ -111,17 +116,20 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             querySnacksReply.SetSuccessReply();
             return querySnacksReply;
         }
+        #endregion
+
+        #region 预定套餐
         [HttpPost]
         public BookSnacksReply BookSnacks(BookSnacksQueryJson QueryJson)
         {
             BookSnacksReply bookSnacksReply = new BookSnacksReply();
             //校验参数
-            if (!bookSnacksReply.RequestInfoGuard(QueryJson))
+            if (!bookSnacksReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.MobilePhone, QueryJson.DeliveryAddress, QueryJson.SendTime.ToString(), QueryJson.OpenID, QueryJson.Snacks))
             {
                 return bookSnacksReply;
             }
             //获取用户信息
-            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(QueryJson.UserName,QueryJson.Password);
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(QueryJson.UserName, QueryJson.Password);
             if (UserInfo == null)
             {
                 bookSnacksReply.SetUserCredentialInvalidReply();
@@ -132,6 +140,13 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             if (cinema == null)
             {
                 bookSnacksReply.SetCinemaInvalidReply();
+                return bookSnacksReply;
+            }
+            //验证用户OpenId是否存在
+            var ticketuser = _ticketUserService.GetTicketUserByOpenID(QueryJson.OpenID);
+            if (ticketuser == null)
+            {
+                bookSnacksReply.SetOpenIDNotExistReply();
                 return bookSnacksReply;
             }
             //验证套餐接口是否可访问
@@ -183,5 +198,130 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             return bookSnacksReply;
 
         }
+        #endregion
+
+        #region 取消套餐
+        [HttpGet]
+        public ReleaseSnacksReply ReleaseSnacks(string UserName, string Password, string CinemaCode, string OrderCode)
+        {
+            ReleaseSnacksReply releaseSnackReply = new ReleaseSnacksReply();
+            //校验参数
+            if (!releaseSnackReply.RequestInfoGuard(UserName, Password, CinemaCode, OrderCode))
+            {
+                return releaseSnackReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                releaseSnackReply.SetUserCredentialInvalidReply();
+                return releaseSnackReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                releaseSnackReply.SetCinemaInvalidReply();
+                return releaseSnackReply;
+            }
+            //验证卖品套餐是否存在
+            var snackOrder = _snacksOrderService.GetSnackOrderByOrderCode(OrderCode);
+            if (snackOrder == null)
+            {
+                releaseSnackReply.SetOrderNotExistReply();
+                return releaseSnackReply;
+            }
+
+            SnackOrderViewEntity snacksorder = _snacksOrderService.GetSnacksOrderWithOrderCode(CinemaCode, OrderCode);
+            //更新订单状态
+            snacksorder.OrderBaseInfo.OrderStatus = SnackOrderStatusEnum.Released;
+            snacksorder.OrderBaseInfo.ReleaseTime = DateTime.Now;
+            //更新套餐数量
+            snacksorder.Snacks.ForEach(x =>
+            {
+                var snackOrderDetail = snacksorder.SnackOrderDetails.Where(y => y.SnackCode == x.SnackCode).SingleOrDefault();
+                if (snackOrderDetail != null)
+                {
+                    x.Stock = x.Stock + snackOrderDetail.Number;
+                }
+            });
+            _snacksOrderService.Update(snacksorder);
+
+            releaseSnackReply.data = new ReleaseSnacksReplyOrder();
+            releaseSnackReply.data.CinemaCode = CinemaCode;
+            releaseSnackReply.data.OrderCode = snacksorder.OrderBaseInfo.OrderCode;
+            releaseSnackReply.data.OrderStatus = snacksorder.OrderBaseInfo.OrderStatus;
+            releaseSnackReply.data.ReleaseTime = snacksorder.OrderBaseInfo.ReleaseTime.GetValueOrDefault();
+            releaseSnackReply.SetSuccessReply();
+            return releaseSnackReply;
+
+        }
+        #endregion
+
+        #region 支付套餐
+        [HttpPost]
+        public PayOrderReply PayOrder(PayOrderQueryJson QueryJson)
+        {
+            PayOrderReply payOderReply = new PayOrderReply();
+            //校验参数
+            if (!payOderReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.OrderCode, QueryJson.OrderPayType.ToString(), QueryJson.OrderPayTime.ToString(), QueryJson.OrderTradeNo, QueryJson.IsUseConpons.ToString(), QueryJson.ConponCode, QueryJson.OpenID))
+            {
+                return payOderReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(QueryJson.UserName, QueryJson.Password);
+            if (UserInfo == null)
+            {
+                payOderReply.SetUserCredentialInvalidReply();
+                return payOderReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(QueryJson.CinemaCode);
+            if (cinema == null)
+            {
+                payOderReply.SetCinemaInvalidReply();
+                return payOderReply;
+            }
+            //验证卖品套餐是否存在
+            var snackOrder = _snacksOrderService.GetSnackOrderByOrderCode(QueryJson.OrderCode);
+            if (snackOrder == null)
+            {
+                payOderReply.SetOrderNotExistReply();
+                return payOderReply;
+            }
+            //验证用户OpenId是否存在
+            var ticketuser = _ticketUserService.GetTicketUserByOpenID(QueryJson.OpenID);
+            if (ticketuser == null)
+            {
+                payOderReply.SetOpenIDNotExistReply();
+                return payOderReply;
+            }
+
+            //更新卖品订单
+            snackOrder.OrderPayFlag = true;
+            snackOrder.OrderPayType = (byte)QueryJson.OrderPayType;
+            snackOrder.OrderPayTime = QueryJson.OrderPayTime;
+            snackOrder.OrderTradeNo = QueryJson.OrderTradeNo;
+            snackOrder.IsUseConpons = QueryJson.IsUseConpons;
+            snackOrder.ConponCode = QueryJson.ConponCode;
+            snackOrder.ConponPrice = QueryJson.ConponPrice;
+            snackOrder.Updated = DateTime.Now;
+            _snacksOrderService.Update(snackOrder);
+
+            payOderReply.data = new PayOrderReplyOrder();
+            payOderReply.data.MapFrom(snackOrder);
+            payOderReply.SetSuccessReply();
+
+            return payOderReply;
+        }
+        #endregion
+
+        #region 提交套餐订单
+        [HttpPost]
+        public SubmitSnacksReply SubmitSnacks(BookSnacksQueryJson QueryJson)
+        {
+            return null;
+        }
+        #endregion
     }
 }

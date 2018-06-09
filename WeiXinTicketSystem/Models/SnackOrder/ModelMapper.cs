@@ -42,7 +42,7 @@ namespace WeiXinTicketSystem.Models.SnackOrder
             switch (status)
             {
                 case SnackOrderStatusEnum.Created:
-                case SnackOrderStatusEnum.Pay:
+                case SnackOrderStatusEnum.Payed:
                     return "darkorange";
                 case SnackOrderStatusEnum.Complete:
                 case SnackOrderStatusEnum.Fetched:
