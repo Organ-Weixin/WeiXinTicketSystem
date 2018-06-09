@@ -245,6 +245,12 @@ namespace WeiXinTicketSystem.WebApi.Models
             ErrorCode = ErrorCodeEnum.PageSizeInvalid.GetValueString();
             ErrorMessage = ErrorCodeEnum.PageSizeInvalid.GetDescription();
         }
+        public void SetOpenIDNotExistReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.OpenIDNotExist.GetValueString();
+            ErrorMessage = ErrorCodeEnum.OpenIDNotExist.GetDescription();
+        }
         #endregion
 
         /// <summary>

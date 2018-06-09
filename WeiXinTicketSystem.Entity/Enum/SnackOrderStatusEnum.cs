@@ -22,19 +22,28 @@ namespace WeiXinTicketSystem.Entity.Enum
         [Description("支付失败")]
         PayFail = 5,
 
+        [Description("已取消")]
+        Released = 6,
+
+        [Description("取消失败")]
+        ReleaseFail = 7,
+
         [Description("已提交")]
-        Submited = 6,
+        Submited = 8,
 
         [Description("提交失败")]
-        SubmitFail = 7,
+        SubmitFail = 9,
 
         [Description("完成")]
-        Complete = 8,
-
-        [Description("已取货")]
-        Fetched = 9,
+        Complete = 10,
 
         [Description("已退单")]
-        Refund = 10
+        Refund = 11,
+
+        [Description("退订失败")]
+        RefundFail = 12,
+
+        [Description("已取货")]
+        Fetched = 13
     }
 }

@@ -67,6 +67,16 @@ namespace WeiXinTicketSystem.WebApi.Models
                 }).ToList();
             return data;
         }
+        public static PayOrderReplyOrder MapFrom(this PayOrderReplyOrder data,SnackOrderEntity entity)
+        {
+            data.CinemaCode = entity.CinemaCode;
+            data.OrderCode = entity.OrderCode;
+            data.OrderStatus = entity.OrderStatus;
+            data.OrderPayFlag = entity.OrderPayFlag.HasValue?entity.OrderPayFlag.Value:false;
+            data.OrderTradeNo = entity.OrderTradeNo;
+            data.OrderPayTime = entity.OrderPayTime.HasValue?entity.OrderPayTime.Value:DateTime.Now;
+            return data;
+        }
 
         public static SnackOrderViewEntity MapFrom(this SnackOrderViewEntity order, BookSnacksQueryJson Queryjson)
         {
@@ -82,6 +92,7 @@ namespace WeiXinTicketSystem.WebApi.Models
             orderBaseInfo.AutoUnLockDateTime = DateTime.Now.AddMinutes(15);
             orderBaseInfo.DeliveryAddress = Queryjson.DeliveryAddress;
             orderBaseInfo.SendTime = Queryjson.SendTime;
+            orderBaseInfo.OpenID = Queryjson.OpenID;
             order.OrderBaseInfo = orderBaseInfo;
 
             order.SnackOrderDetails = Queryjson.Snacks.Select(

@@ -876,10 +876,11 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string MobilePhone { get; set; }
 		public virtual int SnacksCount { get; set; }
 		public virtual decimal TotalPrice { get; set; }
+		public virtual DateTime? ReleaseTime { get; set; }
 		public virtual DateTime? SubmitTime { get; set; }
 		public virtual string VoucherCode { get; set; }
 		public virtual SnackOrderStatusEnum OrderStatus { get; set; }
-		public virtual DateTime? RevokeTime { get; set; }
+		public virtual DateTime? RefundTime { get; set; }
 		public virtual DateTime? PickupTime { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual DateTime Created { get; set; }

@@ -27,6 +27,15 @@ namespace WeiXinTicketSystem.Service
             _adminSnackOrderViewRepository = new Repository<AdminSnackOrdersViewEntity>();
         }
         #endregion
+        /// <summary>
+        /// 查询待支付订单是否存在
+        /// </summary>
+        /// <param name="OrderCode"></param>
+        /// <returns></returns>
+        public SnackOrderEntity GetSnackOrderByOrderCode(string OrderCode)
+        {
+            return _snackOrderRepository.Query.Where(x => x.OrderCode == OrderCode && x.OrderStatus == SnackOrderStatusEnum.Booked && x.AutoUnLockDateTime >= DateTime.Now).SingleOrDefault();
+        }
 
         public SnackOrderViewEntity GetSnacksOrderWithOrderCode(string CinemaCode, string OrderCode)
         {
@@ -83,7 +92,10 @@ namespace WeiXinTicketSystem.Service
                 }
             }
         }
-
+        public void Update(SnackOrderEntity snackorder)
+        {
+            _snackOrderRepository.Update(snackorder);
+        }
         /// <summary>
         /// 更新订单
         /// </summary>

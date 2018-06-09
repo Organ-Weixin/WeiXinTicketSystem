@@ -38,7 +38,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this QuerySnacksReply reply, string Username, string Password, string CinemaCode, string TypeId,string CurrentPage,string PageSize)
+        public static bool RequestInfoGuard(this QuerySnacksReply reply, string Username, string Password, string CinemaCode, string TypeId, string CurrentPage, string PageSize)
         {
             int rint = 0;
             if (string.IsNullOrEmpty(Username))
@@ -61,7 +61,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(TypeId));
                 return false;
             }
-            if(!int.TryParse(TypeId,out rint))
+            if (!int.TryParse(TypeId, out rint))
             {
                 reply.SetSnackTypeInvalidReply();
                 return false;
@@ -89,14 +89,127 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this BookSnacksReply reply, BookSnacksQueryJson QueryJson)
+        public static bool RequestInfoGuard(this BookSnacksReply reply, string UserName, string Password, string CinemaCode, string MobilePhone, string DeliveryAddress, string SendTime, string OpenID, List<BookSnacksQueryJsonSnack> Snacks)
         {
-            if (QueryJson==null)
+            if (string.IsNullOrEmpty(UserName))
             {
-                reply.SetNecessaryParamMissReply(nameof(QueryJson));
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(MobilePhone))
+            {
+                reply.SetNecessaryParamMissReply(nameof(MobilePhone));
+                return false;
+            }
+            if (string.IsNullOrEmpty(DeliveryAddress))
+            {
+                reply.SetNecessaryParamMissReply(nameof(DeliveryAddress));
+                return false;
+            }
+            if (string.IsNullOrEmpty(SendTime))
+            {
+                reply.SetNecessaryParamMissReply(nameof(SendTime));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            if (Snacks == null || Snacks.Count <= 0)
+            {
+                reply.SetNecessaryParamMissReply(nameof(Snacks));
+                return false;
+            }
+            return true;
+        }
+        public static bool RequestInfoGuard(this ReleaseSnacksReply reply, string UserName, string Password, string CinemaCode, string OrderCode)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OrderCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OrderCode));
                 return false;
             }
 
+            return true;
+        }
+        public static bool RequestInfoGuard(this PayOrderReply reply, string UserName, string Password,string CinemaCode,string OrderCode,string OrderPayType,string OrderPayTime,string OrderTradeNo,string IsUseConpons,string ConponCode,string OpenID)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OrderCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OrderCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OrderPayType))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OrderPayType));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OrderPayTime))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OrderPayTime));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OrderTradeNo))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OrderTradeNo));
+                return false;
+            }
+            if (string.IsNullOrEmpty(IsUseConpons))
+            {
+                reply.SetNecessaryParamMissReply(nameof(IsUseConpons));
+                return false;
+            }
+            if (string.IsNullOrEmpty(ConponCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(ConponCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
             return true;
         }
 
@@ -684,31 +797,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
 
 
 
-        //public static bool RequestInfoGuard(this ReleaseSnacksReply reply, string Username, string Password, string CinemaCode, string ChannelOrderCode)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(ChannelOrderCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(ChannelOrderCode));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
+        
 
         //public static bool RequestInfoGuard(this SubmitSnacksReply reply, string Username, string Password,string QueryXml)
         //{
