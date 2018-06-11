@@ -127,5 +127,22 @@ namespace WeiXinTicketSystem.WebApi.Models
             return activity;
 
         }
+
+        public static QueryConponsReplyConpon MapFrom(this QueryConponsReplyConpon conpon, ConponEntity entity)
+        {
+            conpon.Id = entity.Id;
+            conpon.CinemaCode = entity.CinemaCode;
+            conpon.ConponType = entity.ConponType.GetDescription();
+            conpon.OpenID = entity.OpenID;
+            conpon.Price = entity.Price;
+            conpon.ConponCode = entity.ConponCode;
+            conpon.ValidityDate = entity.ValidityDate;
+            conpon.IfUse = entity.IfUse.GetDescription();
+            conpon.UseDate = entity.UseDate;
+            conpon.Title = entity.Title;
+            conpon.Deleted = entity.Deleted;
+            conpon.Image = entity.Image;
+            return conpon;
+        }
     }
 }

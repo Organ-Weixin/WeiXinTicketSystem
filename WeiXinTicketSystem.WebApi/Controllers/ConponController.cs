@@ -36,45 +36,45 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         public async Task<QueryConponsReply> QueryConpons(string UserName, string Password, string CinemaCode, string OpenID, string statusID, string CurrentPage, string PageSize)
         {
             QueryConponsReply queryConponsReply = new QueryConponsReply();
-            ////校验参数
-            //if (!queryConponsReply.RequestInfoGuard(UserName, Password, CinemaCode, OpenID, statusID,CurrentPage, PageSize))
-            //{
-            //    return queryConponsReply;
-            //}
-            ////获取用户信息
-            //SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
-            //if (UserInfo == null)
-            //{
-            //    queryConponsReply.SetUserCredentialInvalidReply();
-            //    return queryConponsReply;
-            //}
-            ////验证影院是否存在且可访问
-            //var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
-            //if (cinema == null)
-            //{
-            //    queryConponsReply.SetCinemaInvalidReply();
-            //    return queryConponsReply;
-            //}
-            ////验证用户OpenId是否存在
-            //var ticketuser = _ticketUserService.GetTicketUserByOpenID(OpenID);
-            //if (ticketuser == null)
-            //{
-            //    queryConponsReply.SetOpenIDNotExistReply();
-            //    return queryConponsReply;
-            //}
-            //var Snacks = await _conponService.QuerySnacksPagedAsync(CinemaCode, TypeId, int.Parse(CurrentPage), int.Parse(PageSize));
+            //校验参数
+            if (!queryConponsReply.RequestInfoGuard(UserName, Password, CinemaCode, OpenID, statusID, CurrentPage, PageSize))
+            {
+                return queryConponsReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryConponsReply.SetUserCredentialInvalidReply();
+                return queryConponsReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryConponsReply.SetCinemaInvalidReply();
+                return queryConponsReply;
+            }
+            //验证用户OpenId是否存在
+            var ticketuser = _ticketUserService.GetTicketUserByOpenID(OpenID);
+            if (ticketuser == null)
+            {
+                queryConponsReply.SetOpenIDNotExistReply();
+                return queryConponsReply;
+            }
+            var Conpons = await _conponService.QueryConponsPagedAsync(CinemaCode, OpenID,int.Parse(statusID), int.Parse(CurrentPage), int.Parse(PageSize));
 
-            //querySnacksReply.data = new QuerySnacksReplySnacks();
-            //if (Snacks == null || Snacks.Count == 0)
-            //{
-            //    querySnacksReply.data.SnackCount = 0;
-            //}
-            //else
-            //{
-            //    querySnacksReply.data.SnackCount = Snacks.Count;
-            //    querySnacksReply.data.Snacks = Snacks.Select(x => new QuerySnacksReplySnack().MapFrom(x)).ToList();
-            //}
-            //querySnacksReply.SetSuccessReply();
+            queryConponsReply.data = new QueryConponsReplyConpons();
+            if (Conpons == null || Conpons.Count == 0)
+            {
+                queryConponsReply.data.ConponCount = 0;
+            }
+            else
+            {
+                queryConponsReply.data.ConponCount = Conpons.Count;
+                queryConponsReply.data.Conpons = Conpons.Select(x => new QueryConponsReplyConpon().MapFrom(x)).ToList();
+            }
+            queryConponsReply.SetSuccessReply();
             return queryConponsReply;
         }
     }
