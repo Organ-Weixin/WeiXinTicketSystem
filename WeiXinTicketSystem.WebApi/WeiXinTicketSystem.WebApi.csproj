@@ -232,6 +232,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
+    <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\SnackController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Extension\ReplyExtension.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Models\Reply\PayOrderReply.cs" />
     <Compile Include="Models\Reply\QueryActivityReply.cs" />
     <Compile Include="Models\Reply\QueryConponsReply.cs" />
+    <Compile Include="Models\Reply\QueryFilmsReply.cs" />
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />
     <Compile Include="Models\Reply\QuerySnackTypesReply.cs" />
     <Compile Include="Models\Reply\ReleaseSnacksReply.cs" />

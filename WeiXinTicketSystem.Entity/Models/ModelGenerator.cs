@@ -523,11 +523,11 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the Bnanner table.
+    /// A class which represents the Banner table.
     /// </summary>
-    [Table("Bnanner")]
-    [SqlLamTable(Name = "Bnanner")]
-    public partial class BnannerEntity : EntityBase
+    [Table("Banner")]
+    [SqlLamTable(Name = "Banner")]
+    public partial class BannerEntity : EntityBase
     {
 		[Key]
 		public virtual int Id { get; set; }
@@ -881,7 +881,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string VoucherCode { get; set; }
 		public virtual SnackOrderStatusEnum OrderStatus { get; set; }
 		public virtual DateTime? RefundTime { get; set; }
-		public virtual DateTime? PickupTime { get; set; }
+		public virtual DateTime? FetchTime { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime AutoUnLockDateTime { get; set; }

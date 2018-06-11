@@ -8,7 +8,7 @@ using System.Web;
 
 namespace WeiXinTicketSystem.Models
 {
-    public class CreateOrUpdateBnannerViewModel
+    public class CreateOrUpdateBannerViewModel
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }

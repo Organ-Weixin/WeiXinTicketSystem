@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WeiXinTicketSystem.Models
 {
-    public class BnannerQueryModel : DynatablePageQueryModel
+    public class BannerQueryModel : DynatablePageQueryModel
     {
         /// <summary>
         ///影院编码

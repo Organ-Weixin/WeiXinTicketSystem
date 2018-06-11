@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Drawing;
 
-namespace WeiXinTicketSystem.Models.Bnanner
+namespace WeiXinTicketSystem.Models.Banner
 {
     public static class ModelMapper
     {
@@ -16,7 +16,7 @@ namespace WeiXinTicketSystem.Models.Bnanner
         /// </summary>
         /// <param name="Activity"></param>
         /// <returns></returns>
-        public static dynamic ToDynatableItem(this BnannerEntity module)
+        public static dynamic ToDynatableItem(this BannerEntity module)
         {
             return new
             {
@@ -87,7 +87,7 @@ namespace WeiXinTicketSystem.Models.Bnanner
         /// </summary>
         /// <param name="CinemaPaySetting"></param>
         /// <param name="model"></param>
-        public static void MapFrom(this BnannerEntity module, CreateOrUpdateBnannerViewModel model)
+        public static void MapFrom(this BannerEntity module, CreateOrUpdateBannerViewModel model)
         {
             module.CinemaCode = model.CinemaCode;
             module.Title = model.Title;
@@ -109,7 +109,7 @@ namespace WeiXinTicketSystem.Models.Bnanner
         /// </summary>
         /// <param name="model"></param>
         /// <param name="CinemaPaySetting"></param>
-        public static void MapFrom(this CreateOrUpdateBnannerViewModel model, BnannerEntity module)
+        public static void MapFrom(this CreateOrUpdateBannerViewModel model, BannerEntity module)
         {
             model.Id = module.Id;
             model.CinemaCode = module.CinemaCode;

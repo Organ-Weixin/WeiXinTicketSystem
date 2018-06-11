@@ -305,15 +305,15 @@ namespace WeiXinTicketSystem
         /// <summary>
         /// 图片上传
         /// </summary>
-        public static class Bnanner
+        public static class Banner
         {
-            public static string Name { get { return nameof(Bnanner); } }
-            public static string Index { get { return nameof(BnannerController.Index); } }
-            public static string List { get { return nameof(BnannerController.List); } }
-            public static string Create { get { return nameof(BnannerController.Create); } }
-            public static string Update { get { return nameof(BnannerController.Update); } }
-            public static string Delete { get { return nameof(BnannerController.Delete); } }
-            public static string _CreateOrUpdate { get { return nameof(BnannerController._CreateOrUpdate); } }
+            public static string Name { get { return nameof(Banner); } }
+            public static string Index { get { return nameof(BannerController.Index); } }
+            public static string List { get { return nameof(BannerController.List); } }
+            public static string Create { get { return nameof(BannerController.Create); } }
+            public static string Update { get { return nameof(BannerController.Update); } }
+            public static string Delete { get { return nameof(BannerController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(BannerController._CreateOrUpdate); } }
         }
 
         /// <summary>

@@ -314,6 +314,33 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
+
+        public static bool RequestInfoGuard(this QueryFilmsReply reply, string Username, string Password, string CinemaCode,string FilmCode)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(FilmCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(FilmCode));
+                return false;
+            }
+
+            return true;
+        }
+
         ///// <summary>
         ///// 检查传入参数
         ///// </summary>
@@ -797,7 +824,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
 
 
 
-        
+
 
         //public static bool RequestInfoGuard(this SubmitSnacksReply reply, string Username, string Password,string QueryXml)
         //{
