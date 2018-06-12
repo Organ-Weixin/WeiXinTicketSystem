@@ -37,6 +37,26 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.dll</HintPath>
     </Reference>
+    <Reference Include="NetSaleSvc.Api.CTMS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.CTMS.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Api.CTMS.XmlSerializers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.CTMS.XmlSerializers.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Entity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="NetSaleSvc.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Util.dll</HintPath>
+    </Reference>
     <Reference Include="PostSharp, Version=5.0.49.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.Redist.5.0.49\lib\net45\PostSharp.dll</HintPath>
       <Private>True</Private>

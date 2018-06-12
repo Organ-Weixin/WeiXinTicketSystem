@@ -144,5 +144,27 @@ namespace WeiXinTicketSystem.WebApi.Models
             conpon.Image = entity.Image;
             return conpon;
         }
+
+        public static QuerySessionsReplySession MapFrom(this QuerySessionsReplySession session, SessionInfoEntity entity)
+        {
+            session.Id = entity.Id;
+            session.CinemaCode = entity.CinemaCode;
+            session.SessionCode = entity.SessionCode;
+            session.ScreenCode = entity.ScreenCode;
+            session.StartTime = entity.StartTime;
+            session.FilmCode = entity.FilmCode;
+            session.FilmName = entity.FilmName;
+            session.Duration = entity.Duration;
+            session.Language = entity.Language;
+            session.UpdateTime = entity.UpdateTime;
+            session.StandardPrice = entity.StandardPrice;
+            session.LowestPrice = entity.LowestPrice;
+            session.SettlePrice = entity.SettlePrice;
+            session.TicketFee = entity.TicketFee;
+            session.IsAvalible = entity.IsAvalible.GetDescription();
+            session.Dimensional = entity.Dimensional;
+            session.ListingPrice = entity.ListingPrice;
+            return session;
+        }
     }
 }

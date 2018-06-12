@@ -33,7 +33,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         #endregion
 
         [HttpGet]
-        public async Task<QueryConponsReply> QueryConpons(string UserName, string Password, string CinemaCode, string OpenID, string statusID, string CurrentPage, string PageSize)
+        public async Task<QueryConponsReply> QueryUserConpons(string UserName, string Password, string CinemaCode, string OpenID, string statusID, string CurrentPage, string PageSize)
         {
             QueryConponsReply queryConponsReply = new QueryConponsReply();
             //校验参数

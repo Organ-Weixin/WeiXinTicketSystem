@@ -99,6 +99,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["AdminConponView"]["ConponType"].PropertyType="ConponTypeEnum";
 	tables["AdminConponView"]["IfUse"].PropertyType="YesOrNoEnum";
 	tables["Cinema"]["OpenSnacks"].PropertyType="YesOrNoEnum";
+	tables["SessionInfo"]["IsAvalible"].PropertyType="YesOrNoEnum";
 	
 #>
 using System;

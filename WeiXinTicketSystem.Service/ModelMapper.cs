@@ -92,7 +92,7 @@ namespace WeiXinTicketSystem.Service
             entity.Language = filmInfo.Language;
             entity.StandardPrice = model.Price.StandardPrice == "" ? 0 : decimal.Parse(model.Price.StandardPrice);
             entity.LowestPrice = model.Price.LowestPrice == "" ? 0 : decimal.Parse(model.Price.LowestPrice);
-            entity.IsAvalible = true;
+            entity.IsAvalible = Entity.Enum.YesOrNoEnum.Yes;
             entity.PlaythroughFlag = model.PlaythroughFlag;
             entity.Dimensional = filmInfo.Dimensional;
             entity.Sequence = filmInfo.Sequence == "" ? 0 : int.Parse(filmInfo.Sequence);
