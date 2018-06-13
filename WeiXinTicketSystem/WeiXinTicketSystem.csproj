@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\PostSharp.5.0.49\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.5.0.49\build\PostSharp.props')" />
+  <Import Project="..\packages\PostSharp.5.0.51\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.5.0.51\build\PostSharp.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -126,8 +126,8 @@
     <Reference Include="NPOI.OpenXmlFormats">
       <HintPath>bin\NPOI\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp">
-      <HintPath>..\packages\PostSharp.Redist.5.0.49\lib\net45\PostSharp.dll</HintPath>
+    <Reference Include="PostSharp, Version=5.0.51.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.Redist.5.0.51\lib\net45\PostSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
@@ -261,10 +261,11 @@
     <Compile Include="Attributes\UI\PasswordAttribute.cs" />
     <Compile Include="Attributes\UI\TextAreaAttribute.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
-    <Compile Include="Controllers\BnannerController.cs" />
+    <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\CinemaController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmInfoController.cs" />
+    <Compile Include="Controllers\GiftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberCardController.cs" />
@@ -294,8 +295,8 @@
     <Compile Include="Models\Activity\ActivityQueryModel.cs" />
     <Compile Include="Models\Activity\CreateOrUpdateActivityViewModel.cs" />
     <Compile Include="Models\Activity\ModelMapper.cs" />
-    <Compile Include="Models\Bnanner\BnannerQueryModel.cs" />
-    <Compile Include="Models\Bnanner\CreateOrUpdateBnannerViewModel.cs" />
+    <Compile Include="Models\Bnanner\BannerQueryModel.cs" />
+    <Compile Include="Models\Bnanner\CreateOrUpdateBannerViewModel.cs" />
     <Compile Include="Models\Bnanner\ModelMapper.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\CinemaMemberCardSettingQueryModel.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\CreateOrUpdateCinemaMemberCardSettingViewModel.cs" />
@@ -326,6 +327,9 @@
     <Compile Include="Models\FilmInfo\DownloadMovieInfo.cs" />
     <Compile Include="Models\FilmInfo\FilmInfoQueryModel.cs" />
     <Compile Include="Models\FilmInfo\ModelMapper.cs" />
+    <Compile Include="Models\Gift\GiftQueryModel.cs" />
+    <Compile Include="Models\Gift\CreateOrUpdateGiftViewModel.cs" />
+    <Compile Include="Models\Gift\ModelMapper.cs" />
     <Compile Include="Models\Login\SysUserLoginViewModel.cs" />
     <Compile Include="Models\MemberCard\CreateOrUpdateMemberCardViewModel.cs" />
     <Compile Include="Models\MemberCard\MemberCardQueryModel.cs" />
@@ -1473,10 +1477,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\PostSharp.5.0.49\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.49\build\PostSharp.props'))" />
-    <Error Condition="!Exists('..\packages\PostSharp.5.0.49\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.49\build\PostSharp.targets'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.5.0.51\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.51\build\PostSharp.props'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.5.0.51\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.51\build\PostSharp.targets'))" />
   </Target>
-  <Import Project="..\packages\PostSharp.5.0.49\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.5.0.49\build\PostSharp.targets')" />
+  <Import Project="..\packages\PostSharp.5.0.51\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.5.0.51\build\PostSharp.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

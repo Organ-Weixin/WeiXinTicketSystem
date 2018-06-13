@@ -17,6 +17,28 @@ using WeiXinTicketSystem.Entity.Enum;
 namespace WeiXinTicketSystem.Entity.Models
 {
     /// <summary>
+    /// A class which represents the Gifts table.
+    /// </summary>
+    [Table("Gifts")]
+    [SqlLamTable(Name = "Gifts")]
+    public partial class GiftEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Details { get; set; }
+		public virtual decimal? OriginalPrice { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual string Image { get; set; }
+		public virtual int? Stock { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the SessionPriceSettings table.
     /// </summary>
     [Table("SessionPriceSettings")]
@@ -354,42 +376,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string Remark { get; set; }
 		public virtual bool IsDel { get; set; }
 		public virtual string Image { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the SessionInfo table.
-    /// </summary>
-    [Table("SessionInfo")]
-    [SqlLamTable(Name = "SessionInfo")]
-    public partial class SessionInfoEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string SessionCode { get; set; }
-		public virtual string ScreenCode { get; set; }
-		public virtual DateTime StartTime { get; set; }
-		public virtual string FilmCode { get; set; }
-		public virtual string FilmName { get; set; }
-		public virtual int? Duration { get; set; }
-		public virtual string Language { get; set; }
-		public virtual DateTime? UpdateTime { get; set; }
-		public virtual decimal StandardPrice { get; set; }
-		public virtual decimal LowestPrice { get; set; }
-		public virtual decimal SettlePrice { get; set; }
-		public virtual decimal TicketFee { get; set; }
-		public virtual bool? IsAvalible { get; set; }
-		public virtual string PlaythroughFlag { get; set; }
-		public virtual string Dimensional { get; set; }
-		public virtual int Sequence { get; set; }
-		public virtual string DingXinUpdateTime { get; set; }
-		public virtual decimal? ListingPrice { get; set; }
-		public virtual decimal? SalePrice { get; set; }
-		public virtual string FeatureNo { get; set; }
-		public virtual string YueKeSaleStatus { get; set; }
-		public virtual DateTime? YueKeStopSellingTime { get; set; }
-		public virtual string YueKeScheduleId { get; set; }
-		public virtual string YueKeScheduleKey { get; set; }
 	}
 
     /// <summary>
@@ -972,6 +958,42 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime? EndDate { get; set; }
 		public virtual YesOrNoEnum Status { get; set; }
 		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the SessionInfo table.
+    /// </summary>
+    [Table("SessionInfo")]
+    [SqlLamTable(Name = "SessionInfo")]
+    public partial class SessionInfoEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string SessionCode { get; set; }
+		public virtual string ScreenCode { get; set; }
+		public virtual DateTime StartTime { get; set; }
+		public virtual string FilmCode { get; set; }
+		public virtual string FilmName { get; set; }
+		public virtual int? Duration { get; set; }
+		public virtual string Language { get; set; }
+		public virtual DateTime? UpdateTime { get; set; }
+		public virtual decimal StandardPrice { get; set; }
+		public virtual decimal LowestPrice { get; set; }
+		public virtual decimal SettlePrice { get; set; }
+		public virtual decimal TicketFee { get; set; }
+		public virtual YesOrNoEnum IsAvalible { get; set; }
+		public virtual string PlaythroughFlag { get; set; }
+		public virtual string Dimensional { get; set; }
+		public virtual int Sequence { get; set; }
+		public virtual string DingXinUpdateTime { get; set; }
+		public virtual decimal? ListingPrice { get; set; }
+		public virtual decimal? SalePrice { get; set; }
+		public virtual string FeatureNo { get; set; }
+		public virtual string YueKeSaleStatus { get; set; }
+		public virtual DateTime? YueKeStopSellingTime { get; set; }
+		public virtual string YueKeScheduleId { get; set; }
+		public virtual string YueKeScheduleKey { get; set; }
 	}
 
 }

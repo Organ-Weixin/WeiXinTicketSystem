@@ -191,5 +191,60 @@ namespace WeiXinTicketSystem.WebApi.Models
                 }).ToList();
             return data;
         }
+
+        public static QueryConponsReplyConpon MapFrom(this QueryConponsReplyConpon conpon, ConponEntity entity)
+        {
+            conpon.Id = entity.Id;
+            conpon.CinemaCode = entity.CinemaCode;
+            conpon.ConponType = entity.ConponType.GetDescription();
+            conpon.OpenID = entity.OpenID;
+            conpon.Price = entity.Price;
+            conpon.ConponCode = entity.ConponCode;
+            conpon.ValidityDate = entity.ValidityDate;
+            conpon.IfUse = entity.IfUse.GetDescription();
+            conpon.UseDate = entity.UseDate;
+            conpon.Title = entity.Title;
+            conpon.Deleted = entity.Deleted;
+            conpon.Image = entity.Image;
+            return conpon;
+        }
+
+        public static QuerySessionsReplySession MapFrom(this QuerySessionsReplySession session, SessionInfoEntity entity)
+        {
+            session.Id = entity.Id;
+            session.CinemaCode = entity.CinemaCode;
+            session.SessionCode = entity.SessionCode;
+            session.ScreenCode = entity.ScreenCode;
+            session.StartTime = entity.StartTime;
+            session.FilmCode = entity.FilmCode;
+            session.FilmName = entity.FilmName;
+            session.Duration = entity.Duration;
+            session.Language = entity.Language;
+            session.UpdateTime = entity.UpdateTime;
+            session.StandardPrice = entity.StandardPrice;
+            session.LowestPrice = entity.LowestPrice;
+            session.SettlePrice = entity.SettlePrice;
+            session.TicketFee = entity.TicketFee;
+            session.IsAvalible = entity.IsAvalible.GetDescription();
+            session.Dimensional = entity.Dimensional;
+            session.ListingPrice = entity.ListingPrice;
+            return session;
+        }
+
+        public static QueryMembersReplyMember MapFrom(this QueryMembersReplyMember member, MemberCardEntity entity)
+        {
+            member.Id = entity.Id;
+            member.CinemaCode = entity.CinemaCode;
+            member.OpenID = entity.OpenID;
+            member.CardNo = entity.CardNo;
+            member.CardPassword = entity.CardPassword;
+            member.Balance = entity.Balance;
+            member.Score = entity.Score;
+            member.MemberGrade = entity.MemberGrade.GetDescription();
+            member.Status = entity.Status.GetDescription();
+            member.Created = entity.Created;
+           
+            return member;
+        }
     }
 }

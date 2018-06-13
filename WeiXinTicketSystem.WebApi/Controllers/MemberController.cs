@@ -15,17 +15,17 @@ using WeiXinTicketSystem.Entity.Enum;
 
 namespace WeiXinTicketSystem.WebApi.Controllers
 {
-    public class ConponController : ApiController
+    public class MemberController : ApiController
     {
-        ConponService _conponService;
+        MemberCardService _memberCardService;
         SystemUserService _userService;
         CinemaService _cinemaService;
         TicketUsersService _ticketUserService;
 
         #region ctor
-        public ConponController()
+        public MemberController()
         {
-            _conponService = new ConponService();
+            _memberCardService = new MemberCardService();
             _userService = new SystemUserService();
             _cinemaService = new CinemaService();
             _ticketUserService = new TicketUsersService();
@@ -33,49 +33,49 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         #endregion
 
         [HttpGet]
-        public async Task<QueryConponsReply> QueryUserConpons(string UserName, string Password, string CinemaCode, string OpenID, string statusID, string CurrentPage, string PageSize)
+        public async Task<QueryMembersReply> QueryMember(string UserName, string Password, string CinemaCode, string OpenID)
         {
-            QueryConponsReply queryConponsReply = new QueryConponsReply();
+            QueryMembersReply queryMembersReply = new QueryMembersReply();
+
             //校验参数
-            if (!queryConponsReply.RequestInfoGuard(UserName, Password, CinemaCode, OpenID, statusID, CurrentPage, PageSize))
+            if (!queryMembersReply.RequestInfoGuard(UserName, Password, CinemaCode, OpenID))
             {
-                return queryConponsReply;
+                return queryMembersReply;
             }
             //获取用户信息
             SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
             if (UserInfo == null)
             {
-                queryConponsReply.SetUserCredentialInvalidReply();
-                return queryConponsReply;
+                queryMembersReply.SetUserCredentialInvalidReply();
+                return queryMembersReply;
             }
             //验证影院是否存在且可访问
             var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
             if (cinema == null)
             {
-                queryConponsReply.SetCinemaInvalidReply();
-                return queryConponsReply;
+                queryMembersReply.SetCinemaInvalidReply();
+                return queryMembersReply;
             }
             //验证用户OpenId是否存在
             var ticketuser = _ticketUserService.GetTicketUserByOpenID(OpenID);
             if (ticketuser == null)
             {
-                queryConponsReply.SetOpenIDNotExistReply();
-                return queryConponsReply;
+                queryMembersReply.SetOpenIDNotExistReply();
+                return queryMembersReply;
             }
-            var Conpons = await _conponService.QueryConponsPagedAsync(CinemaCode, OpenID,int.Parse(statusID), int.Parse(CurrentPage), int.Parse(PageSize));
-
-            queryConponsReply.data = new QueryConponsReplyConpons();
-            if (Conpons == null || Conpons.Count == 0)
+            var Members =await _memberCardService.GetMemberCardByOpenIDAsync(CinemaCode, OpenID);
+            queryMembersReply.data = new QueryMembersReplyMembers();
+            if (Members == null || Members.Count == 0)
             {
-                queryConponsReply.data.ConponCount = 0;
+                queryMembersReply.data.MemberCount = 0;
             }
             else
             {
-                queryConponsReply.data.ConponCount = Conpons.Count;
-                queryConponsReply.data.Conpons = Conpons.Select(x => new QueryConponsReplyConpon().MapFrom(x)).ToList();
+                queryMembersReply.data.MemberCount = Members.Count;
+                queryMembersReply.data.Members = Members.Select(x => new QueryMembersReplyMember().MapFrom(x)).ToList();
             }
-            queryConponsReply.SetSuccessReply();
-            return queryConponsReply;
+            queryMembersReply.SetSuccessReply();
+            return queryMembersReply;
         }
     }
 }

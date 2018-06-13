@@ -498,6 +498,83 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
+
+        public static bool RequestInfoGuard(this QueryFilmsReply reply, string Username, string Password, string CinemaCode,string FilmCode)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(FilmCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(FilmCode));
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool RequestInfoGuard(this QuerySessionsReply reply, string Username, string Password, string CinemaCode, string SessionTime)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(SessionTime))
+            {
+                reply.SetNecessaryParamMissReply(nameof(SessionTime));
+                return false;
+            }
+            return true;
+        }
+
+        public static bool RequestInfoGuard(this QueryMembersReply reply, string Username, string Password, string CinemaCode, string OpenID)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            return true;
+        }
+
         ///// <summary>
         ///// 检查传入参数
         ///// </summary>
@@ -981,7 +1058,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
 
 
 
-        
+
 
         
 

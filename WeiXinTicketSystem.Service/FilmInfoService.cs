@@ -33,7 +33,7 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="filmCode"></param>
         /// <returns></returns>
-        public FilmInfoEntity GetFilmInfoByCinemaCode(string filmCode)
+        public FilmInfoEntity GetFilmInfoByFilmCode(string filmCode)
         {
             return _filmInfoRepository.Query.Where(x => x.FilmCode == filmCode).SingleOrDefault();
         }

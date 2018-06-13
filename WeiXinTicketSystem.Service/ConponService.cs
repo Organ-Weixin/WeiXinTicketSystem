@@ -84,6 +84,41 @@ namespace WeiXinTicketSystem.Service
             return await query.ToPageListAsync();
         }
 
+        public async Task<IPageList<ConponEntity>> QueryConponsPagedAsync(string cinemaCode, string OpenID, int statusID, int currentpage, int pagesize)
+        {
+            int offset = (currentpage - 1) * pagesize;
+            var query = _conponRepository.Query
+                .OrderByDescending(x => x.Id)
+                .Skip(offset)
+                .Take(pagesize);
+
+            if (!string.IsNullOrEmpty(cinemaCode))
+            {
+                query.Where(x => x.CinemaCode == cinemaCode);
+            }
+            if (!string.IsNullOrEmpty(OpenID))
+            {
+                query.Where(x => x.OpenID == OpenID);
+            }
+            if (statusID !=2)
+            {
+                if (statusID == 0)
+                {
+
+                    query.Where(x => x.IfUse == YesOrNoEnum.No);
+                }
+                if (statusID == 1)
+                {
+
+                    query.Where(x => x.IfUse == YesOrNoEnum.Yes);
+                }
+
+            }
+            query.Where(x => !x.Deleted);
+            return await query.ToPageListAsync();
+        }
+
+
         /// <summary>
         /// 获取ConponEntity实体
         /// </summary>
