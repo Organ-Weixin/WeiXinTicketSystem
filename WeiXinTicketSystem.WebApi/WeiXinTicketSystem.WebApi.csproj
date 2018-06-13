@@ -258,6 +258,9 @@
     <Compile Include="Models\Reply\ReleaseSnacksReply.cs" />
     <Compile Include="Models\Reply\StatusEnum.cs" />
     <Compile Include="Models\Reply\SubmitSnacksReply.cs" />
+	<Compile Include="Models\Reply\QueryFilmsReply.cs" />
+    <Compile Include="Models\Reply\QueryMembersReply.cs" />
+    <Compile Include="Models\Reply\QuerySessionsReply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
   </ItemGroup>
