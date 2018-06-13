@@ -82,6 +82,7 @@
     <Compile Include="CinemaTicketSystemAccountService.cs" />
     <Compile Include="ConponService.cs" />
     <Compile Include="FilmInfoService.cs" />
+    <Compile Include="GiftService.cs" />
     <Compile Include="HomeService.cs" />
     <Compile Include="MemberCardService.cs" />
     <Compile Include="ModelMapper.cs" />

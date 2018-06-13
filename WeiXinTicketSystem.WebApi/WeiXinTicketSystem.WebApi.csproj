@@ -233,6 +233,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\SnackController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="Models\Reply\QueryActivityReply.cs" />
     <Compile Include="Models\Reply\QueryConponsReply.cs" />
     <Compile Include="Models\Reply\QueryFilmsReply.cs" />
+    <Compile Include="Models\Reply\QueryMembersReply.cs" />
     <Compile Include="Models\Reply\QuerySessionsReply.cs" />
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />
     <Compile Include="Models\Reply\QuerySnackTypesReply.cs" />

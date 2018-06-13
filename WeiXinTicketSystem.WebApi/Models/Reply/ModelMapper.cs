@@ -166,5 +166,21 @@ namespace WeiXinTicketSystem.WebApi.Models
             session.ListingPrice = entity.ListingPrice;
             return session;
         }
+
+        public static QueryMembersReplyMember MapFrom(this QueryMembersReplyMember member, MemberCardEntity entity)
+        {
+            member.Id = entity.Id;
+            member.CinemaCode = entity.CinemaCode;
+            member.OpenID = entity.OpenID;
+            member.CardNo = entity.CardNo;
+            member.CardPassword = entity.CardPassword;
+            member.Balance = entity.Balance;
+            member.Score = entity.Score;
+            member.MemberGrade = entity.MemberGrade.GetDescription();
+            member.Status = entity.Status.GetDescription();
+            member.Created = entity.Created;
+           
+            return member;
+        }
     }
 }

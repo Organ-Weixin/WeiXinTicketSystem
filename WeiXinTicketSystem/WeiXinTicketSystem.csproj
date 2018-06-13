@@ -265,6 +265,7 @@
     <Compile Include="Controllers\CinemaController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmInfoController.cs" />
+    <Compile Include="Controllers\GiftController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberCardController.cs" />
@@ -326,6 +327,9 @@
     <Compile Include="Models\FilmInfo\DownloadMovieInfo.cs" />
     <Compile Include="Models\FilmInfo\FilmInfoQueryModel.cs" />
     <Compile Include="Models\FilmInfo\ModelMapper.cs" />
+    <Compile Include="Models\Gift\GiftQueryModel.cs" />
+    <Compile Include="Models\Gift\CreateOrUpdateGiftViewModel.cs" />
+    <Compile Include="Models\Gift\ModelMapper.cs" />
     <Compile Include="Models\Login\SysUserLoginViewModel.cs" />
     <Compile Include="Models\MemberCard\CreateOrUpdateMemberCardViewModel.cs" />
     <Compile Include="Models\MemberCard\MemberCardQueryModel.cs" />

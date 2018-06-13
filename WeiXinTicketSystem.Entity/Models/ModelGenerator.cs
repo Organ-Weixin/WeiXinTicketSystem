@@ -17,6 +17,28 @@ using WeiXinTicketSystem.Entity.Enum;
 namespace WeiXinTicketSystem.Entity.Models
 {
     /// <summary>
+    /// A class which represents the Gifts table.
+    /// </summary>
+    [Table("Gifts")]
+    [SqlLamTable(Name = "Gifts")]
+    public partial class GiftEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Details { get; set; }
+		public virtual decimal? OriginalPrice { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual string Image { get; set; }
+		public virtual int? Stock { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the SessionPriceSettings table.
     /// </summary>
     [Table("SessionPriceSettings")]

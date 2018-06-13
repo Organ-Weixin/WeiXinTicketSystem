@@ -125,5 +125,16 @@ namespace WeiXinTicketSystem.Service
         {
             await _memberCardRepository.InsertAsync(entity);
         }
+
+        /// <summary>
+        /// 根据影院编码和OpenID获取会员卡信息
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <param name="OpenID"></param>
+        /// <returns></returns>
+        public async Task<IList<MemberCardEntity>> GetMemberCardByOpenIDAsync(string CinemaCode,String OpenID)
+        {
+            return await _memberCardRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.OpenID == OpenID).ToListAsync();
+        }
     }
 }
