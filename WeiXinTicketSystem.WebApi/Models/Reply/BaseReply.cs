@@ -251,6 +251,12 @@ namespace WeiXinTicketSystem.WebApi.Models
             ErrorCode = ErrorCodeEnum.OpenIDNotExist.GetValueString();
             ErrorMessage = ErrorCodeEnum.OpenIDNotExist.GetDescription();
         }
+        public void SetConponNotExistOrUsedReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.ConponNotExistOrUsed.GetValueString();
+            ErrorMessage = ErrorCodeEnum.ConponNotExistOrUsed.GetDescription();
+        }
         #endregion
 
         /// <summary>

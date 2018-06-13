@@ -523,25 +523,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the Bnanner table.
-    /// </summary>
-    [Table("Bnanner")]
-    [SqlLamTable(Name = "Bnanner")]
-    public partial class BnannerEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string Title { get; set; }
-		public virtual string Image { get; set; }
-		public virtual DateTime? Created { get; set; }
-		public virtual DateTime? StartDate { get; set; }
-		public virtual DateTime? EndDate { get; set; }
-		public virtual YesOrNoEnum Status { get; set; }
-		public virtual bool IsDel { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the MemberCard table.
     /// </summary>
     [Table("MemberCard")]
@@ -881,7 +862,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string VoucherCode { get; set; }
 		public virtual SnackOrderStatusEnum OrderStatus { get; set; }
 		public virtual DateTime? RefundTime { get; set; }
-		public virtual DateTime? PickupTime { get; set; }
+		public virtual DateTime? FetchTime { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime AutoUnLockDateTime { get; set; }
@@ -972,6 +953,25 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int? PriceSettingID { get; set; }
 		public virtual PricePlanTypeEnum? PriceSettingType { get; set; }
 		public virtual decimal? PriceSettingPrice { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the Banner table.
+    /// </summary>
+    [Table("Banner")]
+    [SqlLamTable(Name = "Banner")]
+    public partial class BannerEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
+		public virtual bool IsDel { get; set; }
 	}
 
 }

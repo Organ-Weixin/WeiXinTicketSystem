@@ -20,7 +20,6 @@ namespace WeiXinTicketSystem.WebApi.Models
         public string CinemaCode { get; set; }
         public string TypeName { get; set; }
         public string Remark { get; set; }
-        public bool IsDel { get; set; }
         public string Image { get; set; }
     }
 }

@@ -16,6 +16,10 @@ namespace WeiXinTicketSystem.Entity.Enum
 
         [XmlEnum("2")]
         [Description("通兑券")]
-        Exchange = 2
+        Exchange = 2,
+
+        [XmlEnum("2")]
+        [Description("实物赠品")]
+        Gift = 3
     }
 }

@@ -19,12 +19,14 @@ namespace WeiXinTicketSystem.Service
         private readonly IRepository<SnackOrderDetailEntity> _snackOrderDetailRepository;
         private readonly IRepository<SnackEntity> _snackRepository;
         private readonly IRepository<AdminSnackOrdersViewEntity> _adminSnackOrderViewRepository;
+        private readonly IRepository<ConponEntity> _conponRepository;
         public SnackOrderService()
         {
             _snackOrderRepository = new Repository<SnackOrderEntity>();
             _snackOrderDetailRepository = new Repository<SnackOrderDetailEntity>();
             _snackRepository = new Repository<SnackEntity>();
             _adminSnackOrderViewRepository = new Repository<AdminSnackOrdersViewEntity>();
+            _conponRepository = new Repository<ConponEntity>();
         }
         #endregion
         /// <summary>
@@ -32,9 +34,19 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="OrderCode"></param>
         /// <returns></returns>
-        public SnackOrderEntity GetSnackOrderByOrderCode(string OrderCode)
+        public SnackOrderEntity GetSnackOrderByOrderCode(string OrderCode, string Operation)
         {
-            return _snackOrderRepository.Query.Where(x => x.OrderCode == OrderCode && x.OrderStatus == SnackOrderStatusEnum.Booked && x.AutoUnLockDateTime >= DateTime.Now).SingleOrDefault();
+            var query = _snackOrderRepository.Query.Where(x => x.OrderCode == OrderCode);
+            switch (Operation)
+            {
+                case "PayOrder":
+                    query.Where(x => x.OrderStatus == SnackOrderStatusEnum.Booked && x.AutoUnLockDateTime >= DateTime.Now);
+                    break;
+                case "FetchSnacks":
+                    query.Where(x => x.OrderStatus == SnackOrderStatusEnum.Complete);
+                    break;
+            }
+            return query.SingleOrDefault();
         }
 
         public SnackOrderViewEntity GetSnacksOrderWithOrderCode(string CinemaCode, string OrderCode)
@@ -95,6 +107,31 @@ namespace WeiXinTicketSystem.Service
         public void Update(SnackOrderEntity snackorder)
         {
             _snackOrderRepository.Update(snackorder);
+        }
+
+        public void Update(SnackOrderEntity snackorder,ConponEntity conpon)
+        {
+            using (var connection = DbConnectionFactory.OpenConnection())
+            {
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        _snackOrderRepository.UpdateWithTransaction(snackorder,connection,transaction);
+                        if(conpon.ConponCode!=null)
+                        {
+                            _conponRepository.UpdateWithTransaction(conpon, connection, transaction);
+                        }
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+                        
         }
         /// <summary>
         /// 更新订单
@@ -181,6 +218,35 @@ namespace WeiXinTicketSystem.Service
                 DateTime deadline = endDate.Value.AddDays(1);
                 query.Where(x => x.Created < deadline);
             }
+            return await query.ToPageListAsync();
+        }
+        public async Task<IPageList<SnackOrderEntity>> GetUserOrdersPagedAsync(string cinemaCode,string OpenID, int currentpage, int pagesize)//DateTime? startDate, DateTime? endDate
+        {
+            int offset = (currentpage - 1) * pagesize;
+            var query = _snackOrderRepository.Query
+                .OrderByDescending(x => x.Id)
+                .Skip(offset)
+                .Take(pagesize);
+
+            if (!string.IsNullOrEmpty(cinemaCode))
+            {
+                query.Where(x => x.CinemaCode == cinemaCode);
+            }
+
+            if (!string.IsNullOrEmpty(OpenID))
+            {
+                query.Where(x => x.OpenID==OpenID);
+            }
+            //if (startDate.HasValue)
+            //{
+            //    query.Where(x => x.Created > startDate.Value);
+            //}
+
+            //if (endDate.HasValue)
+            //{
+            //    DateTime deadline = endDate.Value.AddDays(1);
+            //    query.Where(x => x.Created < deadline);
+            //}
             return await query.ToPageListAsync();
         }
         /// <summary>

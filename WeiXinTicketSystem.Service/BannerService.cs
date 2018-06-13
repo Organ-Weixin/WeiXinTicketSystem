@@ -11,15 +11,15 @@ using WeiXinTicketSystem.Entity.Enum;
 
 namespace WeiXinTicketSystem.Service
 {
-    public class BnannerService
+    public class BannerService
     {
         #region ctor
-        private readonly IRepository<BnannerEntity> _bnannerRepository;
+        private readonly IRepository<BannerEntity> _BannerRepository;
 
-        public BnannerService()
+        public BannerService()
         {
             //TODO: 移除内部依赖
-            _bnannerRepository = new Repository<BnannerEntity>();
+            _BannerRepository = new Repository<BannerEntity>();
         }
         #endregion
 
@@ -28,9 +28,9 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="CinemaCode"></param>
         /// <returns></returns>
-        public BnannerEntity GetBnannerByCinemaCode(string CinemaCode)
+        public BannerEntity GetBannerByCinemaCode(string CinemaCode)
         {
-            return _bnannerRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefault();
+            return _BannerRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefault();
         }
 
 
@@ -38,9 +38,18 @@ namespace WeiXinTicketSystem.Service
         /// 获取所有图片上传列表
         /// </summary>
         /// <returns></returns>
-        public async Task<IList<BnannerEntity>> GetAllBnannerAsync()
+        public async Task<IList<BannerEntity>> GetAllBannerAsync()
         {
-            return await _bnannerRepository.Query.Where(x => !x.IsDel).ToListAsync();
+            return await _BannerRepository.Query.Where(x => !x.IsDel).ToListAsync();
+        }
+        /// <summary>
+        /// 根据影院编码获取图片
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <returns></returns>
+        public async Task<IList<BannerEntity>> GetBannerByCinemaCodeAsync(string CinemaCode)
+        {
+            return await _BannerRepository.Query.Where(x => !x.IsDel&& x.CinemaCode==CinemaCode).ToListAsync();
         }
 
 
@@ -52,9 +61,9 @@ namespace WeiXinTicketSystem.Service
         /// <param name="offset"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public async Task<IPageList<BnannerEntity>> GetBnannerPagedAsync(string cinemaCode, string keyword, int offset, int perPage)
+        public async Task<IPageList<BannerEntity>> GetBannerPagedAsync(string cinemaCode, string keyword, int offset, int perPage)
         {
-            var query = _bnannerRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
+            var query = _BannerRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
             //影院编码
             if (!string.IsNullOrEmpty(cinemaCode))
             {
@@ -72,24 +81,13 @@ namespace WeiXinTicketSystem.Service
 
 
         /// <summary>
-        /// 获取PictureUploadEntity实体
-        /// </summary>
-        /// <param name="CinemaCode"></param>
-        /// <returns></returns>
-        public async Task<BnannerEntity> GetBnannerByCinemaCodeAsync(string CinemaCode)
-        {
-            return await _bnannerRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefaultAsync();
-        }
-
-
-        /// <summary>
         /// 根据图片上传ID获取图片上传信息
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public async Task<BnannerEntity> GetBnannerByIdAsync(int Id)
+        public async Task<BannerEntity> GetBannerByIdAsync(int Id)
         {
-            return await _bnannerRepository.Query.Where(x => x.Id == Id).SingleOrDefaultAsync();
+            return await _BannerRepository.Query.Where(x => x.Id == Id).SingleOrDefaultAsync();
         }
 
 
@@ -97,9 +95,9 @@ namespace WeiXinTicketSystem.Service
         /// 更新
         /// </summary>
         /// <param name="entity"></param>
-        public void Update(BnannerEntity entity)
+        public void Update(BannerEntity entity)
         {
-            _bnannerRepository.Update(entity);
+            _BannerRepository.Update(entity);
         }
 
         /// <summary>
@@ -107,9 +105,9 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task UpdateAsync(BnannerEntity entity)
+        public async Task UpdateAsync(BannerEntity entity)
         {
-            await _bnannerRepository.UpdateAsync(entity);
+            await _BannerRepository.UpdateAsync(entity);
         }
 
         /// <summary>
@@ -117,9 +115,9 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task InsertAsync(BnannerEntity entity)
+        public async Task InsertAsync(BannerEntity entity)
         {
-            await _bnannerRepository.InsertAsync(entity);
+            await _BannerRepository.InsertAsync(entity);
         }
 
     }

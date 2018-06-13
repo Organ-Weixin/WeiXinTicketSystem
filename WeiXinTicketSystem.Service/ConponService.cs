@@ -43,6 +43,15 @@ namespace WeiXinTicketSystem.Service
         {
             return await _conponRepository.Query.Where(x => !x.Deleted).ToListAsync();
         }
+        /// <summary>
+        /// 根据优惠券编号获取优惠券
+        /// </summary>
+        /// <param name="ConponCode"></param>
+        /// <returns></returns>
+        public ConponEntity GetConponByConponCode(string ConponCode)
+        {
+            return _conponRepository.Query.Where(x => x.ConponCode == ConponCode).SingleOrDefault();
+        }
 
         /// <summary>
         /// 后台分页读取优惠券信息

@@ -11,6 +11,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         public string Password { get; set; }
         public string CinemaCode { get; set; }
         public string OrderCode { get; set; }
+        public string OrderTradeNo { get; set; }
         public string MobilePhone { get; set; }
         public string OpenID { get; set; }
         public List<SubmitSnacksQueryJsonSnack> Snacks { get; set; }

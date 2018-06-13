@@ -20,7 +20,6 @@ namespace WeiXinTicketSystem.WebApi.Models
             type.CinemaCode = snacktype.CinemaCode;
             type.TypeName = snacktype.TypeName;
             type.Remark = snacktype.Remark;
-            type.IsDel = snacktype.IsDel;
             type.Image = snacktype.Image;
             return type;
         }
@@ -112,6 +111,19 @@ namespace WeiXinTicketSystem.WebApi.Models
             return order;
         }
 
+        public static QueryBannersReplyBanner MapFrom(this QueryBannersReplyBanner banner, BannerEntity entity)
+        {
+            banner.Id = entity.Id;
+            banner.CinemaCode = entity.CinemaCode;
+            banner.Title = entity.Title;
+            banner.Image = entity.Image;
+            banner.Created = entity.Created;
+            banner.StartDate = entity.StartDate.HasValue? entity.StartDate.Value:DateTime.Now;
+            banner.EndDate = entity.EndDate.HasValue ? entity.EndDate.Value : DateTime.Now;
+            banner.Status = (int)entity.Status;
+            return banner;
+        }
+
 
         public static QueryActivityReplyActivity MapFrom(this QueryActivityReplyActivity activity, ActivityEntity entity)
         {
@@ -125,7 +137,59 @@ namespace WeiXinTicketSystem.WebApi.Models
             activity.Status = entity.Status.GetDescription();
             activity.IsDel = entity.IsDel;
             return activity;
-
+        }
+        public static QueryUserOrdersReplyOrder MapFrom(this QueryUserOrdersReplyOrder order, SnackOrderEntity entity)
+        {
+            order.CinemaCode = entity.CinemaCode;
+            order.OrderCode = entity.OrderCode;
+            order.MobilePhone = entity.MobilePhone;
+            order.SnacksCount = entity.SnacksCount;
+            order.TotalPrice = entity.TotalPrice;
+            order.OrderStatus = entity.OrderStatus;
+            order.DeliveryAddress = entity.DeliveryAddress;
+            order.SendTime = entity.SendTime;
+            order.Created = entity.Created;
+            return order;
+        }
+        public static QueryOrderReplyOrder MapFrom(this QueryOrderReplyOrder data, SnackOrderViewEntity order)
+        {
+            data.Id = order.OrderBaseInfo.Id;
+            data.CinemaCode = order.OrderBaseInfo.CinemaCode;
+            data.OrderCode = order.OrderBaseInfo.OrderCode;
+            data.MobilePhone = order.OrderBaseInfo.MobilePhone;
+            data.SnacksCount = order.OrderBaseInfo.SnacksCount;
+            data.TotalPrice = order.OrderBaseInfo.TotalPrice;
+            data.ReleaseTime = order.OrderBaseInfo.ReleaseTime.Value;
+            data.SubmitTime = order.OrderBaseInfo.SubmitTime.Value;
+            data.VoucherCode = order.OrderBaseInfo.VoucherCode;
+            data.OrderStatus = order.OrderBaseInfo.OrderStatus;
+            data.RefundTime = order.OrderBaseInfo.RefundTime.Value;
+            data.FetchTime = order.OrderBaseInfo.FetchTime.Value;
+            data.Created = order.OrderBaseInfo.Created;
+            data.DeliveryAddress = order.OrderBaseInfo.DeliveryAddress;
+            data.SendTime = order.OrderBaseInfo.SendTime;
+            data.Created = order.OrderBaseInfo.Created;
+            data.AutoUnLockDateTime = order.OrderBaseInfo.AutoUnLockDateTime;
+            data.DeliveryAddress = order.OrderBaseInfo.DeliveryAddress;
+            data.SendTime = order.OrderBaseInfo.SendTime;
+            data.OrderPayFlag = order.OrderBaseInfo.OrderPayFlag.Value;
+            data.OrderPayType = order.OrderBaseInfo.OrderPayType.Value;
+            data.OrderPayTime = order.OrderBaseInfo.OrderPayTime.Value;
+            data.OrderTradeNo = order.OrderBaseInfo.OrderTradeNo;
+            data.IsUseConpons = order.OrderBaseInfo.IsUseConpons.Value;
+            data.ConponCode = order.OrderBaseInfo.ConponCode;
+            data.ConponPrice = order.OrderBaseInfo.ConponPrice.Value;
+            data.OpenID = order.OrderBaseInfo.OpenID;
+            data.Snacks = order.SnackOrderDetails.Select(
+                x => new QueryOrderReplySnack()
+                {
+                    SnackCode = x.SnackCode,
+                    StandardPrice = x.StandardPrice,
+                    SalePrice = x.SalePrice,
+                    Number = x.Number,
+                    SubTotalPrice = x.SubTotalPrice
+                }).ToList();
+            return data;
         }
     }
 }

@@ -148,5 +148,11 @@ namespace WeiXinTicketSystem.WebApi.Models
         /// </summary>
         [Description("用户OpenID不存在或不合法！")]
         OpenIDNotExist = 10000022,
+
+        /// <summary>
+        /// 优惠券不存在或已使用
+        /// </summary>
+        [Description("优惠券不存在或已使用！")]
+        ConponNotExistOrUsed = 10000023
     }
 }

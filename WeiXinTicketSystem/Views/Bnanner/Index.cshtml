@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Cinema"] = "active";
-    ViewData["Bnanner"] = "active";
+    ViewData["Banner"] = "active";
     ViewBag.Title = "图片管理";
     List<int> CurrentPermissions = ViewBag.CurrentPermissions;
 }
@@ -71,8 +71,8 @@
             <div class="dataTables_wrapper table-responsive no-padding">
                 <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
                        data-toggle="dynatable-paged"
-                       data-url="@Url.Action(MvcNames.Bnanner.List)"
-                       data-row-template="bnanner-row-template">
+                       data-url="@Url.Action(MvcNames.Banner.List)"
+                       data-row-template="Banner-row-template">
                     <thead>
                         <tr>
                             <th data-dynatable-no-sort="true">#</th>
@@ -95,7 +95,7 @@
                 <div class="dynatable-operation">
                     @if (CurrentPermissions.Contains(2))
                     {
-                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Bnanner.Create)">
+                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Banner.Create)">
                             <i class="fa fa-plus"></i>
                             新建图片
                         </a>
@@ -103,7 +103,7 @@
                 </div>
             </div>
             
-            <script type="text/x-handlebars-template" id="bnanner-row-template">
+            <script type="text/x-handlebars-template" id="Banner-row-template">
                 <tr>
                     <td style="text-align: left;">{{row}}</td>
                     <td style="text-align: left; vertical-align: top;">{{CinemaCode}}</td>
@@ -117,14 +117,14 @@
 
                         @if (CurrentPermissions.Contains(3))
                         {
-                            <a href="@Url.Action(MvcNames.Bnanner.Update)/{{id}}">编辑</a>
+                            <a href="@Url.Action(MvcNames.Banner.Update)/{{id}}">编辑</a>
                         }
 
                         @if (CurrentPermissions.Contains(4))
                         {
                             <span>|</span>
                             <a href="javascript:void(0)"
-                               data-href="@Url.Action(MvcNames.Bnanner.Delete)/{{id}}" data-toggle="popover"
+                               data-href="@Url.Action(MvcNames.Banner.Delete)/{{id}}" data-toggle="popover"
                                data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
                                data-message="确认删除?" data-type="confirm" data-placement="left"
                                data-content-template="#delete-confirm-template">

@@ -1,5 +1,5 @@
 ﻿using WeiXinTicketSystem.Models;
-using WeiXinTicketSystem.Models.Bnanner;
+using WeiXinTicketSystem.Models.Banner;
 using WeiXinTicketSystem.Utils;
 using WeiXinTicketSystem.Entity.Enum;
 using WeiXinTicketSystem.Entity.Models;
@@ -21,14 +21,14 @@ using WeiXinTicketSystem.Properties;
 
 namespace WeiXinTicketSystem.Controllers
 {
-    public class BnannerController : RootExraController
+    public class BannerController : RootExraController
     {
-        private BnannerService _bnannerService;
+        private BannerService _BannerService;
 
         #region ctor
-        public BnannerController()
+        public BannerController()
         {
-            _bnannerService = new BnannerService();
+            _BannerService = new BannerService();
         }
         #endregion
 
@@ -38,7 +38,7 @@ namespace WeiXinTicketSystem.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Bnanner").SingleOrDefault();
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Banner").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
             return View();
@@ -49,9 +49,9 @@ namespace WeiXinTicketSystem.Controllers
         ///// </summary>
         ///// <param name="pageModel"></param>
         ///// <returns></returns>
-        public async Task<ActionResult> List(DynatablePageModel<BnannerQueryModel> pageModel)
+        public async Task<ActionResult> List(DynatablePageModel<BannerQueryModel> pageModel)
         {
-            var paySettings = await _bnannerService.GetBnannerPagedAsync(
+            var paySettings = await _BannerService.GetBannerPagedAsync(
                 CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? pageModel.Query.CinemaCode : CurrentUser.CinemaCode,
                 pageModel.Query.Search,
                 pageModel.Offset,
@@ -67,7 +67,7 @@ namespace WeiXinTicketSystem.Controllers
         /// <returns></returns>
         public ActionResult Create()
         {
-            CreateOrUpdateBnannerViewModel model = new CreateOrUpdateBnannerViewModel();
+            CreateOrUpdateBannerViewModel model = new CreateOrUpdateBannerViewModel();
             PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
@@ -80,13 +80,13 @@ namespace WeiXinTicketSystem.Controllers
         /// <returns></returns>
         public async Task<ActionResult> Update(int id)
         {
-            var bnanner = await _bnannerService.GetBnannerByIdAsync(id);
-            if (bnanner == null)
+            var Banner = await _BannerService.GetBannerByIdAsync(id);
+            if (Banner == null)
             {
                 return HttpBadRequest();
             }
-            CreateOrUpdateBnannerViewModel model = new CreateOrUpdateBnannerViewModel();
-            model.MapFrom(bnanner);
+            CreateOrUpdateBannerViewModel model = new CreateOrUpdateBannerViewModel();
+            model.MapFrom(Banner);
             PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
@@ -96,7 +96,7 @@ namespace WeiXinTicketSystem.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public ActionResult CreateOrUpdate(CreateOrUpdateBnannerViewModel model)
+        public ActionResult CreateOrUpdate(CreateOrUpdateBannerViewModel model)
         {
             return View(nameof(CreateOrUpdate), model);
         }
@@ -107,7 +107,7 @@ namespace WeiXinTicketSystem.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> _CreateOrUpdate(CreateOrUpdateBnannerViewModel model, HttpPostedFileBase Image)
+        public async Task<ActionResult> _CreateOrUpdate(CreateOrUpdateBannerViewModel model, HttpPostedFileBase Image)
         {
             if (!ModelState.IsValid)
             {
@@ -115,38 +115,38 @@ namespace WeiXinTicketSystem.Controllers
                 return ErrorObject(string.Join("/n", errorMessages));
             }
 
-            BnannerEntity bnanner = new BnannerEntity();
+            BannerEntity Banner = new BannerEntity();
             if (model.Id > 0)
             {
-                bnanner = await _bnannerService.GetBnannerByIdAsync(model.Id);
+                Banner = await _BannerService.GetBannerByIdAsync(model.Id);
             }
 
 
-            bnanner.MapFrom(model);
+            Banner.MapFrom(model);
 
 
 
-            if (bnanner.Id == 0)
+            if (Banner.Id == 0)
             {
                 //图片处理
                 if (Image != null)
                 {
                     string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\BnannerImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                    string savePath = @"upload\BannerImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
                     System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
                     string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    bnanner.Image = savePath + fileName;
-                    bnanner.Created = DateTime.Now;
+                    Banner.Image = savePath + fileName;
+                    Banner.Created = DateTime.Now;
                 }
 
-                await _bnannerService.InsertAsync(bnanner);
+                await _BannerService.InsertAsync(Banner);
             }
             else
             {
                 //图片处理
                 if (Image != null)
                 {
-                    string file = Server.MapPath("~/") + bnanner.Image;
+                    string file = Server.MapPath("~/") + Banner.Image;
                     if (!string.IsNullOrEmpty(file))
                     {
                         if (System.IO.File.Exists(file))
@@ -156,17 +156,17 @@ namespace WeiXinTicketSystem.Controllers
                         }
                     }
                     string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\BnannerImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                    string savePath = @"upload\BannerImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
                     System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
                     string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    bnanner.Image = savePath + fileName;
+                    Banner.Image = savePath + fileName;
                 }
 
-                await _bnannerService.UpdateAsync(bnanner);
+                await _BannerService.UpdateAsync(Banner);
             }
 
             //return RedirectObject(Url.Action(nameof(Index)));
-            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Bnanner").SingleOrDefault();
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Banner").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
             return View(nameof(Index));
@@ -179,12 +179,12 @@ namespace WeiXinTicketSystem.Controllers
         /// <returns></returns>
         public async Task<ActionResult> Delete(int id)
         {
-            var bnanner = await _bnannerService.GetBnannerByIdAsync(id);
+            var Banner = await _BannerService.GetBannerByIdAsync(id);
 
-            if (bnanner != null)
+            if (Banner != null)
             {
-                bnanner.IsDel = true;
-                await _bnannerService.UpdateAsync(bnanner);
+                Banner.IsDel = true;
+                await _BannerService.UpdateAsync(Banner);
             }
             return Object();
         }
