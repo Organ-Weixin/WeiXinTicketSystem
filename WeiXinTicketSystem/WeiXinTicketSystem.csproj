@@ -1407,6 +1407,8 @@
     <Content Include="Views\Bnanner\Index.cshtml" />
     <Content Include="Views\Conpon\CreateOrUpdate.cshtml" />
     <Content Include="Views\Conpon\Index.cshtml" />
+    <Content Include="Views\Gift\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Gift\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
