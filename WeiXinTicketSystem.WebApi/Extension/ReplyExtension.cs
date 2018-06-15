@@ -575,6 +575,56 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
+        public static bool RequestInfoGuard(this RegisterMemberReply reply, string UserName, string Password, string CinemaCode, string OpenID, string CardNo, string CardPassword, string Balance, string Score,string MemberGrade)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CardNo))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CardNo));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CardPassword))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CardPassword));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Balance))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Balance));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Score))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Score));
+                return false;
+            }
+            if (string.IsNullOrEmpty(MemberGrade))
+            {
+                reply.SetNecessaryParamMissReply(nameof(MemberGrade));
+                return false;
+            }
+            return true;
+        }
+
         ///// <summary>
         ///// 检查传入参数
         ///// </summary>
@@ -1060,7 +1110,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
 
 
 
-        
+
 
         //public static bool RequestInfoGuard(this QuerySnacksOrderReply reply, string Username, string Password, string CinemaCode, string ChannelOrderCode)
         //{

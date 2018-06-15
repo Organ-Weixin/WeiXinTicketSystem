@@ -246,5 +246,34 @@ namespace WeiXinTicketSystem.WebApi.Models
            
             return member;
         }
+
+        public static MemberCardEntity MapFrom(this MemberCardEntity member, RegisterMemberQueryJson Queryjson)
+        {
+            member.CinemaCode = Queryjson.CinemaCode;
+            member.OpenID = Queryjson.OpenID;
+            member.CardNo = Queryjson.CardNo;
+            member.CardPassword = Queryjson.CardPassword;
+            member.Balance = Queryjson.Balance;
+            member.Score = Queryjson.Score;
+            member.MemberGrade = (MemberCardGradeEnum)Queryjson.MemberGrade;
+            member.Status = MemberCardStatusEnum.Enable;
+            member.Created = DateTime.Now;
+            return member;
+        }
+
+        public static RegisterMemberReplyMember MapFrom(this RegisterMemberReplyMember data, MemberCardEntity member)
+        {
+            data.CinemaCode = member.CinemaCode;
+            data.OpenID = member.OpenID;
+            data.CardNo = member.CardNo;
+            data.CardPassword = member.CardPassword;
+            data.Balance = member.Balance;
+            data.Score = member.Score;
+            data.MemberGrade = member.MemberGrade.GetDescription();
+            data.Status = member.Status.GetDescription();
+            data.Created = member.Created;
+
+            return data;
+        }
     }
 }
