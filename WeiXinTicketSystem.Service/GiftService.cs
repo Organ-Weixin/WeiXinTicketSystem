@@ -42,6 +42,26 @@ namespace WeiXinTicketSystem.Service
             return await _giftRepository.Query.Where(x => !x.IsDel).ToListAsync();
         }
 
+        public async Task<IPageList<GiftEntity>> GetGiftPagedAsync(string CinemaCode, GiftStatusEnum status,int currentpage, int pagesize)
+        {
+            int offset = (currentpage - 1) * pagesize;
+            var query = _giftRepository.Query
+                .OrderByDescending(x => x.Id)
+                .Skip(offset)
+                .Take(pagesize);
+
+            if (!string.IsNullOrEmpty(CinemaCode))
+            {
+                query.Where(x => x.CinemaCode == CinemaCode);
+            }
+            if (status != GiftStatusEnum.All)
+            {
+                query.Where(x => x.Status == status);
+            }
+            query.Where(x => !x.IsDel);
+            return await query.ToPageListAsync();
+        }
+
         /// <summary>
         /// 后台分页读取赠品信息
         /// </summary>

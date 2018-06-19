@@ -200,11 +200,11 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(IsUseConpons));
                 return false;
             }
-            if (string.IsNullOrEmpty(ConponCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(ConponCode));
-                return false;
-            }
+            //if (string.IsNullOrEmpty(ConponCode))
+            //{
+            //    reply.SetNecessaryParamMissReply(nameof(ConponCode));
+            //    return false;
+            //}
             if (string.IsNullOrEmpty(OpenID))
             {
                 reply.SetNecessaryParamMissReply(nameof(OpenID));
@@ -257,7 +257,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-        public static bool RequestInfoGuard(this FetchSnacksReply reply, string UserName, string Password, string CinemaCode, string OrderCode)
+        public static bool RequestInfoGuard(this FetchSnacksReply reply, string UserName, string Password, string CinemaCode, string OrderCode,string VoucherCode)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -277,6 +277,11 @@ namespace WeiXinTicketSystem.WebApi.Extension
             if (string.IsNullOrEmpty(OrderCode))
             {
                 reply.SetNecessaryParamMissReply(nameof(OrderCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(VoucherCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(VoucherCode));
                 return false;
             }
 
@@ -396,7 +401,55 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-
+        public static bool RequestInfoGuard(this SendConponReply reply, string UserName, string Password, string CinemaCode, string Title, string ConponType, string Price, string ValidityDate, string Image,string OpenID)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Title))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Title));
+                return false;
+            }
+            if (string.IsNullOrEmpty(ConponType))
+            {
+                reply.SetNecessaryParamMissReply(nameof(ConponType));
+                return false;
+            }
+            //if (string.IsNullOrEmpty(Price))
+            //{
+            //    reply.SetNecessaryParamMissReply(nameof(Price));
+            //    return false;
+            //}
+            if (string.IsNullOrEmpty(ValidityDate))
+            {
+                reply.SetNecessaryParamMissReply(nameof(ValidityDate));
+                return false;
+            }
+            //if (string.IsNullOrEmpty(Image))
+            //{
+            //    reply.SetNecessaryParamMissReply(nameof(Image));
+            //    return false;
+            //}
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            return true;
+        }
         /// <summary>
         /// 检查传入参数
         /// </summary>
@@ -448,7 +501,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this QueryConponsReply reply, string Username, string Password, string CinemaCode, string OpenID, string statusID, string CurrentPage, string PageSize)
+        public static bool RequestInfoGuard(this QueryConponsReply reply, string Username, string Password, string CinemaCode, string OpenID, string status, string CurrentPage, string PageSize)
         {
             int rint = 0;
             if (string.IsNullOrEmpty(Username))
@@ -471,9 +524,9 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(OpenID));
                 return false;
             }
-            if (string.IsNullOrEmpty(statusID))
+            if (string.IsNullOrEmpty(status))
             {
-                reply.SetNecessaryParamMissReply(nameof(statusID));
+                reply.SetNecessaryParamMissReply(nameof(status));
                 return false;
             }
             if (string.IsNullOrEmpty(CurrentPage))
@@ -494,6 +547,40 @@ namespace WeiXinTicketSystem.WebApi.Extension
             if (!int.TryParse(PageSize, out rint))
             {
                 reply.SetPageSizeInvalidReply();
+                return false;
+            }
+            return true;
+        }
+        public static bool RequestInfoGuard(this QueryGiftsReply reply, string Username, string Password, string CinemaCode,string Status, string CurrentPage, string PageSize)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Status))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Status));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CurrentPage))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CurrentPage));
+                return false;
+            }
+            if (string.IsNullOrEmpty(PageSize))
+            {
+                reply.SetNecessaryParamMissReply(nameof(PageSize));
                 return false;
             }
             return true;

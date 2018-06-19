@@ -153,6 +153,18 @@ namespace WeiXinTicketSystem.WebApi.Models
         /// 优惠券不存在或已使用
         /// </summary>
         [Description("优惠券不存在或已使用！")]
-        ConponNotExistOrUsed = 10000023
+        ConponNotExistOrUsed = 10000023,
+
+        /// <summary>
+        /// 优惠券使用状态非法
+        /// </summary>
+        [Description("优惠券状态非法！合法取值包括：All，Used，NotUsed")]
+        ConponStatusInvalid = 10000024,
+
+        /// <summary>
+        /// 赠品状态非法
+        /// </summary>
+        [Description("赠品状态非法！合法取值包括：All，On，Off")]
+        GiftStatusInvalid = 10000025
     }
 }

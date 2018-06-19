@@ -21,8 +21,8 @@ namespace WeiXinTicketSystem.WebApi.Models
         public string Title { get; set; }
         public string Image { get; set; }
         public string ActivityContent { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public string Status { get; set; }
         public bool IsDel { get; set; }
     }

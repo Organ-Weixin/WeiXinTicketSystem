@@ -16,7 +16,7 @@ namespace WeiXinTicketSystem.WebApi.Models
     }
     public class QuerySnackTypesReplyType
     {
-        public int Id { get; set; }
+        public int TypeId { get; set; }
         public string CinemaCode { get; set; }
         public string TypeName { get; set; }
         public string Remark { get; set; }

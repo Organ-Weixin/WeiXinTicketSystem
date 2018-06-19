@@ -14,7 +14,7 @@ namespace WeiXinTicketSystem.WebApi.Models
     {
         public string CinemaCode { get; set; }
         public string OrderCode { get; set; }
-        public SnackOrderStatusEnum OrderStatus { get; set; }
+        public string OrderStatus { get; set; }
         public DateTime SubmitTime { get; set; }
         public string VoucherCode { get; set; }
     }

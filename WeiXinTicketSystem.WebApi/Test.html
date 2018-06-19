@@ -23,20 +23,17 @@
         //    });
         //});
         $(function () {
-            var postdata = {"UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "MobilePhone": "15000002025", "DeliveryAddress": "衢州新天地影城2号厅1排2座", "SendTime": "2018-06-08 15:00:00", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Snacks": [{ "SnackCode": "31754854", "StandardPrice": "5.00", "SalePrice": "1.00", "Number": 2, "SubTotalPrice": "2:00" }] };
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OrderCode": "b3e5f09adb000001", "OrderTradeNo": "2015010712768841", "MobilePhone": "15000002025", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Snacks": [{ "SnackCode": "31754854", "StandardPrice": "5.00", "SalePrice": "1.00", "Number": 2, "SubTotalPrice": "2:00" }] };
             $.ajax({
                 type: "post",
-                url: "http://localhost:28442/api/Snack/BookSnacks",
+                url: "http://localhost:28442/api/Snack/SubmitSnacks",
                 //contentType: 'application/json',
                 //data: JSON.stringify(postdata),
                 data: postdata,
                 success: function (data, status) {
                     if (status == "success") {
                         console.log(data.Status);
-                        $("#div_test").html("Status:" + data.Status);
-                        $("#div_test").append(" | ErrorCode:" + data.ErrorCode);
-                        $("#div_test").append(" | ErrorMessage:" + data.ErrorMessage);
-                        $("#div_test").append(" | data:" + eval(data.data));
+                        $("#div_test").append(JSON.stringify(data));
                     }
                 }
             });

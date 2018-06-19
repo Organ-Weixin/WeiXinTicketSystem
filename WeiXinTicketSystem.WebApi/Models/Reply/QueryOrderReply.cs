@@ -12,25 +12,25 @@ namespace WeiXinTicketSystem.WebApi.Models
     }
     public class QueryOrderReplyOrder
     {
-        public int Id { get; set; }
+        public int OrderId { get; set; }
         public string CinemaCode { get; set; }
         public string OrderCode { get; set; }
         public string MobilePhone { get; set; }
         public int SnacksCount { get; set; }
         public decimal TotalPrice { get; set; }
-        public DateTime ReleaseTime { get; set; }
-        public DateTime SubmitTime { get; set; }
+        public string ReleaseTime { get; set; }
+        public string SubmitTime { get; set; }
         public string VoucherCode { get; set; }
-        public SnackOrderStatusEnum OrderStatus { get; set; }
-        public DateTime RefundTime { get; set; }
-        public DateTime FetchTime { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime AutoUnLockDateTime { get; set; }
+        public string OrderStatus { get; set; }
+        public string RefundTime { get; set; }
+        public string FetchTime { get; set; }
+        public string Created { get; set; }
+        public string AutoUnLockDateTime { get; set; }
         public string DeliveryAddress { get; set; }
-        public DateTime SendTime { get; set; }
+        public string SendTime { get; set; }
         public bool OrderPayFlag { get; set; }
-        public byte OrderPayType { get; set; }
-        public DateTime OrderPayTime { get; set; }
+        public string OrderPayType { get; set; }
+        public string OrderPayTime { get; set; }
         public string OrderTradeNo { get; set; }
         public bool IsUseConpons { get; set; }
         public string ConponCode { get; set; }

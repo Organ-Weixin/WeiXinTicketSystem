@@ -16,7 +16,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         /// <returns></returns>
         public static QuerySnackTypesReplyType MapFrom(this QuerySnackTypesReplyType type, SnackTypeEntity snacktype)
         {
-            type.Id = snacktype.Id;
+            type.TypeId = snacktype.Id;
             type.CinemaCode = snacktype.CinemaCode;
             type.TypeName = snacktype.TypeName;
             type.Remark = snacktype.Remark;
@@ -24,9 +24,9 @@ namespace WeiXinTicketSystem.WebApi.Models
             return type;
         }
 
-        public static QuerySnacksReplySnack MapFrom(this QuerySnacksReplySnack snack,SnackEntity entity)
+        public static QuerySnacksReplySnack MapFrom(this QuerySnacksReplySnack snack, SnackEntity entity)
         {
-            snack.Id = entity.Id;
+            snack.SnackId = entity.Id;
             snack.CinemaCode = entity.CinemaCode;
             snack.SnackCode = entity.SnackCode;
             snack.TypeId = entity.TypeId;
@@ -36,20 +36,19 @@ namespace WeiXinTicketSystem.WebApi.Models
             snack.SalePrice = entity.SalePrice;
             snack.Status = entity.Status.GetDescription();
             snack.Stock = entity.Stock;
-            snack.ExpDate = entity.ExpDate.HasValue? entity.ExpDate.Value:DateTime.Parse("2099-12-31");
-            snack.IsDel = entity.IsDel;
-            snack.IsRecommand = entity.IsRecommand.HasValue? entity.IsRecommand.Value:false;
+            snack.ExpDate = entity.ExpDate.ToFormatStringWithT();
+            snack.IsRecommand = entity.IsRecommand.HasValue ? entity.IsRecommand.Value : false;
             snack.Image = entity.Image;
             return snack;
         }
-        public static BookSnacksReplySnacks MapFrom(this BookSnacksReplySnacks data,SnackOrderViewEntity order)
+        public static BookSnacksReplySnacks MapFrom(this BookSnacksReplySnacks data, SnackOrderViewEntity order)
         {
             data.CinemaCode = order.OrderBaseInfo.CinemaCode;
             data.OrderCode = order.OrderBaseInfo.OrderCode;
             data.MobilePhone = order.OrderBaseInfo.MobilePhone;
             data.SnacksCount = order.OrderBaseInfo.SnacksCount;
             data.TotalPrice = order.OrderBaseInfo.TotalPrice;
-            data.OrderStatus = order.OrderBaseInfo.OrderStatus;
+            data.OrderStatus = order.OrderBaseInfo.OrderStatus.GetDescription();
             data.DeliveryAddress = order.OrderBaseInfo.DeliveryAddress;
             data.SendTime = order.OrderBaseInfo.SendTime;
             data.Created = order.OrderBaseInfo.Created;
@@ -59,21 +58,21 @@ namespace WeiXinTicketSystem.WebApi.Models
                 x => new BookSnacksReplySnack()
                 {
                     SnackCode = x.SnackCode,
-                    StandardPrice=x.StandardPrice,
-                    SalePrice=x.SalePrice,
-                    Number=x.Number,
-                    SubTotalPrice=x.SubTotalPrice
+                    StandardPrice = x.StandardPrice,
+                    SalePrice = x.SalePrice,
+                    Number = x.Number,
+                    SubTotalPrice = x.SubTotalPrice
                 }).ToList();
             return data;
         }
-        public static PayOrderReplyOrder MapFrom(this PayOrderReplyOrder data,SnackOrderEntity entity)
+        public static PayOrderReplyOrder MapFrom(this PayOrderReplyOrder data, SnackOrderEntity entity)
         {
             data.CinemaCode = entity.CinemaCode;
             data.OrderCode = entity.OrderCode;
-            data.OrderStatus = entity.OrderStatus;
-            data.OrderPayFlag = entity.OrderPayFlag.HasValue?entity.OrderPayFlag.Value:false;
+            data.OrderStatus = entity.OrderStatus.GetDescription();
+            data.OrderPayFlag = entity.OrderPayFlag.HasValue ? entity.OrderPayFlag.Value : false;
             data.OrderTradeNo = entity.OrderTradeNo;
-            data.OrderPayTime = entity.OrderPayTime.HasValue?entity.OrderPayTime.Value:DateTime.Now;
+            data.OrderPayTime = entity.OrderPayTime.ToFormatStringWithT();
             return data;
         }
 
@@ -113,14 +112,14 @@ namespace WeiXinTicketSystem.WebApi.Models
 
         public static QueryBannersReplyBanner MapFrom(this QueryBannersReplyBanner banner, BannerEntity entity)
         {
-            banner.Id = entity.Id;
+            banner.BannerId = entity.Id;
             banner.CinemaCode = entity.CinemaCode;
             banner.Title = entity.Title;
             banner.Image = entity.Image;
-            banner.Created = entity.Created;
-            banner.StartDate = entity.StartDate.HasValue? entity.StartDate.Value:DateTime.Now;
-            banner.EndDate = entity.EndDate.HasValue ? entity.EndDate.Value : DateTime.Now;
-            banner.Status = (int)entity.Status;
+            banner.Created = entity.Created.ToFormatStringWithT();
+            banner.StartDate = entity.StartDate.ToFormatStringWithT();
+            banner.EndDate = entity.EndDate.ToFormatStringWithT();
+            banner.Status = entity.Status.GetDescription();
             return banner;
         }
 
@@ -132,20 +131,21 @@ namespace WeiXinTicketSystem.WebApi.Models
             activity.Title = entity.Title;
             activity.Image = entity.Image;
             activity.ActivityContent = entity.ActivityContent;
-            activity.StartDate = entity.StartDate.Value;
-            activity.EndDate = entity.EndDate.Value;
+            activity.StartDate = entity.StartDate.ToFormatStringWithT();
+            activity.EndDate = entity.EndDate.ToFormatStringWithT();
             activity.Status = entity.Status.GetDescription();
             activity.IsDel = entity.IsDel;
             return activity;
         }
         public static QueryUserOrdersReplyOrder MapFrom(this QueryUserOrdersReplyOrder order, SnackOrderEntity entity)
         {
+            order.OrderId = entity.Id;
             order.CinemaCode = entity.CinemaCode;
             order.OrderCode = entity.OrderCode;
             order.MobilePhone = entity.MobilePhone;
             order.SnacksCount = entity.SnacksCount;
             order.TotalPrice = entity.TotalPrice;
-            order.OrderStatus = entity.OrderStatus;
+            order.OrderStatus = entity.OrderStatus.GetDescription();
             order.DeliveryAddress = entity.DeliveryAddress;
             order.SendTime = entity.SendTime;
             order.Created = entity.Created;
@@ -153,32 +153,29 @@ namespace WeiXinTicketSystem.WebApi.Models
         }
         public static QueryOrderReplyOrder MapFrom(this QueryOrderReplyOrder data, SnackOrderViewEntity order)
         {
-            data.Id = order.OrderBaseInfo.Id;
+            data.OrderId = order.OrderBaseInfo.Id;
             data.CinemaCode = order.OrderBaseInfo.CinemaCode;
             data.OrderCode = order.OrderBaseInfo.OrderCode;
             data.MobilePhone = order.OrderBaseInfo.MobilePhone;
             data.SnacksCount = order.OrderBaseInfo.SnacksCount;
             data.TotalPrice = order.OrderBaseInfo.TotalPrice;
-            data.ReleaseTime = order.OrderBaseInfo.ReleaseTime.Value;
-            data.SubmitTime = order.OrderBaseInfo.SubmitTime.Value;
+            data.ReleaseTime = order.OrderBaseInfo.ReleaseTime.ToFormatStringWithT();
+            data.SubmitTime = order.OrderBaseInfo.SubmitTime.ToFormatStringWithT();
             data.VoucherCode = order.OrderBaseInfo.VoucherCode;
-            data.OrderStatus = order.OrderBaseInfo.OrderStatus;
-            data.RefundTime = order.OrderBaseInfo.RefundTime.Value;
-            data.FetchTime = order.OrderBaseInfo.FetchTime.Value;
-            data.Created = order.OrderBaseInfo.Created;
+            data.OrderStatus = order.OrderBaseInfo.OrderStatus.GetDescription();
+            data.RefundTime = order.OrderBaseInfo.RefundTime.ToFormatStringWithT();
+            data.FetchTime = order.OrderBaseInfo.FetchTime.ToFormatStringWithT();
+            data.Created = order.OrderBaseInfo.Created.ToFormatStringWithT();
             data.DeliveryAddress = order.OrderBaseInfo.DeliveryAddress;
-            data.SendTime = order.OrderBaseInfo.SendTime;
-            data.Created = order.OrderBaseInfo.Created;
-            data.AutoUnLockDateTime = order.OrderBaseInfo.AutoUnLockDateTime;
-            data.DeliveryAddress = order.OrderBaseInfo.DeliveryAddress;
-            data.SendTime = order.OrderBaseInfo.SendTime;
-            data.OrderPayFlag = order.OrderBaseInfo.OrderPayFlag.Value;
-            data.OrderPayType = order.OrderBaseInfo.OrderPayType.Value;
-            data.OrderPayTime = order.OrderBaseInfo.OrderPayTime.Value;
+            data.SendTime = order.OrderBaseInfo.SendTime.ToFormatStringWithT();
+            data.AutoUnLockDateTime = order.OrderBaseInfo.AutoUnLockDateTime.ToFormatStringWithT();
+            data.OrderPayFlag = order.OrderBaseInfo.OrderPayFlag.HasValue ? order.OrderBaseInfo.OrderPayFlag.Value : false;
+            data.OrderPayType = order.OrderBaseInfo.OrderPayType.HasValue ? order.OrderBaseInfo.OrderPayType.Value.GetDescription() : "";
+            data.OrderPayTime = order.OrderBaseInfo.OrderPayTime.ToFormatStringWithT();
             data.OrderTradeNo = order.OrderBaseInfo.OrderTradeNo;
-            data.IsUseConpons = order.OrderBaseInfo.IsUseConpons.Value;
+            data.IsUseConpons = order.OrderBaseInfo.IsUseConpons.HasValue ? order.OrderBaseInfo.IsUseConpons.Value : false;
             data.ConponCode = order.OrderBaseInfo.ConponCode;
-            data.ConponPrice = order.OrderBaseInfo.ConponPrice.Value;
+            data.ConponPrice = order.OrderBaseInfo.ConponPrice.HasValue ? order.OrderBaseInfo.ConponPrice.Value : 0;
             data.OpenID = order.OrderBaseInfo.OpenID;
             data.Snacks = order.SnackOrderDetails.Select(
                 x => new QueryOrderReplySnack()
@@ -194,18 +191,46 @@ namespace WeiXinTicketSystem.WebApi.Models
 
         public static QueryConponsReplyConpon MapFrom(this QueryConponsReplyConpon conpon, ConponEntity entity)
         {
-            conpon.Id = entity.Id;
+            conpon.ConponId = entity.Id;
             conpon.CinemaCode = entity.CinemaCode;
             conpon.ConponType = entity.ConponType.GetDescription();
             conpon.OpenID = entity.OpenID;
             conpon.Price = entity.Price;
             conpon.ConponCode = entity.ConponCode;
-            conpon.ValidityDate = entity.ValidityDate;
-            conpon.IfUse = entity.IfUse.GetDescription();
-            conpon.UseDate = entity.UseDate;
+            conpon.ValidityDate = entity.ValidityDate.ToFormatStringWithT();
+            conpon.Status= entity.Status.GetDescription();
+            conpon.UseDate = entity.UseDate.ToFormatStringWithT();
             conpon.Title = entity.Title;
             conpon.Deleted = entity.Deleted;
             conpon.Image = entity.Image;
+            return conpon;
+        }
+        public static ConponEntity MapFrom(this ConponEntity entity, SendConponQueryJson queryJson)
+        {
+            entity.ConponType = (ConponTypeEnum)queryJson.ConponType;
+            entity.CinemaCode = queryJson.CinemaCode;
+            entity.OpenID = queryJson.OpenID;
+            entity.Price = queryJson.Price;
+            entity.ConponCode = RandomHelper.CreateRandomCode();
+            entity.ValidityDate = queryJson.ValidityDate;
+            entity.Status = ConponStatusEnum.NotUsed;
+            entity.Created = DateTime.Now;
+            entity.Deleted = false;
+            entity.Title = queryJson.Title;
+            entity.Image = queryJson.Image;
+            return entity;
+        }
+        public static SendConponReplyConpon MapFrom(this SendConponReplyConpon conpon, ConponEntity entity)
+        {
+            conpon.CinemaCode = entity.CinemaCode;
+            conpon.Title = entity.Title;
+            conpon.ConponType = (int)entity.ConponType;
+            conpon.ConponCode = entity.ConponCode;
+            conpon.Price = entity.Price.HasValue ? entity.Price.Value : 0;
+            conpon.ValidityDate = entity.ValidityDate.ToFormatStringWithT();
+            conpon.Image = entity.Image;
+            conpon.SendTime = entity.Created.ToFormatStringWithT();
+            conpon.OpenID = entity.OpenID;
             return conpon;
         }
 
@@ -243,8 +268,24 @@ namespace WeiXinTicketSystem.WebApi.Models
             member.MemberGrade = entity.MemberGrade.GetDescription();
             member.Status = entity.Status.GetDescription();
             member.Created = entity.Created;
-           
+
             return member;
+        }
+
+        public static QueryGiftsReplyGift MapFrom(this QueryGiftsReplyGift gift, GiftEntity entity)
+        {
+            gift.GiftId = entity.Id;
+            gift.CinemaCode = entity.CinemaCode;
+            gift.Title = entity.Title;
+            gift.Details = entity.Details;
+            gift.OriginalPrice = entity.OriginalPrice.HasValue? entity.OriginalPrice.Value:0;
+            gift.Price = entity.Price.HasValue? entity.Price.Value:0;
+            gift.Image = entity.Image;
+            gift.Stock = entity.Stock.HasValue ? entity.Stock.Value : 0;
+            gift.StartDate = entity.StartDate.ToFormatStringWithT();
+            gift.EndDate = entity.EndDate.ToFormatStringWithT();
+            gift.Status = entity.Status.GetDescription();
+            return gift;
         }
     }
 }

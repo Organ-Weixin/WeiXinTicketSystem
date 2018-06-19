@@ -257,6 +257,21 @@ namespace WeiXinTicketSystem.WebApi.Models
             ErrorCode = ErrorCodeEnum.ConponNotExistOrUsed.GetValueString();
             ErrorMessage = ErrorCodeEnum.ConponNotExistOrUsed.GetDescription();
         }
+        /// <summary>
+        /// 优惠券使用状态非法
+        /// </summary>
+        public void SetConponStatusInvalidReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.ConponStatusInvalid.GetValueString();
+            ErrorMessage = ErrorCodeEnum.ConponStatusInvalid.GetDescription();
+        }
+        public void SetGiftStatusInvalidReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.GiftStatusInvalid.GetValueString();
+            ErrorMessage = ErrorCodeEnum.GiftStatusInvalid.GetDescription();
+        }
         #endregion
 
         /// <summary>

@@ -34,19 +34,20 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="OrderCode"></param>
         /// <returns></returns>
-        public SnackOrderEntity GetSnackOrderByOrderCode(string OrderCode, string Operation)
+        public SnackOrderEntity GetSnackOrderByOrderCode(string OrderCode)
         {
-            var query = _snackOrderRepository.Query.Where(x => x.OrderCode == OrderCode);
-            switch (Operation)
-            {
-                case "PayOrder":
-                    query.Where(x => x.OrderStatus == SnackOrderStatusEnum.Booked && x.AutoUnLockDateTime >= DateTime.Now);
-                    break;
-                case "FetchSnacks":
-                    query.Where(x => x.OrderStatus == SnackOrderStatusEnum.Complete);
-                    break;
-            }
-            return query.SingleOrDefault();
+            DateTime nowdata = DateTime.Now;
+            return _snackOrderRepository.Query.Where(x => x.OrderCode == OrderCode && x.OrderStatus == SnackOrderStatusEnum.Booked && x.AutoUnLockDateTime > nowdata).SingleOrDefault();
+        }
+        /// <summary>
+        /// 查询待取货订单
+        /// </summary>
+        /// <param name="OrderCode"></param>
+        /// <param name="VoucherCode"></param>
+        /// <returns></returns>
+        public SnackOrderEntity GetSnackOrderbyVoucherCode(string OrderCode,string VoucherCode)
+        {
+            return _snackOrderRepository.Query.Where(x => x.OrderCode == OrderCode && x.VoucherCode == VoucherCode && x.OrderStatus == SnackOrderStatusEnum.Complete).SingleOrDefault();
         }
 
         public SnackOrderViewEntity GetSnacksOrderWithOrderCode(string CinemaCode, string OrderCode)

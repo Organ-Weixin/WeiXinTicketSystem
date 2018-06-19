@@ -16,7 +16,7 @@ namespace WeiXinTicketSystem.WebApi.Models
     }
     public class QuerySnacksReplySnack
     {
-        public int Id { get; set; }
+        public int SnackId { get; set; }
         public string CinemaCode { get; set; }
         public string SnackCode { get; set; }
         public int TypeId { get; set; }
@@ -26,8 +26,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         public decimal SalePrice { get; set; }
         public string Status { get; set; }
         public int Stock { get; set; }
-        public DateTime ExpDate { get; set; }
-        public bool IsDel { get; set; }
+        public string ExpDate { get; set; }
         public bool IsRecommand { get; set; }
         public string Image { get; set; }
     }

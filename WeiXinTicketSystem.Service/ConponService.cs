@@ -84,7 +84,7 @@ namespace WeiXinTicketSystem.Service
             return await query.ToPageListAsync();
         }
 
-        public async Task<IPageList<ConponEntity>> QueryConponsPagedAsync(string cinemaCode, string OpenID, int statusID, int currentpage, int pagesize)
+        public async Task<IPageList<ConponEntity>> QueryConponsPagedAsync(string cinemaCode, string OpenID, ConponStatusEnum status, int currentpage, int pagesize)
         {
             int offset = (currentpage - 1) * pagesize;
             var query = _conponRepository.Query
@@ -100,19 +100,9 @@ namespace WeiXinTicketSystem.Service
             {
                 query.Where(x => x.OpenID == OpenID);
             }
-            if (statusID !=2)
+            if (status != ConponStatusEnum.All)
             {
-                if (statusID == 0)
-                {
-
-                    query.Where(x => x.IfUse == YesOrNoEnum.No);
-                }
-                if (statusID == 1)
-                {
-
-                    query.Where(x => x.IfUse == YesOrNoEnum.Yes);
-                }
-
+                query.Where(x => x.Status == status);
             }
             query.Where(x => !x.Deleted);
             return await query.ToPageListAsync();

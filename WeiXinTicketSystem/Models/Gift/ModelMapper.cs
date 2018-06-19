@@ -56,7 +56,7 @@ namespace WeiXinTicketSystem.Models.Gift
             {
                 module.EndDate =DateTime.Parse(model.EndDate);
             }
-            module.Status = (YesOrNoEnum)model.Status;
+            module.Status = (GiftStatusEnum)model.Status;
 
         }
 

@@ -65,10 +65,12 @@
     <Compile Include="Enum\CinemaFeePayTypeEnum.cs" />
     <Compile Include="Enum\CinemaStatusEnum.cs" />
     <Compile Include="Enum\CinemaTypeEnum.cs" />
+    <Compile Include="Enum\ConponStatusEnum.cs" />
     <Compile Include="Enum\ConponTypeEnum.cs" />
     <Compile Include="Enum\CustomMenuTypeEnum.cs" />
     <Compile Include="Enum\CustomMenuReTypeEnum.cs" />
     <Compile Include="Enum\DefaultActionTypeEnum.cs" />
+    <Compile Include="Enum\GiftStatusEnum.cs" />
     <Compile Include="Enum\LoveFlagEnum.cs" />
     <Compile Include="Enum\MemberCardGradeEnum.cs" />
     <Compile Include="Enum\MemberCardStatusEnum.cs" />

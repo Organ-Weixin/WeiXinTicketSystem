@@ -26,7 +26,7 @@ namespace WeiXinTicketSystem.Models.Conpon
                 Price = module.Price,
                 ConponCode = module.ConponCode,
                 ValidityDate = module.ValidityDate.ToFormatDateString(),
-                IfUse = module.IfUse.GetDescription(),
+                Status = module.Status.GetDescription(),
                 UseDate = module.UseDate.ToFormatDateString(),
                 Title = module.Title
 
@@ -51,7 +51,7 @@ namespace WeiXinTicketSystem.Models.Conpon
                 module.ValidityDate = DateTime.Parse(model.ValidityDate);
             }
 
-            module.IfUse = (YesOrNoEnum)model.IfUse;
+            module.Status = (ConponStatusEnum)model.Status;
             if (!string.IsNullOrEmpty(model.UseDate))
             {
                 module.UseDate =DateTime.Parse(model.UseDate);
@@ -75,7 +75,7 @@ namespace WeiXinTicketSystem.Models.Conpon
             model.Price = module.Price;
             model.ConponCode = module.ConponCode;
             model.ValidityDate = module.ValidityDate.ToFormatDateString();
-            model.IfUse = (int)module.IfUse;
+            model.Status = (int)module.Status;
             model.UseDate = module.UseDate.ToFormatDateString();
             model.Title = module.Title;
 

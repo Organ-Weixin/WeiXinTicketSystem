@@ -13,6 +13,17 @@ namespace WeiXinTicketSystem.Util
         {
             return dateTime.ToString("s");
         }
+        public static string ToFormatStringWithT(this DateTime? dateTime)
+        {
+            if (dateTime.HasValue)
+            {
+                return dateTime.Value.ToFormatStringWithT();
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
 
         /// <summary>
         /// 格式化日期字符串

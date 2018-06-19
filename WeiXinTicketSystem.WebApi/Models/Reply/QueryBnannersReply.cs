@@ -16,13 +16,13 @@ namespace WeiXinTicketSystem.WebApi.Models
     }
     public class QueryBannersReplyBanner
     {
-        public int Id { get; set; }
+        public int BannerId { get; set; }
         public string CinemaCode { get; set; }
         public string Title { get; set; }
         public string Image { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int Status { get; set; }
-        public DateTime Created { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+        public string Status { get; set; }
+        public string Created { get; set; }
     }
 }

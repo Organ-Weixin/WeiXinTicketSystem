@@ -52,7 +52,7 @@ namespace WeiXinTicketSystem.Models
 
         [ListBox("_dd", Multiple = false)]
         [Display(Name = "是否使用")]
-        public int IfUse { get; set; }
+        public int Status { get; set; }
 
         [Display(Name = "使用时间")]
         public string UseDate { get; set; }

@@ -17,7 +17,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         public string MobilePhone { get; set; }
         public int SnacksCount { get; set; }
         public decimal TotalPrice { get; set; }
-        public SnackOrderStatusEnum OrderStatus { get; set; }
+        public string OrderStatus { get; set; }
         public string DeliveryAddress { get; set; }
         public DateTime SendTime { get; set; }
         public DateTime Created { get; set; }
