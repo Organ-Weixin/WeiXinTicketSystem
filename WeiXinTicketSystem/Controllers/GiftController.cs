@@ -180,12 +180,12 @@ namespace WeiXinTicketSystem.Controllers
         /// <returns></returns>
         public async Task<ActionResult> Delete(int id)
         {
-            var Banner = await _giftService.GetGiftByIdAsync(id);
+            var gift = await _giftService.GetGiftByIdAsync(id);
 
-            if (Banner != null)
+            if (gift != null)
             {
-                Banner.IsDel = true;
-                await _giftService.UpdateAsync(Banner);
+                gift.IsDel = true;
+                await _giftService.UpdateAsync(gift);
             }
             return Object();
         }

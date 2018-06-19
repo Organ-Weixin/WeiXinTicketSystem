@@ -32,6 +32,8 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
         #endregion
 
+
+        #region 查询会员信息
         [HttpGet]
         public async Task<QueryMembersReply> QueryMember(string UserName, string Password, string CinemaCode, string OpenID)
         {
@@ -77,5 +79,56 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             queryMembersReply.SetSuccessReply();
             return queryMembersReply;
         }
+
+        #endregion
+
+        #region 开通会员
+        [HttpPost]
+        public RegisterMemberReply RegisterMember(RegisterMemberQueryJson QueryJson)
+        {
+            RegisterMemberReply registerMemberReply = new RegisterMemberReply();
+            //校验参数
+            if (!registerMemberReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.OpenID, QueryJson.CardNo, QueryJson.CardPassword, QueryJson.Balance.ToString(), QueryJson.Score.ToString(),QueryJson.MemberGrade.ToString()))
+            {
+                return registerMemberReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(QueryJson.UserName, QueryJson.Password);
+            if (UserInfo == null)
+            {
+                registerMemberReply.SetUserCredentialInvalidReply();
+                return registerMemberReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(QueryJson.CinemaCode);
+            if (cinema == null)
+            {
+                registerMemberReply.SetCinemaInvalidReply();
+                return registerMemberReply;
+            }
+            //验证用户OpenId是否存在
+            var ticketuser = _ticketUserService.GetTicketUserByOpenID(QueryJson.OpenID);
+            if (ticketuser == null)
+            {
+                registerMemberReply.SetOpenIDNotExistReply();
+                return registerMemberReply;
+            }
+
+            
+            //将请求参数转为会员卡信息
+            var memberCard = new MemberCardEntity();
+            memberCard.MapFrom(QueryJson);
+
+
+            _memberCardService.Insert(memberCard);
+
+            registerMemberReply.data = new RegisterMemberReplyMember();
+            registerMemberReply.data.MapFrom(memberCard);
+            registerMemberReply.SetSuccessReply();
+
+            return registerMemberReply;
+
+        }
+        #endregion
     }
 }

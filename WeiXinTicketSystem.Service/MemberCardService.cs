@@ -117,6 +117,15 @@ namespace WeiXinTicketSystem.Service
 
 
         /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Insert(MemberCardEntity entity)
+        {
+            _memberCardRepository.Insert(entity);
+        }
+
+        /// <summary>
         /// 新增会员卡
         /// </summary>
         /// <param name="entity"></param>

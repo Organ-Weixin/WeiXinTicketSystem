@@ -329,5 +329,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(ConponController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(ConponController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 赠品
+        /// </summary>
+        public static class Gift
+        {
+            public static string Name { get { return nameof(Gift); } }
+            public static string Index { get { return nameof(GiftController.Index); } }
+            public static string List { get { return nameof(GiftController.List); } }
+            public static string Create { get { return nameof(GiftController.Create); } }
+            public static string Update { get { return nameof(GiftController.Update); } }
+            public static string Delete { get { return nameof(GiftController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(GiftController._CreateOrUpdate); } }
+        }
     }
 }
