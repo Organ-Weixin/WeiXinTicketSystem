@@ -272,6 +272,12 @@ namespace WeiXinTicketSystem.WebApi.Models
             ErrorCode = ErrorCodeEnum.GiftStatusInvalid.GetValueString();
             ErrorMessage = ErrorCodeEnum.GiftStatusInvalid.GetDescription();
         }
+        public void SetFilmCodeNotExistReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.FilmCodeNotExist.GetValueString();
+            ErrorMessage = ErrorCodeEnum.FilmCodeNotExist.GetDescription();
+        }
         #endregion
 
         /// <summary>

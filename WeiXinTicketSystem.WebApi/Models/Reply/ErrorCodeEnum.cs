@@ -165,6 +165,12 @@ namespace WeiXinTicketSystem.WebApi.Models
         /// 赠品状态非法
         /// </summary>
         [Description("赠品状态非法！合法取值包括：All，On，Off")]
-        GiftStatusInvalid = 10000025
+        GiftStatusInvalid = 10000025,
+
+        /// <summary>
+        /// 影片编码不存在
+        /// </summary>
+        [Description("影片编码不存在或不合法！")]
+        FilmCodeNotExist = 10000026
     }
 }
