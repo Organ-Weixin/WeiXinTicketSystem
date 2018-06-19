@@ -41,11 +41,30 @@
         //        }
         //    });
         //});
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OpenID": "fasfr333wertrty767hhg", "CardNo": "HM000012345", "CardPassword": "123456", "Balance": "200", "Score": "100", "MemberGrade": "1" };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "http://localhost:28442/api/Member/RegisterMember",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").html("Status:" + data.Status);
+        //                $("#div_test").append(" | ErrorCode:" + data.ErrorCode);
+        //                $("#div_test").append(" | ErrorMessage:" + data.ErrorMessage);
+        //                $("#div_test").append(" | data:" + eval(data.data));
+        //            }
+        //        }
+        //    });
+        //});
         $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OpenID": "fasfr333wertrty767hhg", "CardNo": "HM000012345", "CardPassword": "123456", "Balance": "200", "Score": "100", "MemberGrade": "1" };
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "FilmCode": "001102172018", "FilmName": "狄仁杰之四大天王", "Score": "4.8", "CommentContent": "很精彩，很好看", "OpenID": "fasfr333wertrty767hhg" };
             $.ajax({
                 type: "post",
-                url: "http://localhost:28442/api/Member/RegisterMember",
+                url: "http://localhost:28442/api/Comment/SubmitFilmComment",
                 //contentType: 'application/json',
                 //data: JSON.stringify(postdata),
                 data: postdata,

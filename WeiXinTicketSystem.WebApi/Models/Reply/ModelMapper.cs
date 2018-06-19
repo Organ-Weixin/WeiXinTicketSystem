@@ -201,7 +201,7 @@ namespace WeiXinTicketSystem.WebApi.Models
             conpon.Price = entity.Price;
             conpon.ConponCode = entity.ConponCode;
             conpon.ValidityDate = entity.ValidityDate;
-            conpon.IfUse = entity.IfUse.GetDescription();
+            conpon.Status = entity.Status.GetDescription();
             conpon.UseDate = entity.UseDate;
             conpon.Title = entity.Title;
             conpon.Deleted = entity.Deleted;
@@ -272,6 +272,29 @@ namespace WeiXinTicketSystem.WebApi.Models
             data.MemberGrade = member.MemberGrade.GetDescription();
             data.Status = member.Status.GetDescription();
             data.Created = member.Created;
+
+            return data;
+        }
+
+        public static FilmCommentEntity MapFrom(this FilmCommentEntity comment, SubmitFilmCommentQueryJson Queryjson)
+        {
+            comment.FilmCode = Queryjson.FilmCode;
+            comment.FilmName = Queryjson.FilmName;
+            comment.Score = Queryjson.Score;
+            comment.CommentContent = Queryjson.CommentContent;
+            comment.OpenID = Queryjson.OpenID;
+            comment.Created = DateTime.Now;
+            return comment;
+        }
+
+        public static SubmitFilmCommentReplyComment MapFrom(this SubmitFilmCommentReplyComment data, FilmCommentEntity comment)
+        {
+            data.FilmCode = comment.FilmCode;
+            data.FilmName = comment.FilmName;
+            data.Score = comment.Score;
+            data.CommentContent = comment.CommentContent;
+            data.OpenID = comment.OpenID;
+            data.Created = comment.Created;
 
             return data;
         }

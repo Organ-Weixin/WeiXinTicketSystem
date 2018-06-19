@@ -313,7 +313,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             if (QueryJson.IsUseConpons)
             {
                 conpon = _conponService.GetConponByConponCode(QueryJson.ConponCode);
-                if(conpon.IfUse==YesOrNoEnum.Yes||conpon.Deleted)
+                if(conpon.Status== ConponStatusEnum.Used||conpon.Deleted)
                 {
                     payOderReply.SetConponNotExistOrUsedReply();
                     return payOderReply;
@@ -330,7 +330,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             snackOrder.ConponPrice = QueryJson.ConponPrice;
             snackOrder.Updated = DateTime.Now;
             //更新优惠券
-            conpon.IfUse = YesOrNoEnum.Yes;
+            conpon.Status = ConponStatusEnum.Used;
             conpon.Updated = DateTime.Now;
             conpon.Price = QueryJson.ConponPrice;
 

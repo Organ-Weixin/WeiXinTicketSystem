@@ -95,9 +95,9 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["AdminMemberCardView"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
 	tables["AdminMemberCardView"]["Status"].PropertyType="MemberCardStatusEnum";
 	tables["Conpons"]["ConponType"].PropertyType="ConponTypeEnum";
-	tables["Conpons"]["IfUse"].PropertyType="YesOrNoEnum";
+	tables["Conpons"]["Status"].PropertyType="ConponStatusEnum";
 	tables["AdminConponView"]["ConponType"].PropertyType="ConponTypeEnum";
-	tables["AdminConponView"]["IfUse"].PropertyType="YesOrNoEnum";
+	tables["AdminConponView"]["Status"].PropertyType="ConponStatusEnum";
 	tables["Cinema"]["OpenSnacks"].PropertyType="YesOrNoEnum";
 	tables["SessionInfo"]["IsAvalible"].PropertyType="YesOrNoEnum";
 	tables["Gifts"]["Status"].PropertyType="YesOrNoEnum";

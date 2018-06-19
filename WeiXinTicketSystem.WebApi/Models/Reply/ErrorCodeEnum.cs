@@ -153,6 +153,13 @@ namespace WeiXinTicketSystem.WebApi.Models
         /// 优惠券不存在或已使用
         /// </summary>
         [Description("优惠券不存在或已使用！")]
-        ConponNotExistOrUsed = 10000023
+        ConponNotExistOrUsed = 10000023,
+
+        /// <summary>
+        /// 影片编码不存在
+        /// </summary>
+        [Description("影片编码不存在或不合法！")]
+        FilmCodeNotExist = 10000024
+
     }
 }

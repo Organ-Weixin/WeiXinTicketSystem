@@ -231,6 +231,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Models\Query\BookSnacksQueryJson.cs" />
     <Compile Include="Models\Query\PayOrderQueryJson.cs" />
     <Compile Include="Models\Query\RegisterMemberQueryJson.cs" />
+    <Compile Include="Models\Query\SubmitFilmCommentQueryJson.cs" />
     <Compile Include="Models\Query\SubmitSnacksQueryJson.cs" />
     <Compile Include="Models\Reply\BaseReply.cs" />
     <Compile Include="Models\Reply\BookSnacksReply.cs" />
@@ -262,6 +264,7 @@
     <Compile Include="Models\Reply\RegisterMemberReply.cs" />
     <Compile Include="Models\Reply\ReleaseSnacksReply.cs" />
     <Compile Include="Models\Reply\StatusEnum.cs" />
+    <Compile Include="Models\Reply\SubmitFilmCommentReply.cs" />
     <Compile Include="Models\Reply\SubmitSnacksReply.cs" />
     <Compile Include="Models\Reply\QueryFilmsReply.cs" />
     <Compile Include="Models\Reply\QueryMembersReply.cs" />

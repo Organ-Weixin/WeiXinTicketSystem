@@ -100,20 +100,8 @@ namespace WeiXinTicketSystem.Service
             {
                 query.Where(x => x.OpenID == OpenID);
             }
-            if (statusID !=2)
-            {
-                if (statusID == 0)
-                {
-
-                    query.Where(x => x.IfUse == YesOrNoEnum.No);
-                }
-                if (statusID == 1)
-                {
-
-                    query.Where(x => x.IfUse == YesOrNoEnum.Yes);
-                }
-
-            }
+            query.Where(x => x.Status == (ConponStatusEnum)statusID);
+            
             query.Where(x => !x.Deleted);
             return await query.ToPageListAsync();
         }

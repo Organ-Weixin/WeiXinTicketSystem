@@ -23,7 +23,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         public decimal? Price { get; set; }
         public string ConponCode { get; set; }
         public DateTime? ValidityDate { get; set; }
-        public string IfUse { get; set; }
+        public string Status { get; set; }
         public DateTime? UseDate { get; set; }
         public bool Deleted { get; set; }
         public string Title { get; set; }
