@@ -12,7 +12,7 @@ namespace WeiXinTicketSystem.WebApi.Models
 
     public class QueryFilmsReplyFilm
     {
-        public int Id { get; set; }
+        public int FilmId { get; set; }
         public string FilmCode { get; set; }
         public string FilmName { get; set; }
         public string Version { get; set; }

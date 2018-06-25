@@ -168,6 +168,46 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the Snacks table.
+    /// </summary>
+    [Table("Snacks")]
+    [SqlLamTable(Name = "Snacks")]
+    public partial class SnackEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string SnackCode { get; set; }
+		public virtual int TypeId { get; set; }
+		public virtual string SnackName { get; set; }
+		public virtual string Remark { get; set; }
+		public virtual decimal StandardPrice { get; set; }
+		public virtual decimal SalePrice { get; set; }
+		public virtual SnackStatusEnum Status { get; set; }
+		public virtual int Stock { get; set; }
+		public virtual DateTime? ExpDate { get; set; }
+		public virtual bool IsDel { get; set; }
+		public virtual bool? IsRecommand { get; set; }
+		public virtual string Image { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the SnackTypes table.
+    /// </summary>
+    [Table("SnackTypes")]
+    [SqlLamTable(Name = "SnackTypes")]
+    public partial class SnackTypeEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string TypeName { get; set; }
+		public virtual string Remark { get; set; }
+		public virtual bool IsDel { get; set; }
+		public virtual string Image { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the CinemaWeChatOfficialAccounts table.
     /// </summary>
     [Table("CinemaWeChatOfficialAccounts")]
@@ -189,6 +229,25 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string vice_AppId { get; set; }
 		public virtual string vice_AppSecret { get; set; }
 		public virtual string vice_Micro_signal { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the AdminFilmCommentView view.
+    /// </summary>
+    [Table("AdminFilmCommentView")]
+    [SqlLamTable(Name = "AdminFilmCommentView")]
+    public partial class AdminFilmCommentViewEntity : EntityBase
+    {
+		public virtual int Id { get; set; }
+		public virtual string FilmCode { get; set; }
+		public virtual string FilmName { get; set; }
+		public virtual decimal Score { get; set; }
+		public virtual string CommentContent { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual bool Deleted { get; set; }
+		public virtual string NickName { get; set; }
+		public virtual string HeadImgUrl { get; set; }
 	}
 
     /// <summary>
@@ -378,46 +437,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string LoveFlag { get; set; }
 		public virtual string Type { get; set; }
 		public virtual DateTime UpdateTime { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the Snacks table.
-    /// </summary>
-    [Table("Snacks")]
-    [SqlLamTable(Name = "Snacks")]
-    public partial class SnackEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string SnackCode { get; set; }
-		public virtual int TypeId { get; set; }
-		public virtual string SnackName { get; set; }
-		public virtual string Remark { get; set; }
-		public virtual decimal StandardPrice { get; set; }
-		public virtual decimal SalePrice { get; set; }
-		public virtual SnackStatusEnum Status { get; set; }
-		public virtual int Stock { get; set; }
-		public virtual DateTime? ExpDate { get; set; }
-		public virtual bool IsDel { get; set; }
-		public virtual bool? IsRecommand { get; set; }
-		public virtual string Image { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the SnackTypes table.
-    /// </summary>
-    [Table("SnackTypes")]
-    [SqlLamTable(Name = "SnackTypes")]
-    public partial class SnackTypeEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string TypeName { get; set; }
-		public virtual string Remark { get; set; }
-		public virtual bool IsDel { get; set; }
-		public virtual string Image { get; set; }
 	}
 
     /// <summary>

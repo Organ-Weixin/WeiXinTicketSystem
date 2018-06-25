@@ -85,5 +85,57 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
 
         #endregion
+
+
+        #region 获取影片评论信息
+
+        [HttpGet]
+        public async Task<QueryFilmCommentsReply> QueryFilmComments(string UserName, string Password, string CinemaCode, string FilmCode, string CurrentPage, string PageSize)
+        {
+            QueryFilmCommentsReply queryFilmCommentsReply = new QueryFilmCommentsReply();
+            //校验参数
+            if (!queryFilmCommentsReply.RequestInfoGuard(UserName, Password, CinemaCode,FilmCode, CurrentPage, PageSize))
+            {
+                return queryFilmCommentsReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryFilmCommentsReply.SetUserCredentialInvalidReply();
+                return queryFilmCommentsReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryFilmCommentsReply.SetCinemaInvalidReply();
+                return queryFilmCommentsReply;
+            }
+            //验证影片编码是否存在
+            FilmInfoEntity filmInfo = _filmInfoService.GetFilmInfoByFilmCode(FilmCode);
+            if (filmInfo == null)
+            {
+                queryFilmCommentsReply.SetFilmCodeNotExistReply();
+                return queryFilmCommentsReply;
+            }
+
+            var FilmComments = await _filmCommentService.QueryFilmCommentsPagedAsync(FilmCode, int.Parse(CurrentPage), int.Parse(PageSize));
+
+            queryFilmCommentsReply.data = new QueryFilmCommentsReplyComments();
+            if (FilmComments == null || FilmComments.Count == 0)
+            {
+                queryFilmCommentsReply.data.CommentCount = 0;
+            }
+            else
+            {
+                queryFilmCommentsReply.data.CommentCount = FilmComments.Count;
+                queryFilmCommentsReply.data.Comments = FilmComments.Select(x => new QueryFilmCommentsReplyComment().MapFrom(x)).ToList();
+            }
+            queryFilmCommentsReply.SetSuccessReply();
+            return queryFilmCommentsReply;
+        }
+
+        #endregion
     }
 }

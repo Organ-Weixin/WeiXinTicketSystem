@@ -15,11 +15,13 @@ namespace WeiXinTicketSystem.Service
     {
         #region ctor
         private readonly IRepository<FilmCommentEntity> _filmCommentRepository;
+        private readonly IRepository<AdminFilmCommentViewEntity> _filmCommentViewRepository;
 
         public FilmCommentService()
         {
             //TODO: 移除内部依赖
             _filmCommentRepository = new Repository<FilmCommentEntity>();
+            _filmCommentViewRepository= new Repository<AdminFilmCommentViewEntity>();
         }
         #endregion
 
@@ -68,6 +70,23 @@ namespace WeiXinTicketSystem.Service
             if (!string.IsNullOrEmpty(keyword))
             {
                 query.Where(x => x.CommentContent.Contains(keyword) );
+            }
+            query.Where(x => !x.Deleted);
+            return await query.ToPageListAsync();
+        }
+
+
+        public async Task<IPageList<AdminFilmCommentViewEntity>> QueryFilmCommentsPagedAsync(string filmCode, int currentpage, int pagesize)
+        {
+            int offset = (currentpage - 1) * pagesize;
+            var query = _filmCommentViewRepository.Query
+                .OrderByDescending(x => x.Created)
+                .Skip(offset)
+                .Take(pagesize);
+
+            if (!string.IsNullOrEmpty(filmCode))
+            {
+                query.Where(x => x.FilmCode == filmCode);
             }
             query.Where(x => !x.Deleted);
             return await query.ToPageListAsync();

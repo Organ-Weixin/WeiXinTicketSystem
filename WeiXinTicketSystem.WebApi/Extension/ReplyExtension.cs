@@ -709,6 +709,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(MemberGrade));
                 return false;
             }
+
             return true;
         }
 
@@ -753,6 +754,53 @@ namespace WeiXinTicketSystem.WebApi.Extension
            
             return true;
         }
+
+        public static bool RequestInfoGuard(this QueryFilmCommentsReply reply, string Username, string Password, string CinemaCode, string FilmCode, string CurrentPage, string PageSize)
+        {
+            int rint = 0;
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(FilmCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(FilmCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CurrentPage))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CurrentPage));
+                return false;
+            }
+            if (!int.TryParse(CurrentPage, out rint))
+            {
+                reply.SetCurrentPageInvalidReply();
+                return false;
+            }
+            if (string.IsNullOrEmpty(PageSize))
+            {
+                reply.SetNecessaryParamMissReply(nameof(PageSize));
+                return false;
+            }
+            if (!int.TryParse(PageSize, out rint))
+            {
+                reply.SetPageSizeInvalidReply();
+                return false;
+            }
+            return true;
+        }
+
         ///// <summary>
         ///// 检查传入参数
         ///// </summary>

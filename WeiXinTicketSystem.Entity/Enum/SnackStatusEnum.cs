@@ -8,16 +8,16 @@ namespace WeiXinTicketSystem.Entity.Enum
     /// </summary>
     public enum SnackStatusEnum:byte
     {
-        [XmlEnum("1")]
+        [XmlEnum("0")]
         [Description("全部")]
-        All=2,
+        All=0,
+
+        [XmlEnum("1")]
+        [Description("下架")]
+        Off = 1,
 
         [XmlEnum("2")]
-        [Description("下架")]
-        Off = 0,
-
-        [XmlEnum("3")]
         [Description("上架")]
-        On = 1
+        On = 2
     }
 }

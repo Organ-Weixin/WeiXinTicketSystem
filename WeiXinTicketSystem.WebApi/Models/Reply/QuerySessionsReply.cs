@@ -18,7 +18,7 @@ namespace WeiXinTicketSystem.WebApi.Models
 
     public class QuerySessionsReplySession
     {
-        public int Id { get; set; }
+        public int SessionId { get; set; }
         public string CinemaCode { get; set; }
         public string SessionCode { get; set; }
         public string ScreenCode { get; set; }

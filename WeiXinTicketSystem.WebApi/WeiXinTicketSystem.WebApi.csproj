@@ -237,7 +237,7 @@
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\SnackController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-	<Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Extension\ReplyExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -255,6 +255,7 @@
     <Compile Include="Models\Reply\QueryActivityReply.cs" />
     <Compile Include="Models\Reply\QueryBnannersReply.cs" />
     <Compile Include="Models\Reply\QueryConponsReply.cs" />
+    <Compile Include="Models\Reply\QueryFilmCommentsReply.cs" />
     <Compile Include="Models\Reply\QueryGiftsReply.cs" />
     <Compile Include="Models\Reply\QueryOrderReply.cs" />
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />
@@ -268,10 +269,10 @@
     <Compile Include="Models\Reply\QueryFilmsReply.cs" />
     <Compile Include="Models\Reply\QueryMembersReply.cs" />
     <Compile Include="Models\Reply\QuerySessionsReply.cs" />
-	<Compile Include="Models\Query\RegisterMemberQueryJson.cs" />
+    <Compile Include="Models\Query\RegisterMemberQueryJson.cs" />
     <Compile Include="Models\Query\SubmitFilmCommentQueryJson.cs" />
-	<Compile Include="Models\Reply\RegisterMemberReply.cs" />
-	<Compile Include="Models\Reply\SubmitFilmCommentReply.cs" />
+    <Compile Include="Models\Reply\RegisterMemberReply.cs" />
+    <Compile Include="Models\Reply\SubmitFilmCommentReply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
   </ItemGroup>

@@ -22,11 +22,43 @@
         //        }
         //    });
         //});
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OrderCode": "b3e5f09adb000001", "OrderTradeNo": "2015010712768841", "MobilePhone": "15000002025", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Snacks": [{ "SnackCode": "31754854", "StandardPrice": "5.00", "SalePrice": "1.00", "Number": 2, "SubTotalPrice": "2:00" }] };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "http://localhost:28442/api/Snack/SubmitSnacks",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "FilmCode": "001102172018", "FilmName": "狄仁杰之四大天王", "Score": "4.9", "CommentContent": "精彩绝伦", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo" };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "http://localhost:28442/api/Comment/SubmitFilmComment",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
         $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OrderCode": "b3e5f09adb000001", "OrderTradeNo": "2015010712768841", "MobilePhone": "15000002025", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Snacks": [{ "SnackCode": "31754854", "StandardPrice": "5.00", "SalePrice": "1.00", "Number": 2, "SubTotalPrice": "2:00" }] };
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "CardNo": "HM0012345", "CardPassword": "123456", "Balance": "1200", "Score": "120", "MemberGrade": "2" };
             $.ajax({
                 type: "post",
-                url: "http://localhost:28442/api/Snack/SubmitSnacks",
+                url: "http://localhost:28442/api/Member/RegisterMember",
                 //contentType: 'application/json',
                 //data: JSON.stringify(postdata),
                 data: postdata,

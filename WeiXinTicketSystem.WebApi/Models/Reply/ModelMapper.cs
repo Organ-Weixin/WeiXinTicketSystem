@@ -236,7 +236,7 @@ namespace WeiXinTicketSystem.WebApi.Models
 
         public static QuerySessionsReplySession MapFrom(this QuerySessionsReplySession session, SessionInfoEntity entity)
         {
-            session.Id = entity.Id;
+            session.SessionId = entity.Id;
             session.CinemaCode = entity.CinemaCode;
             session.SessionCode = entity.SessionCode;
             session.ScreenCode = entity.ScreenCode;
@@ -258,7 +258,7 @@ namespace WeiXinTicketSystem.WebApi.Models
 
         public static QueryMembersReplyMember MapFrom(this QueryMembersReplyMember member, MemberCardEntity entity)
         {
-            member.Id = entity.Id;
+            member.MemberId = entity.Id;
             member.CinemaCode = entity.CinemaCode;
             member.OpenID = entity.OpenID;
             member.CardNo = entity.CardNo;
@@ -338,6 +338,20 @@ namespace WeiXinTicketSystem.WebApi.Models
             data.Created = comment.Created;
 
             return data;
+        }
+
+        public static QueryFilmCommentsReplyComment MapFrom(this QueryFilmCommentsReplyComment filmComment, AdminFilmCommentViewEntity entity)
+        {
+            filmComment.CommentId = entity.Id;
+            filmComment.FilmCode = entity.FilmCode;
+            filmComment.FilmName = entity.FilmName;
+            filmComment.Score = entity.Score;
+            filmComment.CommentContent = entity.CommentContent;
+            filmComment.OpenID = entity.OpenID;
+            filmComment.Created = entity.Created;
+            filmComment.NickName = entity.NickName;
+            filmComment.HeadImgUrl = entity.HeadImgUrl;
+            return filmComment;
         }
     }
 }

@@ -57,7 +57,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
 
             FilmInfoEntity film =await _filmInfoService.GetFilmInfoByFilmCodeAsync(FilmCode);
             queryFilmsReply.data = new QueryFilmsReplyFilm();
-            queryFilmsReply.data.Id = film.Id;
+            queryFilmsReply.data.FilmId = film.Id;
             queryFilmsReply.data.FilmCode = film.FilmCode;
             queryFilmsReply.data.FilmName = film.FilmName;
             queryFilmsReply.data.Version = film.Version;
