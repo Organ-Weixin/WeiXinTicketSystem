@@ -353,5 +353,22 @@ namespace WeiXinTicketSystem.WebApi.Models
             filmComment.HeadImgUrl = entity.HeadImgUrl;
             return filmComment;
         }
+
+        public static QueryCinemasReplyCinema MapFrom(this QueryCinemasReplyCinema cinema, CinemaEntity entity)
+        {
+            cinema.CinemaId = entity.Id;
+            cinema.CinemaCode = entity.CinemaCode;
+            cinema.CinemaName = entity.CinemaName;
+            cinema.TicketSystem = entity.TicketSystem.GetDescription();
+            cinema.ContactName = entity.ContactName;
+            cinema.ContactMobile = entity.ContactMobile;
+            cinema.TheaterChain = entity.TheaterChain.GetDescription();
+            cinema.Address = entity.Address;
+            cinema.Status = entity.Status.GetDescription();
+            cinema.Latitude = entity.Latitude;
+            cinema.Longitude = entity.Longitude;
+            cinema.OpenSnacks = entity.OpenSnacks.GetDescription();
+            return cinema;
+        }
     }
 }
