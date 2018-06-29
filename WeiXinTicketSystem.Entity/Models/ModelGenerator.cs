@@ -115,6 +115,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string Province { get; set; }
 		public virtual string City { get; set; }
 		public virtual string HeadImgUrl { get; set; }
+		public virtual long? TotalScore { get; set; }
 	}
 
     /// <summary>
@@ -331,6 +332,58 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual YesOrNoEnum IsCustomTicketTemplet { get; set; }
 		public virtual YesOrNoEnum IsCustomPackageTemplet { get; set; }
 		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the Stamps table.
+    /// </summary>
+    [Table("Stamps")]
+    [SqlLamTable(Name = "Stamps")]
+    public partial class StampEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string StampCode { get; set; }
+		public virtual string Image { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool? Deleted { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the UserStamps table.
+    /// </summary>
+    [Table("UserStamps")]
+    [SqlLamTable(Name = "UserStamps")]
+    public partial class UserStampEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual string StampCode { get; set; }
+		public virtual byte? CollectType { get; set; }
+		public virtual byte? Status { get; set; }
+		public virtual DateTime? Created { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the ScoreRecords table.
+    /// </summary>
+    [Table("ScoreRecords")]
+    [SqlLamTable(Name = "ScoreRecords")]
+    public partial class ScoreRecordEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual ScoreRecordTypeEnum Type { get; set; }
+		public virtual int? Score { get; set; }
+		public virtual string Description { get; set; }
+		public virtual ScoreRecordDirectionEnum Direction { get; set; }
+		public virtual DateTime? Created { get; set; }
 	}
 
     /// <summary>

@@ -842,6 +842,52 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
+
+        public static bool RequestInfoGuard(this SignInReply reply, string UserName, string Password, string CinemaCode, string OpenID, string Type, string Score, string Description,string Direction)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Type))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Type));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Score))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Score));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Description))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Description));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Direction))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Direction));
+                return false;
+            }
+
+            return true;
+        }
         ///// <summary>
         ///// 检查传入参数
         ///// </summary>

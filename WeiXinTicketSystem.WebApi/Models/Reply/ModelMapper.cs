@@ -3,6 +3,7 @@ using System.Linq;
 using WeiXinTicketSystem.Entity.Models;
 using WeiXinTicketSystem.Util;
 using WeiXinTicketSystem.Entity.Enum;
+using WeiXinTicketSystem.Service;
 
 namespace WeiXinTicketSystem.WebApi.Models
 {
@@ -369,6 +370,35 @@ namespace WeiXinTicketSystem.WebApi.Models
             cinema.Longitude = entity.Longitude;
             cinema.OpenSnacks = entity.OpenSnacks.GetDescription();
             return cinema;
+        }
+
+        public static ScoreRecordEntity MapFrom(this ScoreRecordEntity scoreRecord, SignInQueryJson Queryjson)
+        {
+            scoreRecord.CinemaCode = Queryjson.CinemaCode;
+            scoreRecord.OpenID = Queryjson.OpenID;
+            scoreRecord.Type = (ScoreRecordTypeEnum)Queryjson.Type;
+            scoreRecord.Score = Queryjson.Score;
+            scoreRecord.Description = Queryjson.Description;
+            scoreRecord.Direction = (ScoreRecordDirectionEnum)Queryjson.Direction;
+            scoreRecord.Created = DateTime.Now;
+            return scoreRecord;
+        }
+
+        public static SignInReplySignIn MapFrom(this SignInReplySignIn data, ScoreRecordEntity scoreRecord)
+        {
+            data.CinemaCode = scoreRecord.CinemaCode;
+            data.OpenID = scoreRecord.OpenID;
+            data.Type = scoreRecord.Type.GetDescription();
+            data.Score = scoreRecord.Score;
+            data.Description = scoreRecord.Description;
+            data.Direction = scoreRecord.Direction.GetDescription();
+            data.Created = scoreRecord.Created;
+
+            TicketUsersService _ticketUserService = new TicketUsersService();
+            TicketUserEntity ticketUser = _ticketUserService.GetTicketUserByOpenID(scoreRecord.OpenID);
+            data.TotalScore = ticketUser.TotalScore;
+
+            return data;
         }
     }
 }

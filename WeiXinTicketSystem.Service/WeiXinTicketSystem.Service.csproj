@@ -89,6 +89,7 @@
     <Compile Include="ModelMapper.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="BannerService.cs" />
+    <Compile Include="ScoreRecordService.cs" />
     <Compile Include="SessionPriceSettingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenInfoService.cs" />

@@ -78,6 +78,8 @@
     <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PayTypeEnum.cs" />
     <Compile Include="Enum\PricePlanTypeEnum.cs" />
+    <Compile Include="Enum\ScoreRecordDirectionEnum.cs" />
+    <Compile Include="Enum\ScoreRecordTypeEnum.cs" />
     <Compile Include="Enum\SnackOrderStatusEnum.cs" />
     <Compile Include="Enum\SnackStatusEnum.cs" />
     <Compile Include="Enum\YesOrNoEnum.cs" />

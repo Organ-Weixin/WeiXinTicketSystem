@@ -102,6 +102,8 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["Cinema"]["OpenSnacks"].PropertyType="YesOrNoEnum";
 	tables["SessionInfo"]["IsAvalible"].PropertyType="YesOrNoEnum";
 	tables["Gifts"]["Status"].PropertyType="GiftStatusEnum";
+	tables["ScoreRecords"]["Type"].PropertyType="ScoreRecordTypeEnum";
+	tables["ScoreRecords"]["Direction"].PropertyType="ScoreRecordDirectionEnum";
 	
 #>
 using System;
