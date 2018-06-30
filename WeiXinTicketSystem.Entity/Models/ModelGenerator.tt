@@ -104,6 +104,10 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["Gifts"]["Status"].PropertyType="GiftStatusEnum";
 	tables["ScoreRecords"]["Type"].PropertyType="ScoreRecordTypeEnum";
 	tables["ScoreRecords"]["Direction"].PropertyType="ScoreRecordDirectionEnum";
+	tables["UserStamps"]["CollectType"].PropertyType="UserStampCollectTypeEnum";
+	tables["UserStamps"]["Status"].PropertyType="UserStampStatusEnum";
+	tables["ApiUserStampView"]["CollectType"].PropertyType="UserStampCollectTypeEnum";
+	tables["ApiUserStampView"]["Status"].PropertyType="UserStampStatusEnum";
 	
 #>
 using System;

@@ -245,12 +245,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Query\BookSnacksQueryJson.cs" />
+    <Compile Include="Models\Query\CollectStampQueryJson.cs" />
     <Compile Include="Models\Query\PayOrderQueryJson.cs" />
     <Compile Include="Models\Query\SendConponQueryJson.cs" />
     <Compile Include="Models\Query\SignInQueryJson.cs" />
     <Compile Include="Models\Query\SubmitSnacksQueryJson.cs" />
     <Compile Include="Models\Reply\BaseReply.cs" />
     <Compile Include="Models\Reply\BookSnacksReply.cs" />
+    <Compile Include="Models\Reply\CollectStampReply.cs" />
     <Compile Include="Models\Reply\ErrorCodeEnum.cs" />
     <Compile Include="Models\Reply\FetchSnacksReply.cs" />
     <Compile Include="Models\Reply\ModelMapper.cs" />
@@ -265,6 +267,7 @@
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />
     <Compile Include="Models\Reply\QuerySnackTypesReply.cs" />
     <Compile Include="Models\Reply\QueryUserOrdersReply.cs" />
+    <Compile Include="Models\Reply\QueryUserStampsReply.cs" />
     <Compile Include="Models\Reply\RefundSnacksReply.cs" />
     <Compile Include="Models\Reply\ReleaseSnacksReply.cs" />
     <Compile Include="Models\Reply\SendConponReply.cs" />

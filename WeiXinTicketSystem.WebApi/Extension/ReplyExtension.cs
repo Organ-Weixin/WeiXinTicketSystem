@@ -888,6 +888,73 @@ namespace WeiXinTicketSystem.WebApi.Extension
 
             return true;
         }
+
+        public static bool RequestInfoGuard(this CollectStampReply reply, string UserName, string Password, string CinemaCode, string OpenID, string StampCode, string CollectType, string Status)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            if (string.IsNullOrEmpty(StampCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(StampCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CollectType))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CollectType));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Status))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Status));
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool RequestInfoGuard(this QueryUserStampsReply reply, string Username, string Password, string CinemaCode, string OpenID)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            return true;
+        }
+
         ///// <summary>
         ///// 检查传入参数
         ///// </summary>

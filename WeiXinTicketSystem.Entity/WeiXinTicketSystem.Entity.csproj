@@ -82,6 +82,8 @@
     <Compile Include="Enum\ScoreRecordTypeEnum.cs" />
     <Compile Include="Enum\SnackOrderStatusEnum.cs" />
     <Compile Include="Enum\SnackStatusEnum.cs" />
+    <Compile Include="Enum\UserStampCollectTypeEnum.cs" />
+    <Compile Include="Enum\UserStampStatusEnum.cs" />
     <Compile Include="Enum\YesOrNoEnum.cs" />
     <Compile Include="Enum\RoleTypeEnum.cs" />
     <Compile Include="Enum\SystemPermissionEnum.cs" />

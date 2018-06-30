@@ -315,6 +315,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual double? Latitude { get; set; }
 		public virtual double? Longitude { get; set; }
 		public virtual YesOrNoEnum OpenSnacks { get; set; }
+		public virtual string PayType { get; set; }
 	}
 
     /// <summary>
@@ -332,40 +333,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual YesOrNoEnum IsCustomTicketTemplet { get; set; }
 		public virtual YesOrNoEnum IsCustomPackageTemplet { get; set; }
 		public virtual bool IsDel { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the Stamps table.
-    /// </summary>
-    [Table("Stamps")]
-    [SqlLamTable(Name = "Stamps")]
-    public partial class StampEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string Title { get; set; }
-		public virtual string StampCode { get; set; }
-		public virtual string Image { get; set; }
-		public virtual DateTime? Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual bool? Deleted { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the UserStamps table.
-    /// </summary>
-    [Table("UserStamps")]
-    [SqlLamTable(Name = "UserStamps")]
-    public partial class UserStampEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string OpenID { get; set; }
-		public virtual string StampCode { get; set; }
-		public virtual byte? CollectType { get; set; }
-		public virtual byte? Status { get; set; }
-		public virtual DateTime? Created { get; set; }
 	}
 
     /// <summary>
@@ -407,6 +374,23 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int? UpdateUserId { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool Deleted { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the UserStamps table.
+    /// </summary>
+    [Table("UserStamps")]
+    [SqlLamTable(Name = "UserStamps")]
+    public partial class UserStampEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual string StampCode { get; set; }
+		public virtual UserStampCollectTypeEnum CollectType { get; set; }
+		public virtual UserStampStatusEnum Status { get; set; }
+		public virtual DateTime? Created { get; set; }
 	}
 
     /// <summary>
@@ -456,6 +440,76 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the Orders table.
+    /// </summary>
+    [Table("Orders")]
+    [SqlLamTable(Name = "Orders")]
+    public partial class OrderEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string SessionCode { get; set; }
+		public virtual string ScreenCode { get; set; }
+		public virtual DateTime SessionTime { get; set; }
+		public virtual string FilmCode { get; set; }
+		public virtual string FilmName { get; set; }
+		public virtual int TicketCount { get; set; }
+		public virtual decimal TotalPrice { get; set; }
+		public virtual decimal TotalFee { get; set; }
+		public virtual decimal TotalSalePrice { get; set; }
+		public virtual decimal? TotalLoveSeatDifferences { get; set; }
+		public virtual CinemaFeePayTypeEnum? FeePayType { get; set; }
+		public virtual decimal? TotalGuestPayFee { get; set; }
+		public virtual OrderStatusEnum OrderStatus { get; set; }
+		public virtual string MobilePhone { get; set; }
+		public virtual DateTime? LockTime { get; set; }
+		public virtual DateTime? AutoUnlockDatetime { get; set; }
+		public virtual string LockOrderCode { get; set; }
+		public virtual DateTime? SubmitTime { get; set; }
+		public virtual string SubmitOrderCode { get; set; }
+		public virtual string PrintNo { get; set; }
+		public virtual string VerifyCode { get; set; }
+		public virtual bool? PrintStatus { get; set; }
+		public virtual DateTime? PrintTime { get; set; }
+		public virtual string RefundBatchNo { get; set; }
+		public virtual DateTime? RefundTime { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+		public virtual string ErrorMessage { get; set; }
+		public virtual string SerialNum { get; set; }
+		public virtual bool? OrderPayFlag { get; set; }
+		public virtual PayTypeEnum OrderPayType { get; set; }
+		public virtual DateTime? OrderPayTime { get; set; }
+		public virtual bool IsMemberPay { get; set; }
+		public virtual string PayType { get; set; }
+		public virtual string Printpassword { get; set; }
+		public virtual string OrderTradeNo { get; set; }
+		public virtual string CardNo { get; set; }
+		public virtual string PaySeqNo { get; set; }
+		public virtual string OpenID { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the Stamps table.
+    /// </summary>
+    [Table("Stamps")]
+    [SqlLamTable(Name = "Stamps")]
+    public partial class StampEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string StampCode { get; set; }
+		public virtual string Image { get; set; }
+		public virtual DateTime? ValidityDate { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the AdminSnacksView view.
     /// </summary>
     [Table("AdminSnacksView")]
@@ -494,6 +548,25 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime? UpdateTime { get; set; }
 		public virtual int? SeatCount { get; set; }
 		public virtual string Type { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the ApiUserStampView view.
+    /// </summary>
+    [Table("ApiUserStampView")]
+    [SqlLamTable(Name = "ApiUserStampView")]
+    public partial class ApiUserStampViewEntity : EntityBase
+    {
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual string StampCode { get; set; }
+		public virtual UserStampCollectTypeEnum CollectType { get; set; }
+		public virtual UserStampStatusEnum Status { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
+		public virtual DateTime? ValidityDate { get; set; }
 	}
 
     /// <summary>
@@ -669,57 +742,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool IsDel { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the Orders table.
-    /// </summary>
-    [Table("Orders")]
-    [SqlLamTable(Name = "Orders")]
-    public partial class OrderEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string SessionCode { get; set; }
-		public virtual string ScreenCode { get; set; }
-		public virtual DateTime SessionTime { get; set; }
-		public virtual string FilmCode { get; set; }
-		public virtual string FilmName { get; set; }
-		public virtual int TicketCount { get; set; }
-		public virtual decimal TotalPrice { get; set; }
-		public virtual decimal TotalFee { get; set; }
-		public virtual decimal TotalSalePrice { get; set; }
-		public virtual decimal? TotalLoveSeatDifferences { get; set; }
-		public virtual CinemaFeePayTypeEnum? FeePayType { get; set; }
-		public virtual decimal? TotalGuestPayFee { get; set; }
-		public virtual OrderStatusEnum OrderStatus { get; set; }
-		public virtual string MobilePhone { get; set; }
-		public virtual DateTime? LockTime { get; set; }
-		public virtual DateTime? AutoUnlockDatetime { get; set; }
-		public virtual string LockOrderCode { get; set; }
-		public virtual DateTime? SubmitTime { get; set; }
-		public virtual string SubmitOrderCode { get; set; }
-		public virtual string PrintNo { get; set; }
-		public virtual string VerifyCode { get; set; }
-		public virtual bool? PrintStatus { get; set; }
-		public virtual DateTime? PrintTime { get; set; }
-		public virtual string RefundBatchNo { get; set; }
-		public virtual DateTime? RefundTime { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual bool Deleted { get; set; }
-		public virtual string ErrorMessage { get; set; }
-		public virtual string SerialNum { get; set; }
-		public virtual bool? OrderPayFlag { get; set; }
-		public virtual PayTypeEnum OrderPayType { get; set; }
-		public virtual DateTime? OrderPayTime { get; set; }
-		public virtual string PayType { get; set; }
-		public virtual string Printpassword { get; set; }
-		public virtual string OrderTradeNo { get; set; }
-		public virtual string CardNo { get; set; }
-		public virtual string PaySeqNo { get; set; }
-		public virtual string OpenID { get; set; }
 	}
 
     /// <summary>

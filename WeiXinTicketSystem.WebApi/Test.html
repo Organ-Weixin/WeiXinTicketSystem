@@ -70,11 +70,27 @@
         //        }
         //    });
         //});
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Type": "1", "Score": "10", "Description": "用户签到", "Direction": "0" };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "http://localhost:28442/api/User/SignIn",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
         $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Type": "1", "Score": "10", "Description": "用户签到", "Direction": "0" };
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "StampCode": "YZ001", "CollectType": "1", "Status": "0" };
             $.ajax({
                 type: "post",
-                url: "http://localhost:28442/api/User/SignIn",
+                url: "http://localhost:28442/api/User/CollectStamp",
                 //contentType: 'application/json',
                 //data: JSON.stringify(postdata),
                 data: postdata,
@@ -86,7 +102,6 @@
                 }
             });
         });
-
 
 
     </script>

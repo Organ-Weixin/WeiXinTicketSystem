@@ -400,5 +400,50 @@ namespace WeiXinTicketSystem.WebApi.Models
 
             return data;
         }
+
+        public static UserStampEntity MapFrom(this UserStampEntity userStamp, CollectStampQueryJson Queryjson)
+        {
+            userStamp.CinemaCode = Queryjson.CinemaCode;
+            userStamp.OpenID = Queryjson.OpenID;
+            userStamp.StampCode = Queryjson.StampCode;
+            userStamp.CollectType = (UserStampCollectTypeEnum)Queryjson.CollectType;
+            userStamp.Status = (UserStampStatusEnum)Queryjson.Status;
+            userStamp.Created = DateTime.Now;
+            return userStamp;
+        }
+
+        public static CollectStampReplyStamp MapFrom(this CollectStampReplyStamp data, UserStampEntity userStamp)
+        {
+            data.CinemaCode = userStamp.CinemaCode;
+            data.OpenID = userStamp.OpenID;
+            data.CollectType = userStamp.CollectType.GetDescription();
+            data.Status = userStamp.Status.GetDescription();
+            data.Created = userStamp.Created;
+            data.StampCode = userStamp.StampCode;
+
+            StampService _stampService = new StampService();
+            StampEntity stamp = _stampService.GetStampByStampCode(userStamp.StampCode);
+            data.StampTitle = stamp.Title;
+            data.StampImage = stamp.Image;
+            data.StampValidityDate = stamp.ValidityDate;
+
+            return data;
+        }
+
+        public static QueryUserStampsReplyStamp MapFrom(this QueryUserStampsReplyStamp userStamp, ApiUserStampViewEntity entity)
+        {
+            userStamp.UserStampId = entity.Id;
+            userStamp.CinemaCode = entity.CinemaCode;
+            userStamp.OpenID = entity.OpenID;
+            userStamp.CollectType = entity.CollectType.GetDescription();
+            userStamp.Status = entity.Status.GetDescription();
+            userStamp.Created = entity.Created;
+            userStamp.StampCode = entity.StampCode;
+            userStamp.StampTitle = entity.Title;
+            userStamp.StampImage = entity.Image;
+            userStamp.StampValidityDate = entity.ValidityDate;
+
+            return userStamp;
+        }
     }
 }
