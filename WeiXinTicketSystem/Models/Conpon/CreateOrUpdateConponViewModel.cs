@@ -43,8 +43,6 @@ namespace WeiXinTicketSystem.Models
 
         [File]
         [Display(Name = "优惠券图标")]
-        [Required(ErrorMessage = "{0}不能为空")]
-        [StringLength(300, ErrorMessage = "{0}最多300个字符")]
         public string Image { get; set; }
 
         [Display(Name = "有效期")]

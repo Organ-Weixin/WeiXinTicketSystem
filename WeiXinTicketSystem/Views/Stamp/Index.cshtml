@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["CinemaManage"] = "active";
+    ViewData["Stamp"] = "active";
+    ViewBag.Title = "印章管理";
+    List<int> CurrentPermissions = ViewBag.CurrentPermissions;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        印章管理
+        <small>管理系统模块</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
+        <li class="active">印章管理</li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.Stamp.List)"
+                       data-row-template="stamp-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">印章编码</th>
+                            <th data-dynatable-no-sort="true">标题</th>
+                            <th data-dynatable-no-sort="true">有效期</th>
+                            <th data-dynatable-no-sort="true">创建时间</th>
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!---查询条件-->
+                <div class="dynatable-custom-filter">
+                    <input type="text" placeholder="印章编码" name="StampCode" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                </div>
+                <div class="dynatable-operation">
+                    @if (CurrentPermissions.Contains(2))
+                    {
+                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Stamp.Create)">
+                            <i class="fa fa-plus"></i>
+                            新建印章
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="stamp-row-template">
+                <tr>
+                    <td style="text-align: left;">{{row}}</td>
+                    <td style="text-align: left; vertical-align: top;">{{StampCode}}</td>
+                    <td style="text-align: left;">{{Title}}</td>
+                    <td style="text-align: left;">{{ValidityDate}}</td>
+                    <td style="text-align: left;">{{Created}}</td>
+                    <td style="text-align: left;">
+
+                        @if (CurrentPermissions.Contains(3))
+                        {
+                            <a href="@Url.Action(MvcNames.Stamp.Update)/{{id}}">编辑</a>
+                        }
+
+                        @if (CurrentPermissions.Contains(4))
+                        {
+                            <span>|</span>
+                            <a href="javascript:void(0)"
+                               data-href="@Url.Action(MvcNames.Stamp.Delete)/{{id}}" data-toggle="popover"
+                               data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                               data-message="确认删除?" data-type="confirm" data-placement="left"
+                               data-content-template="#delete-confirm-template">
+                                删除
+                            </a>
+                        }
+                    </td>
+                </tr>
+            </script>
+
+        </div>
+    </div>
+</section>
+
+
+

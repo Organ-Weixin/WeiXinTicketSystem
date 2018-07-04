@@ -492,24 +492,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the Stamps table.
-    /// </summary>
-    [Table("Stamps")]
-    [SqlLamTable(Name = "Stamps")]
-    public partial class StampEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string Title { get; set; }
-		public virtual string StampCode { get; set; }
-		public virtual string Image { get; set; }
-		public virtual DateTime? ValidityDate { get; set; }
-		public virtual DateTime? Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual bool Deleted { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the AdminSnacksView view.
     /// </summary>
     [Table("AdminSnacksView")]
@@ -717,6 +699,24 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int? ModuleSequence { get; set; }
 		public virtual string ModuleFlag { get; set; }
 		public virtual int? CreateUserId { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the Stamps table.
+    /// </summary>
+    [Table("Stamps")]
+    [SqlLamTable(Name = "Stamps")]
+    public partial class StampEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string StampCode { get; set; }
+		public virtual string Image { get; set; }
+		public virtual DateTime? ValidityDate { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool Deleted { get; set; }

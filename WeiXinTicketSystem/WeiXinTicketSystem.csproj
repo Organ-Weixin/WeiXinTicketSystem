@@ -286,6 +286,7 @@
     <Compile Include="Controllers\SnackController.cs" />
     <Compile Include="Controllers\SnackOrderController.cs" />
     <Compile Include="Controllers\SnackTypeController.cs" />
+    <Compile Include="Controllers\StampController.cs" />
     <Compile Include="Controllers\TicketSystemAccountController.cs" />
     <Compile Include="Controllers\TicketUsersController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -361,6 +362,9 @@
     <Compile Include="Models\Snack\CreateOrUpdateSnackViewModel.cs" />
     <Compile Include="Models\Snack\ModelMapper.cs" />
     <Compile Include="Models\Snack\SnackPageQueryModel.cs" />
+    <Compile Include="Models\Stamp\CreateOrUpdateStampViewModel.cs" />
+    <Compile Include="Models\Stamp\ModelMapper.cs" />
+    <Compile Include="Models\Stamp\StampQueryModel.cs" />
     <Compile Include="Models\TicketUsers\ModelMapper.cs" />
     <Compile Include="Models\TicketUsers\TicketUsersQueryModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
@@ -1407,9 +1411,11 @@
     <Content Include="Views\Bnanner\Index.cshtml" />
     <Content Include="Views\Conpon\CreateOrUpdate.cshtml" />
     <Content Include="Views\Conpon\Index.cshtml" />
-	<Content Include="Views\Gift\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Gift\CreateOrUpdate.cshtml" />
     <Content Include="Views\Gift\Index.cshtml" />
     <None Include="Properties\PublishProfiles\WeiXinTicket.Admin.pubxml" />
+    <Content Include="Views\Stamp\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Stamp\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
