@@ -259,7 +259,7 @@ namespace WeiXinTicketSystem.WebApi.Models
 
         public static QueryMembersReplyMember MapFrom(this QueryMembersReplyMember member, MemberCardEntity entity)
         {
-            member.Id = entity.Id;
+            member.MemberId = entity.Id;
             member.CinemaCode = entity.CinemaCode;
             member.OpenID = entity.OpenID;
             member.CardNo = entity.CardNo;
@@ -503,6 +503,106 @@ namespace WeiXinTicketSystem.WebApi.Models
             });
 
             return order;
+        }
+        public static QueryFilmCommentsReplyComment MapFrom(this QueryFilmCommentsReplyComment filmComment, AdminFilmCommentViewEntity entity)
+        {
+            filmComment.CommentId = entity.Id;
+            filmComment.FilmCode = entity.FilmCode;
+            filmComment.FilmName = entity.FilmName;
+            filmComment.Score = entity.Score;
+            filmComment.CommentContent = entity.CommentContent;
+            filmComment.OpenID = entity.OpenID;
+            filmComment.Created = entity.Created;
+            filmComment.NickName = entity.NickName;
+            filmComment.HeadImgUrl = entity.HeadImgUrl;
+            return filmComment;
+        }
+
+        public static QueryCinemasReplyCinema MapFrom(this QueryCinemasReplyCinema cinema, CinemaEntity entity)
+        {
+            cinema.CinemaId = entity.Id;
+            cinema.CinemaCode = entity.CinemaCode;
+            cinema.CinemaName = entity.CinemaName;
+            cinema.TicketSystem = entity.TicketSystem.GetDescription();
+            cinema.ContactName = entity.ContactName;
+            cinema.ContactMobile = entity.ContactMobile;
+            cinema.TheaterChain = entity.TheaterChain.GetDescription();
+            cinema.Address = entity.Address;
+            cinema.Status = entity.Status.GetDescription();
+            cinema.Latitude = entity.Latitude;
+            cinema.Longitude = entity.Longitude;
+            cinema.OpenSnacks = entity.OpenSnacks.GetDescription();
+            return cinema;
+        }
+
+        public static ScoreRecordEntity MapFrom(this ScoreRecordEntity scoreRecord, SignInQueryJson Queryjson)
+        {
+            scoreRecord.CinemaCode = Queryjson.CinemaCode;
+            scoreRecord.OpenID = Queryjson.OpenID;
+            scoreRecord.Type = (ScoreRecordTypeEnum)Queryjson.Type;
+            scoreRecord.Score = Queryjson.Score;
+            scoreRecord.Description = Queryjson.Description;
+            scoreRecord.Direction = (ScoreRecordDirectionEnum)Queryjson.Direction;
+            scoreRecord.Created = DateTime.Now;
+            return scoreRecord;
+        }
+
+        public static SignInReplySignIn MapFrom(this SignInReplySignIn data, ScoreRecordEntity scoreRecord,TicketUserEntity ticketUser)
+        {
+            data.CinemaCode = scoreRecord.CinemaCode;
+            data.OpenID = scoreRecord.OpenID;
+            data.Type = scoreRecord.Type.GetDescription();
+            data.Score = scoreRecord.Score;
+            data.Description = scoreRecord.Description;
+            data.Direction = scoreRecord.Direction.GetDescription();
+            data.Created = scoreRecord.Created;
+
+            data.TotalScore = ticketUser.TotalScore;
+
+            return data;
+        }
+
+        public static UserStampEntity MapFrom(this UserStampEntity userStamp, CollectStampQueryJson Queryjson)
+        {
+            userStamp.CinemaCode = Queryjson.CinemaCode;
+            userStamp.OpenID = Queryjson.OpenID;
+            userStamp.StampCode = Queryjson.StampCode;
+            userStamp.CollectType = (UserStampCollectTypeEnum)Queryjson.CollectType;
+            userStamp.Status = (UserStampStatusEnum)Queryjson.Status;
+            userStamp.Created = DateTime.Now;
+            return userStamp;
+        }
+
+        public static CollectStampReplyStamp MapFrom(this CollectStampReplyStamp data, UserStampEntity userStamp, StampEntity stamp)
+        {
+            data.CinemaCode = userStamp.CinemaCode;
+            data.OpenID = userStamp.OpenID;
+            data.CollectType = userStamp.CollectType.GetDescription();
+            data.Status = userStamp.Status.GetDescription();
+            data.Created = userStamp.Created;
+            data.StampCode = userStamp.StampCode;
+
+            data.StampTitle = stamp.Title;
+            data.StampImage = stamp.Image;
+            data.StampValidityDate = stamp.ValidityDate;
+
+            return data;
+        }
+
+        public static QueryUserStampsReplyStamp MapFrom(this QueryUserStampsReplyStamp userStamp, ApiUserStampViewEntity entity)
+        {
+            userStamp.UserStampId = entity.Id;
+            userStamp.CinemaCode = entity.CinemaCode;
+            userStamp.OpenID = entity.OpenID;
+            userStamp.CollectType = entity.CollectType.GetDescription();
+            userStamp.Status = entity.Status.GetDescription();
+            userStamp.Created = entity.Created;
+            userStamp.StampCode = entity.StampCode;
+            userStamp.StampTitle = entity.Title;
+            userStamp.StampImage = entity.Image;
+            userStamp.StampValidityDate = entity.ValidityDate;
+
+            return userStamp;
         }
     }
 }

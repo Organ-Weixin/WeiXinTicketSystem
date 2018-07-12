@@ -1061,6 +1061,206 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
+        public static bool RequestInfoGuard(this QueryFilmCommentsReply reply, string Username, string Password, string CinemaCode, string FilmCode, string CurrentPage, string PageSize)
+        {
+            int rint = 0;
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(FilmCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(FilmCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CurrentPage))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CurrentPage));
+                return false;
+            }
+            if (!int.TryParse(CurrentPage, out rint))
+            {
+                reply.SetCurrentPageInvalidReply();
+                return false;
+            }
+            if (string.IsNullOrEmpty(PageSize))
+            {
+                reply.SetNecessaryParamMissReply(nameof(PageSize));
+                return false;
+            }
+            if (!int.TryParse(PageSize, out rint))
+            {
+                reply.SetPageSizeInvalidReply();
+                return false;
+            }
+            return true;
+        }
+
+        public static bool RequestInfoGuard(this QueryCinemasReply reply, string Username, string Password, string CinemaCode, string CurrentPage, string PageSize)
+        {
+            int rint = 0;
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CurrentPage))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CurrentPage));
+                return false;
+            }
+            if (!int.TryParse(CurrentPage, out rint))
+            {
+                reply.SetCurrentPageInvalidReply();
+                return false;
+            }
+            if (string.IsNullOrEmpty(PageSize))
+            {
+                reply.SetNecessaryParamMissReply(nameof(PageSize));
+                return false;
+            }
+            if (!int.TryParse(PageSize, out rint))
+            {
+                reply.SetPageSizeInvalidReply();
+                return false;
+            }
+            return true;
+        }
+
+        public static bool RequestInfoGuard(this SignInReply reply, string UserName, string Password, string CinemaCode, string OpenID, string Type, string Score, string Description, string Direction)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Type))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Type));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Score))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Score));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Description))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Description));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Direction))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Direction));
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool RequestInfoGuard(this CollectStampReply reply, string UserName, string Password, string CinemaCode, string OpenID, string StampCode, string CollectType, string Status)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            if (string.IsNullOrEmpty(StampCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(StampCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CollectType))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CollectType));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Status))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Status));
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool RequestInfoGuard(this QueryUserStampsReply reply, string Username, string Password, string CinemaCode, string OpenID)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            return true;
+        }
+
+
         ///// <summary>
         ///// 检查传入参数
         ///// </summary>

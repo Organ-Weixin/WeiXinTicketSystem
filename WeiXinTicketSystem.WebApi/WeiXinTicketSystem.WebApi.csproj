@@ -147,7 +147,13 @@
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -241,12 +247,14 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\CinemaController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\SnackController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Extension\ReplyExtension.cs" />
@@ -295,6 +303,13 @@
     <Compile Include="Models\Query\SubmitFilmCommentQueryJson.cs" />
     <Compile Include="Models\Reply\RegisterMemberReply.cs" />
     <Compile Include="Models\Reply\SubmitFilmCommentReply.cs" />
+    <Compile Include="Models\Query\CollectStampQueryJson.cs" />
+    <Compile Include="Models\Query\SignInQueryJson.cs" />
+    <Compile Include="Models\Reply\CollectStampReply.cs" />
+    <Compile Include="Models\Reply\QueryCinemasReply.cs" />
+    <Compile Include="Models\Reply\QueryFilmCommentsReply.cs" />
+    <Compile Include="Models\Reply\QueryUserStampsReply.cs" />
+    <Compile Include="Models\Reply\SignInReply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
   </ItemGroup>
