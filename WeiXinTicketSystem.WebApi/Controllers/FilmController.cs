@@ -57,25 +57,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
 
             FilmInfoEntity film =await _filmInfoService.GetFilmInfoByFilmCodeAsync(FilmCode);
             queryFilmsReply.data = new QueryFilmsReplyFilm();
-            queryFilmsReply.data.Id = film.Id;
-            queryFilmsReply.data.FilmCode = film.FilmCode;
-            queryFilmsReply.data.FilmName = film.FilmName;
-            queryFilmsReply.data.Version = film.Version;
-            queryFilmsReply.data.Duration = film.Duration;
-            queryFilmsReply.data.PublishDate = film.PublishDate;
-            queryFilmsReply.data.Publisher = film.Publisher;
-            queryFilmsReply.data.Producer = film.Producer;
-            queryFilmsReply.data.Director = film.Director;
-            queryFilmsReply.data.Cast = film.Cast;
-            queryFilmsReply.data.Introduction = film.Introduction;
-            queryFilmsReply.data.Score = film.Score;
-            queryFilmsReply.data.Area = film.Area;
-            queryFilmsReply.data.Type = film.Type;
-            queryFilmsReply.data.Language = film.Language;
-            queryFilmsReply.data.Status = film.Status.GetDescription();
-            queryFilmsReply.data.Image = film.Image;
-            queryFilmsReply.data.Trailer = film.Trailer;
-
+            queryFilmsReply.data.MapFrom(film);
             queryFilmsReply.SetSuccessReply();
             return queryFilmsReply;
         }

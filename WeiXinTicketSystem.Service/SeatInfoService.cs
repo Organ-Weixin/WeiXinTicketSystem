@@ -87,6 +87,11 @@ namespace WeiXinTicketSystem.Service
             }
         }
 
+        public QuerySessionSeatReply QuerySessionSeat(string CinemaCode, string SessionCode, string Status)
+        {
+            return _netSaleSvcApi.QuerySessionSeat(CinemaCode, SessionCode, Status);
+        }
+
         public ReturnData QuerySeat(string CinemaCode,string ScreenCode)
         {
             ReturnData returnData = new ReturnData();

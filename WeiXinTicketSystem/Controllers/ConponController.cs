@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Reflection;
 using System.Web;
 using WeiXinTicketSystem.Properties;
+using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
 {
@@ -122,18 +123,27 @@ namespace WeiXinTicketSystem.Controllers
             }
 
             conpon.MapFrom(model);
+
             //图片处理
             if (Image != null)
             {
                 string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                if (conpon.Image != null && System.IO.File.Exists(rootPath + conpon.Image))
-                {
-                    System.IO.File.Delete(rootPath + conpon.Image);
-                }
+                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
                 string savePath = @"upload\ConponImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/ConponImg/" + DateTime.Now.ToString("yyyyMM") + "/";
                 System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                //判断原图片是否存在
+                if (!string.IsNullOrEmpty(conpon.Image))
+                {
+                    string file = conpon.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    if (System.IO.File.Exists(file))
+                    {
+                        //如果存在则删除
+                        System.IO.File.Delete(file);
+                    }
+                }
                 string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                conpon.Image = savePath + fileName;
+                conpon.Image = basePath + accessPath + fileName;
             }
 
             if (conpon.Id == 0)
@@ -179,7 +189,7 @@ namespace WeiXinTicketSystem.Controllers
             ViewBag.ConponType_dd = EnumUtil.GetSelectList<ConponTypeEnum>();
 
             //绑定是否使用枚举
-            ViewBag.IfUse_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
+            ViewBag.Status_dd = EnumUtil.GetSelectList<ConponStatusEnum>();
 
 
             //绑定用户列表

@@ -4,6 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
 	<meta charset="utf-8" />
+    <!--<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <!--<script src="jquery-1.4.1.min.js"></script>-->
     <script src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
     <script>
         //$(function () {
@@ -22,11 +25,29 @@
         //        }
         //    });
         //});
+
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "MobilePhone": "15000002025", "DeliveryAddress": "衢州新天地影城2号厅1排2座", "SendTime": "2018-06-08 15:00:00", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Snacks": [{ "SnackCode": "31754854", "StandardPrice": "5.00", "SalePrice": "1.00", "Number": 2, "SubTotalPrice": "2.00" }] };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "https://xcx.80piao.com/api/Snack/BookSnacks",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
+
         $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "OrderCode": "b3e5f09adb000001", "OrderTradeNo": "2015010712768841", "MobilePhone": "15000002025", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Snacks": [{ "SnackCode": "31754854", "StandardPrice": "5.00", "SalePrice": "1.00", "Number": 2, "SubTotalPrice": "2:00" }] };
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "CinemaCode": "33097601", "Order": { "SessionCode": "40381807018XJ6NV", "SeatsCount": 1, "PayType": "0", "Seats": [{ "SeatCode": "0000000000000003", "Price": "30.00", "Fee": "0.00" }] } };
             $.ajax({
                 type: "post",
-                url: "http://localhost:28442/api/Snack/SubmitSnacks",
+                url: "http://localhost:28442/api/Ticket/LockSeat",
                 //contentType: 'application/json',
                 //data: JSON.stringify(postdata),
                 data: postdata,

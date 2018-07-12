@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using WeiXinTicketSystem.Entity.Models;
 using WeiXinTicketSystem.Util;
 using System.IO;
+using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
 {
@@ -133,18 +134,27 @@ namespace WeiXinTicketSystem.Controllers
                 snack = await _snackService.GetSnackByIdAsync(model.Id);
             }
             snack.MapFrom(model);
+
             //图片处理
             if (Image != null)
             {
                 string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                if(snack.Image!=null&& System.IO.File.Exists(rootPath + snack.Image))
-                {
-                    System.IO.File.Delete(rootPath + snack.Image);
-                }
+                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
                 string savePath = @"upload\SnackImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/SnackImg/" + DateTime.Now.ToString("yyyyMM") + "/";
                 System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath,DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                snack.Image = savePath + fileName;
+                //判断原图片是否存在
+                if (!string.IsNullOrEmpty(snack.Image))
+                {
+                    string file = snack.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    if (System.IO.File.Exists(file))
+                    {
+                        //如果存在则删除
+                        System.IO.File.Delete(file);
+                    }
+                }
+                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
+                snack.Image = basePath + accessPath + fileName;
             }
             if (snack.Id == 0)
             {
@@ -165,6 +175,7 @@ namespace WeiXinTicketSystem.Controllers
             {
                 await _snackService.UpdateAsync(snack);
             }
+
             //return RedirectObject(Url.Action(nameof(Index)));
             var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Snack").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();

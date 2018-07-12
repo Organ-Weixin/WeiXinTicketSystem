@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\ActivityStatusEnum.cs" />
     <Compile Include="Enum\CinemaFeeGatherTypeEnum.cs" />
     <Compile Include="Enum\CinemaFeePayTypeEnum.cs" />
     <Compile Include="Enum\CinemaStatusEnum.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Enum\CustomMenuTypeEnum.cs" />
     <Compile Include="Enum\CustomMenuReTypeEnum.cs" />
     <Compile Include="Enum\DefaultActionTypeEnum.cs" />
+    <Compile Include="Enum\FilmStatusEnum.cs" />
     <Compile Include="Enum\GiftStatusEnum.cs" />
     <Compile Include="Enum\LoveFlagEnum.cs" />
     <Compile Include="Enum\MemberCardGradeEnum.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Enum\OrderStatusEnum.cs" />
     <Compile Include="Enum\PayTypeEnum.cs" />
     <Compile Include="Enum\PricePlanTypeEnum.cs" />
+    <Compile Include="Enum\SessionSeatStatusEnum.cs" />
     <Compile Include="Enum\SnackOrderStatusEnum.cs" />
     <Compile Include="Enum\SnackStatusEnum.cs" />
     <Compile Include="Enum\YesOrNoEnum.cs" />

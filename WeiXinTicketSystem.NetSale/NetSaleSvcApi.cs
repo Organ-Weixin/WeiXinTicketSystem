@@ -123,7 +123,7 @@ namespace WeiXinTicketSystem.NetSale
                 CinemaCode = order.orderBaseInfo.CinemaCode,
                 Order = new LockSeatQueryXmlOrder
                 {
-                    PayType = "0",//现金支付
+                    PayType = order.orderBaseInfo.PayType,
                     SessionCode = order.orderBaseInfo.SessionCode,
                     Count = order.orderBaseInfo.TicketCount,
                     Seat = order.orderSeatDetails.Select(x => new LockSeatQueryXmlSeat
@@ -145,6 +145,38 @@ namespace WeiXinTicketSystem.NetSale
             }
 
             return lockSeatReply;
+        }
+        #endregion
+
+        #region 解锁座位
+        public ReleaseSeatReply ReleaseSeat(OrderViewEntity order)
+        {
+            ReleaseSeatReply releaseSeatReply = new ReleaseSeatReply();
+            ReleaseSeatQueryXml param = new ReleaseSeatQueryXml
+            {
+                CinemaCode = order.orderBaseInfo.CinemaCode,
+                Order = new ReleaseSeatQueryXmlOrder
+                {
+                    OrderCode = order.orderBaseInfo.LockOrderCode,
+                    SessionCode = order.orderBaseInfo.SessionCode,
+                    Count = order.orderBaseInfo.TicketCount,
+                    Seat = order.orderSeatDetails.Select(x => new ReleaseSeatQueryXmlSeat
+                    {
+                        SeatCode = x.SeatCode
+                    }).ToList()
+                }
+            };
+            try
+            {
+                string QueryXml = ToXml(param);
+                releaseSeatReply = netSaleService.ReleaseSeat(pAppCode, pKeyInfo, QueryXml);
+            }
+            catch
+            {
+                //do nothing
+            }
+            return releaseSeatReply;
+
         }
         #endregion
 
@@ -238,6 +270,38 @@ namespace WeiXinTicketSystem.NetSale
                 //do nothing
             }
             return refundTicketReply;
+        }
+        #endregion
+
+        #region 查询出票状态
+        public QueryPrintReply QueryPrint(string CinemaCode, string PrintNo, string VerifyCode)
+        {
+            QueryPrintReply queryPrintReply = new QueryPrintReply();
+            try
+            {
+                queryPrintReply = netSaleService.QueryPrint(pAppCode, pKeyInfo, CinemaCode, PrintNo, VerifyCode);
+            }
+            catch (Exception e)
+            {
+                //do nothing
+            }
+            return queryPrintReply;
+        }
+        #endregion
+
+        #region 查询订单
+        public QueryOrderReply QueryOrder(string CinemaCode,string OrderCode)
+        {
+            QueryOrderReply queryOrderReply = new QueryOrderReply();
+            try
+            {
+                queryOrderReply = netSaleService.QueryOrder(pAppCode, pKeyInfo, CinemaCode, OrderCode);
+            }
+            catch (Exception e)
+            {
+                //do nothing
+            }
+            return queryOrderReply;
         }
         #endregion
 

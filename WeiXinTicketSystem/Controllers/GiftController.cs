@@ -18,6 +18,7 @@ using System.Net;
 using System.Xml.Linq;
 using WeiXin.Tools;
 using WeiXinTicketSystem.Properties;
+using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
 {
@@ -116,53 +117,40 @@ namespace WeiXinTicketSystem.Controllers
                 var errorMessages = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
                 return ErrorObject(string.Join("/n", errorMessages));
             }
-
-           GiftEntity gift = new GiftEntity();
+            GiftEntity gift = new GiftEntity();
             if (model.Id > 0)
             {
                 gift = await _giftService.GetGiftByIdAsync(model.Id);
             }
-
-
             gift.MapFrom(model);
 
-
-
+            //图片处理
+            if (Image != null)
+            {
+                string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
+                string savePath = @"upload\GiftImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/GiftImg/" + DateTime.Now.ToString("yyyyMM") + "/";
+                System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                //判断原图片是否存在
+                if (!string.IsNullOrEmpty(gift.Image))
+                {
+                    string file = gift.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    if (System.IO.File.Exists(file))
+                    {
+                        //如果存在则删除
+                        System.IO.File.Delete(file);
+                    }
+                }
+                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
+                gift.Image = basePath + accessPath + fileName;
+            }
             if (gift.Id == 0)
             {
-                //图片处理
-                if (Image != null)
-                {
-                    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\GiftImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                    string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    gift.Image = savePath + fileName;
-                }
-
                 await _giftService.InsertAsync(gift);
             }
             else
             {
-                //图片处理
-                if (Image != null)
-                {
-                    string file = Server.MapPath("~/") + gift.Image;
-                    if (!string.IsNullOrEmpty(file))
-                    {
-                        if (System.IO.File.Exists(file))
-                        {
-                            //如果存在则删除
-                            System.IO.File.Delete(file);
-                        }
-                    }
-                    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\GiftImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                    string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    gift.Image = savePath + fileName;
-                }
-
                 await _giftService.UpdateAsync(gift);
             }
 
@@ -193,7 +181,7 @@ namespace WeiXinTicketSystem.Controllers
         private void PreparyCreateOrEditViewData()
         {
             //绑定是否上架枚举
-            ViewBag.Status_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
+            ViewBag.Status_dd = EnumUtil.GetSelectList<GiftStatusEnum>();
 
         }
 

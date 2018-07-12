@@ -18,6 +18,7 @@ using System.Net;
 using System.Xml.Linq;
 using WeiXin.Tools;
 using WeiXinTicketSystem.Properties;
+using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
 {
@@ -123,48 +124,36 @@ namespace WeiXinTicketSystem.Controllers
                 activity = await _activityService.GetActivityByIdAsync(model.Id);
             }
 
-
             activity.MapFrom(model);
 
-
+            //图片处理
+            if (Image != null)
+            {
+                string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
+                string savePath = @"upload\ActivityImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/ActivityImg/" + DateTime.Now.ToString("yyyyMM") + "/";
+                System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                //判断原图片是否存在
+                if (!string.IsNullOrEmpty(activity.Image))
+                {
+                    string file = activity.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    if (System.IO.File.Exists(file))
+                    {
+                        //如果存在则删除
+                        System.IO.File.Delete(file);
+                    }
+                }
+                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
+                activity.Image = basePath + accessPath + fileName;
+            }
 
             if (activity.Id == 0)
             {
-                //图片处理
-                if (Image != null)
-                {
-                    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\ActivityImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                    string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    activity.Image = savePath + fileName;
-                }
-
                 await _activityService.InsertAsync(activity);
             }
             else
             {
-               
-
-                //图片处理
-                if (Image != null)
-                {
-                    string file = Server.MapPath("~/") + activity.Image;
-                    if (!string.IsNullOrEmpty(file))
-                    {
-                        if (System.IO.File.Exists(file))
-                        {
-                            //如果存在则删除
-                            System.IO.File.Delete(file);
-                        }
-                    }
-                    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\ActivityImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                    string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    activity.Image = savePath + fileName;
-                }
-
                 await _activityService.UpdateAsync(activity);
             }
 

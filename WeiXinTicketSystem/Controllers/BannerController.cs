@@ -18,6 +18,7 @@ using System.Net;
 using System.Xml.Linq;
 using WeiXin.Tools;
 using WeiXinTicketSystem.Properties;
+using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
 {
@@ -121,47 +122,37 @@ namespace WeiXinTicketSystem.Controllers
                 Banner = await _BannerService.GetBannerByIdAsync(model.Id);
             }
 
-
             Banner.MapFrom(model);
 
-
+            //图片处理
+            if (Image != null)
+            {
+                string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
+                string savePath = @"upload\BannerImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/BannerImg/" + DateTime.Now.ToString("yyyyMM") + "/";
+                System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                //判断原图片是否存在
+                if (!string.IsNullOrEmpty(Banner.Image))
+                {
+                    string file = Banner.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    if (System.IO.File.Exists(file))
+                    {
+                        //如果存在则删除
+                        System.IO.File.Delete(file);
+                    }
+                }
+                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
+                Banner.Image = basePath + accessPath + fileName;
+            }
 
             if (Banner.Id == 0)
             {
-                //图片处理
-                if (Image != null)
-                {
-                    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\BannerImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                    string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    Banner.Image = savePath + fileName;
-                    Banner.Created = DateTime.Now;
-                }
-
+                Banner.Created = DateTime.Now;
                 await _BannerService.InsertAsync(Banner);
             }
             else
             {
-                //图片处理
-                if (Image != null)
-                {
-                    string file = Server.MapPath("~/") + Banner.Image;
-                    if (!string.IsNullOrEmpty(file))
-                    {
-                        if (System.IO.File.Exists(file))
-                        {
-                            //如果存在则删除
-                            System.IO.File.Delete(file);
-                        }
-                    }
-                    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\BannerImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                    string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    Banner.Image = savePath + fileName;
-                }
-
                 await _BannerService.UpdateAsync(Banner);
             }
 

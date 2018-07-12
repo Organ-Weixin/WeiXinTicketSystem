@@ -12,39 +12,37 @@ namespace WeiXinTicketSystem.WebApi.Models
     }
     public class QueryOrderReplyOrder
     {
-        public int OrderId { get; set; }
-        public string CinemaCode { get; set; }
         public string OrderCode { get; set; }
-        public string MobilePhone { get; set; }
-        public int SnacksCount { get; set; }
-        public decimal TotalPrice { get; set; }
-        public string ReleaseTime { get; set; }
-        public string SubmitTime { get; set; }
-        public string VoucherCode { get; set; }
-        public string OrderStatus { get; set; }
-        public string RefundTime { get; set; }
-        public string FetchTime { get; set; }
-        public string Created { get; set; }
-        public string AutoUnLockDateTime { get; set; }
-        public string DeliveryAddress { get; set; }
-        public string SendTime { get; set; }
-        public bool OrderPayFlag { get; set; }
-        public string OrderPayType { get; set; }
-        public string OrderPayTime { get; set; }
-        public string OrderTradeNo { get; set; }
-        public bool IsUseConpons { get; set; }
-        public string ConponCode { get; set; }
-        public decimal ConponPrice { get; set; }
-        public string OpenID { get; set; }
-        public List<QueryOrderReplySnack> Snacks { get; set; }
+        public string CinemaCode { get; set; }
+        public CinemaTypeEnum CinemaType { get; set; }
+        public string CinemaName { get; set; }
+        public string ScreenCode { get; set; }
+        public string ScreenName { get; set; }
+        public string SessionCode { get; set; }
+        public string StartTime { get; set; }
+        public string PlaythroughFlag { get; set; }
+        public string PrintNo { get; set; }
+        public string VerifyCode { get; set; }
+        public QueryOrderReplyFilm Film { get; set; }
+        public List<QueryOrderReplySeat> Seats { get; set; }
     }
-    public class QueryOrderReplySnack
-    {
-        public string SnackCode { get; set; }
-        public decimal StandardPrice { get; set; }
-        public decimal SalePrice { get; set; }
-        public int Number { get; set; }
-        public decimal SubTotalPrice { get; set; }
 
+    public class QueryOrderReplyFilm
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Duration { get; set; }
+        public string Sequence { get; set; }
+    }
+    public class QueryOrderReplySeat
+    {
+        public string SeatCode { get; set; }
+        public string RowNum { get; set; }
+        public string ColumnNum { get; set; }
+        public string FilmTicketCode { get; set; }
+        public YesOrNoEnum PrintStatus { get; set; }
+        public string PrintTime { get; set; }
+        public YesOrNoEnum RefundStatus { get; set; }
+        public string RefundTime { get; set; }
     }
 }

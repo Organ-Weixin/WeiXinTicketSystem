@@ -6,11 +6,11 @@ using WeiXinTicketSystem.Entity.Enum;
 
 namespace WeiXinTicketSystem.WebApi.Models
 {
-    public class PayOrderReply: BaseReply
+    public class PaySnackOrderReply: BaseReply
     {
-        public PayOrderReplyOrder data { get; set; }
+        public PaySnackOrderReplyOrder data { get; set; }
     }
-    public class PayOrderReplyOrder
+    public class PaySnackOrderReplyOrder
     {
         public string CinemaCode { get; set; }
         public string OrderCode { get; set; }

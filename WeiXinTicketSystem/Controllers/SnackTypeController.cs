@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using WeiXinTicketSystem.Properties;
 using System.Web;
+using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
 {
@@ -124,18 +125,27 @@ namespace WeiXinTicketSystem.Controllers
             }
 
             type.MapFrom(model);
+
             //图片处理
             if (Image != null)
             {
                 string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                if (type.Image != null && System.IO.File.Exists(rootPath + type.Image))
-                {
-                    System.IO.File.Delete(rootPath + type.Image);
-                }
+                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
                 string savePath = @"upload\SnackTypeImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/SnackTypeImg/" + DateTime.Now.ToString("yyyyMM") + "/";
                 System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                //判断原图片是否存在
+                if (!string.IsNullOrEmpty(type.Image))
+                {
+                    string file = type.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    if (System.IO.File.Exists(file))
+                    {
+                        //如果存在则删除
+                        System.IO.File.Delete(file);
+                    }
+                }
                 string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                type.Image = savePath + fileName;
+                type.Image = basePath + accessPath + fileName;
             }
 
             if (type.Id == 0)

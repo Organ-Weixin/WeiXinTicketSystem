@@ -6,17 +6,17 @@ using WeiXinTicketSystem.Entity.Enum;
 
 namespace WeiXinTicketSystem.WebApi.Models
 {
-    public class QueryUserOrdersReply:BaseReply
+    public class QueryUserSnackOrdersReply:BaseReply
     {
-        public QueryUserOrdersReplyOrders data { get; set; }
+        public QueryUserSnackOrdersReplyOrders data { get; set; }
     }
-    public class QueryUserOrdersReplyOrders
+    public class QueryUserSnackOrdersReplyOrders
     {
         public string OpenID { get; set; }
         public int OrdersCount { get; set; }
-        public List<QueryUserOrdersReplyOrder> Orders { get; set; }
+        public List<QueryUserSnackOrdersReplyOrder> Orders { get; set; }
     }
-    public class QueryUserOrdersReplyOrder
+    public class QueryUserSnackOrdersReplyOrder
     {
         public int OrderId { get; set; }
         public string CinemaCode { get; set; }

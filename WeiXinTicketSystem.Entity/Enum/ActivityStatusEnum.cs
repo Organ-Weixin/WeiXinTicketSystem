@@ -3,21 +3,22 @@ using System.Xml.Serialization;
 
 namespace WeiXinTicketSystem.Entity.Enum
 {
-    /// <summary>
-    /// 套餐状态枚举类
-    /// </summary>
-    public enum SnackStatusEnum:byte
+    public enum ActivityStatusEnum:byte
     {
+        [XmlEnum("0")]
+        [Description("非法状态")]
+        Illegal = 0,
+
         [XmlEnum("1")]
         [Description("全部")]
-        All=1,
+        All = 1,
 
         [XmlEnum("2")]
-        [Description("下架")]
+        [Description("已取消")]
         Off = 2,
 
         [XmlEnum("3")]
-        [Description("上架")]
+        [Description("进行中")]
         On = 3
     }
 }

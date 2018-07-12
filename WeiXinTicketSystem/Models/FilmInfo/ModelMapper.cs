@@ -66,7 +66,7 @@ namespace WeiXinTicketSystem.Models.FilmInfo
             module.Area = model.Area;
             module.Type = model.Type;
             module.Language = model.Language;
-            module.Status = (YesOrNoEnum)model.Status;
+            module.Status = (FilmStatusEnum)model.Status;
             //module.Image = model.Image;
             module.Trailer = model.Trailer;
         }

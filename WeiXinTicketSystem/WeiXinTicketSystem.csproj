@@ -1403,11 +1403,11 @@
     <Content Include="Views\PrintSetting\Index.cshtml" />
     <Content Include="Views\Activity\CreateOrUpdate.cshtml" />
     <Content Include="Views\Activity\Index.cshtml" />
-    <Content Include="Views\Bnanner\CreateOrUpdate.cshtml" />
-    <Content Include="Views\Bnanner\Index.cshtml" />
+    <Content Include="Views\Banner\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Conpon\CreateOrUpdate.cshtml" />
     <Content Include="Views\Conpon\Index.cshtml" />
-	<Content Include="Views\Gift\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Gift\CreateOrUpdate.cshtml" />
     <Content Include="Views\Gift\Index.cshtml" />
     <None Include="Properties\PublishProfiles\WeiXinTicket.Admin.pubxml" />
   </ItemGroup>
