@@ -1,0 +1,78 @@
+﻿@model CreateOrUpdateStampViewModel
+@{
+    ViewData["CinemaManage"] = "active";
+    ViewData["Stamp"] = "active";
+    ViewBag.Title = Model.Id > 0 ? "印章编辑" : "印章添加";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @(Model.Id > 0 ? "印章编辑" : "印章添加")
+        <small>印章管理</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
+        <li><a href="@Url.Action(MvcNames.Stamp.Index)"><i class="fa fa-group"></i> 印章管理</a></li>
+        <li class="active">@(Model.Id > 0 ? "印章编辑" : "印章添加")</li>
+    </ol>
+</section>
+
+
+@using (Html.BeginForm(MvcNames.Stamp._CreateOrUpdate, MvcNames.Stamp.Name, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+{
+    <!-- Main content -->
+    <section class="content">
+        <!-- Your Page Content Here -->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">基础信息</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.EditorFor(x => x.Id)
+                        @Html.EditorFor(x => x.Title)
+                        @Html.EditorFor(x => x.ValidityDate, new { htmlAttributes = new { @class = "datepicker" } })
+                    </div>
+                </div>
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">上传印章图片(若无改动不用重新上传)</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.EditorFor(x => x.Image)
+                    </div>
+                </div>
+                <fieldset>
+                    <button type="submit" class="btn btn-primary col-xs-2 col-xs-offset-3">保存</button>
+                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.Stamp.Index)">取消</a>
+                </fieldset>
+            </div>
+        </div>
+    </section>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $('#ValidityDate').datetimepicker({
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            minView: 2,
+            showMeridian: 0,
+            forceParse: 0,
+            startView: 2,
+            format: 'yyyy-mm-dd'
+        });
+
+        
+    </script>
+}
+
+
+
+

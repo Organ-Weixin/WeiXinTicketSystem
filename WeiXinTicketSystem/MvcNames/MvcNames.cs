@@ -343,5 +343,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(GiftController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(GiftController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 印章
+        /// </summary>
+        public static class Stamp
+        {
+            public static string Name { get { return nameof(Stamp); } }
+            public static string Index { get { return nameof(StampController.Index); } }
+            public static string List { get { return nameof(StampController.List); } }
+            public static string Create { get { return nameof(StampController.Create); } }
+            public static string Update { get { return nameof(StampController.Update); } }
+            public static string Delete { get { return nameof(StampController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(StampController._CreateOrUpdate); } }
+        }
     }
 }

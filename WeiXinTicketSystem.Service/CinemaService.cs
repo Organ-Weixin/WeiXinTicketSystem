@@ -79,6 +79,19 @@ namespace WeiXinTicketSystem.Service
             return await query.ToPageListAsync();
         }
 
+
+        public async Task<IPageList<CinemaEntity>> QueryCinemasPagedAsync(int currentpage, int pagesize)
+        {
+            int offset = (currentpage - 1) * pagesize;
+            var query = _cinemaRepository.Query
+                .OrderByDescending(x => x.Id)
+                .Skip(offset)
+                .Take(pagesize);
+
+            query.Where(x => !x.IsDel);
+            return await query.ToPageListAsync();
+        }
+
         /// <summary>
         /// 获取Cinema实体
         /// </summary>

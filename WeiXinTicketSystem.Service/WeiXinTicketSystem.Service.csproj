@@ -89,6 +89,7 @@
     <Compile Include="ModelMapper.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="BannerService.cs" />
+    <Compile Include="ScoreRecordService.cs" />
     <Compile Include="SessionPriceSettingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenInfoService.cs" />
@@ -97,11 +98,13 @@
     <Compile Include="SnackService.cs" />
     <Compile Include="SnackOrderService.cs" />
     <Compile Include="SnackTypeService.cs" />
+    <Compile Include="StampService.cs" />
     <Compile Include="SystemModuleService.cs" />
     <Compile Include="SystemRolePermissionService.cs" />
     <Compile Include="SystemRoleService.cs" />
     <Compile Include="SystemUserService.cs" />
     <Compile Include="TicketUsersService.cs" />
+    <Compile Include="UserStampService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeiXinTicketSystem.Entity\WeiXinTicketSystem.Entity.csproj">

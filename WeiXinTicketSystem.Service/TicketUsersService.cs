@@ -102,5 +102,46 @@ namespace WeiXinTicketSystem.Service
         {
             return await _ticketUsersRepository.Query.Where(x => x.Id == Id).SingleOrDefaultAsync();
         }
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Update(TicketUserEntity entity)
+        {
+            _ticketUsersRepository.Update(entity);
+        }
+
+
+        /// <summary>
+        /// 更新会员卡
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task UpdateAsync(TicketUserEntity entity)
+        {
+            await _ticketUsersRepository.UpdateAsync(entity);
+        }
+
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Insert(TicketUserEntity entity)
+        {
+            _ticketUsersRepository.Insert(entity);
+        }
+
+        /// <summary>
+        /// 新增会员卡
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task InsertAsync(TicketUserEntity entity)
+        {
+            await _ticketUsersRepository.InsertAsync(entity);
+        }
+
+
     }
 }
