@@ -24,7 +24,7 @@ namespace WeiXinTicketSystem.Models
         [ListBox("_dd", Multiple = false)]
         [Display(Name = "类型")]
         [Required(ErrorMessage = "{0}不能为空")]
-        public int TypeId { get; set; }
+        public string TypeCode { get; set; }
         /// <summary>
         /// 套餐名称
         /// </summary>

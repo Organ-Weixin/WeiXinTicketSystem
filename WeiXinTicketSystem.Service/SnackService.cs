@@ -68,7 +68,7 @@ namespace WeiXinTicketSystem.Service
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();
         }
-        public async Task<IPageList<SnackEntity>> QuerySnacksPagedAsync(string cinemaCode, string typeid, int currentpage, int pagesize)
+        public async Task<IPageList<SnackEntity>> QuerySnacksPagedAsync(string cinemaCode, string typeCode, int currentpage, int pagesize)
         {
             int offset = (currentpage - 1) * pagesize;
             var query = _snackRepository.Query
@@ -80,9 +80,9 @@ namespace WeiXinTicketSystem.Service
             {
                 query.Where(x => x.CinemaCode == cinemaCode);
             }
-            if (!string.IsNullOrEmpty(typeid))
+            if (!string.IsNullOrEmpty(typeCode))
             {
-                query.Where(x => x.TypeId == int.Parse(typeid));
+                query.Where(x => x.TypeCode == typeCode);
             }
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();

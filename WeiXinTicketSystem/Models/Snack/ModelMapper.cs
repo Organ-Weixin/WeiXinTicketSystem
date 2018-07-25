@@ -40,7 +40,7 @@ namespace WeiXinTicketSystem.Models.Snack
         public static void MapFrom(this SnackEntity snack, CreateOrUpdateSnackViewModel model)
         {
             snack.CinemaCode = model.CinemaCode;
-            snack.TypeId = model.TypeId;
+            snack.TypeCode = model.TypeCode;
             snack.SnackName = model.SnackName;
             //snack.Image = model.Image;
             snack.Remark = model.Remark;
@@ -58,7 +58,7 @@ namespace WeiXinTicketSystem.Models.Snack
         {
             model.Id = snack.Id;
             model.CinemaCode = snack.CinemaCode;
-            model.TypeId = snack.TypeId;
+            model.TypeCode = snack.TypeCode;
             model.SnackName = snack.SnackName;
             //model.Image = snack.Image;
             model.Remark = snack.Remark;

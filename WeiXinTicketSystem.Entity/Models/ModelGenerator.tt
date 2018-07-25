@@ -117,6 +117,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	//tables["User_Cinema"]["OpenSnacks"].PropertyType="SnackInterfaceEnum";
 	tables["UserStamps"]["CollectType"].PropertyType="UserStampCollectTypeEnum";
 	tables["UserStamps"]["Status"].PropertyType="UserStampStatusEnum";
+	tables["Snacks"]["IsRecommand"].PropertyType="YesOrNoEnum";
 #>
 using System;
 using System.ComponentModel.DataAnnotations;

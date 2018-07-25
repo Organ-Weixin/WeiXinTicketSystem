@@ -30,7 +30,7 @@ namespace WeiXinTicketSystem.WebApi.Models
             snack.SnackId = entity.Id;
             snack.CinemaCode = entity.CinemaCode;
             snack.SnackCode = entity.SnackCode;
-            snack.TypeId = entity.TypeId;
+            snack.TypeCode = entity.TypeCode;
             snack.SnackName = entity.SnackName;
             snack.Remark = entity.Remark;
             snack.StandardPrice = entity.StandardPrice;
@@ -38,7 +38,7 @@ namespace WeiXinTicketSystem.WebApi.Models
             snack.Status = entity.Status.GetDescription();
             snack.Stock = entity.Stock;
             snack.ExpDate = entity.ExpDate.ToFormatStringWithT();
-            snack.IsRecommand = entity.IsRecommand.HasValue ? entity.IsRecommand.Value : false;
+            snack.IsRecommand = entity.IsRecommand.GetDescription();
             snack.Image = entity.Image;
             return snack;
         }

@@ -168,7 +168,7 @@ namespace WeiXinTicketSystem.Controllers
                 //snack.Image = ImageByte;
                 snack.Status = SnackStatusEnum.On;//0下架，1上架
                 snack.IsDel = false;
-                snack.IsRecommand = false;
+                ////////////////////////////////////////////////////////////snack.IsRecommand = false;
                 await _snackService.InsertAsync(snack);
             }
             else

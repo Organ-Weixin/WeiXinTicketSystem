@@ -19,7 +19,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         public int SnackId { get; set; }
         public string CinemaCode { get; set; }
         public string SnackCode { get; set; }
-        public int TypeId { get; set; }
+        public string TypeCode { get; set; }
         public string SnackName { get; set; }
         public string Remark { get; set; }
         public decimal StandardPrice { get; set; }
@@ -27,7 +27,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         public string Status { get; set; }
         public int Stock { get; set; }
         public string ExpDate { get; set; }
-        public bool IsRecommand { get; set; }
+        public string IsRecommand { get; set; }
         public string Image { get; set; }
     }
 }
