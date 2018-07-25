@@ -150,7 +150,7 @@ namespace WeiXinTicketSystem.Controllers
             {
                 List<CinemaEntity> cinemas = new List<CinemaEntity>();
                 cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
-                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.CinemaName, Value = x.CinemaCode });
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
             }
             else
             {

@@ -101,7 +101,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             else
             {
-                cinema = new CinemaEntity { CinemaCode = Resources.DEFAULT_CINEMACODE, CinemaName = "普照网络" };
+                cinema = new CinemaEntity { Code = Resources.DEFAULT_CINEMACODE, Name = "普照网络" };
             }
 
             var role = await _roleService.GetAsync(model.RoleId);
@@ -180,10 +180,10 @@ namespace WeiXinTicketSystem.Controllers
             }
             else
             {
-                cinema = new CinemaEntity { CinemaCode = Resources.DEFAULT_CINEMACODE, CinemaName = "普照网络" };
+                cinema = new CinemaEntity { Code = Resources.DEFAULT_CINEMACODE, Name = "普照网络" };
             }
-            sysUser.CinemaCode = cinema.CinemaCode;
-            sysUser.CinemaName = cinema.CinemaName;
+            sysUser.CinemaCode = cinema.Code;
+            sysUser.CinemaName = cinema.Name;
 
             var role = await _roleService.GetAsync(model.RoleId);
             if (role == null)
@@ -295,9 +295,9 @@ namespace WeiXinTicketSystem.Controllers
         {
             if (CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE)
             {
-                List<CinemaEntity> cinemas = new List<CinemaEntity> { new CinemaEntity { CinemaCode = Resources.DEFAULT_CINEMACODE, CinemaName = "普照网络" } };
+                List<CinemaEntity> cinemas = new List<CinemaEntity> { new CinemaEntity { Code = Resources.DEFAULT_CINEMACODE, Name = "普照网络" } };
                 cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
-                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.CinemaName, Value = x.CinemaCode });
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
             }
             else
             {

@@ -171,6 +171,12 @@ namespace WeiXinTicketSystem.WebApi.Models
         /// 影片编码不存在
         /// </summary>
         [Description("影片编码不存在或不合法！")]
-        FilmCodeNotExist = 10000026
+        FilmCodeNotExist = 10000026,
+
+        /// <summary>
+        /// 小程序appid不存在
+        /// </summary>
+        [Description("影院小程序APPID不存在或不合法！")]
+        CinemaMiniProgramAccountNotExist = 10000027
     }
 }

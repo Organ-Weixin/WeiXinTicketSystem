@@ -13,6 +13,7 @@ namespace WeiXinTicketSystem.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
+        [ListBox("_dd", Multiple = false)]
         [Display(Name = "影院编码")]
         [Required(ErrorMessage = "{0}不能为空")]
         [StringLength(8, ErrorMessage = "{0}最多8个字符")]
@@ -22,7 +23,7 @@ namespace WeiXinTicketSystem.Models
         [Required(ErrorMessage = "{0}不能为空")]
         [StringLength(50, ErrorMessage = "{0}最多50个字符")]
         public string Title { get; set; }
-
+        [TextArea]
         [Display(Name = "详细")]
         public string Details { get; set; }
 

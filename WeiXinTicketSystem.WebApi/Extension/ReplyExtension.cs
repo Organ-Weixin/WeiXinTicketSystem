@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using NetSaleSvc.Api.Models;
+
 namespace WeiXinTicketSystem.WebApi.Extension
 {
     public static class ReplyExtension
@@ -38,7 +40,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this QuerySnacksReply reply, string Username, string Password, string CinemaCode, string TypeId, string CurrentPage, string PageSize)
+        public static bool RequestInfoGuard(this Models.QuerySnacksReply reply, string Username, string Password, string CinemaCode, string TypeId, string CurrentPage, string PageSize)
         {
             int rint = 0;
             if (string.IsNullOrEmpty(Username))
@@ -89,7 +91,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this BookSnacksReply reply, string UserName, string Password, string CinemaCode, string MobilePhone, string DeliveryAddress, string SendTime, string OpenID, List<BookSnacksQueryJsonSnack> Snacks)
+        public static bool RequestInfoGuard(this Models.BookSnacksReply reply, string UserName, string Password, string CinemaCode, string MobilePhone, string DeliveryAddress, string SendTime, string OpenID, List<BookSnacksQueryJsonSnack> Snacks)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -133,7 +135,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-        public static bool RequestInfoGuard(this ReleaseSnacksReply reply, string UserName, string Password, string CinemaCode, string OrderCode)
+        public static bool RequestInfoGuard(this Models.ReleaseSnacksReply reply, string UserName, string Password, string CinemaCode, string OrderCode)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -212,7 +214,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-        public static bool RequestInfoGuard(this SubmitSnacksReply reply, string Username, string Password, string CinemaCode,string OrderCode,string OrderTradeNo,string MobilePhone,string OpenID, List<SubmitSnacksQueryJsonSnack> Snacks)
+        public static bool RequestInfoGuard(this Models.SubmitSnacksReply reply, string Username, string Password, string CinemaCode,string OrderCode,string OrderTradeNo,string MobilePhone,string OpenID, List<SubmitSnacksQueryJsonSnack> Snacks)
         {
             if (string.IsNullOrEmpty(Username))
             {
@@ -612,7 +614,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this QuerySessionsReply reply, string Username, string Password, string CinemaCode, string StartDate,string EndDate)
+        public static bool RequestInfoGuard(this QuerySessionReply reply, string Username, string Password, string CinemaCode, string StartDate,string EndDate)
         {
             if (string.IsNullOrEmpty(Username))
             {
@@ -788,279 +790,6 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this LockSeatReply reply, string UserName, string Password, string CinemaCode,string OpenID, string SessionCode, string SeatsCount, string PayType, List<LockSeatQueryJsonSeat> Seats)
-        {
-            if (string.IsNullOrEmpty(UserName))
-            {
-                reply.SetNecessaryParamMissReply(nameof(UserName));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(OpenID))
-            {
-                reply.SetNecessaryParamMissReply(nameof(OpenID));
-                return false;
-            }
-            if (string.IsNullOrEmpty(SessionCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(SessionCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(SeatsCount))
-            {
-                reply.SetNecessaryParamMissReply(nameof(SeatsCount));
-                return false;
-            }
-            if (string.IsNullOrEmpty(PayType))
-            {
-                reply.SetNecessaryParamMissReply(nameof(PayType));
-                return false;
-            }
-            if (Seats == null || Seats.Count <= 0)
-            {
-                reply.SetNecessaryParamMissReply(nameof(Seats));
-                return false;
-            }
-            return true;
-        }
-        public static bool RequestInfoGuard(this ReleaseSeatReply reply, string UserName, string Password, string CinemaCode,string OrderCode, string SessionCode,string SeatsCount, List<ReleaseSeatQueryJsonSeat> Seats)
-        {
-            if (string.IsNullOrEmpty(UserName))
-            {
-                reply.SetNecessaryParamMissReply(nameof(UserName));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(OrderCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(OrderCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(SessionCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(SessionCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(SeatsCount))
-            {
-                reply.SetNecessaryParamMissReply(nameof(SeatsCount));
-                return false;
-            }
-            if (Seats == null || Seats.Count <= 0)
-            {
-                reply.SetNecessaryParamMissReply(nameof(Seats));
-                return false;
-            }
-            return true;
-        }
-
-        public static bool RequestInfoGuard(this SubmitOrderReply reply, string UserName, string Password, string CinemaCode,string PaySeqNo, string OrderCode, string SessionCode, string SeatsCount,string MobilePhone, List<SubmitOrderQueryJsonSeat> Seats)
-        {
-            if (string.IsNullOrEmpty(UserName))
-            {
-                reply.SetNecessaryParamMissReply(nameof(UserName));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(PaySeqNo))
-            {
-                reply.SetNecessaryParamMissReply(nameof(PaySeqNo));
-                return false;
-            }
-            if (string.IsNullOrEmpty(OrderCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(OrderCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(SessionCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(SessionCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(SeatsCount))
-            {
-                reply.SetNecessaryParamMissReply(nameof(SeatsCount));
-                return false;
-            }
-            if (string.IsNullOrEmpty(MobilePhone))
-            {
-                reply.SetNecessaryParamMissReply(nameof(MobilePhone));
-                return false;
-            }
-            if (Seats == null || Seats.Count <= 0)
-            {
-                reply.SetNecessaryParamMissReply(nameof(Seats));
-                return false;
-            }
-            return true;
-        }
-        public static bool RequestInfoGuard(this RefundTicketReply reply, string UserName, string Password, string CinemaCode, string PrintNo, string VerifyCode)
-        {
-            if (string.IsNullOrEmpty(UserName))
-            {
-                reply.SetNecessaryParamMissReply(nameof(UserName));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(PrintNo))
-            {
-                reply.SetNecessaryParamMissReply(nameof(PrintNo));
-                return false;
-            }
-            if (string.IsNullOrEmpty(VerifyCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(VerifyCode));
-                return false;
-            }
-            return true;
-        }
-        public static bool RequestInfoGuard(this QueryOrderReply reply, string UserName, string Password, string CinemaCode, string OrderCode)
-        {
-            if (string.IsNullOrEmpty(UserName))
-            {
-                reply.SetNecessaryParamMissReply(nameof(UserName));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(OrderCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(OrderCode));
-                return false;
-            }
-            return true;
-        }
-        public static bool RequestInfoGuard(this QueryTicketReply reply, string UserName, string Password, string CinemaCode, string PrintNo, string VerifyCode)
-        {
-            if (string.IsNullOrEmpty(UserName))
-            {
-                reply.SetNecessaryParamMissReply(nameof(UserName));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(PrintNo))
-            {
-                reply.SetNecessaryParamMissReply(nameof(PrintNo));
-                return false;
-            }
-            if (string.IsNullOrEmpty(VerifyCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(VerifyCode));
-                return false;
-            }
-            return true;
-        }
-        public static bool RequestInfoGuard(this QueryPrintReply reply, string UserName, string Password, string CinemaCode, string PrintNo, string VerifyCode)
-        {
-            if (string.IsNullOrEmpty(UserName))
-            {
-                reply.SetNecessaryParamMissReply(nameof(UserName));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(PrintNo))
-            {
-                reply.SetNecessaryParamMissReply(nameof(PrintNo));
-                return false;
-            }
-            if (string.IsNullOrEmpty(VerifyCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(VerifyCode));
-                return false;
-            }
-            return true;
-        }
-        public static bool RequestInfoGuard(this FetchTicketReply reply, string UserName, string Password, string CinemaCode, string PrintNo, string VerifyCode)
-        {
-            if (string.IsNullOrEmpty(UserName))
-            {
-                reply.SetNecessaryParamMissReply(nameof(UserName));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(PrintNo))
-            {
-                reply.SetNecessaryParamMissReply(nameof(PrintNo));
-                return false;
-            }
-            if (string.IsNullOrEmpty(VerifyCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(VerifyCode));
-                return false;
-            }
-            return true;
-        }
         public static bool RequestInfoGuard(this QueryFilmCommentsReply reply, string Username, string Password, string CinemaCode, string FilmCode, string CurrentPage, string PageSize)
         {
             int rint = 0;
@@ -1260,514 +989,65 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
+        public static bool RequestInfoGuard(this QueryTicketUserReply reply, string Username, string Password, string CinemaCode, string OpenID)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OpenID))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                return false;
+            }
+            return true;
+        }
 
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this QueryCinemaListReply reply, string Username, string Password)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
+        public static bool RequestInfoGuard(this TicketUserLoginReply reply, string Username, string Password,string CinemaCode, string Code, string EncryptedData, string Iv)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Code))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Code));
+                return false;
+            }
+            if (string.IsNullOrEmpty(EncryptedData))
+            {
+                reply.SetNecessaryParamMissReply(nameof(EncryptedData));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Iv))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Iv));
+                return false;
+            }
+            return true;
+        }
 
-        //    return true;
-        //}
-
-
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="CinemaCode"></param>
-        ///// <param name="ScreenCode"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this QuerySeatReply reply, string Username, 
-        //    string Password, string CinemaCode, string ScreenCode)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(ScreenCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(ScreenCode));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="CinemaCode"></param>
-        ///// <param name="StartDate"></param>
-        ///// <param name="EndDate"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this QueryFilmReply reply, string Username, string Password,
-        //    string CinemaCode, string StartDate, string EndDate)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(StartDate))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(StartDate));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(EndDate))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(EndDate));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="CinemaCode"></param>
-        ///// <param name="StartDate"></param>
-        ///// <param name="EndDate"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this QuerySessionReply reply, string Username, string Password,
-        //    string CinemaCode, string StartDate, string EndDate)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(StartDate))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(StartDate));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(EndDate))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(EndDate));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="CinemaCode"></param>
-        ///// <param name="SessionCode"></param>
-        ///// <param name="Status"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this QuerySessionSeatReply reply, string Username, string Password,
-        //    string CinemaCode, string SessionCode, string Status)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(SessionCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(SessionCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Status))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Status));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="QueryXml"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this ReleaseSeatReply reply, string Username, string Password,
-        //    string QueryXml)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(QueryXml))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(QueryXml));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="QueryXml"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this SubmitOrderReply reply, string Username, string Password,
-        //    string QueryXml)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(QueryXml))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(QueryXml));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="CinemaCode"></param>
-        ///// <param name="PrintNo"></param>
-        ///// <param name="VerifyCode"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this QueryPrintReply reply, string Username, string Password,
-        //    string CinemaCode, string PrintNo, string VerifyCode)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(PrintNo))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(PrintNo));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(VerifyCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(VerifyCode));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="CinemaCode"></param>
-        ///// <param name="PrintNo"></param>
-        ///// <param name="VerifyCode"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this RefundTicketReply reply, string Username, string Password,
-        //    string CinemaCode, string PrintNo, string VerifyCode)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(PrintNo))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(PrintNo));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(VerifyCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(VerifyCode));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="CinemaCode"></param>
-        ///// <param name="OrderCode"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this QueryOrderReply reply, string Username, string Password,
-        //    string CinemaCode, string OrderCode)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(OrderCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(OrderCode));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="CinemaCode"></param>
-        ///// <param name="PrintNo"></param>
-        ///// <param name="VerifyCode"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this QueryTicketReply reply, string Username, string Password,
-        //    string CinemaCode, string PrintNo, string VerifyCode)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(PrintNo))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(PrintNo));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(VerifyCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(VerifyCode));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 检查传入参数
-        ///// </summary>
-        ///// <param name="reply"></param>
-        ///// <param name="Username"></param>
-        ///// <param name="Password"></param>
-        ///// <param name="CinemaCode"></param>
-        ///// <param name="PrintNo"></param>
-        ///// <param name="VerifyCode"></param>
-        ///// <returns></returns>
-        //public static bool RequestInfoGuard(this FetchTicketReply reply, string Username, string Password,
-        //    string CinemaCode, string PrintNo, string VerifyCode)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(PrintNo))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(PrintNo));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(VerifyCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(VerifyCode));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-
-
-
-
-
-
-
-
-        //public static bool RequestInfoGuard(this QuerySnacksOrderReply reply, string Username, string Password, string CinemaCode, string ChannelOrderCode)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(ChannelOrderCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(ChannelOrderCode));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        //public static bool RequestInfoGuard(this RevokeSnacksReply reply, string Username, string Password, string CinemaCode, string OrderCode)
-        //{
-        //    if (string.IsNullOrEmpty(Username))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Username));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(Password))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(Password));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(CinemaCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-        //        return false;
-        //    }
-        //    if (string.IsNullOrEmpty(OrderCode))
-        //    {
-        //        reply.SetNecessaryParamMissReply(nameof(OrderCode));
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
     }
 }

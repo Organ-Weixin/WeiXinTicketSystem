@@ -49,10 +49,36 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["tablename"]["columnname"].PropertyName="newname";	// To change the property name of a column
 	tables["tablename"]["columnname"].PropertyType="bool";		// To change the property type of a column
 */
-	tables["Cinema"]["TicketSystem"].PropertyType="CinemaTypeEnum";
+	tables["AdminConponView"]["ConponType"].PropertyType="ConponTypeEnum";
+	tables["AdminConponView"]["Status"].PropertyType="ConponStatusEnum";
+    tables["AdminMemberCardView"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
+	tables["AdminMemberCardView"]["Status"].PropertyType="MemberCardStatusEnum";
+	tables["AdminOrderView"]["OrderStatus"].PropertyType="OrderStatusEnum";
+	tables["AdminSessionView"]["PricePlanType"].PropertyType="PricePlanTypeEnum";
+	tables["AdminSnacksView"]["Status"].PropertyType="SnackStatusEnum";
+	tables["AdminSnackOrdersView"]["OrderStatus"].PropertyType="SnackOrderStatusEnum";
+	tables["ApiUserStampView"]["CollectType"].PropertyType="UserStampCollectTypeEnum";
+	tables["ApiUserStampView"]["Status"].PropertyType="UserStampStatusEnum";
+	tables["Activity"]["Status"].PropertyType="YesOrNoEnum";
+	tables["Banner"]["Status"].PropertyType="YesOrNoEnum";
+    tables["Cinema"]["IsOpenSnacks"].PropertyType="CinemaOpenEnum";
+	tables["Cinema"]["IsOpen"].PropertyType="CinemaOpenEnum";
 	tables["Cinema"]["TheaterChain"].PropertyType="TheaterChainEnum";
-	tables["Cinema"]["Status"].PropertyType="CinemaStatusEnum";
-	tables["Cinema"]["OpenSnacks"].PropertyType="YesOrNoEnum";
+	tables["CinemaView"]["IsOpen"].PropertyType="CinemaOpenEnum";
+	tables["CinemaView"]["CinemaType"].PropertyType="CinemaTypeEnum";
+	tables["CinemaView"]["IsOpenSnacks"].PropertyType="CinemaOpenEnum";
+	tables["CinemaView"]["TheaterChain"].PropertyType="TheaterChainEnum";
+	tables["CinemaPaymentSettings"]["IsUseAlipay"].PropertyType="YesOrNoEnum";
+	tables["CinemaPaymentSettings"]["IsUseBfbpay"].PropertyType="YesOrNoEnum";
+	tables["CinemaPaymentSettings"]["IsUseWxpay"].PropertyType="YesOrNoEnum";
+	tables["CinemaPaymentSettings"]["IsUserMemberCard"].PropertyType="YesOrNoEnum";
+	tables["CinemaPrePaySettings"]["IsPrePay"].PropertyType="YesOrNoEnum";
+	tables["CinemaMemberCardSettings"]["IsCardUse"].PropertyType="YesOrNoEnum";
+	tables["CinemaMemberCardSettings"]["IsCardRegister"].PropertyType="YesOrNoEnum";
+	tables["CinemaMemberCardSettings"]["IsCardReCharge"].PropertyType="YesOrNoEnum";
+	tables["CinemaPrintSettings"]["IsPrintName"].PropertyType="YesOrNoEnum";
+	tables["CinemaPrintSettings"]["IsCustomTicketTemplet"].PropertyType="YesOrNoEnum";
+	tables["CinemaPrintSettings"]["IsCustomPackageTemplet"].PropertyType="YesOrNoEnum";
 	tables["CinemaCustomMenu"]["MenuType"].PropertyType="CustomMenuTypeEnum";
 	tables["CinemaCustomMenu"]["MenuReType"].PropertyType="CustomMenuReTypeEnum";
 	tables["CinemaMemberCardSettings"]["CardType"].PropertyType="MemberCardTypeEnum";
@@ -61,54 +87,36 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["CinemaPriceSettings"]["IsSellByStandardPrice"].PropertyType="YesOrNoEnum";
 	tables["CinemaTicketSystemAccounts"]["TicketSystem"].PropertyType="CinemaTypeEnum";
 	tables["CinemaWeChatOfficialAccounts"]["AccountType"].PropertyType="WeChatOfficialAccountTypeEnum";
+
+    tables["Conpons"]["ConponType"].PropertyType="ConponTypeEnum";
+	tables["Conpons"]["Status"].PropertyType="ConponStatusEnum";
+
 	tables["DefaultActions"]["ActionType"].PropertyType="DefaultActionTypeEnum";
+	tables["FilmInfo"]["Status"].PropertyType="FilmStatusEnum";
+	tables["Gifts"]["Status"].PropertyType="GiftStatusEnum";
+	tables["Middleware"]["Type"].PropertyType="CinemaTypeEnum";
 	tables["MemberCard"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
 	tables["MemberCard"]["Status"].PropertyType="MemberCardStatusEnum";
 	tables["MemberCardChargeRecords"]["ChargeType"].PropertyType="PayTypeEnum";
-	tables["Orders"]["FeePayType"].PropertyType="CinemaFeePayTypeEnum";
+	
 	tables["Orders"]["OrderStatus"].PropertyType="OrderStatusEnum";
+	tables["Orders"]["PrintStatus"].PropertyType="YesOrNoEnum";
+	tables["Orders"]["FeePayType"].PropertyType="CinemaFeePayTypeEnum";
 	tables["Orders"]["OrderPayType"].PropertyType="PayTypeEnum";
-	tables["SessionPriceSettings"]["Type"].PropertyType="PricePlanTypeEnum";
-	tables["SystemRoles"]["Type"].PropertyType="SystemRoleTypeEnum";
-	tables["TicketUsers"]["Sex"].PropertyType="UserSexEnum";
-	tables["TicketUsers"]["IsActive"].PropertyType="YesOrNoEnum";
-	tables["AdminOrderView"]["OrderStatus"].PropertyType="OrderStatusEnum";
-	tables["AdminSessionView"]["PriceSettingType"].PropertyType="PricePlanTypeEnum";
-	tables["CinemaPaymentSettings"]["IsUseAlipay"].PropertyType="YesOrNoEnum";
-	tables["CinemaPaymentSettings"]["IsUseBfbpay"].PropertyType="YesOrNoEnum";
-	tables["CinemaPaymentSettings"]["IsUseWxpay"].PropertyType="YesOrNoEnum";
-	tables["CinemaPaymentSettings"]["IsUserMemberCard"].PropertyType="YesOrNoEnum";
-	tables["CinemaPrePaySettings"]["IsPrePay"].PropertyType="YesOrNoEnum";
-	tables["FilmInfo"]["Status"].PropertyType="FilmStatusEnum";
-	tables["CinemaMemberCardSettings"]["IsCardUse"].PropertyType="YesOrNoEnum";
-	tables["CinemaMemberCardSettings"]["IsCardRegister"].PropertyType="YesOrNoEnum";
-	tables["CinemaMemberCardSettings"]["IsCardReCharge"].PropertyType="YesOrNoEnum";
+	tables["PricePlan"]["Type"].PropertyType="PricePlanTypeEnum";
 	tables["Snacks"]["Status"].PropertyType="SnackStatusEnum";
 	tables["SnackOrders"]["OrderStatus"].PropertyType="SnackOrderStatusEnum";
 	tables["SnackOrders"]["OrderPayType"].PropertyType="PayTypeEnum";
-	tables["AdminSnacksView"]["Status"].PropertyType="SnackStatusEnum";
-	tables["AdminSnackOrdersView"]["OrderStatus"].PropertyType="SnackOrderStatusEnum";
-	tables["CinemaPrintSettings"]["IsPrintName"].PropertyType="YesOrNoEnum";
-	tables["CinemaPrintSettings"]["IsCustomTicketTemplet"].PropertyType="YesOrNoEnum";
-	tables["CinemaPrintSettings"]["IsCustomPackageTemplet"].PropertyType="YesOrNoEnum";
-	tables["Activity"]["Status"].PropertyType="YesOrNoEnum";
-	tables["Banner"]["Status"].PropertyType="YesOrNoEnum";
-	tables["AdminMemberCardView"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
-	tables["AdminMemberCardView"]["Status"].PropertyType="MemberCardStatusEnum";
-	tables["Conpons"]["ConponType"].PropertyType="ConponTypeEnum";
-	tables["Conpons"]["Status"].PropertyType="ConponStatusEnum";
-	tables["AdminConponView"]["ConponType"].PropertyType="ConponTypeEnum";
-	tables["AdminConponView"]["Status"].PropertyType="ConponStatusEnum";
-	tables["Cinema"]["OpenSnacks"].PropertyType="YesOrNoEnum";
-	
-	tables["Gifts"]["Status"].PropertyType="GiftStatusEnum";
 	tables["ScoreRecords"]["Type"].PropertyType="ScoreRecordTypeEnum";
 	tables["ScoreRecords"]["Direction"].PropertyType="ScoreRecordDirectionEnum";
+	tables["SystemRoles"]["Type"].PropertyType="SystemRoleTypeEnum";
+	tables["TicketUsers"]["Sex"].PropertyType="UserSexEnum";
+	tables["TicketUsers"]["IsActive"].PropertyType="YesOrNoEnum";
+	//tables["UserCinemaView"]["OpenSnacks"].PropertyType="SnackInterfaceEnum";
+	//tables["UserCinemaView"]["CinemaType"].PropertyType="CinemaTypeEnum";
+	//tables["User_Cinema"]["OpenSnacks"].PropertyType="SnackInterfaceEnum";
 	tables["UserStamps"]["CollectType"].PropertyType="UserStampCollectTypeEnum";
 	tables["UserStamps"]["Status"].PropertyType="UserStampStatusEnum";
-	tables["ApiUserStampView"]["CollectType"].PropertyType="UserStampCollectTypeEnum";
-	tables["ApiUserStampView"]["Status"].PropertyType="UserStampStatusEnum";
-	
 #>
 using System;
 using System.ComponentModel.DataAnnotations;

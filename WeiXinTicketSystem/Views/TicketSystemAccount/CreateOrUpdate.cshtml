@@ -1,6 +1,6 @@
 ﻿@model CreateOrUpdateTicketSystemAccountViewModel
 @{
-    ViewData["Cinema"] = "active";
+    ViewData["CinemaConfig"] = "active";
     ViewData["TicketSystemAccount"] = "active";
     ViewBag.Title = Model.Id > 0 ? "影院系统对接账号配置编辑" : "影院系统对接账号配置添加";
 }
@@ -55,5 +55,17 @@
             </div>
         </div>
     </section>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $('#CinemaCode').on('change', function () {
+            //判断是否选取prompt属性，无返回值；
+            if ($(this).val()) {
+                var CinemaName = $(this).find('option:selected').text();
+                $("#CinemaName").val(CinemaName);
+            }
+        });
+    </script>
 }
 

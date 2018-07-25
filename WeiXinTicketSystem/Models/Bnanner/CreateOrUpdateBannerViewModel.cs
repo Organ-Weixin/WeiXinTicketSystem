@@ -13,6 +13,7 @@ namespace WeiXinTicketSystem.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
+        [ListBox("_dd", Multiple = false)]
         [Display(Name = "影院编码")]
         [Required(ErrorMessage = "{0}不能为空")]
         [StringLength(8, ErrorMessage = "{0}最多8个字符")]
@@ -32,6 +33,9 @@ namespace WeiXinTicketSystem.Models
 
         [Display(Name = "结束时间")]
         public string EndDate { get; set; }
+
+        [Display(Name = "链接地址")]
+        public string LinkUrl { get; set; }
 
         [ListBox("_dd", Multiple = false)]
         [Display(Name = "是否启用")]

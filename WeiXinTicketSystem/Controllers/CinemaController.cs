@@ -18,12 +18,13 @@ namespace WeiXinTicketSystem.Controllers
     public class CinemaController : RootExraController
     {
         private CinemaService _cinemaService;
-
+        private MiddlewareService _middlewareService;
 
         #region ctor
         public CinemaController()
         {
             _cinemaService = new CinemaService();
+            _middlewareService = new MiddlewareService();
         }
         #endregion
 
@@ -63,10 +64,10 @@ namespace WeiXinTicketSystem.Controllers
         /// 添加影院
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             CreateOrUpdateCinemaViewModel model = new CreateOrUpdateCinemaViewModel();
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -84,7 +85,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             CreateOrUpdateCinemaViewModel model = new CreateOrUpdateCinemaViewModel();
             model.MapFrom(cinema);
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -152,25 +153,26 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
-        private void PreparyCreateOrEditViewData()
+        private async Task PreparyCreateOrEditViewData()
         {
-            //绑定售票系统枚举
-            ViewBag.TicketSystem_dd = EnumUtil.GetSelectList<CinemaTypeEnum>();
-
+            //绑定中间件枚举
+            List<MiddlewareEntity> middlewares = new List<MiddlewareEntity>();
+            middlewares.AddRange(await _middlewareService.GetAllMiddlewaresAsync());
+            ViewBag.Mid_dd = middlewares.Select(x => new SelectListItem { Text = x.Title, Value = x.Id.ToString() });
             //绑定所属院线枚举
             ViewBag.TheaterChain_dd = EnumUtil.GetSelectList<TheaterChainEnum>();
 
             //绑定状态(0-未开通，1-已开通)枚举
-            ViewBag.Status_dd = EnumUtil.GetSelectList<CinemaStatusEnum>();
+            ViewBag.IsOpen_dd = EnumUtil.GetSelectList<CinemaOpenEnum>();
 
             //绑定是否开通套餐枚举
-            ViewBag.OpenSnacks_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
+            ViewBag.OpenSnacks_dd = EnumUtil.GetSelectList<CinemaOpenEnum>();
 
         }
 
         private void PrepareIndexViewData()
         {
-            ViewBag.IsOpen = EnumUtil.GetSelectList<CinemaStatusEnum>();
+            ViewBag.IsOpen = EnumUtil.GetSelectList<CinemaOpenEnum>();
         }
 
 

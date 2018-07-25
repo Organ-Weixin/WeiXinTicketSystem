@@ -12,15 +12,15 @@ namespace WeiXinTicketSystem.Models.PricePlan
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        public static dynamic ToDynatableItem(this SessionPriceSettingEntity pricesetting)
+        public static dynamic ToDynatableItem(this PricePlanEntity pricePlan)
         {
             return new
             {
-                id = pricesetting.Id,
-                CinemaCode = pricesetting.CinemaCode,
-                Code = pricesetting.Code,
-                Type = pricesetting.Type.GetDescription(),
-                Price = pricesetting.Price.ToString("0.##")
+                id = pricePlan.Id,
+                CinemaCode = pricePlan.CinemaCode,
+                Code = pricePlan.Code,
+                Type = pricePlan.Type.GetDescription(),
+                Price = pricePlan.Price.ToString("0.##")
             };
         }
     }

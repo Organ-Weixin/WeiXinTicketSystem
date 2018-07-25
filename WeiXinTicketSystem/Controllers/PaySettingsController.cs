@@ -19,11 +19,13 @@ namespace WeiXinTicketSystem.Controllers
     public class PaySettingsController : RootExraController
     {
         private CinemaPaySettingsService _paySettingsService;
+        private CinemaService _cinemaService;
 
         #region ctor
         public PaySettingsController()
         {
             _paySettingsService = new CinemaPaySettingsService();
+            _cinemaService = new CinemaService();
         }
         #endregion
 
@@ -61,10 +63,10 @@ namespace WeiXinTicketSystem.Controllers
         /// 添加影院支付方式配置
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             CreateOrUpdateCinemaPaySettingsViewModel model = new CreateOrUpdateCinemaPaySettingsViewModel();
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -82,7 +84,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             CreateOrUpdateCinemaPaySettingsViewModel model = new CreateOrUpdateCinemaPaySettingsViewModel();
             model.MapFrom(paySettings);
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -148,8 +150,22 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
-        private void PreparyCreateOrEditViewData()
+        private async Task PreparyCreateOrEditViewData()
         {
+            if (CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE)
+            {
+                List<CinemaEntity> cinemas = new List<CinemaEntity>();
+                cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
+            }
+            else
+            {
+                ViewBag.CinemaCode_dd = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = CurrentUser.CinemaName, Value = CurrentUser.CinemaCode }
+                };
+            }
+
             //绑定是否使用支付宝枚举
             ViewBag.IsUseAlipay_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
 

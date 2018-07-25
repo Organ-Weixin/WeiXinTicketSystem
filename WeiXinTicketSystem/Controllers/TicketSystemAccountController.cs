@@ -19,11 +19,12 @@ namespace WeiXinTicketSystem.Controllers
     public class TicketSystemAccountController : RootExraController
     {
         private CinemaTicketSystemAccountService _ticketSystemAccountService;
-
+        private CinemaService _cinemaService;
         #region ctor
         public TicketSystemAccountController()
         {
             _ticketSystemAccountService = new CinemaTicketSystemAccountService();
+            _cinemaService = new CinemaService();
         }
         #endregion
 
@@ -60,10 +61,10 @@ namespace WeiXinTicketSystem.Controllers
         /// 添加影院系统对接账号配置
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             CreateOrUpdateTicketSystemAccountViewModel model = new CreateOrUpdateTicketSystemAccountViewModel();
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -81,7 +82,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             CreateOrUpdateTicketSystemAccountViewModel model = new CreateOrUpdateTicketSystemAccountViewModel();
             model.MapFrom(ticketSystemAccount);
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -146,11 +147,24 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
-        private void PreparyCreateOrEditViewData()
+        private async Task PreparyCreateOrEditViewData()
         {
             //绑定影院系统枚举
             ViewBag.TicketSystem_dd = EnumUtil.GetSelectList<CinemaTypeEnum>();
-
+            //影院下拉
+            if (CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE)
+            {
+                List<CinemaEntity> cinemas = new List<CinemaEntity>();
+                cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
+            }
+            else
+            {
+                ViewBag.CinemaCode_dd = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = CurrentUser.CinemaName, Value = CurrentUser.CinemaCode }
+                };
+            }
         }
 
     }

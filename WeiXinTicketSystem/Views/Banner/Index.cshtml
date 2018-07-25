@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Cinema"] = "active";
+    ViewData["CinemaManage"] = "active";
     ViewData["Banner"] = "active";
     ViewBag.Title = "图片管理";
     List<int> CurrentPermissions = ViewBag.CurrentPermissions;
@@ -7,52 +7,6 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-
-    <style>
-        .black_overlay {
-            display: none;
-            position: absolute;
-            top: 0%;
-            left: 0%;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            z-index: 1001;
-            -moz-opacity: 0.8;
-            opacity: .80;
-            filter: alpha(opacity=80);
-        }
-
-        .white_content {
-            display: none;
-            position: absolute;
-            top: 10%;
-            left: 10%;
-            width: 80%;
-            height: 80%;
-            border: 16px solid lightblue;
-            background-color: white;
-            z-index: 1002;
-            overflow: auto;
-        }
-
-        .white_content_small {
-            display: none;
-            position: absolute;
-            top: 20%;
-            left: 30%;
-            width: 40%;
-            height: 50%;
-            border: 16px solid lightblue;
-            background-color: white;
-            z-index: 1002;
-            overflow: auto;
-        }
-    </style> 
-
-
-
-
     <h1>
         图片管理
         <small>管理系统模块</small>
@@ -108,7 +62,7 @@
                     <td style="text-align: left;">{{row}}</td>
                     <td style="text-align: left; vertical-align: top;">{{CinemaCode}}</td>
                     <td style="text-align: left;">{{Title}}</td>
-                    <td style="text-align: left;"><img id="{{FileName}}"  style="width:102px;height: 126px;" src="{{Image}}" onclick="PreviewImg({{FileName}},'{{Image}}')"/></td>
+                    <td style="text-align: left;"><img style="width:32px;height: 32px;" src="{{Image}}" onmouseover="ShowImg('{{Image}}')" onmouseout="CloseImg()"/></td>
                     <td style="text-align: left;">{{Created}}</td>
                     <td style="text-align: left;">{{StartDate}}</td>
                     <td style="text-align: left;">{{EndDate}}</td>
@@ -138,16 +92,9 @@
         </div>
     </div>
 
-
-
-    <!--弹出层时背景层DIV-->
-    <div id="fade" class="black_overlay">
-    </div>
-    <div id="MyDiv" class="white_content">
-        <div style="text-align: right; cursor: default; height: 40px;">
-            <span style="font-size: 16px;" onclick="CloseDiv('MyDiv','fade')">关闭</span>
-        </div>
-        <img id="personcardimage2" style="width:99%;height: 94%;" src="javaScript:PreviewImg('E:\\PPAA\\20180605140255.jpeg')" />
+    <!--显示图片层-->
+    <div id="MyDiv" style="display: none;position: absolute;top: 20%;left: 50%;width: 50%;height: 50%;z-index: 1001;overflow: auto;-moz-opacity: 0.8;opacity: .80;filter: alpha(opacity=80)">
+        <img id="personcardimage2"/>
     </div>  
 
 
@@ -156,35 +103,16 @@
 
 @section scripts{
     <script type="text/javascript">
-        function PreviewImg(id,imgFile) {
-            //alert('E:\\PPAA\\20180605140255.jpeg')
-          // document.getElementById("personcardimage").style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod = scale)";
-            //document.getElementById("personcardimage").filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgFile;
-            //document.getElementById("personcardimage").filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = "~/Content/img/login.jpg";
-            ShowDiv('MyDiv', 'fade');
-            document.getElementById("personcardimage2").src = imgFile;
+        //隐藏图片
+        function CloseImg()
+        {
+            document.getElementById('MyDiv').style.display = 'none';
         }
-
-
-
-        //弹出隐藏层  
-        function ShowDiv(show_div, bg_div) {
-            document.getElementById(show_div).style.display = 'block';
-            document.getElementById(bg_div).style.display = 'block';
-            var bgdiv = document.getElementById(bg_div);
-            bgdiv.style.width = document.body.scrollWidth;
-            // bgdiv.style.height = $(document).height();  
-            $("#" + bg_div).height($(document).height());
+        //显示图片
+        function ShowImg(imgFile) {
+            document.getElementById("personcardimage2").src = imgFile;
+            document.getElementById('MyDiv').style.display = 'block';
         };
-        //关闭弹出层  
-        function CloseDiv(show_div, bg_div) {
-            document.getElementById(show_div).style.display = 'none';
-            document.getElementById(bg_div).style.display = 'none';
-        };
-
-
 
     </script>
 }
-
-

@@ -6,12 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks;
 using WeiXinTicketSystem.Entity.Models.PageList;
-using WeiXinTicketSystem.Entity.Enum;
-using System.Net;
-using System.IO;
-using System.Xml.Linq;
-using System.Web;
 
 namespace WeiXinTicketSystem.Service
 {
@@ -27,7 +23,15 @@ namespace WeiXinTicketSystem.Service
         }
         #endregion
 
-
+        /// <summary>
+        /// 通过影片编码列表获取影片信息实体
+        /// </summary>
+        /// <param name="Codes"></param>
+        /// <returns></returns>
+        public IList<FilmInfoEntity> GetFilmInfosByCodes(IEnumerable<string> Codes)
+        {
+            return _filmInfoRepository.Query.WhereIsIn(x => x.FilmCode, Codes).ToList();
+        }
         /// <summary>
         /// 根据影片编码获取影片信息
         /// </summary>
@@ -37,16 +41,29 @@ namespace WeiXinTicketSystem.Service
         {
             return _filmInfoRepository.Query.Where(x => x.FilmCode == filmCode).SingleOrDefault();
         }
-
         /// <summary>
-        /// 获取所有影片信息列表
+        /// 根据影片编码获取影片信息异步
         /// </summary>
+        /// <param name="filmCode"></param>
         /// <returns></returns>
-        public async Task<IList<FilmInfoEntity>> GetAllFilmInfoAsync()
+        public async Task<FilmInfoEntity> GetFilmInfoByFilmCodeAsync(string filmCode)
         {
-            return await _filmInfoRepository.Query.Where(x => !x.IsDel).ToListAsync();
+            return await _filmInfoRepository.Query.Where(x => x.FilmCode == filmCode).SingleOrDefaultAsync();
         }
 
+        public FilmInfoEntity GetFilmInfoByCode(string filmCode)
+        {
+            return _filmInfoRepository.Query.Where(x => x.FilmCode == filmCode).SingleOrDefault();
+        }
+        /// <summary>
+        /// 根据影片信息ID获取影片信息
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public async Task<FilmInfoEntity> GetFilmInfoByIdAsync(int Id)
+        {
+            return await _filmInfoRepository.Query.Where(x => x.Id == Id).SingleOrDefaultAsync();
+        }
         /// <summary>
         /// 后台分页读取影片信息
         /// </summary>
@@ -74,61 +91,39 @@ namespace WeiXinTicketSystem.Service
             {
                 query.Where(x => x.Publisher.Contains(keyword) || x.Producer.Contains(keyword) || x.Director.Contains(keyword) || x.Cast.Contains(keyword) || x.Introduction.Contains(keyword));
             }
-            query.Where(x => !x.IsDel);
+            //query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();
         }
-
         /// <summary>
-        /// 获取FilmInfoEntity实体
+        ///  通过影片编码查找所有影片信息
         /// </summary>
         /// <param name="filmCode"></param>
         /// <returns></returns>
-        public async Task<FilmInfoEntity> GetFilmInfoByFilmCodeAsync(string filmCode)
+        public IEnumerable<FilmInfoEntity> GetFilmsByCode(string filmCode)
         {
-            return await _filmInfoRepository.Query.Where(x => x.FilmCode == filmCode).SingleOrDefaultAsync();
+            return _filmInfoRepository.Query.Where(x => x.FilmCode == filmCode).ToList();
+        }
+
+        public FilmInfoEntity GetFilmByFilmName(string FilmName)
+        {
+            _filmInfoRepository.Query.Where(t => t.FilmName == FilmName || t.FilmName.Contains(FilmName)).ToList();
+            if (_filmInfoRepository.Query.Where(t => t.FilmName == FilmName || t.FilmName.Contains(FilmName)).ToList().Count > 0)
+            {
+                return _filmInfoRepository.Query.Where(t => t.FilmName == FilmName || t.FilmName.Contains(FilmName)).ToList()[0];
+            }
+            else
+                return null;
         }
 
         /// <summary>
-        /// 根据影片信息ID获取影片信息
+        /// 批量合并
         /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        public async Task<FilmInfoEntity> GetFilmInfoByIdAsync(int Id)
+        /// <param name="entities"></param>
+        public void BulkMerge(IEnumerable<FilmInfoEntity> NewEntities
+            , IEnumerable<FilmInfoEntity> OldEntities)
         {
-            return await _filmInfoRepository.Query.Where(x => x.Id == Id).SingleOrDefaultAsync();
-        }
-
-
-
-        /// <summary>
-        /// 更新
-        /// </summary>
-        /// <param name="entity"></param>
-        public void Update(FilmInfoEntity entity)
-        {
-            _filmInfoRepository.Update(entity);
-        }
-
-
-        /// <summary>
-        /// 更新影片信息
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public async Task UpdateAsync(FilmInfoEntity entity)
-        {
-            await _filmInfoRepository.UpdateAsync(entity);
-        }
-
-
-        /// <summary>
-        /// 新增影片信息
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public async Task InsertAsync(FilmInfoEntity entity)
-        {
-            await _filmInfoRepository.InsertAsync(entity);
+            _filmInfoRepository.BulkMerge(NewEntities, x => x.Id,
+                OldEntities, x => x.Id);
         }
 
         /// <summary>
@@ -140,28 +135,41 @@ namespace WeiXinTicketSystem.Service
         {
             _filmInfoRepository.Insert(entity);
         }
+        /// <summary>
+        /// 新增影片信息
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task InsertAsync(FilmInfoEntity entity)
+        {
+            await _filmInfoRepository.InsertAsync(entity);
+        }
 
         /// <summary>
-        ///  通过影片编码查找所有影片信息
+        /// 更新
         /// </summary>
-        /// <param name="filmCode"></param>
+        /// <param name="entity"></param>
+        public void Update(FilmInfoEntity entity)
+        {
+            _filmInfoRepository.Update(entity);
+        }
+        /// <summary>
+        /// 更新影片信息
+        /// </summary>
+        /// <param name="entity"></param>
         /// <returns></returns>
-        public IEnumerable<FilmInfoEntity>  GetFilmsByID(string filmCode)
+        public async Task UpdateAsync(FilmInfoEntity entity)
         {
-            return _filmInfoRepository.Query.Where(x => x.FilmCode == filmCode).ToList();
+            await _filmInfoRepository.UpdateAsync(entity);
         }
-
-        public FilmInfoEntity GetFilmByFilmName(string FilmName)
+        /// <summary>
+        /// 删除影片信息
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(FilmInfoEntity entity)
         {
-             _filmInfoRepository.Query.Where(t => t.FilmName == FilmName || t.FilmName.Contains(FilmName)).ToList();
-            if (_filmInfoRepository.Query.Where(t => t.FilmName == FilmName || t.FilmName.Contains(FilmName)).ToList().Count > 0)
-            {
-                return _filmInfoRepository.Query.Where(t => t.FilmName == FilmName || t.FilmName.Contains(FilmName)).ToList()[0];
-            }
-            else
-                return null;
+            await _filmInfoRepository.DeleteAsync(entity);
         }
-
-        
     }
 }

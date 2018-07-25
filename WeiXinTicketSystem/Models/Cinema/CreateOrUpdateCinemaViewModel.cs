@@ -22,8 +22,8 @@ namespace WeiXinTicketSystem.Models
         public string CinemaName { get; set; }
 
         [ListBox("_dd", Multiple = false)]
-        [Display(Name = "售票系统")]
-        public int TicketSystem { get; set; }
+        [Display(Name = "中间件")]
+        public int Mid { get; set; }
 
         [Display(Name = "联系人")]
         [StringLength(50, ErrorMessage = "{0}最多50个字符")]
@@ -43,7 +43,7 @@ namespace WeiXinTicketSystem.Models
 
         [ListBox("_dd", Multiple = false)]
         [Display(Name = "状态")]
-        public int Status { get; set; }
+        public int IsOpen { get; set; }
 
         [Display(Name = "影院所在位置纬度")]
         public double? Latitude { get; set; }

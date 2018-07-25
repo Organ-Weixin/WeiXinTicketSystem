@@ -64,7 +64,7 @@
     <Compile Include="Enum\ActivityStatusEnum.cs" />
     <Compile Include="Enum\CinemaFeeGatherTypeEnum.cs" />
     <Compile Include="Enum\CinemaFeePayTypeEnum.cs" />
-    <Compile Include="Enum\CinemaStatusEnum.cs" />
+    <Compile Include="Enum\CinemaOpenEnum.cs" />
     <Compile Include="Enum\CinemaTypeEnum.cs" />
     <Compile Include="Enum\ConponStatusEnum.cs" />
     <Compile Include="Enum\ConponTypeEnum.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="Enum\PayTypeEnum.cs" />
     <Compile Include="Enum\PricePlanTypeEnum.cs" />
     <Compile Include="Enum\SessionSeatStatusEnum.cs" />
+    <Compile Include="Enum\SnackInterfaceEnum.cs" />
     <Compile Include="Enum\SnackOrderStatusEnum.cs" />
     <Compile Include="Enum\SnackStatusEnum.cs" />
     <Compile Include="Enum\YesOrNoEnum.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="Enum\TheaterChainEnum.cs" />
     <Compile Include="Enum\UserSexEnum.cs" />
     <Compile Include="Enum\WeChatOfficialAccountTypeEnum.cs" />
-	<Compile Include="Enum\ScoreRecordDirectionEnum.cs" />
+    <Compile Include="Enum\ScoreRecordDirectionEnum.cs" />
     <Compile Include="Enum\ScoreRecordTypeEnum.cs" />
     <Compile Include="Enum\UserStampCollectTypeEnum.cs" />
     <Compile Include="Enum\UserStampStatusEnum.cs" />

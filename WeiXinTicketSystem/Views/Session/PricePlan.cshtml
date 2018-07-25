@@ -2,19 +2,19 @@
 @{
     ViewBag.CinemaManage = "active";
     ViewBag.Session = "active";
-    ViewBag.Title = Model.PriceSettingId > 0 ? "价格设置编缉" : "价格设置添加";
+    ViewBag.Title = Model.PricePlanId > 0 ? "价格设置编缉" : "价格设置添加";
 }
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        @(Model.PriceSettingId > 0 ? "价格设置编缉" : "价格设置添加")
+        @(Model.PricePlanId > 0 ? "价格设置编缉" : "价格设置添加")
         <small>价格设置</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
         <li><a href="@Url.Action(MvcNames.Role.Index)"><i class="fa fa-group"></i> 排期设置</a></li>
-        <li class="active">@(Model.PriceSettingId > 0 ? "价格设置编缉" : "价格设置添加")</li>
+        <li class="active">@(Model.PricePlanId > 0 ? "价格设置编缉" : "价格设置添加")</li>
     </ol>
 </section>
 
@@ -37,7 +37,7 @@
                         <h3 class="box-title">基础信息</h3>
                     </div>
                     <div class="modal-body">
-                        @Html.EditorFor(x => x.PriceSettingId)
+                        @Html.EditorFor(x => x.PricePlanId)
                         @Html.EditorFor(x => x.CinemaCode)
                         @Html.EditorFor(x => x.UserID)
                         @Html.EditorFor(x => x.SessionCode)

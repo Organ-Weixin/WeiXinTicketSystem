@@ -83,6 +83,14 @@
             startView: 2,
             format: 'yyyy-mm-dd'
         });
+
+        $('#CinemaCode').on('change', function () {
+            //判断是否选取prompt属性，无返回值；
+            if ($(this).val()) {
+                var CinemaName = $(this).find('option:selected').text();
+                $("#CinemaName").val(CinemaName);
+            }
+        });
     </script>
 }
 

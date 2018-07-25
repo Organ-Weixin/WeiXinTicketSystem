@@ -154,7 +154,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 return bookSnacksReply;
             }
             //验证套餐接口是否可访问
-            if (cinema.OpenSnacks == YesOrNoEnum.No)
+            if (cinema.IsOpenSnacks == CinemaOpenEnum.Closed)
             {
                 bookSnacksReply.SetSnackInterfaceInvalidReply();
                 return bookSnacksReply;
@@ -245,7 +245,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 releaseSnackReply.SetOrderNotExistReply();
                 return releaseSnackReply;
             }
-            
+
             //更新订单状态
             snacksorder.OrderBaseInfo.OrderStatus = SnackOrderStatusEnum.Released;
             snacksorder.OrderBaseInfo.ReleaseTime = DateTime.Now;
@@ -309,11 +309,11 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 payOrderReply.SetOpenIDNotExistReply();
                 return payOrderReply;
             }
-            var conpon=new ConponEntity();
+            var conpon = new ConponEntity();
             if (QueryJson.IsUseConpons)
             {
                 conpon = _conponService.GetConponByConponCode(QueryJson.ConponCode);
-                if(conpon.Status==ConponStatusEnum.Used||conpon.Deleted)
+                if (conpon.Status == ConponStatusEnum.Used || conpon.Deleted)
                 {
                     payOrderReply.SetConponNotExistOrUsedReply();
                     return payOrderReply;
@@ -336,7 +336,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             conpon.Price = QueryJson.ConponPrice;
             conpon.UseDate = DateTime.Now;
 
-            _snacksOrderService.Update(snackOrder,conpon);
+            _snacksOrderService.Update(snackOrder, conpon);
 
             payOrderReply.data = new PaySnackOrderReplyOrder();
             payOrderReply.data.MapFrom(snackOrder);
@@ -371,7 +371,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 return submitSnacksReply;
             }
             //验证卖品套餐是否存在
-            var snacksOrder = _snacksOrderService.GetSnacksOrderWithOrderCode(QueryJson.CinemaCode,QueryJson.OrderCode);
+            var snacksOrder = _snacksOrderService.GetSnacksOrderWithOrderCode(QueryJson.CinemaCode, QueryJson.OrderCode);
             if (snacksOrder.OrderBaseInfo == null || (snacksOrder.OrderBaseInfo.OrderStatus != SnackOrderStatusEnum.Payed
                 && snacksOrder.OrderBaseInfo.OrderStatus != SnackOrderStatusEnum.SubmitFail))
             {
@@ -443,11 +443,11 @@ namespace WeiXinTicketSystem.WebApi.Controllers
 
         #region 套餐取货
         [HttpGet]
-        public FetchSnacksReply FetchSnacks(string UserName, string Password, string CinemaCode, string OrderCode,string VoucherCode)
+        public FetchSnacksReply FetchSnacks(string UserName, string Password, string CinemaCode, string OrderCode, string VoucherCode)
         {
             FetchSnacksReply fetchSnacksReply = new FetchSnacksReply();
             //校验参数
-            if (!fetchSnacksReply.RequestInfoGuard(UserName, Password, CinemaCode, OrderCode,VoucherCode))
+            if (!fetchSnacksReply.RequestInfoGuard(UserName, Password, CinemaCode, OrderCode, VoucherCode))
             {
                 return fetchSnacksReply;
             }
@@ -466,7 +466,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 return fetchSnacksReply;
             }
             //验证卖品套餐是否存在
-            var snackOrder = _snacksOrderService.GetSnackOrderbyVoucherCode(OrderCode,VoucherCode);
+            var snackOrder = _snacksOrderService.GetSnackOrderbyVoucherCode(OrderCode, VoucherCode);
             if (snackOrder == null)
             {
                 fetchSnacksReply.SetOrderNotExistReply();
@@ -477,7 +477,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             snackOrder.OrderStatus = SnackOrderStatusEnum.Fetched;
             snackOrder.FetchTime = DateTime.Now;
             snackOrder.Updated = DateTime.Now;
-           
+
             _snacksOrderService.Update(snackOrder);
 
             fetchSnacksReply.data = new FetchSnacksReplyOrder();
@@ -622,7 +622,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 queryUserOrdersReply.SetOpenIDNotExistReply();
                 return queryUserOrdersReply;
             }
-            var UserOrders = await _snacksOrderService.GetUserOrdersPagedAsync(CinemaCode,OpenID, int.Parse(CurrentPage), int.Parse(PageSize));
+            var UserOrders = await _snacksOrderService.GetUserOrdersPagedAsync(CinemaCode, OpenID, int.Parse(CurrentPage), int.Parse(PageSize));
 
             queryUserOrdersReply.data = new QueryUserSnackOrdersReplyOrders();
             queryUserOrdersReply.data.OpenID = OpenID;
@@ -642,7 +642,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
 
         #region 查询订单详细
         [HttpGet]
-        public QuerySnackOrderReply QuerySnackOrder(string UserName, string Password, string CinemaCode,string OrderCode)
+        public QuerySnackOrderReply QuerySnackOrder(string UserName, string Password, string CinemaCode, string OrderCode)
         {
             QuerySnackOrderReply queryOrderReply = new QuerySnackOrderReply();
             //校验参数

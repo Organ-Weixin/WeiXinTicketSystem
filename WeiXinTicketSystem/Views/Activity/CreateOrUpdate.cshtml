@@ -1,6 +1,6 @@
 ﻿@model CreateOrUpdateActivityViewModel
 @{
-    ViewData["Cinema"] = "active";
+    ViewData["CinemaManage"] = "active";
     ViewData["Activity"] = "active";
     ViewBag.Title = Model.Id > 0 ? "活动表编辑" : "活动表添加";
 }
@@ -39,6 +39,7 @@
                         @Html.EditorFor(x => x.Image)
                         @Html.EditorFor(x => x.StartDate, new { htmlAttributes = new { @class = "datepicker" } })
                         @Html.EditorFor(x => x.EndDate, new { htmlAttributes = new { @class = "datepicker" } })
+                        @Html.EditorFor(x => x.LinkUrl)
                         @Html.EditorFor(x => x.Status)
                     </div>
                 </div>
@@ -66,6 +67,14 @@
 
 @section scripts{
     <script type="text/javascript">
+        $('#CinemaCode').on('change', function () {
+            //判断是否选取prompt属性，无返回值；
+            if ($(this).val()) {
+                var CinemaName = $(this).find('option:selected').text();
+                $("#CinemaName").val(CinemaName);
+            }
+        });
+
         $('#StartDate').datetimepicker({
             language: 'zh-CN',
             weekStart: 1,

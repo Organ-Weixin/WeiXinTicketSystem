@@ -27,6 +27,7 @@ namespace WeiXinTicketSystem.Models.Snack
                 standardPrice = snack.StandardPrice.ToString("0.##"),
                 salePrice = snack.SalePrice.ToString("0.##"),
                 stock=snack.Stock,
+                Image=snack.Image,
                 status = snack.Status.GetDescription()
             };
         }

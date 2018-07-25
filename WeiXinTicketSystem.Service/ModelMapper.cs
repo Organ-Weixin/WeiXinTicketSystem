@@ -17,8 +17,8 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public static ScreenInfoEntity MapToEntity(this QueryCinemaReplyScreen model, ScreenInfoEntity entity)
         {
-            entity.ScreenCode = model.Code;
-            entity.ScreenName = model.Name;
+            entity.SCode = model.Code;
+            entity.SName = model.Name;
             entity.SeatCount = model.SeatCount;
             entity.Type = model.Type;
             entity.UpdateTime = DateTime.Now;

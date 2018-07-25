@@ -32,8 +32,8 @@ namespace WeiXinTicketSystem.Models.User
         {
             user.UserName = model.Username;
             user.Password = MD5Helper.MD5Encrypt(model.Password);
-            user.CinemaCode = cinema.CinemaCode;
-            user.CinemaName = cinema.CinemaName;
+            user.CinemaCode = cinema.Code;
+            user.CinemaName = cinema.Name;
             user.RealName = model.RealName;
             user.RoleId = model.RoleId;
             user.RoleName = role.Name;

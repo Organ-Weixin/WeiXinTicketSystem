@@ -1,6 +1,6 @@
 ﻿@model CreateOrUpdateCinemaPrintSettingViewModel
 @{
-    ViewData["Cinema"] = "active";
+    ViewData["CinemaConfig"] = "active";
     ViewData["PrintSetting"] = "active";
     ViewBag.Title = Model.Id > 0 ? "影院打印设置编辑" : "影院打印设置添加";
 }
@@ -53,5 +53,17 @@
             </div>
         </div>
     </section>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $('#CinemaCode').on('change', function () {
+            //判断是否选取prompt属性，无返回值；
+            if ($(this).val()) {
+                var CinemaName = $(this).find('option:selected').text();
+                $("#CinemaName").val(CinemaName);
+            }
+        });
+    </script>
 }
 

@@ -15,11 +15,11 @@ namespace WeiXinTicketSystem.Controllers
 {
     public class PricePlanController : RootExraController
     {
-        public SessionPriceSettingService _priceSettingService;
+        public PricePlanService _pricePlanService;
         #region ctor
         public PricePlanController()
         {
-            _priceSettingService = new SessionPriceSettingService();
+            _pricePlanService = new PricePlanService();
         }
         #endregion
         /// <summary>
@@ -41,7 +41,7 @@ namespace WeiXinTicketSystem.Controllers
         /// <returns></returns>
         public async Task<ActionResult> List(DynatablePageModel<DynatablePageQueryModel> pageModel)
         {
-            var pricesettings = await _priceSettingService.GetPriceSettingsPagedAsync(
+            var pricesettings = await _pricePlanService.GetPricePlanPagedAsync(
                  pageModel.Offset,
                  pageModel.PerPage,
                  pageModel.Query.Search);
@@ -59,11 +59,11 @@ namespace WeiXinTicketSystem.Controllers
         /// <returns></returns>
         public async Task<ActionResult> Delete(int id)
         {
-            var pricesetting = await _priceSettingService.GetAsync(id);
+            var pricesetting = await _pricePlanService.GetAsync(id);
 
             if (pricesetting != null)
             {
-                await _priceSettingService.DeleteAsync(pricesetting);
+                await _pricePlanService.DeleteAsync(pricesetting);
             }
             return Object();
         }

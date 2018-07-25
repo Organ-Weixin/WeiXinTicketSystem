@@ -28,7 +28,7 @@ namespace WeiXinTicketSystem.Models.Session
                 language = session.Language,
                 standardPrice = session.StandardPrice.ToString("0.##"),
                 lowestPrice = session.LowestPrice.ToString("0.##"),
-                pricePlanPrice = session.PriceSettingPrice.HasValue ? session.PriceSettingPrice.Value.ToString("0.##") : "0"
+                pricePlanPrice = session.PricePlanPrice.HasValue ? session.PricePlanPrice.Value.ToString("0.##") : "0"
             };
         }
 
@@ -37,7 +37,7 @@ namespace WeiXinTicketSystem.Models.Session
         /// </summary>
         /// <param name="role"></param>
         /// <param name="model"></param>
-        public static void MapFrom(this SessionPriceSettingEntity plan, SetPriceViewModel model)
+        public static void MapFrom(this PricePlanEntity plan, SetPriceViewModel model)
         {
             plan.CinemaCode = model.CinemaCode;
             if (model.Type == 1)
@@ -52,6 +52,7 @@ namespace WeiXinTicketSystem.Models.Session
             {
                 plan.Code = model.FilmCode;
             }
+            plan.UserID = model.UserID.HasValue ? model.UserID.Value : 0;
             plan.Type = (PricePlanTypeEnum)model.Type;
             
             
@@ -65,16 +66,17 @@ namespace WeiXinTicketSystem.Models.Session
         /// <param name="role"></param>
         public static void MapFrom(this SetPriceViewModel model, AdminSessionViewEntity session)
         {
-            model.PriceSettingId = session.PriceSettingID.HasValue ? session.PriceSettingID.Value:0;
-            model.CinemaCode = session.CinemaCode;
-            model.SessionCode = session.SessionCode;
+            model.PricePlanId = session.PricePlanID.HasValue ? session.PricePlanID.Value:0;
+            model.CinemaCode = session.CCode;
+            model.UserID = session.UserID;
+            model.SessionCode = session.SCode;
             model.FilmCode = session.FilmCode;
-            if(session.PriceSettingType==null)
+            if(session.PricePlanType==null)
             {
-                session.PriceSettingType = PricePlanTypeEnum.Film;
+                session.PricePlanType = PricePlanTypeEnum.Film;
             }
-            model.Type = (int)session.PriceSettingType;
-            model.Price = session.PriceSettingPrice.HasValue? session.PriceSettingPrice:session.StandardPrice;
+            model.Type = (int)session.PricePlanType;
+            model.Price = session.PricePlanPrice.HasValue? session.PricePlanPrice : session.StandardPrice;
         }
     }
 }

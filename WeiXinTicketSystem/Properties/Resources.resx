@@ -135,6 +135,9 @@
   <data name="BOOTSTRAP_STYLE" xml:space="preserve">
     <value>~/bundles/bootstrap/style</value>
   </data>
+  <data name="CKEDITOR_SCRIPT" xml:space="preserve">
+    <value>~/bundles/ckeditor/script</value>
+  </data>
   <data name="DATEPICKER_SCRIPT" xml:space="preserve">
     <value>~/bundles/datepicker/script</value>
   </data>

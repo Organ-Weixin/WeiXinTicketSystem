@@ -11,7 +11,7 @@ namespace WeiXinTicketSystem.Models
         /// 价格设置ID
         /// </summary>
         [HiddenInput(DisplayValue = false)]
-        public int PriceSettingId { get; set; }
+        public int PricePlanId { get; set; }
         /// <summary>
         /// 价格设置影院编码
         /// </summary>

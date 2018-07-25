@@ -22,6 +22,7 @@ namespace WeiXinTicketSystem.Models.SnackType
                 typename = snackstype.TypeName,
                 remark=snackstype.Remark,
                 snacksCount = snackstype.SnacksCount,
+                Image=snackstype.Image,
                 candelete = snackstype.SnacksCount > 0 ? false : true
             };
         }

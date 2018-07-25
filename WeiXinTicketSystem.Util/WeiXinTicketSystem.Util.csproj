@@ -53,11 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AESHelper.cs" />
     <Compile Include="Aspect\CheckForNullArgumentsAspect.cs" />
     <Compile Include="CommonEqualityComparer.cs" />
     <Compile Include="DateTimeExtension.cs" />
     <Compile Include="EnumExtension.cs" />
     <Compile Include="HttpHelper.cs" />
+    <Compile Include="HttpUtil.cs" />
     <Compile Include="ImageHelper.cs" />
     <Compile Include="JsonExtension.cs" />
     <Compile Include="JSONHelper.cs" />

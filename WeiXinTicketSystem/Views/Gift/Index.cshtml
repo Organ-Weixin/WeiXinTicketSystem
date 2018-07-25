@@ -32,6 +32,7 @@
                             <th data-dynatable-no-sort="true">#</th>
                             <th data-dynatable-no-sort="true">影院编码</th>
                             <th data-dynatable-no-sort="true">标题</th>
+                            <th data-dynatable-no-sort="true">图片</th>
                             <th data-dynatable-no-sort="true">原价</th>
                             <th data-dynatable-no-sort="true">现价</th>
                             <th data-dynatable-no-sort="true">库存</th>
@@ -64,6 +65,7 @@
                     <td style="text-align: left;">{{row}}</td>
                     <td style="text-align: left; vertical-align: top;">{{CinemaCode}}</td>
                     <td style="text-align: left;">{{Title}}</td>
+                    <td style="text-align: left;"><img style="width:32px;height: 32px;" src="{{Image}}" onmouseover="ShowImg('{{Image}}')" onmouseout="CloseImg()" /></td>
                     <td style="text-align: left;">{{OriginalPrice}}</td>
                     <td style="text-align: left;">{{Price}}</td>
                     <td style="text-align: left;">{{Stock}}</td>
@@ -94,6 +96,25 @@
 
         </div>
     </div>
+
+    <!--显示图片层-->
+    <div id="MyDiv" style="display: none;position: absolute;top: 20%;left: 50%;width: 50%;height: 50%;z-index: 1001;overflow: auto;-moz-opacity: 0.8;opacity: .80;filter: alpha(opacity=80)">
+        <img id="personcardimage2" />
+    </div>
 </section>
 
+@section scripts{
+    <script type="text/javascript">
+        //隐藏图片
+        function CloseImg()
+        {
+            document.getElementById('MyDiv').style.display = 'none';
+        }
+        //显示图片
+        function ShowImg(imgFile) {
+            document.getElementById("personcardimage2").src = imgFile;
+            document.getElementById('MyDiv').style.display = 'block';
+        };
 
+    </script>
+}

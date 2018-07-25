@@ -44,10 +44,10 @@
         //});
 
         $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "CinemaCode": "33097601", "Order": { "SessionCode": "40381807018XJ6NV", "SeatsCount": 1, "PayType": "0", "Seats": [{ "SeatCode": "0000000000000003", "Price": "30.00", "Fee": "0.00" }] } };
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "Code": "011g6bkt00QGvd1T8Fkt0GsWjt0g6bk4", "EncryptedData": "lEXp9aqrVjKhgj6OCDbLHu4M5Vj1FiCm5abzC4YWfJzyDzZ1cxmHfb14WqjC+w+tAe5HPJ41DBuvtG+6pMSqV+ioneOSH7Km1oC5FsWw4vEWzMr5xnQcgt/3KoX0G0OWlCAwQHNU2Uu7Sv4iaCM2Xa7JBy23RuXTgZANF0amPnE0jl8zEiwpptBV0uyDbJl5yFGw6Ye5dolHi0xJrODw9tQc3yTrOSVyNuklGN4k60Xe2bxLGQ/nWIF9kKyfqTN3qSjy+J3UONNxD21ldTnb1qiXIivW05Z/JGy1dQF/2zx3pxZXwQjVHbmVJ9geoHzRNb2vOmqWhJ0bA2OHK1ko5FE3gVhEeJykGFlNwq+tEUDsHWrHIIfYt1DcR/AoEZZtwSFtFsE5A2WNhIDF5fLISlDLa+y+Yekn7jwFPJNhBGzkGYpDp6IGMYidx15jA4K8Ia6w+IOAYbBBAanX+iE9tg==", "Iv": "jvxrE6tlzXOrBtx+sCrk7Q==" };
             $.ajax({
                 type: "post",
-                url: "http://localhost:28442/api/Ticket/LockSeat",
+                url: "http://localhost:28442/api/User/TicketUserLogin",
                 //contentType: 'application/json',
                 //data: JSON.stringify(postdata),
                 data: postdata,
@@ -59,6 +59,40 @@
                 }
             });
         });
+
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "QueryXml": "<SubmitOrder CinemaCode=\"33111001\"><Order PaySeqNo=\"\" OrderCode=\"1683180716000076\" SessionCode=\"1683201807160028\" Count=\"1\" MobilePhone=\"13736146034\"><Seat SeatCode=\"3311100108#01#10\" Price=\"25.00\" RealPrice=\"25.00\" Fee=\"0.00\"/></Order></SubmitOrder>" };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "http://localhost:28442/api/Ticket/SubmitOrder",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
+
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "MobilePhone": "15000002025", "DeliveryAddress": "衢州新天地影城2号厅1排2座", "SendTime": "2018-06-08 15:00:00", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Snacks": [{ "SnackCode": "31754854", "StandardPrice": "5.00", "SalePrice": "1.00", "Number": 2, "SubTotalPrice": "2.00" }] };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "https://xcx.80piao.com/api/Snack/TestResponse",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
     </script>
 </head>
 <body>

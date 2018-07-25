@@ -55,7 +55,6 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 return queryCinemasReply;
             }
 
-
             var cinemas = await _cinemaService.QueryCinemasPagedAsync(int.Parse(CurrentPage), int.Parse(PageSize));
 
             queryCinemasReply.data = new QueryCinemasReplyCinemas();

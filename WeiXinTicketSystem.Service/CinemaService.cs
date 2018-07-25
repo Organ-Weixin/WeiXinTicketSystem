@@ -14,13 +14,13 @@ namespace WeiXinTicketSystem.Service
     public class CinemaService
     {
         #region ctor
-        //private readonly IRepository<CinemaViewEntity> _cinemaViewRepository;
+        private readonly IRepository<CinemaViewEntity> _cinemaViewRepository;
         private readonly IRepository<CinemaEntity> _cinemaRepository;
 
         public CinemaService()
         {
             //TODO: 移除内部依赖
-            //_cinemaViewRepository = new Repository<CinemaViewEntity>();
+            _cinemaViewRepository = new Repository<CinemaViewEntity>();
             _cinemaRepository = new Repository<CinemaEntity>();
         }
         #endregion
@@ -30,9 +30,9 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="CinemaCode"></param>
         /// <returns></returns>
-        public CinemaEntity GetCinemaByCinemaCode(string CinemaCode)
+        public CinemaViewEntity GetCinemaViewByCinemaCode(string CinemaCode)
         {
-            return _cinemaRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefault();
+            return _cinemaViewRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefault();
         }
 
         /// <summary>
@@ -52,38 +52,38 @@ namespace WeiXinTicketSystem.Service
         /// <param name="offset"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public async Task<IPageList<CinemaEntity>> GetCinemasPagedAsync(string cinemaCode, string CinemaName,CinemaStatusEnum? IsOpen, string keyword, int offset, int perPage)
+        public async Task<IPageList<CinemaViewEntity>> GetCinemasPagedAsync(string cinemaCode, string CinemaName,CinemaOpenEnum? IsOpen, string keyword, int offset, int perPage)
         {
-            var query = _cinemaRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
+            var query = _cinemaViewRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
             //影院编码
             if (!string.IsNullOrEmpty(cinemaCode))
             {
-                query.Where(x => x.CinemaCode == cinemaCode);
+                query.Where(x => x.Code == cinemaCode);
             }
             //影院名称
             if (!string.IsNullOrEmpty(CinemaName))
             {
-                query.Where(x => x.CinemaName.Contains(CinemaName));
+                query.Where(x => x.Name.Contains(CinemaName));
             }
             //是否开通接口
             if (IsOpen.HasValue)
             {
-                query.Where(x => x.Status == IsOpen.Value);
+                query.Where(x => x.IsOpen == IsOpen.Value);
             }
             //其他数据
             if (!string.IsNullOrEmpty(keyword))
             {
-                query.Where(x => x.Address.Contains(keyword) || x.DingXinId.Contains(keyword) || x.ContactName.Contains(keyword) || x.ContactMobile.Contains(keyword) || x.YueKeId.Contains(keyword));
+                query.Where(x => x.Address.Contains(keyword) || x.DingXinId.ToString().Contains(keyword)
+                    || x.ScreenCount.ToString().Contains(keyword) || x.MId.ToString().Contains(keyword));
             }
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();
         }
 
-
-        public async Task<IPageList<CinemaEntity>> QueryCinemasPagedAsync(int currentpage, int pagesize)
+        public async Task<IPageList<CinemaViewEntity>> QueryCinemasPagedAsync(int currentpage, int pagesize)
         {
             int offset = (currentpage - 1) * pagesize;
-            var query = _cinemaRepository.Query
+            var query = _cinemaViewRepository.Query
                 .OrderByDescending(x => x.Id)
                 .Skip(offset)
                 .Take(pagesize);
@@ -97,9 +97,19 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="CinemaCode"></param>
         /// <returns></returns>
+        public CinemaEntity GetCinemaByCinemaCode(string CinemaCode)
+        {
+            return _cinemaRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefault();
+        }
+
+        /// <summary>
+        /// 获取Cinema实体
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <returns></returns>
         public async Task<CinemaEntity> GetCinemaByCinemaCodeAsync(string CinemaCode)
         {
-            return await _cinemaRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefaultAsync();
+            return await _cinemaRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefaultAsync();
         }
         /// <summary>
         /// 根据影院ID获取影院

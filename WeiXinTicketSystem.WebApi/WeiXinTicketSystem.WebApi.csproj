@@ -80,27 +80,27 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NetSaleSvc.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.dll</HintPath>
+      <HintPath>bin\NetSaleSvc.Api.dll</HintPath>
     </Reference>
     <Reference Include="NetSaleSvc.Api.CTMS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.CTMS.dll</HintPath>
+      <HintPath>bin\NetSaleSvc.Api.CTMS.dll</HintPath>
     </Reference>
     <Reference Include="NetSaleSvc.Api.CTMS.XmlSerializers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Api.CTMS.XmlSerializers.dll</HintPath>
+      <HintPath>bin\NetSaleSvc.Api.CTMS.XmlSerializers.dll</HintPath>
     </Reference>
     <Reference Include="NetSaleSvc.Entity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Entity.dll</HintPath>
+      <HintPath>bin\NetSaleSvc.Entity.dll</HintPath>
     </Reference>
     <Reference Include="NetSaleSvc.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Service.dll</HintPath>
+      <HintPath>bin\NetSaleSvc.Service.dll</HintPath>
     </Reference>
     <Reference Include="NetSaleSvc.Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\WeiXinTicketSystem\bin\NetSaleSvc.Util.dll</HintPath>
+      <HintPath>bin\NetSaleSvc.Util.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -113,9 +113,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.6\lib\net45\System.Web.Cors.dll</HintPath>
@@ -147,13 +147,7 @@
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.WebRequest">
-    </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -262,43 +256,34 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Query\BookSnacksQueryJson.cs" />
-    <Compile Include="Models\Query\LockSeatQueryJson.cs" />
+    <Compile Include="Models\Query\NetSaleQueryJson.cs" />
     <Compile Include="Models\Query\PaySnackOrderQueryJson.cs" />
-    <Compile Include="Models\Query\ReleaseSeatQueryJson.cs" />
     <Compile Include="Models\Query\SendConponQueryJson.cs" />
-    <Compile Include="Models\Query\SubmitOrderQueryJson.cs" />
     <Compile Include="Models\Query\SubmitSnacksQueryJson.cs" />
+    <Compile Include="Models\Query\TicketUserLoginQueryJson.cs" />
     <Compile Include="Models\Reply\BaseReply.cs" />
     <Compile Include="Models\Reply\BookSnacksReply.cs" />
     <Compile Include="Models\Reply\ErrorCodeEnum.cs" />
     <Compile Include="Models\Reply\FetchSnacksReply.cs" />
-    <Compile Include="Models\Reply\FetchTicketReply.cs" />
-    <Compile Include="Models\Reply\LockSeatReply.cs" />
+    <Compile Include="Models\Reply\jscode2sessionReply.cs" />
     <Compile Include="Models\Reply\ModelMapper.cs" />
     <Compile Include="Models\Reply\PaySnackOrderReply.cs" />
     <Compile Include="Models\Reply\QueryActivityReply.cs" />
     <Compile Include="Models\Reply\QueryBnannersReply.cs" />
     <Compile Include="Models\Reply\QueryConponsReply.cs" />
     <Compile Include="Models\Reply\QueryGiftsReply.cs" />
-    <Compile Include="Models\Reply\QueryOrderReply.cs" />
-    <Compile Include="Models\Reply\QueryPrintReply.cs" />
     <Compile Include="Models\Reply\QuerySnackOrderReply.cs" />
-    <Compile Include="Models\Reply\QuerySessionSeatReply.cs" />
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />
     <Compile Include="Models\Reply\QuerySnackTypesReply.cs" />
-    <Compile Include="Models\Reply\QueryTicketReply.cs" />
+    <Compile Include="Models\Reply\QueryTicketUserReply.cs" />
     <Compile Include="Models\Reply\QueryUserSnackOrdersReply.cs" />
     <Compile Include="Models\Reply\RefundSnacksReply.cs" />
-    <Compile Include="Models\Reply\RefundTicketReply.cs" />
-    <Compile Include="Models\Reply\ReleaseSeatReply.cs" />
     <Compile Include="Models\Reply\ReleaseSnacksReply.cs" />
     <Compile Include="Models\Reply\SendConponReply.cs" />
     <Compile Include="Models\Reply\StatusEnum.cs" />
-    <Compile Include="Models\Reply\SubmitOrderReply.cs" />
     <Compile Include="Models\Reply\SubmitSnacksReply.cs" />
     <Compile Include="Models\Reply\QueryFilmsReply.cs" />
     <Compile Include="Models\Reply\QueryMembersReply.cs" />
-    <Compile Include="Models\Reply\QuerySessionsReply.cs" />
     <Compile Include="Models\Query\RegisterMemberQueryJson.cs" />
     <Compile Include="Models\Query\SubmitFilmCommentQueryJson.cs" />
     <Compile Include="Models\Reply\RegisterMemberReply.cs" />
@@ -310,6 +295,8 @@
     <Compile Include="Models\Reply\QueryFilmCommentsReply.cs" />
     <Compile Include="Models\Reply\QueryUserStampsReply.cs" />
     <Compile Include="Models\Reply\SignInReply.cs" />
+    <Compile Include="Models\Reply\TicketUserLoginReply.cs" />
+    <Compile Include="Models\Reply\WxUserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
   </ItemGroup>

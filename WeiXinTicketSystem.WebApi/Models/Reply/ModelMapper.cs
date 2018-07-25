@@ -234,29 +234,6 @@ namespace WeiXinTicketSystem.WebApi.Models
             return conpon;
         }
 
-        public static QuerySessionsReplySession MapFrom(this QuerySessionsReplySession session, SessionInfoEntity entity)
-        {
-            session.SessionId = entity.Id;
-            session.CinemaCode = entity.CinemaCode;
-            session.SessionCode = entity.SessionCode;
-            session.ScreenCode = entity.ScreenCode;
-            session.StartTime = entity.StartTime.ToFormatStringWithT();
-            session.FilmCode = entity.FilmCode;
-            session.FilmName = entity.FilmName;
-            session.Duration = entity.Duration;
-            session.Language = entity.Language;
-            session.UpdateTime = entity.UpdateTime.ToFormatStringWithT();
-            session.StandardPrice = entity.StandardPrice;
-            session.LowestPrice = entity.LowestPrice;
-            session.SettlePrice = entity.SettlePrice;
-            session.TicketFee = entity.TicketFee;
-            session.IsAvalible = entity.IsAvalible == true ? "可用" : "不可用";
-            session.Dimensional = entity.Dimensional;
-            session.ListingPrice = entity.ListingPrice;
-            session.SalePrice = entity.SalePrice.HasValue ? entity.SalePrice.Value : 0;
-            return session;
-        }
-
         public static QueryMembersReplyMember MapFrom(this QueryMembersReplyMember member, MemberCardEntity entity)
         {
             member.MemberId = entity.Id;
@@ -337,7 +314,6 @@ namespace WeiXinTicketSystem.WebApi.Models
             data.CommentContent = comment.CommentContent;
             data.OpenID = comment.OpenID;
             data.Created = comment.Created;
-
             return data;
         }
         public static QueryFilmsReplyFilm MapFrom(this QueryFilmsReplyFilm data, FilmInfoEntity entity)
@@ -353,157 +329,16 @@ namespace WeiXinTicketSystem.WebApi.Models
             data.Director = entity.Director;
             data.Cast = entity.Cast;
             data.Introduction = entity.Introduction;
-            data.Score = entity.Score;
-            data.Area = entity.Area;
-            data.Type = entity.Type;
-            data.Language = entity.Language;
-            data.Status = entity.Status.GetDescription();
-            data.Image = entity.Image;
-            data.Trailer = entity.Trailer;
+            //data.Score = entity.Score;
+            //data.Area = entity.Area;
+            //data.Type = entity.Type;
+            //data.Language = entity.Language;
+            //data.Status = entity.Status.GetDescription();
+            //data.Image = entity.Image;
+            //data.Trailer = entity.Trailer;
             return data;
         }
-        public static QueryTicketReplyTickets MapFrom(this QueryTicketReplyTickets data,OrderViewEntity order,CinemaEntity cinema,ScreenInfoEntity screen)
-        {
-            data.TicketsCount = order.orderSeatDetails.Count;
-            var Tickets = order.orderSeatDetails.Select(x => new QueryTicketReplyTicket
-            {
-                PrintNo = order.orderBaseInfo.PrintNo,
-                TicketInfoCode=x.TicketInfoCode,
-                CinemaCode= cinema.CinemaCode,
-                CinemaName=cinema.CinemaName,
-                ScreenCode=screen.ScreenCode,
-                ScreenName=screen.ScreenName,
-                FilmCode=order.orderBaseInfo.FilmCode,
-                FilmName=order.orderBaseInfo.FilmName,
-                SessionCode=order.orderBaseInfo.SessionCode,
-                SessionDateTime= order.orderBaseInfo.SessionTime.ToFormatStringWithT() ?? string.Empty,
-                TicketCode=x.FilmTicketCode,
-                SeatCode=x.SeatCode,
-                SeatName= $"{x.RowNum}排{x.ColumnNum}座",
-                Price= x.Price.ToString("0.##"),
-                Service = x.Fee.ToString("0.##"),
-                PrintFlag = x.PrintFlag.GetValueOrDefault(false).ToString()
-            }).ToList();
-            data.Tickets = Tickets;
-            return data;
-        }
-
-        public static QueryOrderReplyOrder MapFrom(this QueryOrderReplyOrder data,OrderViewEntity order,CinemaEntity cinema,ScreenInfoEntity screen,SessionInfoEntity session)
-        {
-            data.OrderCode = order.orderBaseInfo.SubmitOrderCode;
-            data.CinemaCode = order.orderBaseInfo.CinemaCode;
-            data.CinemaType = cinema.TicketSystem;
-            data.CinemaName = cinema.CinemaName;
-            data.ScreenCode = screen.ScreenCode;
-            data.ScreenName = screen.ScreenName;
-            data.SessionCode = order.orderBaseInfo.SessionCode;
-            data.StartTime = order.orderBaseInfo.SessionTime.ToFormatStringWithT();
-            data.PlaythroughFlag = session?.PlaythroughFlag ?? "No";
-            data.PrintNo = order.orderBaseInfo.PrintNo;
-            data.VerifyCode = order.orderBaseInfo.VerifyCode;
-
-            QueryOrderReplyFilm film = new QueryOrderReplyFilm
-            {
-                Code = order.orderBaseInfo.FilmCode,
-                Name = order.orderBaseInfo.FilmName,
-                Duration = (session?.Duration ?? 0).ToString(),
-                Sequence = (session?.Sequence ?? 1).ToString()
-            };
-            data.Film = film;
-
-            var Seats = order.orderSeatDetails.Select(x => new QueryOrderReplySeat
-            {
-                SeatCode = x.SeatCode,
-                RowNum = x.RowNum ?? string.Empty,
-                ColumnNum = x.ColumnNum ?? string.Empty,
-                FilmTicketCode = x.FilmTicketCode,
-                PrintStatus = order.orderBaseInfo.PrintStatus.GetValueOrDefault(false) ? YesOrNoEnum.Yes : YesOrNoEnum.No,
-                PrintTime = order.orderBaseInfo.PrintTime?.ToFormatStringWithT() ?? string.Empty,
-                RefundStatus = order.orderBaseInfo.OrderStatus == OrderStatusEnum.Refund ? YesOrNoEnum.Yes : YesOrNoEnum.No,
-                RefundTime = order.orderBaseInfo.RefundTime?.ToFormatStringWithT() ?? string.Empty
-            }).ToList();
-            data.Seats = Seats;
-            return data;
-        }
-        public static QuerySessionSeatReplySeat MapFrom(this QuerySessionSeatReplySeat seat,NetSaleSvc.Api.Models.QuerySessionSeatReplySeat netSeat)
-        {
-            seat.SeatCode = netSeat.Code;
-            seat.RowNum = netSeat.RowNum;
-            seat.ColumnNum = netSeat.ColumnNum;
-            seat.Status = netSeat.Status;
-            return seat;
-        }
-
-        public static OrderViewEntity MapFrom(this OrderViewEntity order,CinemaEntity cinema,
-            LockSeatQueryJson Queryjson, SessionInfoEntity sessionInfo)
-        {
-            //订单基本信息
-            OrderEntity orderBaseInfo = new OrderEntity();
-            orderBaseInfo.CinemaCode = Queryjson.CinemaCode;
-            orderBaseInfo.SessionCode = sessionInfo.SessionCode;
-            orderBaseInfo.ScreenCode = sessionInfo.ScreenCode;
-            orderBaseInfo.SessionTime = sessionInfo.StartTime;
-            orderBaseInfo.FilmCode = sessionInfo.FilmCode;
-            orderBaseInfo.FilmName = sessionInfo.FilmName;
-            orderBaseInfo.TicketCount = Queryjson.Order.SeatsCount;
-            orderBaseInfo.TotalPrice = Queryjson.Order.Seats.Sum(x => x.Price);
-            orderBaseInfo.TotalFee = Queryjson.Order.Seats.Sum(x => x.Fee);
-            orderBaseInfo.OrderStatus = OrderStatusEnum.Created;
-            orderBaseInfo.Created = DateTime.Now;
-            orderBaseInfo.OpenID = Queryjson.OpenID;
-            //orderBaseInfo.PayType = Queryjson.Order.PayType;//payType默认为0，1不更新到数据库，满天星系统除外，满天星系统的PayType取值为I0/N0等
-
-            if (cinema.TicketSystem == CinemaTypeEnum.ManTianXing)
-            {
-                //数据库中会员及非会员支付类型以逗号分隔存于PayType字段中，会员在前
-                if (Queryjson.Order.PayType == "1")
-                {
-                    orderBaseInfo.IsMemberPay = true;
-                    orderBaseInfo.PayType = cinema.PayType.Split(',')?.First();
-                }
-                else
-                {
-                    orderBaseInfo.IsMemberPay = false;
-                    orderBaseInfo.PayType = cinema.PayType.Split(',')?.Last();
-                }
-            }
-            order.orderBaseInfo = orderBaseInfo;
-
-            order.orderSeatDetails = Queryjson.Order.Seats.Select(
-                x => new OrderSeatDetailEntity()
-                {
-                    SeatCode = x.SeatCode,
-                    Price = x.Price,
-                    Fee = x.Fee,
-                    Created = DateTime.Now
-                }).ToList();
-
-            return order;
-        }
-
-        public static OrderViewEntity MapFrom(this OrderViewEntity order, SubmitOrderQueryJson QueryJson)
-        {
-            order.orderBaseInfo.TotalPrice = QueryJson.Order.Seats.Sum(x => x.Price);
-            order.orderBaseInfo.TotalSalePrice = QueryJson.Order.Seats.Sum(x => x.RealPrice);
-            order.orderBaseInfo.TotalFee = QueryJson.Order.Seats.Sum(x => x.Fee);
-            order.orderBaseInfo.MobilePhone = QueryJson.Order.MobilePhone;
-            if (order.orderBaseInfo.IsMemberPay)
-            {
-                order.orderBaseInfo.PaySeqNo = QueryJson.Order.PaySeqNo;
-            }
-            order.orderSeatDetails.ForEach(x =>
-            {
-                var newInfo = QueryJson.Order.Seats.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
-                if (newInfo != null)
-                {
-                    x.Price = newInfo.Price;
-                    x.SalePrice = newInfo.RealPrice;
-                    x.Fee = newInfo.Fee;
-                }
-            });
-
-            return order;
-        }
+        
         public static QueryFilmCommentsReplyComment MapFrom(this QueryFilmCommentsReplyComment filmComment, AdminFilmCommentViewEntity entity)
         {
             filmComment.CommentId = entity.Id;
@@ -518,20 +353,20 @@ namespace WeiXinTicketSystem.WebApi.Models
             return filmComment;
         }
 
-        public static QueryCinemasReplyCinema MapFrom(this QueryCinemasReplyCinema cinema, CinemaEntity entity)
+        public static QueryCinemasReplyCinema MapFrom(this QueryCinemasReplyCinema cinema, CinemaViewEntity entity)
         {
             cinema.CinemaId = entity.Id;
-            cinema.CinemaCode = entity.CinemaCode;
-            cinema.CinemaName = entity.CinemaName;
-            cinema.TicketSystem = entity.TicketSystem.GetDescription();
+            cinema.CinemaCode = entity.Code;
+            cinema.CinemaName = entity.Name;
+            cinema.CinemaType = entity.CinemaType.GetDescription();
             cinema.ContactName = entity.ContactName;
             cinema.ContactMobile = entity.ContactMobile;
             cinema.TheaterChain = entity.TheaterChain.GetDescription();
             cinema.Address = entity.Address;
-            cinema.Status = entity.Status.GetDescription();
+            cinema.IsOpen = entity.IsOpen.GetDescription();
             cinema.Latitude = entity.Latitude;
             cinema.Longitude = entity.Longitude;
-            cinema.OpenSnacks = entity.OpenSnacks.GetDescription();
+            cinema.OpenSnacks = entity.IsOpenSnacks.GetDescription();
             return cinema;
         }
 
@@ -603,6 +438,54 @@ namespace WeiXinTicketSystem.WebApi.Models
             userStamp.StampValidityDate = entity.ValidityDate;
 
             return userStamp;
+        }
+
+        public static TicketUserEntity MapFrom(this TicketUserEntity entity,WxUserInfo user)
+        {
+            entity.OpenID = user.openId;
+            entity.NickName = user.nickName;
+            entity.Sex = (UserSexEnum)user.gender;
+            entity.Country = user.country;
+            entity.Province = user.province;
+            entity.City = user.city;
+            entity.HeadImgUrl = user.avatarUrl;
+            entity.Language = user.language;
+            return entity;
+        }
+        public static QueryTicketUserReplyTicketUser MapFrom(this QueryTicketUserReplyTicketUser ticketUser,TicketUserEntity entity)
+        {
+            ticketUser.TicketUserId = entity.Id;
+            ticketUser.CinemaCode = entity.CinemaCode;
+            ticketUser.OpenID = entity.OpenID;
+            ticketUser.NickName = entity.NickName;
+            ticketUser.Sex = entity.Sex.GetDescription();
+            ticketUser.Country = entity.Country;
+            ticketUser.Province = entity.Province;
+            ticketUser.City = entity.City;
+            ticketUser.HeadImgUrl = entity.HeadImgUrl;
+            ticketUser.Language = entity.Language;
+            ticketUser.TotalScore = entity.TotalScore.HasValue? entity.TotalScore.Value:0;
+            ticketUser.IsActive = entity.IsActive.GetDescription();
+            ticketUser.Created = entity.Created.ToFormatStringWithT();
+            return ticketUser;
+        }
+
+        public static TicketUserLoginTicketUser MapFrom(this TicketUserLoginTicketUser ticketUser,TicketUserEntity entity)
+        {
+            ticketUser.TicketUserId = entity.Id;
+            ticketUser.CinemaCode = entity.CinemaCode;
+            ticketUser.OpenID = entity.OpenID;
+            ticketUser.NickName = entity.NickName;
+            ticketUser.Sex = entity.Sex.GetDescription();
+            ticketUser.Country = entity.Country;
+            ticketUser.Province = entity.Province;
+            ticketUser.City = entity.City;
+            ticketUser.HeadImgUrl = entity.HeadImgUrl;
+            ticketUser.Language = entity.Language;
+            ticketUser.TotalScore = entity.TotalScore.HasValue ? entity.TotalScore.Value : 0;
+            ticketUser.IsActive = entity.IsActive.GetDescription();
+            ticketUser.Created = entity.Created.ToFormatStringWithT();
+            return ticketUser;
         }
     }
 }

@@ -19,11 +19,12 @@ namespace WeiXinTicketSystem.Controllers
     public class PrePaySettingsController : RootExraController
     {
         private CinemaPrePaySettingsService _prePayService;
-
+        private CinemaService _cinemaService;
         #region ctor
         public PrePaySettingsController()
         {
             _prePayService = new CinemaPrePaySettingsService();
+            _cinemaService = new CinemaService();
         }
         #endregion
 
@@ -61,10 +62,10 @@ namespace WeiXinTicketSystem.Controllers
         /// 添加影院预付款配置
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             CreateOrUpdateCinemaPrePayViewModel model = new CreateOrUpdateCinemaPrePayViewModel();
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -82,7 +83,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             CreateOrUpdateCinemaPrePayViewModel model = new CreateOrUpdateCinemaPrePayViewModel();
             model.MapFrom(prePay);
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -147,11 +148,24 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
-        private void PreparyCreateOrEditViewData()
+        private async Task PreparyCreateOrEditViewData()
         {
             //绑定是否支付预付款枚举
             ViewBag.IsPrePay_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
-
+            //影院选择
+            if (CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE)
+            {
+                List<CinemaEntity> cinemas = new List<CinemaEntity>();
+                cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
+            }
+            else
+            {
+                ViewBag.CinemaCode_dd = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = CurrentUser.CinemaName, Value = CurrentUser.CinemaCode }
+                };
+            }
 
         }
 

@@ -25,11 +25,12 @@ namespace WeiXinTicketSystem.Controllers
     public class BannerController : RootExraController
     {
         private BannerService _BannerService;
-
+        private CinemaService _cinemaService;
         #region ctor
         public BannerController()
         {
             _BannerService = new BannerService();
+            _cinemaService = new CinemaService();
         }
         #endregion
 
@@ -66,10 +67,10 @@ namespace WeiXinTicketSystem.Controllers
         /// 添加图片上传
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             CreateOrUpdateBannerViewModel model = new CreateOrUpdateBannerViewModel();
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -88,7 +89,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             CreateOrUpdateBannerViewModel model = new CreateOrUpdateBannerViewModel();
             model.MapFrom(Banner);
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -180,11 +181,24 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
-        private void PreparyCreateOrEditViewData()
+        private async Task PreparyCreateOrEditViewData()
         {
             //绑定是否启用枚举
             ViewBag.Status_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
-
+            //影院下拉
+            if (CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE)
+            {
+                List<CinemaEntity> cinemas = new List<CinemaEntity>();
+                cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
+            }
+            else
+            {
+                ViewBag.CinemaCode_dd = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = CurrentUser.CinemaName, Value = CurrentUser.CinemaCode }
+                };
+            }
         }
 
 

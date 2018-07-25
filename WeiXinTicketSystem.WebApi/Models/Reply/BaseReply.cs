@@ -278,6 +278,12 @@ namespace WeiXinTicketSystem.WebApi.Models
             ErrorCode = ErrorCodeEnum.FilmCodeNotExist.GetValueString();
             ErrorMessage = ErrorCodeEnum.FilmCodeNotExist.GetDescription();
         }
+        public void SetCinemaMiniProgramAccountInvalidReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.CinemaMiniProgramAccountNotExist.GetValueString();
+            ErrorMessage = ErrorCodeEnum.CinemaMiniProgramAccountNotExist.GetDescription();
+        }
         #endregion
 
         /// <summary>

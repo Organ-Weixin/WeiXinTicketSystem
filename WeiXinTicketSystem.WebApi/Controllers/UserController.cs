@@ -23,6 +23,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         TicketUsersService _ticketUserService;
         UserStampService _userStampService;
         StampService _stampService;
+        CinemaMiniProgramAccountService _miniProgramAccountService;
 
         #region ctor
         public UserController()
@@ -33,6 +34,72 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             _ticketUserService = new TicketUsersService();
             _userStampService = new UserStampService();
             _stampService = new StampService();
+            _miniProgramAccountService = new CinemaMiniProgramAccountService();
+        }
+        #endregion
+
+        #region 用户登录
+        [HttpPost]
+        public TicketUserLoginReply UserLogin(TicketUserLoginQueryJson QueryJson)
+        {
+            TicketUserLoginReply ticketUserLoginReply = new TicketUserLoginReply();
+            //校验参数
+            if (!ticketUserLoginReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.Code, QueryJson.EncryptedData, QueryJson.Iv))
+            {
+                return ticketUserLoginReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(QueryJson.UserName, QueryJson.Password);
+            if (UserInfo == null)
+            {
+                ticketUserLoginReply.SetUserCredentialInvalidReply();
+                return ticketUserLoginReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(QueryJson.CinemaCode);
+            if (cinema == null)
+            {
+                ticketUserLoginReply.SetCinemaInvalidReply();
+                return ticketUserLoginReply;
+            }
+            //验证并获取AppID和AppSecret
+            var miniProgramAccount = _miniProgramAccountService.GetCinemaMiniProgramAccountByCinemaCode(QueryJson.CinemaCode);
+            if (miniProgramAccount == null)
+            {
+                ticketUserLoginReply.SetCinemaMiniProgramAccountInvalidReply();
+                return ticketUserLoginReply;
+            }
+            //获取sessionKey
+            string url = string.Format("https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code", miniProgramAccount.AppId, miniProgramAccount.AppSecret, QueryJson.Code);
+            string returnStr = HttpUtil.Send("", url);
+            jscode2sessionReply jscode2sessionReply = returnStr.JsonDeserialize<jscode2sessionReply>();
+            //string openid = jscode2sessionReply.openid;
+            string sessionkey = jscode2sessionReply.session_key;
+
+            string swxUserInfo = AESHelper.AesDecrypt(QueryJson.EncryptedData, sessionkey, QueryJson.Iv);
+            WxUserInfo wxUserInfo = swxUserInfo.JsonDeserialize<WxUserInfo>();
+
+            var ticketUser = _ticketUserService.GetTicketUserByOpenID(wxUserInfo.openId);
+            if (ticketUser == null)
+            {
+                ticketUser = new TicketUserEntity();
+                ticketUser.MapFrom(wxUserInfo);
+                ticketUser.CinemaCode = QueryJson.CinemaCode;
+                ticketUser.IsActive = YesOrNoEnum.Yes;
+                ticketUser.Created = DateTime.Now;
+                ticketUser.TotalScore = 0;
+                ticketUser.Id = _ticketUserService.Insert(ticketUser);
+            }
+            else
+            {
+                ticketUser.MapFrom(wxUserInfo);
+                _ticketUserService.Update(ticketUser);
+            }
+
+            ticketUserLoginReply.data = new TicketUserLoginTicketUser();
+            ticketUserLoginReply.data.MapFrom(ticketUser);
+            ticketUserLoginReply.SetSuccessReply();
+            return ticketUserLoginReply;
         }
         #endregion
 
@@ -42,9 +109,9 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         [HttpPost]
         public SignInReply SignIn(SignInQueryJson QueryJson)
         {
-           SignInReply signInReply = new SignInReply();
+            SignInReply signInReply = new SignInReply();
             //校验参数
-            if (!signInReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.OpenID, QueryJson.Type.ToString(), QueryJson.Score.ToString(), QueryJson.Description,QueryJson.Direction.ToString()))
+            if (!signInReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.OpenID, QueryJson.Type.ToString(), QueryJson.Score.ToString(), QueryJson.Description, QueryJson.Direction.ToString()))
             {
                 return signInReply;
             }
@@ -70,39 +137,26 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 return signInReply;
             }
 
-
             //将请求参数转为影片评论信息
             var scoreRecord = new ScoreRecordEntity();
             scoreRecord.MapFrom(QueryJson);
-
-
             _scoreRecordService.Insert(scoreRecord);
 
-            TicketUserEntity ticketUser = _ticketUserService.GetTicketUserByOpenID(scoreRecord.OpenID);
             if (scoreRecord.Direction == ScoreRecordDirectionEnum.Obtain)
             {
-                if (ticketuser.TotalScore == null)
-                {
-                    ticketuser.TotalScore = 0;
-                }
-                ticketuser.TotalScore = ticketuser.TotalScore + scoreRecord.Score;
+                ticketuser.TotalScore = ticketuser.TotalScore ?? 0 + scoreRecord.Score;
             }
             else if (scoreRecord.Direction == ScoreRecordDirectionEnum.Spend)
             {
-                if (ticketuser.TotalScore == null)
-                {
-                    ticketuser.TotalScore = 0;
-                }
-                ticketuser.TotalScore = ticketuser.TotalScore - scoreRecord.Score;
+                ticketuser.TotalScore = ticketuser.TotalScore > scoreRecord.Score ? ticketuser.TotalScore - scoreRecord.Score : 0;
             }
             _ticketUserService.Update(ticketuser);
 
             signInReply.data = new SignInReplySignIn();
-            signInReply.data.MapFrom(scoreRecord,ticketUser);
+            signInReply.data.MapFrom(scoreRecord, ticketuser);
             signInReply.SetSuccessReply();
 
             return signInReply;
-
         }
 
         #endregion
@@ -149,7 +203,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
 
             collectStampReply.data = new CollectStampReplyStamp();
             StampEntity stamp = _stampService.GetStampByStampCode(userStamp.StampCode);
-            collectStampReply.data.MapFrom(userStamp,stamp);
+            collectStampReply.data.MapFrom(userStamp, stamp);
             collectStampReply.SetSuccessReply();
 
             return collectStampReply;
@@ -206,6 +260,44 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             return queryUserStampsReply;
         }
 
+        #endregion
+
+        #region 查询购票用户信息
+        [HttpGet]
+        public QueryTicketUserReply QueryUser(string UserName, string Password, string CinemaCode, string OpenID)
+        {
+            QueryTicketUserReply queryTicketUserReply = new QueryTicketUserReply();
+            //校验参数
+            if (!queryTicketUserReply.RequestInfoGuard(UserName, Password, CinemaCode, OpenID))
+            {
+                return queryTicketUserReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryTicketUserReply.SetUserCredentialInvalidReply();
+                return queryTicketUserReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryTicketUserReply.SetCinemaInvalidReply();
+                return queryTicketUserReply;
+            }
+            //验证用户OpenId是否存在
+            var ticketuser = _ticketUserService.GetTicketUserByOpenID(OpenID);
+            if (ticketuser == null)
+            {
+                queryTicketUserReply.SetOpenIDNotExistReply();
+                return queryTicketUserReply;
+            }
+            queryTicketUserReply.data = new QueryTicketUserReplyTicketUser();
+            queryTicketUserReply.data.MapFrom(ticketuser);
+            queryTicketUserReply.SetSuccessReply();
+            return queryTicketUserReply;
+        }
         #endregion
 
     }

@@ -54,6 +54,7 @@ namespace WeiXinTicketSystem.Controllers
                  pageModel.Offset,
                  pageModel.PerPage,
                  pageModel.Query.Search,
+                 12,//小程序渠道12
                  pageModel.Query.OrderStatus,
                  startDate,
                  endDate);
@@ -80,6 +81,7 @@ namespace WeiXinTicketSystem.Controllers
             var orders = await _orderService.GetOrdersAsync(
                 CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? null : CurrentUser.CinemaCode,
                  Search,
+                 12,//小程序渠道12
                  (OrderStatusEnum)OrderStatus,
                  startDate,
                  endDate);

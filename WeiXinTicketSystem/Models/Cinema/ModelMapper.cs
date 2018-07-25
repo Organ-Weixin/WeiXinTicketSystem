@@ -12,26 +12,24 @@ namespace WeiXinTicketSystem.Models.Cinema
         /// </summary>
         /// <param name="Cinema"></param>
         /// <returns></returns>
-        public static dynamic ToDynatableItem(this CinemaEntity module)
+        public static dynamic ToDynatableItem(this CinemaViewEntity entity)
         {
             return new
             {
-                id = module.Id,
-                CinemaCode = module.CinemaCode,
-                CinemaName = module.CinemaName,
-                TicketSystem = module.TicketSystem.GetDescription(),
-                
+                id = entity.Id,
+                CinemaCode = entity.Code,
+                CinemaName = entity.Name,
+                cinemaType = entity.CinemaType.GetDescription(),
+                ContactName = entity.ContactName,
+                ContactMobile = entity.ContactMobile,
+                TheaterChain = entity.TheaterChain,
+                Address = entity.Address,
+                Status = entity.IsOpen.GetDescription(),
+                Latitude = entity.Latitude,
+                Longitude = entity.Longitude,
+                OpenSnacks = entity.IsOpenSnacks.GetDescription(),
 
-                ContactName = module.ContactName,
-                ContactMobile = module.ContactMobile,
-                TheaterChain = module.TheaterChain,
-                Address = module.Address,
-                Status = module.Status.GetDescription(),
-                Latitude = module.Latitude,
-                Longitude = module.Longitude,
-                OpenSnacks = module.OpenSnacks.GetDescription(),
-
-                Created = module.Created
+                Created = entity.Created
             };
         }
 
@@ -43,17 +41,17 @@ namespace WeiXinTicketSystem.Models.Cinema
         /// <param name="model"></param>
         public static void MapFrom(this CinemaEntity module, CreateOrUpdateCinemaViewModel model)
         {
-            module.CinemaCode = model.CinemaCode;
-            module.CinemaName = model.CinemaName;
-            module.TicketSystem = (CinemaTypeEnum)model.TicketSystem;
+            module.Code = model.CinemaCode;
+            module.Name = model.CinemaName;
+            module.MId = model.Mid;
             module.ContactName = model.ContactName;
             module.ContactMobile = model.ContactMobile;
             module.TheaterChain = (TheaterChainEnum)model.TheaterChain;
             module.Address = model.Address;
-            module.Status = (CinemaStatusEnum)model.Status;
+            module.IsOpen = (CinemaOpenEnum)model.IsOpen;
             module.Latitude = model.Latitude;
             module.Longitude = model.Longitude;
-            module.OpenSnacks = (YesOrNoEnum)model.OpenSnacks;
+            module.IsOpenSnacks = (CinemaOpenEnum)model.OpenSnacks;
             //module.Created = model.Created;
 
         }
@@ -66,17 +64,17 @@ namespace WeiXinTicketSystem.Models.Cinema
         public static void MapFrom(this CreateOrUpdateCinemaViewModel model, CinemaEntity module)
         {
             model.Id = module.Id;
-            model.CinemaCode = module.CinemaCode;
-            model.CinemaName = module.CinemaName;
-            model.TicketSystem = (int)module.TicketSystem;
+            model.CinemaCode = module.Code;
+            model.CinemaName = module.Name;
+            model.Mid = module.MId;
             model.ContactName = module.ContactName;
             model.ContactMobile = module.ContactMobile;
             model.TheaterChain = (int)module.TheaterChain;
             model.Address = module.Address;
-            model.Status = (int)module.Status;
+            model.IsOpen = (int)module.IsOpen;
             model.Latitude = module.Latitude;
             model.Longitude = module.Longitude;
-            model.OpenSnacks = (int)module.OpenSnacks;
+            model.OpenSnacks = (int)module.IsOpenSnacks;
             //model.Created = module.Created;
 
         }

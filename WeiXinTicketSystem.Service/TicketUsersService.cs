@@ -127,9 +127,9 @@ namespace WeiXinTicketSystem.Service
         /// 新增
         /// </summary>
         /// <param name="entity"></param>
-        public void Insert(TicketUserEntity entity)
+        public int Insert(TicketUserEntity entity)
         {
-            _ticketUsersRepository.Insert(entity);
+            return _ticketUsersRepository.Insert(entity);
         }
 
         /// <summary>

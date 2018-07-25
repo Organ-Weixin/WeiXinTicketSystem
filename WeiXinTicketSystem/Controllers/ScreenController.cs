@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System.IO;
 using WeiXinTicketSystem.Entity.Models;
 
+using NetSaleSvc.Api.Models;
+using NetSaleSvc.Api.Core;
+
 namespace WeiXinTicketSystem.Controllers
 {
     public class ScreenController : RootExraController
@@ -19,12 +22,14 @@ namespace WeiXinTicketSystem.Controllers
         private ScreenInfoService _screenInfoService;
         private SeatInfoService _seatInfoService;
         private CinemaService _cinemaService;
+        private NetSaleSvcCore netSaleService;
         #region ctor
         public ScreenController()
         {
             _screenInfoService = new ScreenInfoService();
             _seatInfoService = new SeatInfoService();
             _cinemaService = new CinemaService();
+            netSaleService = NetSaleSvcCore.Instance;
         }
         #endregion
         /// <summary>
@@ -65,10 +70,11 @@ namespace WeiXinTicketSystem.Controllers
                 var errorMessages = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
                 return ErrorObject(string.Join("/n", errorMessages));
             }
-            ReturnData returnData = _screenInfoService.QueryCinema(CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? model.CinemaCode : CurrentUser.CinemaCode);
-            if (!returnData.Status)
+
+            var querycinemaReply = netSaleService.QueryCinema("MiniProgram", "6BF477EBCC446F54E6512AFC0E976C41", CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? model.CinemaCode : CurrentUser.CinemaCode);
+            if (querycinemaReply.Status != "Success")
             {
-                return ErrorObject(returnData.Info);
+                return ErrorObject(querycinemaReply.ErrorMessage);
             }
             return RedirectObject(Url.Action(nameof(Index)) + "?queries[CinemaCode_dd]=" + model.CinemaCode);
             //return Object();
@@ -80,10 +86,10 @@ namespace WeiXinTicketSystem.Controllers
             var screenInfo = await _screenInfoService.GetScreenInfoByIdAsync(id);
             if (screenInfo != null)
             {
-                var returnData = _seatInfoService.QuerySeat(screenInfo.CinemaCode, screenInfo.ScreenCode);
-                if (!returnData.Status)
+                var querySeatReply = netSaleService.QuerySeat("MiniProgram", "6BF477EBCC446F54E6512AFC0E976C41", screenInfo.CCode, screenInfo.SCode);
+                if (querySeatReply.Status!= "Success")
                 {
-                    return ErrorObject(returnData.Info);
+                    return ErrorObject(querySeatReply.ErrorMessage);
                 }
             }
             return Object();
@@ -99,7 +105,7 @@ namespace WeiXinTicketSystem.Controllers
             {
                 List<CinemaEntity> cinemas = new List<CinemaEntity>();
                 cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
-                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.CinemaName, Value = x.CinemaCode });
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
             }
             else
             {

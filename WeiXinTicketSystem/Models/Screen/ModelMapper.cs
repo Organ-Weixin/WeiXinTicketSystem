@@ -21,8 +21,8 @@ namespace WeiXinTicketSystem.Models.Screen
             {
                 id = screen.Id,
                 cinemaName = screen.CinemaName,
-                screenCode = screen.ScreenCode,
-                screenName = screen.ScreenName,
+                screenCode = screen.SCode,
+                screenName = screen.SName,
                 updateTime = screen.UpdateTime,
                 seatCount = screen.SeatCount,
                 type = screen.Type

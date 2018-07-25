@@ -23,65 +23,14 @@ namespace WeiXinTicketSystem.Models.Banner
                 id = module.Id,
                 CinemaCode = module.CinemaCode,
                 Title = module.Title,
-
                 Created = module.Created.ToFormatDateString(),
                 StartDate = module.StartDate.ToFormatDateString(),
                 EndDate = module.EndDate.ToFormatDateString(),
                 Status = module.Status.GetDescription(),
-
-
-
-                //Image = GetThumbnail(Image.FromFile(HttpRuntime.AppDomainAppPath.ToString() + module.Image),504,374) 
-                //Image = Image.FromFile(HttpRuntime.AppDomainAppPath.ToString() + module.Image)
-                
-                Image = GetImage(module.Image),
-                FileName = GetFileName(module.Image)
-
+                Image = module.Image
             };
         }
 
-        /// <summary>
-        /// 为图片生成缩略图  
-        /// </summary>
-        /// <param name="phyPath">原图片的路径</param>
-        /// <param name="width">缩略图宽</param>
-        /// <param name="height">缩略图高</param>
-        /// <returns></returns>
-        public static System.Drawing.Image GetThumbnail(System.Drawing.Image image, int width, int height)
-        {
-            Bitmap bmp = new Bitmap(width, height);
-            //从Bitmap创建一个System.Drawing.Graphics
-            System.Drawing.Graphics gr = System.Drawing.Graphics.FromImage(bmp);
-            //设置 
-            gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            //下面这个也设成高质量
-            gr.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-            //下面这个设成High
-            gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            //把原始图像绘制成上面所设置宽高的缩小图
-            System.Drawing.Rectangle rectDestination = new System.Drawing.Rectangle(0, 0, width, height);
-
-            gr.DrawImage(image, rectDestination, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
-            return bmp;
-        }
-
-
-        private static string GetFileName(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-                return "";
-            string filename=path.Substring(path.LastIndexOf("\\")+1,path.Length-1- path.LastIndexOf("\\"));
-            string filename1 = filename.Split('.')[0];
-            return filename1;
-        }
-
-
-        private static string GetImage(string image)
-        {
-            if (string.IsNullOrEmpty(image))
-                return "";
-            return image.Replace(@"\", @"\\");
-        }
         /// <summary>
         /// ViewModel to Entity
         /// </summary>
@@ -99,6 +48,7 @@ namespace WeiXinTicketSystem.Models.Banner
             {
                 module.EndDate = DateTime.Parse(model.EndDate);
             }
+            module.LinkUrl = model.LinkUrl;
 
             module.Status = (YesOrNoEnum)model.Status;
 
@@ -116,6 +66,7 @@ namespace WeiXinTicketSystem.Models.Banner
             model.Title = module.Title;
             model.StartDate = module.StartDate.ToFormatDateString();
             model.EndDate = module.EndDate.ToFormatDateString();
+            model.LinkUrl = module.LinkUrl;
             model.Status = (int)module.Status;
 
         }

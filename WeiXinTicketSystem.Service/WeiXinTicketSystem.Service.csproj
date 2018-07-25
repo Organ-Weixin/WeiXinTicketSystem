@@ -79,6 +79,7 @@
     <Compile Include="CinemaPriceSettingService.cs" />
     <Compile Include="CinemaPrintSettingService.cs" />
     <Compile Include="CinemaService.cs" />
+    <Compile Include="CinemaMiniProgramAccountService.cs" />
     <Compile Include="CinemaTicketSystemAccountService.cs" />
     <Compile Include="ConponService.cs" />
     <Compile Include="FilmCommentService.cs" />
@@ -86,11 +87,12 @@
     <Compile Include="GiftService.cs" />
     <Compile Include="HomeService.cs" />
     <Compile Include="MemberCardService.cs" />
+    <Compile Include="MiddlewareService.cs" />
     <Compile Include="ModelMapper.cs" />
-    <Compile Include="OrderService.cs" />
     <Compile Include="BannerService.cs" />
+    <Compile Include="OrderService.cs" />
+    <Compile Include="PricePlanService.cs" />
     <Compile Include="ScoreRecordService.cs" />
-    <Compile Include="SessionPriceSettingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenInfoService.cs" />
     <Compile Include="SeatInfoService.cs" />
@@ -110,10 +112,6 @@
     <ProjectReference Include="..\WeiXinTicketSystem.Entity\WeiXinTicketSystem.Entity.csproj">
       <Project>{1cb80679-6add-44ea-a670-89939291be48}</Project>
       <Name>WeiXinTicketSystem.Entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WeiXinTicketSystem.NetSale\WeiXinTicketSystem.NetSale.csproj">
-      <Project>{66b25e09-b94b-4e92-a7be-d00b8cdd61c1}</Project>
-      <Name>WeiXinTicketSystem.NetSale</Name>
     </ProjectReference>
     <ProjectReference Include="..\WeiXinTicketSystem.Util\WeiXinTicketSystem.Util.csproj">
       <Project>{da17b70a-16e1-4634-b761-8b8bff9f4c27}</Project>

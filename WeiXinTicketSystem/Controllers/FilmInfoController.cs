@@ -17,6 +17,7 @@ using System.Drawing.Imaging;
 using System.Net;
 using System.Xml.Linq;
 using WeiXin.Tools;
+using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
 {
@@ -122,126 +123,36 @@ namespace WeiXinTicketSystem.Controllers
             {
                 filmInfo = await _filmInfoService.GetFilmInfoByIdAsync(model.Id);
             }
-
-
             filmInfo.MapFrom(model);
 
-            
+            //图片处理
+            if (Image != null)
+            {
+                string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
+                string savePath = @"upload\FilmImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/FilmImg/" + DateTime.Now.ToString("yyyyMM") + "/";
+                System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                //判断原图片是否存在
+                if (!string.IsNullOrEmpty(filmInfo.Image))
+                {
+                    string file = filmInfo.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    if (System.IO.File.Exists(file))
+                    {
+                        //如果存在则删除
+                        System.IO.File.Delete(file);
+                    }
+                }
+                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
+                filmInfo.Image = basePath + accessPath + fileName;
+            }
 
             if (filmInfo.Id == 0)
             {
-                ////图片处理
-                //string strFileName = DateTime.Now.Ticks.ToString();
-                //string strDate = DateTime.Now.ToString("yyyyMM");
-                //string strFilePath = Server.MapPath("~/upload/MovieImg/") + strDate + "\\";
-                //byte[] ImageByte = null;
-                //if (Image != null)
-                //{
-                //    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                //    ImageByte = ImageHelper.ImageToBytes(image);
-                //    ImageFormat format = image.RawFormat;
-                //    if (format.Equals(ImageFormat.Jpeg))
-                //    {
-                //        strFileName += ".jpeg";
-                //    }
-                //    else if (format.Equals(ImageFormat.Png))
-                //    {
-                //        strFileName += ".png";
-                //    }
-                //    else if (format.Equals(ImageFormat.Bmp))
-                //    {
-                //        strFileName += ".bmp";
-                //    }
-                //    else if (format.Equals(ImageFormat.Gif))
-                //    {
-                //        strFileName += ".gif";
-                //    }
-                //    else if (format.Equals(ImageFormat.Icon))
-                //    {
-                //        strFileName += ".icon";
-                //    }
-                //    if (!Directory.Exists(strFilePath))  //判断路径是否存在 不存在创建
-                //    {
-                //        Directory.CreateDirectory(strFilePath);
-                //    }
-                //    image.Save(strFilePath + strFileName);
-                //}
-
-                //filmInfo.Image = strFilePath + strFileName;
-                //图片处理
-                if (Image != null)
-                {
-                    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\MovieImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                    string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    filmInfo.Image = savePath + fileName;
-                }
-
                 await _filmInfoService.InsertAsync(filmInfo);
             }
             else
             {
-                if (Image != null)
-                {
-                    string file = Server.MapPath("~/") + filmInfo.Image;
-                    if (!string.IsNullOrEmpty(file))
-                    {
-                        if (System.IO.File.Exists(file))
-                        {
-                            //如果存在则删除
-                            System.IO.File.Delete(file);
-                        }
-                    }
-                }
-
-                ////图片处理
-                //string strFileName = DateTime.Now.Ticks.ToString();
-                //string strDate = DateTime.Now.ToString("yyyyMM");
-                //string strFilePath = Server.MapPath("~/upload/MovieImg/") + strDate + "\\";
-                //byte[] ImageByte = null;
-                //if (Image != null)
-                //{
-                //    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                //    ImageByte = ImageHelper.ImageToBytes(image);
-                //    ImageFormat format = image.RawFormat;
-                //    if (format.Equals(ImageFormat.Jpeg))
-                //    {
-                //        strFileName += ".jpeg";
-                //    }
-                //    else if (format.Equals(ImageFormat.Png))
-                //    {
-                //        strFileName += ".png";
-                //    }
-                //    else if (format.Equals(ImageFormat.Bmp))
-                //    {
-                //        strFileName += ".bmp";
-                //    }
-                //    else if (format.Equals(ImageFormat.Gif))
-                //    {
-                //        strFileName += ".gif";
-                //    }
-                //    else if (format.Equals(ImageFormat.Icon))
-                //    {
-                //        strFileName += ".icon";
-                //    }
-                //    if (!Directory.Exists(strFilePath))  //判断路径是否存在 不存在创建
-                //    {
-                //        Directory.CreateDirectory(strFilePath);
-                //    }
-                //    image.Save(strFilePath + strFileName);
-                //}
-                //filmInfo.Image = strFilePath +  strFileName;
-                //图片处理
-                if (Image != null)
-                {
-                    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                    string savePath = @"upload\MovieImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                    string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                    filmInfo.Image = savePath + fileName;
-                }
-
                 await _filmInfoService.UpdateAsync(filmInfo);
             }
 
@@ -263,7 +174,7 @@ namespace WeiXinTicketSystem.Controllers
 
             if (cinema != null)
             {
-                cinema.IsDel = true;
+                //cinema.IsDel = true;
                 await _filmInfoService.UpdateAsync(cinema);
             }
             return Object();
@@ -313,7 +224,7 @@ namespace WeiXinTicketSystem.Controllers
 
                 FilmInfoEntity entity = ConvertFilmToEntity(qryFilm.FilmInfomation);
                 string filmCode = entity.FilmCode;
-                if (_filmInfoService.GetFilmsByID(filmCode).Count() == 0)
+                if (_filmInfoService.GetFilmsByCode(filmCode).Count() == 0)
                 {
                     _filmInfoService.Insert(entity);
 

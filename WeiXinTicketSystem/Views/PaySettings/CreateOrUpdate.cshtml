@@ -1,6 +1,6 @@
 ﻿@model CreateOrUpdateCinemaPaySettingsViewModel
 @{
-    ViewData["Cinema"] = "active";
+    ViewData["CinemaConfig"] = "active";
     ViewData["PaySettings"] = "active";
     ViewBag.Title = Model.Id > 0 ? "影院支付方式配置编辑" : "影院支付方式配置添加";
 }
@@ -64,5 +64,17 @@
             </div>
         </div>
     </section>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $('#CinemaCode').on('change', function () {
+            //判断是否选取prompt属性，无返回值；
+            if ($(this).val()) {
+                var CinemaName = $(this).find('option:selected').text();
+                $("#CinemaName").val(CinemaName);
+            }
+        });
+    </script>
 }
 

@@ -270,6 +270,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberCardController.cs" />
     <Compile Include="Controllers\MemberCardSettingController.cs" />
+    <Compile Include="Controllers\MiniProgramAccountController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PaySettingsController.cs" />
@@ -302,6 +303,9 @@
     <Compile Include="Models\CinemaMemberCardSetting\CinemaMemberCardSettingQueryModel.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\CreateOrUpdateCinemaMemberCardSettingViewModel.cs" />
     <Compile Include="Models\CinemaMemberCardSetting\ModelMapper.cs" />
+    <Compile Include="Models\CinemaMiniProgramAccount\CinemaMiniProgramAccountQueryModel.cs" />
+    <Compile Include="Models\CinemaMiniProgramAccount\CreateOrUpdateMiniProgramAccountViewModel.cs" />
+    <Compile Include="Models\CinemaMiniProgramAccount\ModelMapper.cs" />
     <Compile Include="Models\CinemaPaySettings\CinemaPaySettingsQueryModel.cs" />
     <Compile Include="Models\CinemaPaySettings\CreateOrUpdateCinemaPaySettingsViewModel.cs" />
     <Compile Include="Models\CinemaPaySettings\ModelMapper.cs" />
@@ -1340,7 +1344,9 @@
     <Content Include="Content\plugins\fontAwesome\fonts\FontAwesome.otf" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-codes.json" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1416,6 +1422,8 @@
     <None Include="Properties\PublishProfiles\WeiXinTicket.Admin.pubxml" />
     <Content Include="Views\Stamp\CreateOrUpdate.cshtml" />
     <Content Include="Views\Stamp\Index.cshtml" />
+    <Content Include="Views\MiniProgramAccount\Index.cshtml" />
+    <Content Include="Views\MiniProgramAccount\CreateOrUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1438,10 +1446,6 @@
     <ProjectReference Include="..\WeiXinTicketSystem.Entity\WeiXinTicketSystem.Entity.csproj">
       <Project>{1cb80679-6add-44ea-a670-89939291be48}</Project>
       <Name>WeiXinTicketSystem.Entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WeiXinTicketSystem.NetSale\WeiXinTicketSystem.NetSale.csproj">
-      <Project>{66b25e09-b94b-4e92-a7be-d00b8cdd61c1}</Project>
-      <Name>WeiXinTicketSystem.NetSale</Name>
     </ProjectReference>
     <ProjectReference Include="..\WeiXinTicketSystem.Service\WeiXinTicketSystem.Service.csproj">
       <Project>{78b46f03-b652-4ed7-82cf-7171e4839390}</Project>

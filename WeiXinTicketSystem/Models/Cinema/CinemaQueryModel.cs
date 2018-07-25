@@ -19,6 +19,6 @@ namespace WeiXinTicketSystem.Models
         /// <summary>
         /// 影院是否开通接口
         /// </summary>
-        public CinemaStatusEnum? IsOpen { get; set; }
+        public CinemaOpenEnum? IsOpen { get; set; }
     }
 }

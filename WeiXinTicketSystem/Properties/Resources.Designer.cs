@@ -115,6 +115,15 @@ namespace WeiXinTicketSystem.Properties {
         }
         
         /// <summary>
+        ///   查找类似 ~/bundles/ckeditor/script 的本地化字符串。
+        /// </summary>
+        public static string CKEDITOR_SCRIPT {
+            get {
+                return ResourceManager.GetString("CKEDITOR_SCRIPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 ~/bundles/datepicker/script 的本地化字符串。
         /// </summary>
         public static string DATEPICKER_SCRIPT {

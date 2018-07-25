@@ -13,20 +13,25 @@ using WeiXinTicketSystem.Service;
 using System.Threading.Tasks;
 using WeiXinTicketSystem.Entity.Models;
 
+using NetSaleSvc.Api.Models;
+using NetSaleSvc.Api.Core;
+
 namespace WeiXinTicketSystem.Controllers
 {
     public class SessionController : RootExraController
     {
         private SessionInfoService _sessionInfoService;
-        private SessionPriceSettingService _priceSettingService;
+        private PricePlanService _pricePlanService;
         private CinemaService _cinemaService;
+        private NetSaleSvcCore netSaleService;
 
         #region ctor
         public SessionController()
         {
             _sessionInfoService = new SessionInfoService();
-            _priceSettingService = new SessionPriceSettingService();
+            _pricePlanService = new PricePlanService();
             _cinemaService = new CinemaService();
+            netSaleService = NetSaleSvcCore.Instance;
         }
         #endregion
 
@@ -52,6 +57,7 @@ namespace WeiXinTicketSystem.Controllers
                  pageModel.Offset,
                  pageModel.PerPage,
                  pageModel.Query.Search,
+                 12,//默认渠道12小程序
                  startDate,
                  endDate);
 
@@ -90,10 +96,10 @@ namespace WeiXinTicketSystem.Controllers
                 endDate = DateTime.Now;
             }
 
-            ReturnData returnData = _sessionInfoService.QuerySession(CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? model.CinemaCode : CurrentUser.CinemaCode,startDate,endDate);
-            if (!returnData.Status)
+            var querysessionReply = netSaleService.QuerySession("MiniProgram", "6BF477EBCC446F54E6512AFC0E976C41", CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? model.CinemaCode : CurrentUser.CinemaCode, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
+            if (querysessionReply.Status!= "Success")
             {
-                return ErrorObject(returnData.Info);
+                return ErrorObject(querysessionReply.ErrorMessage);
             }
             return RedirectObject(Url.Action(nameof(Index)));
             //return Object();
@@ -146,29 +152,29 @@ namespace WeiXinTicketSystem.Controllers
                 return ErrorObject(string.Join("/n", errorMessages));
             }
 
-            SessionPriceSettingEntity pricesetting = new SessionPriceSettingEntity();
-            //if (model.PricePlanId > 0)
-            //{
-            //priceplan = await _pricePlanService.GetAsync(model.PricePlanId);
-            //}
+            PricePlanEntity priceplan = new PricePlanEntity();
+            if (model.PricePlanId > 0)
+            {
+                priceplan = await _pricePlanService.GetAsync(model.PricePlanId);
+            }
 
-            pricesetting.MapFrom(model);
-            SessionPriceSettingEntity Oldpriceplan = await _priceSettingService.GetAsync(pricesetting.CinemaCode, pricesetting.Type, pricesetting.Code);
+            priceplan.MapFrom(model);
+            PricePlanEntity Oldpriceplan = await _pricePlanService.GetAsync(priceplan.CinemaCode,12,priceplan.Type, priceplan.Code);//默认渠道12小程序
             if (Oldpriceplan == null)
             {
-                pricesetting.Id = 0;
+                priceplan.Id = 0;
             }
             else
             {
-                pricesetting.Id = Oldpriceplan.Id;
+                priceplan.Id = Oldpriceplan.Id;
             }
-            if (pricesetting.Id == 0)
+            if (priceplan.Id == 0)
             {
-                await _priceSettingService.InsertAsync(pricesetting);
+                await _pricePlanService.InsertAsync(priceplan);
             }
             else
             {
-                await _priceSettingService.UpdateAsync(pricesetting);
+                await _pricePlanService.UpdateAsync(priceplan);
             }
 
             return RedirectObject(Url.Action(nameof(Index)));
@@ -184,7 +190,7 @@ namespace WeiXinTicketSystem.Controllers
             {
                 List<CinemaEntity> cinemas = new List<CinemaEntity>();
                 cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
-                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.CinemaName, Value = x.CinemaCode });
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
             }
             else
             {

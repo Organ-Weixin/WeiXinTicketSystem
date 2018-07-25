@@ -183,6 +183,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(TicketSystemAccountController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(TicketSystemAccountController._CreateOrUpdate); } }
         }
+        /// <summary>
+        /// 小程序账号
+        /// </summary>
+        public static class MiniProgramAccount
+        {
+            public static string Name { get { return nameof(MiniProgramAccount); } }
+            public static string Index { get { return nameof(MiniProgramAccountController.Index); } }
+            public static string List { get { return nameof(MiniProgramAccountController.List); } }
+            public static string Create { get { return nameof(MiniProgramAccountController.Create); } }
+            public static string Update { get { return nameof(MiniProgramAccountController.Update); } }
+            public static string Delete { get { return nameof(MiniProgramAccountController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(MiniProgramAccountController._CreateOrUpdate); } }
+        }
 
         /// <summary>
         /// 会员卡

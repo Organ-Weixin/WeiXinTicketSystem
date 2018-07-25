@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Reflection;
 using System.Web;
 using WeiXinTicketSystem.Properties;
+using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
 {
@@ -121,14 +122,22 @@ namespace WeiXinTicketSystem.Controllers
             if (Image != null)
             {
                 string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                if (stamp.Image != null && System.IO.File.Exists(rootPath + stamp.Image))
-                {
-                    System.IO.File.Delete(rootPath + stamp.Image);
-                }
+                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
                 string savePath = @"upload\StampImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/StampImg/" + DateTime.Now.ToString("yyyyMM") + "/";
                 System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                //判断原图片是否存在
+                if (!string.IsNullOrEmpty(stamp.Image))
+                {
+                    string file = stamp.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    if (System.IO.File.Exists(file))
+                    {
+                        //如果存在则删除
+                        System.IO.File.Delete(file);
+                    }
+                }
                 string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                stamp.Image = savePath + fileName;
+                stamp.Image = basePath + accessPath + fileName;
             }
 
             if (stamp.Id == 0)

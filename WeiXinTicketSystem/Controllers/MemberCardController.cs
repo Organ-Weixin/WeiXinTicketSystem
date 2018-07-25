@@ -20,12 +20,13 @@ namespace WeiXinTicketSystem.Controllers
     {
         private MemberCardService _memberCardService;
         private TicketUsersService _ticketUsersService;
-
+        private CinemaService _cinemaService;
         #region ctor
         public MemberCardController()
         {
             _memberCardService = new MemberCardService();
             _ticketUsersService = new TicketUsersService();
+            _cinemaService = new CinemaService();
         }
         #endregion
 
@@ -168,6 +169,21 @@ namespace WeiXinTicketSystem.Controllers
             List<TicketUserEntity> ticketUsers = new List<TicketUserEntity>();
             ticketUsers.AddRange(await _ticketUsersService.GetAllTicketUserAsync());
             ViewBag.OpenID_dd = ticketUsers.Select(x => new SelectListItem { Text = x.NickName, Value = x.OpenID });
+
+            //影院下拉
+            if (CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE)
+            {
+                List<CinemaEntity> cinemas = new List<CinemaEntity>();
+                cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
+            }
+            else
+            {
+                ViewBag.CinemaCode_dd = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = CurrentUser.CinemaName, Value = CurrentUser.CinemaCode }
+                };
+            }
 
         }
 

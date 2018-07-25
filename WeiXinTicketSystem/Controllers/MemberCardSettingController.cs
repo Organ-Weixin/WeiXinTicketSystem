@@ -19,11 +19,12 @@ namespace WeiXinTicketSystem.Controllers
     public class MemberCardSettingController : RootExraController
     {
         private CinemaMemberCardSettingService _memberCardSettingService;
-
+        private CinemaService _cinemaService;
         #region ctor
         public MemberCardSettingController()
         {
             _memberCardSettingService = new CinemaMemberCardSettingService();
+            _cinemaService = new CinemaService();
         }
         #endregion
 
@@ -60,10 +61,10 @@ namespace WeiXinTicketSystem.Controllers
         /// 添加影城会员卡设置
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             CreateOrUpdateCinemaMemberCardSettingViewModel model = new CreateOrUpdateCinemaMemberCardSettingViewModel();
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -81,7 +82,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             CreateOrUpdateCinemaMemberCardSettingViewModel model = new CreateOrUpdateCinemaMemberCardSettingViewModel();
             model.MapFrom(memberCardSetting);
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -146,7 +147,7 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
-        private void PreparyCreateOrEditViewData()
+        private async Task PreparyCreateOrEditViewData()
         {
             //绑定是否使用会员卡枚举
             ViewBag.IsCardUse_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
@@ -160,6 +161,20 @@ namespace WeiXinTicketSystem.Controllers
             //绑定会员卡类型枚举
             ViewBag.CardType_dd = EnumUtil.GetSelectList<MemberCardTypeEnum>();
 
+            //影院下拉
+            if (CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE)
+            {
+                List<CinemaEntity> cinemas = new List<CinemaEntity>();
+                cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
+            }
+            else
+            {
+                ViewBag.CinemaCode_dd = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = CurrentUser.CinemaName, Value = CurrentUser.CinemaCode }
+                };
+            }
         }
 
     }

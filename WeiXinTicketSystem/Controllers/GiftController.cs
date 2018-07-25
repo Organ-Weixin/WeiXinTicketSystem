@@ -25,11 +25,12 @@ namespace WeiXinTicketSystem.Controllers
     public class GiftController : RootExraController
     {
         private GiftService _giftService;
-
+        private CinemaService _cinemaService;
         #region ctor
         public GiftController()
         {
             _giftService = new GiftService();
+            _cinemaService = new CinemaService();
         }
         #endregion
 
@@ -67,10 +68,10 @@ namespace WeiXinTicketSystem.Controllers
         /// 添加赠品
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             CreateOrUpdateGiftViewModel model = new CreateOrUpdateGiftViewModel();
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -89,7 +90,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             CreateOrUpdateGiftViewModel model = new CreateOrUpdateGiftViewModel();
             model.MapFrom(gift);
-            PreparyCreateOrEditViewData();
+            await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
@@ -178,11 +179,24 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
-        private void PreparyCreateOrEditViewData()
+        private async Task PreparyCreateOrEditViewData()
         {
             //绑定是否上架枚举
             ViewBag.Status_dd = EnumUtil.GetSelectList<GiftStatusEnum>();
-
+            //影院下拉
+            if (CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE)
+            {
+                List<CinemaEntity> cinemas = new List<CinemaEntity>();
+                cinemas.AddRange(await _cinemaService.GetAllCinemasAsync());
+                ViewBag.CinemaCode_dd = cinemas.Select(x => new SelectListItem { Text = x.Name, Value = x.Code });
+            }
+            else
+            {
+                ViewBag.CinemaCode_dd = new List<SelectListItem>
+                {
+                    new SelectListItem { Text = CurrentUser.CinemaName, Value = CurrentUser.CinemaCode }
+                };
+            }
         }
 
     }

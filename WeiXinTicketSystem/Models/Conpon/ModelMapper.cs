@@ -28,7 +28,8 @@ namespace WeiXinTicketSystem.Models.Conpon
                 ValidityDate = module.ValidityDate.ToFormatDateString(),
                 Status = module.Status.GetDescription(),
                 UseDate = module.UseDate.ToFormatDateString(),
-                Title = module.Title
+                Title = module.Title,
+                Image = module.Image
 
             };
         }

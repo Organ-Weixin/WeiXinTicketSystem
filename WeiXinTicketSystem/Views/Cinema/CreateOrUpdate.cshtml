@@ -1,5 +1,6 @@
 ﻿@model CreateOrUpdateCinemaViewModel
 @{
+    ViewData["CinemaConfig"] = "active";
     ViewData["Cinema"] = "active";
     ViewBag.Title = Model.Id > 0 ? "影院编辑" : "影院添加";
 }
@@ -42,12 +43,12 @@
                         @Html.EditorFor(x => x.Id)
                         @Html.EditorFor(x => x.CinemaCode)
                         @Html.EditorFor(x => x.CinemaName)
-                        @Html.EditorFor(x => x.TicketSystem)
+                        @Html.EditorFor(x => x.Mid)
                         @Html.EditorFor(x => x.ContactName)
                         @Html.EditorFor(x => x.ContactMobile)
                         @Html.EditorFor(x => x.TheaterChain)
                         @Html.EditorFor(x => x.Address)
-                        @Html.EditorFor(x => x.Status)
+                        @Html.EditorFor(x => x.IsOpen)
                         @Html.EditorFor(x => x.Latitude)
                         @Html.EditorFor(x => x.Longitude)
                         @Html.EditorFor(x => x.OpenSnacks)

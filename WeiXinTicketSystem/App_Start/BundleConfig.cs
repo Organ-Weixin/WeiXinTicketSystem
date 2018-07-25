@@ -41,6 +41,11 @@ namespace WeiXinTicketSystem
             bundles.Add(new StyleBundle(Resources.MORRIS_STYLE).Include(
                     "~/Content/plugins/morris/morris.css"));
 
+            //Ckeditor
+            bundles.Add(new ScriptBundle(Resources.CKEDITOR_SCRIPT).Include(
+                "~/Content/plugins/ckeditor/ckeditor.js")
+                );
+
             //Date Picker
             bundles.Add(new ScriptBundle(Resources.DATEPICKER_SCRIPT).Include(
                     "~/Content/plugins/datepicker/bootstrap-datepicker.js",

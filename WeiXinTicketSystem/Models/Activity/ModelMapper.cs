@@ -50,7 +50,9 @@ namespace WeiXinTicketSystem.Models.Activity
             {
                 module.EndDate =DateTime.Parse(model.EndDate);
             }
-            
+            module.LinkUrl = model.LinkUrl;
+
+
             module.Status = (YesOrNoEnum)model.Status;
 
         }
@@ -69,6 +71,7 @@ namespace WeiXinTicketSystem.Models.Activity
             model.ActivityContent = module.ActivityContent;
             model.StartDate = module.StartDate.ToFormatDateString();
             model.EndDate = module.EndDate.ToFormatDateString();
+            model.LinkUrl = module.LinkUrl;
             model.Status = (int)module.Status;
 
         }
