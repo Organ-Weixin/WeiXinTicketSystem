@@ -46,7 +46,7 @@ namespace WeiXinTicketSystem.Controllers
             var snacks = await _snackService.GetSnacksPagedAsync(
                 CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? pageModel.Query.CinemaCode_dd : CurrentUser.CinemaCode,
                  pageModel.Query.SnackCode,
-                 pageModel.Query.TypeId_dd,
+                 pageModel.Query.TypeCode_dd,
                  pageModel.Offset,
                  pageModel.PerPage,
                  pageModel.Query.Search
@@ -206,7 +206,7 @@ namespace WeiXinTicketSystem.Controllers
 
             List<SnackTypeEntity> snacksTypes = new List<SnackTypeEntity>();
             snacksTypes.AddRange(await _snacksTypeService.GetAllSnacksTypesAsync(CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? "" : CurrentUser.CinemaCode));
-            ViewBag.TypeId_dd = snacksTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.Id.ToString() });
+            ViewBag.TypeCode_dd = snacksTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode.ToString() });
         }
     }
 }

@@ -719,7 +719,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Id { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string SnackCode { get; set; }
-		public virtual int TypeId { get; set; }
+		public virtual string TypeCode { get; set; }
 		public virtual string TypeName { get; set; }
 		public virtual string SnackName { get; set; }
 		public virtual string Remark { get; set; }
@@ -729,7 +729,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Stock { get; set; }
 		public virtual DateTime? ExpDate { get; set; }
 		public virtual bool IsDel { get; set; }
-		public virtual bool? IsRecommand { get; set; }
+		public virtual byte IsRecommand { get; set; }
 		public virtual string Image { get; set; }
 		public virtual string CinemaName { get; set; }
 	}
@@ -793,6 +793,7 @@ namespace WeiXinTicketSystem.Entity.Models
     {
 		public virtual int Id { get; set; }
 		public virtual string CinemaCode { get; set; }
+		public virtual string TypeCode { get; set; }
 		public virtual string CinemaName { get; set; }
 		public virtual string TypeName { get; set; }
 		public virtual string Image { get; set; }

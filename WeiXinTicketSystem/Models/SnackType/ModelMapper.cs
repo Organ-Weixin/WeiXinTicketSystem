@@ -19,6 +19,7 @@ namespace WeiXinTicketSystem.Models.SnackType
             {
                 id = snackstype.Id,
                 cinemaname = snackstype.CinemaName,
+                typecode=snackstype.TypeCode,
                 typename = snackstype.TypeName,
                 remark=snackstype.Remark,
                 snacksCount = snackstype.SnacksCount,
@@ -35,6 +36,7 @@ namespace WeiXinTicketSystem.Models.SnackType
         public static void MapFrom(this SnackTypeEntity type, CreateOrUpdateSnackTypeViewModel model)
         {
             type.CinemaCode = model.CinemaCode;
+            type.TypeCode = model.TypeCode;
             type.TypeName = model.TypeName;
             type.Remark = model.Remark;
             //type.Image = model.Image;
@@ -49,6 +51,7 @@ namespace WeiXinTicketSystem.Models.SnackType
         {
             model.Id = type.Id;
             model.CinemaCode = type.CinemaCode;
+            model.TypeCode = type.TypeCode;
             model.TypeName = type.TypeName;
             model.Remark = type.Remark;
             //model.Image = type.Image;

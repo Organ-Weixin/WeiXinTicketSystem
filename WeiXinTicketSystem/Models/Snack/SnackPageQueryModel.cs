@@ -15,6 +15,6 @@ namespace WeiXinTicketSystem.Models
         /// <summary>
         /// 套餐类型
         /// </summary>
-        public string TypeId_dd { get; set; }
+        public string TypeCode_dd { get; set; }
     }
 }

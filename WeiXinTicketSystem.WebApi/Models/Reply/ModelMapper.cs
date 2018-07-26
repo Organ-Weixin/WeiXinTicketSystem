@@ -19,6 +19,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         {
             type.TypeId = snacktype.Id;
             type.CinemaCode = snacktype.CinemaCode;
+            type.TypeCode = snacktype.TypeCode;
             type.TypeName = snacktype.TypeName;
             type.Remark = snacktype.Remark;
             type.Image = snacktype.Image;

@@ -22,6 +22,13 @@ namespace WeiXinTicketSystem.Models
         /// <summary>
         /// 类型名称
         /// </summary>
+        [Display(Name = "类型编号")]
+        [Required(ErrorMessage = "{0}不能为空")]
+        [StringLength(50, ErrorMessage = "{0}最多50个字符")]
+        public string TypeCode { get; set; }
+        /// <summary>
+        /// 类型名称
+        /// </summary>
         [Display(Name = "类型名称")]
         [Required(ErrorMessage = "{0}不能为空")]
         [StringLength(50, ErrorMessage = "{0}最多50个字符")]

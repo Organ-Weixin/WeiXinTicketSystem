@@ -40,7 +40,7 @@ namespace WeiXinTicketSystem.Service
            return _snackRepository.Query.Where(x => x.CinemaCode == CinemaCode)
                     .WhereIsIn(x => x.SnackCode,SnackCodes).ToList();
         }
-        public async Task<IPageList<AdminSnacksViewEntity>> GetSnacksPagedAsync(string cinemaCode,string snackcode, string typeid,
+        public async Task<IPageList<AdminSnacksViewEntity>> GetSnacksPagedAsync(string cinemaCode,string snackcode, string typeCode,
             int offset, int perPage, string keyword)
         {
             var query = _snackViewRepository.Query
@@ -56,9 +56,9 @@ namespace WeiXinTicketSystem.Service
             {
                 query.Where(x => x.SnackCode == snackcode);
             }
-            if (!string.IsNullOrEmpty(typeid))
+            if (!string.IsNullOrEmpty(typeCode))
             {
-                query.Where(x => x.TypeId == int.Parse(typeid));
+                query.Where(x => x.TypeCode == typeCode);
             }
 
             if (!string.IsNullOrEmpty(keyword))
