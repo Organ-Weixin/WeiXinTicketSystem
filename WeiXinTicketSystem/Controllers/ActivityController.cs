@@ -44,6 +44,7 @@ namespace WeiXinTicketSystem.Controllers
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
             return View();
+
         }
 
 
