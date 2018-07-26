@@ -40,7 +40,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this Models.QuerySnacksReply reply, string Username, string Password, string CinemaCode, string TypeId, string CurrentPage, string PageSize)
+        public static bool RequestInfoGuard(this Models.QuerySnacksReply reply, string Username, string Password, string CinemaCode, string TypeCode, string CurrentPage, string PageSize)
         {
             int rint = 0;
             if (string.IsNullOrEmpty(Username))
@@ -58,14 +58,9 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(CinemaCode));
                 return false;
             }
-            if (string.IsNullOrEmpty(TypeId))
+            if (string.IsNullOrEmpty(TypeCode))
             {
-                reply.SetNecessaryParamMissReply(nameof(TypeId));
-                return false;
-            }
-            if (!int.TryParse(TypeId, out rint))
-            {
-                reply.SetSnackTypeInvalidReply();
+                reply.SetNecessaryParamMissReply(nameof(TypeCode));
                 return false;
             }
             if (string.IsNullOrEmpty(CurrentPage))
