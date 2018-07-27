@@ -83,11 +83,11 @@ namespace WeiXinTicketSystem.WebApi.Controllers
 
         #region 查询套餐
         [HttpGet]
-        public async Task<QuerySnacksReply> QuerySnacks(string UserName, string Password, string CinemaCode, string TypeId, string CurrentPage, string PageSize)
+        public async Task<QuerySnacksReply> QuerySnacks(string UserName, string Password, string CinemaCode, string TypeCode, string CurrentPage, string PageSize)
         {
             QuerySnacksReply querySnacksReply = new QuerySnacksReply();
             //校验参数
-            if (!querySnacksReply.RequestInfoGuard(UserName, Password, CinemaCode, TypeId, CurrentPage, PageSize))
+            if (!querySnacksReply.RequestInfoGuard(UserName, Password, CinemaCode, TypeCode, CurrentPage, PageSize))
             {
                 return querySnacksReply;
             }
@@ -105,7 +105,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 querySnacksReply.SetCinemaInvalidReply();
                 return querySnacksReply;
             }
-            var Snacks = await _snackService.QuerySnacksPagedAsync(CinemaCode, TypeId, int.Parse(CurrentPage), int.Parse(PageSize));
+            var Snacks = await _snackService.QuerySnacksPagedAsync(CinemaCode, TypeCode, int.Parse(CurrentPage), int.Parse(PageSize));
 
             querySnacksReply.data = new QuerySnacksReplySnacks();
             if (Snacks == null || Snacks.Count == 0)

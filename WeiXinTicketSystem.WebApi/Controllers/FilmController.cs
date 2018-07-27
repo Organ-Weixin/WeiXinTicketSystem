@@ -56,6 +56,11 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             }
 
             FilmInfoEntity film =await _filmInfoService.GetFilmInfoByFilmCodeAsync(FilmCode);
+            if (film == null)
+            {
+                queryFilmsReply.SetFilmCodeNotExistReply();
+                return queryFilmsReply;
+            }
             queryFilmsReply.data = new QueryFilmsReplyFilm();
             queryFilmsReply.data.MapFrom(film);
             queryFilmsReply.SetSuccessReply();

@@ -754,20 +754,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the MiniProgramLinkUrl table.
-    /// </summary>
-    [Table("MiniProgramLinkUrl")]
-    [SqlLamTable(Name = "MiniProgramLinkUrl")]
-    public partial class MiniProgramLinkUrlEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string LinkName { get; set; }
-		public virtual string LinkUrl { get; set; }
-		public virtual byte? IsDel { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the SnackTypes table.
     /// </summary>
     [Table("SnackTypes")]
@@ -919,6 +905,20 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool Deleted { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the MiniProgramLinkUrl table.
+    /// </summary>
+    [Table("MiniProgramLinkUrl")]
+    [SqlLamTable(Name = "MiniProgramLinkUrl")]
+    public partial class MiniProgramLinkUrlEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string LinkName { get; set; }
+		public virtual string LinkUrl { get; set; }
+		public virtual bool IsDel { get; set; }
 	}
 
     /// <summary>
