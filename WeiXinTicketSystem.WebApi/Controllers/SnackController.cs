@@ -677,5 +677,48 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             return queryOrderReply;
         }
         #endregion
+
+        #region 查询推荐套餐
+
+        [HttpGet]
+        public async Task<QuerySnacksReply> QueryRecommandSnacks(string UserName, string Password, string CinemaCode, string TypeCode)
+        {
+            QuerySnacksReply querySnacksReply = new QuerySnacksReply();
+            //校验参数
+            if (!querySnacksReply.RequestInfoGuard(UserName, Password, CinemaCode, TypeCode))
+            {
+                return querySnacksReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                querySnacksReply.SetUserCredentialInvalidReply();
+                return querySnacksReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                querySnacksReply.SetCinemaInvalidReply();
+                return querySnacksReply;
+            }
+            var Snacks = await _snackService.GetRecommandSnacksByTypeCodeAsync(CinemaCode, TypeCode);
+
+            querySnacksReply.data = new QuerySnacksReplySnacks();
+            if (Snacks == null || Snacks.Count == 0)
+            {
+                querySnacksReply.data.SnackCount = 0;
+            }
+            else
+            {
+                querySnacksReply.data.SnackCount = Snacks.Count;
+                querySnacksReply.data.Snacks = Snacks.Select(x => new QuerySnacksReplySnack().MapFrom(x)).ToList();
+            }
+            querySnacksReply.SetSuccessReply();
+            return querySnacksReply;
+        }
+
+        #endregion
     }
 }

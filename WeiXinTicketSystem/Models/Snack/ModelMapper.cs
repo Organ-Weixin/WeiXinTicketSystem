@@ -23,12 +23,13 @@ namespace WeiXinTicketSystem.Models.Snack
                 cinemaName = snack.CinemaName,
                 code = snack.SnackCode,
                 type = snack.TypeName,
-                name=snack.SnackName,
+                name = snack.SnackName,
                 standardPrice = snack.StandardPrice.ToString("0.##"),
                 salePrice = snack.SalePrice.ToString("0.##"),
-                stock=snack.Stock,
-                Image=snack.Image,
-                status = snack.Status.GetDescription()
+                stock = snack.Stock,
+                Image = snack.Image,
+                status = snack.Status.GetDescription(),
+                IsRecommand = snack.IsRecommand.GetDescription()
             };
         }
 
@@ -47,6 +48,7 @@ namespace WeiXinTicketSystem.Models.Snack
             snack.StandardPrice = model.StandardPrice;
             snack.SalePrice = model.SalePrice;
             snack.Stock = (int)model.Stock;
+            snack.IsRecommand = (YesOrNoEnum)model.IsRecommand;
         }
 
         /// <summary>
@@ -65,6 +67,7 @@ namespace WeiXinTicketSystem.Models.Snack
             model.StandardPrice = snack.StandardPrice;
             model.SalePrice = snack.SalePrice;
             model.Stock = snack.Stock;
+            model.IsRecommand = (int)snack.IsRecommand;
         }
     }
 }

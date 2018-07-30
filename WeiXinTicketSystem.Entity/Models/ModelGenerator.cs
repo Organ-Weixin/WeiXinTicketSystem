@@ -729,7 +729,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Stock { get; set; }
 		public virtual DateTime? ExpDate { get; set; }
 		public virtual bool IsDel { get; set; }
-		public virtual byte IsRecommand { get; set; }
+		public virtual YesOrNoEnum IsRecommand { get; set; }
 		public virtual string Image { get; set; }
 		public virtual string CinemaName { get; set; }
 	}

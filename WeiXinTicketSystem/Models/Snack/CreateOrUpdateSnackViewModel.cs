@@ -73,5 +73,12 @@ namespace WeiXinTicketSystem.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         [Range(1,9999, ErrorMessage = "您输入的数量不符合规范，应该在{1}-{2}之间")]
         public decimal Stock { get; set; }
+
+        /// <summary>
+        /// 是否推荐
+        /// </summary>
+        [ListBox("_dd", Multiple = false)]
+        [Display(Name = "是否推荐")]
+        public int IsRecommand { get; set; }
     }
 }

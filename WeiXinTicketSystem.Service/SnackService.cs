@@ -127,5 +127,24 @@ namespace WeiXinTicketSystem.Service
         {
             await _snackRepository.InsertAsync(entity);
         }
+
+        /// <summary>
+        /// 根据套餐类型获取推荐套餐
+        /// </summary>
+        /// <param name="typeCode"></param>
+        /// <returns></returns>
+        public async Task<IList<SnackEntity>> GetRecommandSnacksByTypeCodeAsync(string cinemaCode, string typeCode)
+        {
+            var query = _snackRepository.Query.Where(x => !x.IsDel);
+            if (!string.IsNullOrEmpty(cinemaCode))
+            {
+                query.Where(x => x.CinemaCode == cinemaCode);
+            }
+            if (!string.IsNullOrEmpty(typeCode))
+            {
+                query.Where(x => x.TypeCode == typeCode && x.IsRecommand ==YesOrNoEnum.Yes);
+            }
+            return await query.ToListAsync();
+        }
     }
 }

@@ -86,6 +86,32 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
+        public static bool RequestInfoGuard(this Models.QuerySnacksReply reply, string Username, string Password, string CinemaCode, string TypeCode)
+        {
+            int rint = 0;
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(TypeCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(TypeCode));
+                return false;
+            }
+            return true;
+        }
+
         public static bool RequestInfoGuard(this Models.BookSnacksReply reply, string UserName, string Password, string CinemaCode, string MobilePhone, string DeliveryAddress, string SendTime, string OpenID, List<BookSnacksQueryJsonSnack> Snacks)
         {
             if (string.IsNullOrEmpty(UserName))
