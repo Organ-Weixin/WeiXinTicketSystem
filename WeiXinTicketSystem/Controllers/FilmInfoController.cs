@@ -16,7 +16,6 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Net;
 using System.Xml.Linq;
-using WeiXin.Tools;
 using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
@@ -188,174 +187,32 @@ namespace WeiXinTicketSystem.Controllers
 
         }
 
-        public ActionResult UpdateFilm()
+        /// <summary>
+        /// 获取影片信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GrabFilmData()
         {
-             UpdateMovie();
+            string URLAddress = "http://datacenter.ykse.com.cn:8200/FilmDataDownload.aspx?year=" + DateTime.Now.ToString("yyyy");
+            string httpresult = HttpHelper.VisitUrl(URLAddress);
+            XElement Film = XElement.Parse(httpresult.Replace("<![CDATA[", "").Replace("]]>", ""));
+            IEnumerable<XElement> FilmInfoList = Film.Descendants("FilmInfomation");
+            foreach (var film in FilmInfoList)
+            {
+                YKFilmInfomation ykFilm = JSONHelper.DeserializeObject<YKFilmInfomation>(film);
+                FilmInfoEntity entity = _filmInfoService.GetFilmInfoByCode(ykFilm.FilmInfomation.ID);
+                if(entity==null)
+                {
+                    entity = new FilmInfoEntity();
+                    entity.MapFrom(ykFilm.FilmInfomation);
+                    _filmInfoService.Insert(entity);
+                }
+            }
+            //重新读权限，回到首页
             var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "FilmInfo").SingleOrDefault();
             CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
             return View(nameof(Index));
         }
-
-        /// <summary>
-        /// 更新影片信息
-        /// </summary>
-        /// <returns></returns>
-        public void UpdateMovie()
-        {
-            WebClient client = new WebClient();
-            DateTime date = DateTime.Now.Date.AddDays(1);
-            string strDate = date.ToString("yyyy");
-            string URLAddress = "http://datacenter.ykse.com.cn:8200/FilmDataDownload.aspx?year=" + strDate;
-            string strPath =System.Web.HttpContext.Current.Server.MapPath("/download");
-            if (!Directory.Exists(strPath))
-            {
-                Directory.CreateDirectory(strPath);
-            }
-            string fileName = strPath + "\\MovieInfo.xml";
-            client.DownloadFile(URLAddress, fileName);
-            XDocument doc = XDocument.Load(fileName);
-            XElement Film = XElement.Parse(doc.ToString().Replace("<![CDATA[", "").Replace("]]>", ""));
-            IEnumerable<XElement> FilmInfoList = Film.Descendants("FilmInfomation");
-
-            foreach (var film in FilmInfoList)
-            {
-                QryDownloadMovieInfo qryFilm = JSONHelper.DeserializeObject<QryDownloadMovieInfo>(film);
-
-                FilmInfoEntity entity = ConvertFilmToEntity(qryFilm.FilmInfomation);
-                string filmCode = entity.FilmCode;
-                if (_filmInfoService.GetFilmsByCode(filmCode).Count() == 0)
-                {
-                    _filmInfoService.Insert(entity);
-
-                }
-            }
-            //获取豆瓣上的影片信息更新movie
-            updatefromdouban();
-        }
-
-        private FilmInfoEntity ConvertFilmToEntity(DownloadMovieInfo film)
-        {
-            FilmInfoEntity entity = new FilmInfoEntity();
-            entity.FilmCode = film.ID;
-            entity.FilmName = film.Name;
-            entity.Duration = "0";
-            entity.PublishDate = film.PublishDate;
-            entity.Director = film.Director;
-            entity.Cast = film.Cast;
-            entity.Introduction = film.Brief;
-            entity.Score = 0;
-            entity.Area = " ";
-            entity.Type = " ";
-            entity.Language = " ";
-            entity.Status = 0;
-            entity.Image = " ";
-
-            return entity;
-
-        }
-
-        public bool updatefromdouban()
-        {
-            string Url = "https://api.douban.com/v2/movie/coming_soon";//豆瓣即将上映
-            string coming_soon = HttpHelper.VisitUrl(Url);
-            DoubanComingSoonReply DoubanComingSoonReply = JSONHelper.FromJson<DoubanComingSoonReply>(coming_soon);
-            foreach (var subject in DoubanComingSoonReply.subjects)
-            {
-                string UrlFilm = "https://api.douban.com/v2/movie/subject/" + subject.id;
-                string Film = HttpHelper.VisitUrl(UrlFilm);
-                DoubanFilmReply DoubanFilmReply = JSONHelper.FromJson<DoubanFilmReply>(Film);
-                FilmInfoEntity entity = ConvertDoubanFilmToEntity(DoubanFilmReply);
-                //string filmCode = entity.FilmCode;
-                //if (dao.GetFilmsByID(filmCode).Count() == 0)
-                //{
-                //Insert(entity);
-                //}
-                //更新movie
-                FilmInfoEntity filmInfo = _filmInfoService.GetFilmByFilmName(entity.FilmName);
-                if (filmInfo != null)
-                {
-                    filmInfo.Director = entity.Director;
-                    filmInfo.Cast = entity.Cast;
-                    filmInfo.Introduction = entity.Introduction;
-                    filmInfo.Score = entity.Score;
-                    filmInfo.Area = entity.Area;
-                    filmInfo.Type = entity.Type;
-
-                    filmInfo.Image = entity.Image;
-                    _filmInfoService.Update(filmInfo);
-                }
-            }
-            return true;
-        }
-
-        private FilmInfoEntity ConvertDoubanFilmToEntity(DoubanFilmReply film)
-        {
-            FilmInfoEntity entity = new FilmInfoEntity();
-            entity.FilmCode = film.id;
-            entity.FilmName = film.title;
-            entity.Duration = "0";
-            //entity.FilmPublishDate = ;
-            string directors = string.Empty;
-            foreach (var director in film.directors)
-            {
-                directors += director.name + "/";
-            }
-            entity.Director = directors.IndexOf('/') > 0 ? directors.TrimEnd('/') : "";
-            string casts = string.Empty;
-            foreach (var cast in film.casts)
-            {
-                casts += cast.name + "/";
-            }
-            entity.Cast = casts.IndexOf('/') > 0 ? casts.TrimEnd('/') : "";
-            entity.Introduction = film.summary;
-            //entity.FilmDate = film.PublishDate;
-            entity.Score = Convert.ToDecimal(film.rating.average);
-            string countries = string.Empty;
-            foreach (var countrie in film.countries)
-            {
-                countries += countrie + "/";
-            }
-            entity.Area = countries.IndexOf('/') > 0 ? countries.TrimEnd('/') : "";
-            string genres = string.Empty;
-            foreach (var genre in film.genres)
-            {
-                genres += genre + "/";
-            }
-            entity.Type = genres.IndexOf('/') > 0 ? genres.TrimEnd('/') : "";
-            entity.Language = " ";
-            entity.Status = 0;
-            entity.Image = DownloadImg(film.images.small);
-
-            return entity;
-        }
-
-        /// <summary>
-        /// 下载电影图片到本地
-        /// </summary>
-        /// <param name="Url"></param>
-        /// <returns></returns>
-        private string DownloadImg(string Url)
-        {
-            try
-            {
-                DateTime nowdate = DateTime.Now;
-                WebClient mywebclient = new WebClient();
-                string savePath = "/upload/MovieImg/" + nowdate.ToString("yyyyMM") + "/" + Url.Split('/')[Url.Split('/').Length - 1];
-                string PhysicalPath = HttpRuntime.AppDomainAppPath.ToString() + "/upload/MovieImg/" + nowdate.ToString("yyyyMM") + "/";
-                if (!Directory.Exists(PhysicalPath))
-                {
-                    Directory.CreateDirectory(PhysicalPath);
-                }
-                PhysicalPath += Url.Split('/')[Url.Split('/').Length - 1];
-                mywebclient.DownloadFile(Url, PhysicalPath);
-                return savePath;
-            }
-            catch (Exception ex)
-            {
-                return "";
-            }
-        }
-
     }
 }

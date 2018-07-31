@@ -32,11 +32,11 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         #region 获取影院信息
 
         [HttpGet]
-        public async Task<QueryCinemasReply> QueryCinemas(string UserName, string Password, string CinemaCode, string CurrentPage, string PageSize)
+        public async Task<QueryCinemasReply> QueryCinemas(string UserName, string Password, string AppId, string CurrentPage, string PageSize)
         {
             QueryCinemasReply queryCinemasReply = new QueryCinemasReply();
             //校验参数
-            if (!queryCinemasReply.RequestInfoGuard(UserName, Password, CinemaCode, CurrentPage, PageSize))
+            if (!queryCinemasReply.RequestInfoGuard(UserName, Password, AppId, CurrentPage, PageSize))
             {
                 return queryCinemasReply;
             }
@@ -47,16 +47,8 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 queryCinemasReply.SetUserCredentialInvalidReply();
                 return queryCinemasReply;
             }
-            //验证影院是否存在且可访问
-            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
-            if (cinema == null)
-            {
-                queryCinemasReply.SetCinemaInvalidReply();
-                return queryCinemasReply;
-            }
 
-            var cinemas = await _cinemaService.QueryCinemasPagedAsync(int.Parse(CurrentPage), int.Parse(PageSize));
-
+            var cinemas = await _cinemaService.QueryCinemasByAppIdPagedAsync(AppId,int.Parse(CurrentPage), int.Parse(PageSize));
             queryCinemasReply.data = new QueryCinemasReplyCinemas();
             if (cinemas == null || cinemas.Count == 0)
             {

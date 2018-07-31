@@ -16,12 +16,14 @@ namespace WeiXinTicketSystem.Service
         #region ctor
         private readonly IRepository<CinemaViewEntity> _cinemaViewRepository;
         private readonly IRepository<CinemaEntity> _cinemaRepository;
+        private readonly IRepository<CinemaMiniProgramAccountEntity> _cinemaMiniProgramAccountRepository;
 
         public CinemaService()
         {
             //TODO: 移除内部依赖
             _cinemaViewRepository = new Repository<CinemaViewEntity>();
             _cinemaRepository = new Repository<CinemaEntity>();
+            _cinemaMiniProgramAccountRepository = new Repository<CinemaMiniProgramAccountEntity>();
         }
         #endregion
 
@@ -80,14 +82,21 @@ namespace WeiXinTicketSystem.Service
             return await query.ToPageListAsync();
         }
 
-        public async Task<IPageList<CinemaViewEntity>> QueryCinemasPagedAsync(int currentpage, int pagesize)
+        public async Task<IPageList<CinemaViewEntity>> QueryCinemasByAppIdPagedAsync(string AppId, int currentpage, int pagesize)
         {
+            //先读出影院编码列表
+            IList<CinemaMiniProgramAccountEntity> accounts = _cinemaMiniProgramAccountRepository.Query.Where(x => x.AppId == AppId).ToList();
+            string strCinemaCodes = string.Join(",", accounts.Select(x => x.CinemaCode));//这里一定要分开写，不能连写，否则获取不到单独的CinemaCode列
+            IList<string> CinemaCodes = strCinemaCodes.Split(',').ToList();
             int offset = (currentpage - 1) * pagesize;
             var query = _cinemaViewRepository.Query
                 .OrderByDescending(x => x.Id)
                 .Skip(offset)
                 .Take(pagesize);
-
+            if(CinemaCodes.Count>0)
+            {
+                query.WhereIsIn(x=>x.Code,CinemaCodes);
+            }
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();
         }

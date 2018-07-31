@@ -330,13 +330,13 @@ namespace WeiXinTicketSystem.WebApi.Models
             data.Director = entity.Director;
             data.Cast = entity.Cast;
             data.Introduction = entity.Introduction;
-            //data.Score = entity.Score;
-            //data.Area = entity.Area;
-            //data.Type = entity.Type;
-            //data.Language = entity.Language;
-            //data.Status = entity.Status.GetDescription();
-            //data.Image = entity.Image;
-            //data.Trailer = entity.Trailer;
+            data.Score = entity.Score;
+            data.Area = entity.Area;
+            data.Type = entity.Type;
+            data.Language = entity.Language;
+            data.Status = entity.Status.GetDescription();
+            data.Image = entity.Image;
+            data.Trailer = entity.Trailer;
             return data;
         }
         

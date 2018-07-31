@@ -48,7 +48,7 @@
                 <div class="dynatable-operation">
                     @if (CurrentPermissions.Contains(2))
                     {
-                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.FilmInfo.UpdateFilm)" onclick="zqypxxClick();">
+                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.FilmInfo.GrabFilmData)" onclick="zqypxxClick();">
                             <i class="fa fa-plus"></i>
                             <span id="zqypxx">抓取影片信息</span>
                         </a>
@@ -67,7 +67,7 @@
                     <td style="text-align: left;">{{PublishDate}}</td>
                     <td style="text-align: left;"><img style="width:32px;height: 32px;" src="{{Image}}" onmouseover="ShowImg('{{Image}}')" onmouseout="CloseImg()" /></td>
                     <td style="text-align: left;">{{FilmName}}</td>
-                    <td style="text-align: left;">{{Status}}</td>
+                    <td style="text-align: left;color:{{statusClass}}">{{Status}}</td>
                     <td style="text-align: left;">
 
                         @if (CurrentPermissions.Contains(3))
@@ -113,7 +113,6 @@
         };
 
         function zqypxxClick() {
-            //alert($('#zqypxx').text());
             $('#zqypxx').html("正在提交中，请等待……");
         }
     </script>

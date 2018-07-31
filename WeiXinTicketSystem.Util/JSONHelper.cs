@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace WeiXin.Tools
+namespace WeiXinTicketSystem.Util
 {
     /// <summary>
     /// 提供了一个关于json的辅助类
