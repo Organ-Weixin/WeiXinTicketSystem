@@ -34,6 +34,7 @@ namespace WeiXinTicketSystem.Models
         [Display(Name = "结束时间")]
         public string EndDate { get; set; }
 
+        [ListBox("_dd", Multiple = false)]
         [Display(Name = "链接地址")]
         public string LinkUrl { get; set; }
 

@@ -370,5 +370,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(StampController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(StampController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 链接地址
+        /// </summary>
+        public static class MiniProgramLinkUrl
+        {
+            public static string Name { get { return nameof(MiniProgramLinkUrl); } }
+            public static string Index { get { return nameof(MiniProgramLinkUrlController.Index); } }
+            public static string List { get { return nameof(MiniProgramLinkUrlController.List); } }
+            public static string Create { get { return nameof(MiniProgramLinkUrlController.Create); } }
+            public static string Update { get { return nameof(MiniProgramLinkUrlController.Update); } }
+            public static string Delete { get { return nameof(MiniProgramLinkUrlController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(MiniProgramLinkUrlController._CreateOrUpdate); } }
+        }
     }
 }

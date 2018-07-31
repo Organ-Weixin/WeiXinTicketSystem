@@ -40,6 +40,7 @@
                             <th data-dynatable-no-sort="true">销售价</th>
                             <th data-dynatable-no-sort="true">库存</th>
                             <th data-dynatable-no-sort="true">状态</th>
+                            <th data-dynatable-no-sort="true">是否推荐</th>
                             <th data-dynatable-no-sort="true" width="180px">操作</th>
                         </tr>
                     </thead>
@@ -75,6 +76,7 @@
                     <td style="text-align: left;overflow:hidden;">{{salePrice}}</td>
                     <td style="text-align: left;overflow:hidden;">{{stock}}</td>
                     <td style="text-align: left;overflow:hidden;">{{status}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{IsRecommand}}</td>
                     <td style="text-align: left;overflow:hidden;">
                         @if (CurrentPermissions.Contains(3))
                         {

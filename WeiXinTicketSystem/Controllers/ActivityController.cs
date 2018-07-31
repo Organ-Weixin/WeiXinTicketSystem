@@ -25,11 +25,13 @@ namespace WeiXinTicketSystem.Controllers
     {
         private ActivityService _activityService;
         private CinemaService _cinemaService;
+        private MiniProgramLinkUrlService _miniProgramLinkUrlService;
         #region ctor
         public ActivityController()
         {
             _activityService = new ActivityService();
             _cinemaService = new CinemaService();
+            _miniProgramLinkUrlService = new MiniProgramLinkUrlService();
         }
         #endregion
 
@@ -201,6 +203,11 @@ namespace WeiXinTicketSystem.Controllers
                     new SelectListItem { Text = CurrentUser.CinemaName, Value = CurrentUser.CinemaCode }
                 };
             }
+
+            //链接地址下拉框
+            List<MiniProgramLinkUrlEntity> miniProgramLinkUrls = new List<MiniProgramLinkUrlEntity>();
+            miniProgramLinkUrls.AddRange(await _miniProgramLinkUrlService.GetAllMiniProgramLinkUrlAsync());
+            ViewBag.LinkUrl_dd = miniProgramLinkUrls.Select(x => new SelectListItem { Text = x.LinkName, Value = x.LinkUrl });
         }
 
     }

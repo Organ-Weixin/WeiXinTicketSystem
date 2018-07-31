@@ -729,7 +729,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Stock { get; set; }
 		public virtual DateTime? ExpDate { get; set; }
 		public virtual bool IsDel { get; set; }
-		public virtual byte IsRecommand { get; set; }
+		public virtual YesOrNoEnum IsRecommand { get; set; }
 		public virtual string Image { get; set; }
 		public virtual string CinemaName { get; set; }
 	}
@@ -751,20 +751,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string Title { get; set; }
 		public virtual string Image { get; set; }
 		public virtual DateTime? ValidityDate { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the MiniProgramLinkUrl table.
-    /// </summary>
-    [Table("MiniProgramLinkUrl")]
-    [SqlLamTable(Name = "MiniProgramLinkUrl")]
-    public partial class MiniProgramLinkUrlEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string LinkName { get; set; }
-		public virtual string LinkUrl { get; set; }
-		public virtual byte? IsDel { get; set; }
 	}
 
     /// <summary>
@@ -919,6 +905,20 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool Deleted { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the MiniProgramLinkUrl table.
+    /// </summary>
+    [Table("MiniProgramLinkUrl")]
+    [SqlLamTable(Name = "MiniProgramLinkUrl")]
+    public partial class MiniProgramLinkUrlEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string LinkName { get; set; }
+		public virtual string LinkUrl { get; set; }
+		public virtual bool IsDel { get; set; }
 	}
 
     /// <summary>

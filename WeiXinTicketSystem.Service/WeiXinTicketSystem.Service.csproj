@@ -88,6 +88,7 @@
     <Compile Include="HomeService.cs" />
     <Compile Include="MemberCardService.cs" />
     <Compile Include="MiddlewareService.cs" />
+    <Compile Include="MiniProgramLinkUrlService.cs" />
     <Compile Include="ModelMapper.cs" />
     <Compile Include="BannerService.cs" />
     <Compile Include="OrderService.cs" />

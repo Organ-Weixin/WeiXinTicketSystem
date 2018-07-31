@@ -207,6 +207,9 @@ namespace WeiXinTicketSystem.Controllers
             List<SnackTypeEntity> snacksTypes = new List<SnackTypeEntity>();
             snacksTypes.AddRange(await _snacksTypeService.GetAllSnacksTypesAsync(CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? "" : CurrentUser.CinemaCode));
             ViewBag.TypeCode_dd = snacksTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode.ToString() });
+
+            //绑定是否推荐枚举
+            ViewBag.IsRecommand_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
         }
     }
 }
