@@ -20,6 +20,5 @@ namespace WeiXinTicketSystem.Entity.Enum
         [XmlEnum("4")]
         [Description("会员卡")]
         MemberCardPay = 4
-
     }
 }

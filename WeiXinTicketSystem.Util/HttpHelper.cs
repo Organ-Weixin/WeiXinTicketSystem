@@ -44,7 +44,7 @@ namespace WeiXinTicketSystem.Util
                 {
                     resst = new GZipStream(resst, CompressionMode.Decompress);
                 }
-                StreamReader sr = new StreamReader(resst, Encoding.UTF8);
+                StreamReader sr = new StreamReader(resst, Encoding.Default);
                 string str = sr.ReadToEnd();
 
                 return str;

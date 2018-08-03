@@ -16,7 +16,6 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Net;
 using System.Xml.Linq;
-using WeiXin.Tools;
 using WeiXinTicketSystem.Properties;
 using System.Configuration;
 

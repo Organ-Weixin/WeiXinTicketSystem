@@ -8,7 +8,16 @@ using System.Web;
 
 namespace WeiXinTicketSystem.Models
 {
-    public class DownloadMovieInfo
+    ///<summary>
+    ///用于将Xml转换为类对象
+    ///</summary>
+    public class YKFilmInfomation
+    {
+        public FilmInfomation FilmInfomation { get; set; }
+        
+    }
+
+    public class FilmInfomation
     {
         ///<summary>
         ///影片编码
@@ -61,11 +70,5 @@ namespace WeiXinTicketSystem.Models
         public string Brief { get; set; }
     }
 
-    ///<summary>
-    ///用于将Xml转换为类对象
-    ///</summary>
-    public class QryDownloadMovieInfo
-    {
-        public DownloadMovieInfo FilmInfomation { get; set; }
-    }
+
 }

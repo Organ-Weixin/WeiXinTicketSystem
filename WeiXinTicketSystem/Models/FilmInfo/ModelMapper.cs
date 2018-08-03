@@ -35,10 +35,29 @@ namespace WeiXinTicketSystem.Models.FilmInfo
                 Type = module.Type,
                 Language = module.Language,
                 Status = module.Status.GetDescription(),
+                statusClass = GetStatusClass(module.Status),
                 Image = module.Image,
                 Trailer = module.Trailer
 
             };
+        }
+
+        /// <summary>
+        /// 获取状态样式
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public static string GetStatusClass(FilmStatusEnum status)
+        {
+            switch (status)
+            {
+                case FilmStatusEnum.NoPassed:
+                    return "red";
+                case FilmStatusEnum.Passed:
+                    return "green";
+                default:
+                    return "darkorange";
+            }
         }
 
 
@@ -98,6 +117,20 @@ namespace WeiXinTicketSystem.Models.FilmInfo
             //model.Image = module.Image;
             model.Trailer = module.Trailer;
 
+        }
+
+        public static void MapFrom(this FilmInfoEntity entity, FilmInfomation film)
+        {
+            entity.FilmCode = film.ID;
+            entity.FilmName = film.Name;
+            //entity.Version = film.Version;
+            entity.Duration = "0";
+            entity.PublishDate = film.PublishDate;
+            entity.Publisher = film.Publisher;
+            entity.Producer = film.Producer;
+            entity.Director = film.Director;
+            entity.Cast = film.Cast;
+            entity.Introduction = film.Brief;
         }
     }
 }

@@ -234,7 +234,7 @@ namespace WeiXinTicketSystem
             public static string Update { get { return nameof(FilmInfoController.Update); } }
             public static string Delete { get { return nameof(FilmInfoController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(FilmInfoController._CreateOrUpdate); } }
-            public static string UpdateFilm { get { return nameof(FilmInfoController.UpdateFilm); } }
+            public static string GrabFilmData { get { return nameof(FilmInfoController.GrabFilmData); } }
         }
 
         /// <summary>

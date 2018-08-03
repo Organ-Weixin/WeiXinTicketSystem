@@ -857,7 +857,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this QueryCinemasReply reply, string Username, string Password, string CinemaCode, string CurrentPage, string PageSize)
+        public static bool RequestInfoGuard(this QueryCinemasReply reply, string Username, string Password, string AppId, string CurrentPage, string PageSize)
         {
             int rint = 0;
             if (string.IsNullOrEmpty(Username))
@@ -870,9 +870,9 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(Password));
                 return false;
             }
-            if (string.IsNullOrEmpty(CinemaCode))
+            if (string.IsNullOrEmpty(AppId))
             {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                reply.SetNecessaryParamMissReply(nameof(AppId));
                 return false;
             }
             if (string.IsNullOrEmpty(CurrentPage))
