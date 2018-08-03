@@ -384,5 +384,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(MiniProgramLinkUrlController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(MiniProgramLinkUrlController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 赠送条件
+        /// </summary>
+        public static class GivingConditions
+        {
+            public static string Name { get { return nameof(GivingConditions); } }
+            public static string Index { get { return nameof(GivingConditionsController.Index); } }
+            public static string List { get { return nameof(GivingConditionsController.List); } }
+            public static string Create { get { return nameof(GivingConditionsController.Create); } }
+            public static string Update { get { return nameof(GivingConditionsController.Update); } }
+            public static string Delete { get { return nameof(GivingConditionsController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(GivingConditionsController._CreateOrUpdate); } }
+        }
     }
 }

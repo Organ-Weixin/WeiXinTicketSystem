@@ -488,5 +488,18 @@ namespace WeiXinTicketSystem.WebApi.Models
             ticketUser.Created = entity.Created.ToFormatStringWithT();
             return ticketUser;
         }
+
+        public static QueryGivingConditionsReplyCondition MapFrom(this QueryGivingConditionsReplyCondition condition, GivingConditionEntity entity)
+        {
+            condition.ConditionId = entity.Id;
+            condition.CinemaCode = entity.CinemaCode;
+            condition.Conditions = entity.Conditions;
+            condition.ConponType = entity.ConponType.GetDescription();
+            condition.Price = entity.Price;
+            condition.StartDate = entity.StartDate.ToFormatStringWithT();
+            condition.EndDate = entity.EndDate.ToFormatStringWithT();
+            
+            return condition;
+        }
     }
 }

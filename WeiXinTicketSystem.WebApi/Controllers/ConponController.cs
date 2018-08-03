@@ -22,6 +22,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         CinemaService _cinemaService;
         TicketUsersService _ticketUserService;
         GiftService _giftService;
+        GivingConditionsService _givingConditionsService;
 
         #region ctor
         public ConponController()
@@ -31,6 +32,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             _cinemaService = new CinemaService();
             _ticketUserService = new TicketUsersService();
             _giftService = new GiftService();
+            _givingConditionsService = new GivingConditionsService();
         }
         #endregion
 
@@ -180,6 +182,51 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             queryGiftsReply.SetSuccessReply();
             return queryGiftsReply;
         }
+        #endregion
+
+        #region 查询该影院下所有赠送条件
+
+        [HttpGet]
+        public async Task<QueryGivingConditionsReply> QueryGivingConditions(string UserName, string Password, string CinemaCode)
+        {
+            QueryGivingConditionsReply queryGivingConditionsReply = new QueryGivingConditionsReply();
+            //校验参数
+            if (!queryGivingConditionsReply.RequestInfoGuard(UserName, Password, CinemaCode))
+            {
+                return queryGivingConditionsReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryGivingConditionsReply.SetUserCredentialInvalidReply();
+                return queryGivingConditionsReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryGivingConditionsReply.SetCinemaInvalidReply();
+                return queryGivingConditionsReply;
+            }
+            
+            var givingConditions = await _givingConditionsService.GetGivingConditionByCinemaCodeAsync(CinemaCode);
+
+            queryGivingConditionsReply.data = new QueryGivingConditionsReplyConditions();
+            if (givingConditions == null || givingConditions.Count == 0)
+            {
+                queryGivingConditionsReply.data.ConditionsCount = 0;
+            }
+            else
+            {
+                queryGivingConditionsReply.data.ConditionsCount = givingConditions.Count;
+                queryGivingConditionsReply.data.Conditions = givingConditions.Select(x => new QueryGivingConditionsReplyCondition().MapFrom(x)).ToList();
+            }
+            queryGivingConditionsReply.SetSuccessReply();
+            return queryGivingConditionsReply;
+        }
+
+
         #endregion
 
     }

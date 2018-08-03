@@ -266,6 +266,7 @@
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmInfoController.cs" />
     <Compile Include="Controllers\GiftController.cs" />
+    <Compile Include="Controllers\GivingConditionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MiniProgramLinkUrlController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -336,6 +337,9 @@
     <Compile Include="Models\Gift\GiftQueryModel.cs" />
     <Compile Include="Models\Gift\CreateOrUpdateGiftViewModel.cs" />
     <Compile Include="Models\Gift\ModelMapper.cs" />
+    <Compile Include="Models\GivingConditions\CreateOrUpdateGivingConditionsViewModel.cs" />
+    <Compile Include="Models\GivingConditions\GivingConditionsQueryModel.cs" />
+    <Compile Include="Models\GivingConditions\ModelMapper.cs" />
     <Compile Include="Models\Login\SysUserLoginViewModel.cs" />
     <Compile Include="Models\MemberCard\CreateOrUpdateMemberCardViewModel.cs" />
     <Compile Include="Models\MemberCard\MemberCardQueryModel.cs" />
@@ -1430,6 +1434,8 @@
     <Content Include="Views\MiniProgramAccount\CreateOrUpdate.cshtml" />
     <Content Include="Views\MiniProgramLinkUrl\CreateOrUpdate.cshtml" />
     <Content Include="Views\MiniProgramLinkUrl\Index.cshtml" />
+    <Content Include="Views\GivingConditions\CreateOrUpdate.cshtml" />
+    <Content Include="Views\GivingConditions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

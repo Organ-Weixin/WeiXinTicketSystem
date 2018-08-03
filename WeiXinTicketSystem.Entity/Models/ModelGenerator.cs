@@ -922,6 +922,46 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the GivingConditions table.
+    /// </summary>
+    [Table("GivingConditions")]
+    [SqlLamTable(Name = "GivingConditions")]
+    public partial class GivingConditionEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string Conditions { get; set; }
+		public virtual ConponTypeEnum ConponType { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the AdminGivingConditionsView view.
+    /// </summary>
+    [Table("AdminGivingConditionsView")]
+    [SqlLamTable(Name = "AdminGivingConditionsView")]
+    public partial class AdminGivingConditionsViewEntity : EntityBase
+    {
+		public virtual string CinemaCode { get; set; }
+		public virtual int Id { get; set; }
+		public virtual string Conditions { get; set; }
+		public virtual ConponTypeEnum ConponType { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+		public virtual string CinemaName { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the Stamps table.
     /// </summary>
     [Table("Stamps")]

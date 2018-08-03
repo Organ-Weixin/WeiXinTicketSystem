@@ -85,6 +85,7 @@
     <Compile Include="FilmCommentService.cs" />
     <Compile Include="FilmInfoService.cs" />
     <Compile Include="GiftService.cs" />
+    <Compile Include="GivingConditionsService.cs" />
     <Compile Include="HomeService.cs" />
     <Compile Include="MemberCardService.cs" />
     <Compile Include="MiddlewareService.cs" />
