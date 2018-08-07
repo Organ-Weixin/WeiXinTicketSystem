@@ -34,7 +34,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public CinemaViewEntity GetCinemaViewByCinemaCode(string CinemaCode)
         {
-            return _cinemaViewRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefault();
+            return _cinemaViewRepository.Query.Where(x => x.Code == CinemaCode && !x.IsDel).SingleOrDefault();
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public CinemaEntity GetCinemaByCinemaCode(string CinemaCode)
         {
-            return _cinemaRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefault();
+            return _cinemaRepository.Query.Where(x => x.Code == CinemaCode && !x.IsDel).SingleOrDefault();
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public async Task<CinemaEntity> GetCinemaByCinemaCodeAsync(string CinemaCode)
         {
-            return await _cinemaRepository.Query.Where(x => x.Code == CinemaCode).SingleOrDefaultAsync();
+            return await _cinemaRepository.Query.Where(x => x.Code == CinemaCode && !x.IsDel).SingleOrDefaultAsync();
         }
         /// <summary>
         /// 根据影院ID获取影院

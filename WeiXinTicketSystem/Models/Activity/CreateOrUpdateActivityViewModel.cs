@@ -45,6 +45,13 @@ namespace WeiXinTicketSystem.Models
         public string LinkUrl { get; set; }
 
         [ListBox("_dd", Multiple = false)]
+        [Display(Name = "等级编号")]
+        public string GradeCode { get; set; }
+
+        [Display(Name = "排序")]
+        public string ActivitySequence { get; set; }
+
+        [ListBox("_dd", Multiple = false)]
         [Display(Name = "是否启用")]
         public int Status { get; set; }
     }

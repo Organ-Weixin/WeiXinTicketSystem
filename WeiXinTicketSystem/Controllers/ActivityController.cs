@@ -26,12 +26,14 @@ namespace WeiXinTicketSystem.Controllers
         private ActivityService _activityService;
         private CinemaService _cinemaService;
         private MiniProgramLinkUrlService _miniProgramLinkUrlService;
+        private RecommendGradeService _recommendGradeService;
         #region ctor
         public ActivityController()
         {
             _activityService = new ActivityService();
             _cinemaService = new CinemaService();
             _miniProgramLinkUrlService = new MiniProgramLinkUrlService();
+            _recommendGradeService = new RecommendGradeService();
         }
         #endregion
 
@@ -208,6 +210,11 @@ namespace WeiXinTicketSystem.Controllers
             List<MiniProgramLinkUrlEntity> miniProgramLinkUrls = new List<MiniProgramLinkUrlEntity>();
             miniProgramLinkUrls.AddRange(await _miniProgramLinkUrlService.GetAllMiniProgramLinkUrlAsync());
             ViewBag.LinkUrl_dd = miniProgramLinkUrls.Select(x => new SelectListItem { Text = x.LinkName, Value = x.LinkUrl });
+
+            //推荐等级下拉框
+            List<RecommendGradeEntity> recommendGrade = new List<RecommendGradeEntity>();
+            recommendGrade.AddRange(await _recommendGradeService.GetAllRecommendGradeAsync());
+            ViewBag.GradeCode_dd = recommendGrade.Select(x => new SelectListItem { Text = x.GradeName, Value = x.GradeCode });
         }
 
     }

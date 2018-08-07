@@ -15,11 +15,13 @@ namespace WeiXinTicketSystem.Service
     {
         #region ctor
         private readonly IRepository<ActivityEntity> _activityRepository;
+        private readonly IRepository<AdminActivityViewEntity> _adminActivityViewRepository;
 
         public ActivityService()
         {
             //TODO: 移除内部依赖
             _activityRepository = new Repository<ActivityEntity>();
+            _adminActivityViewRepository = new Repository<AdminActivityViewEntity>();
         }
         #endregion
 
@@ -51,9 +53,9 @@ namespace WeiXinTicketSystem.Service
         /// <param name="offset"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public async Task<IPageList<ActivityEntity>> GetActivityPagedAsync(string cinemaCode, string keyword, int offset, int perPage)
+        public async Task<IPageList<AdminActivityViewEntity>> GetActivityPagedAsync(string cinemaCode, string keyword, int offset, int perPage)
         {
-            var query = _activityRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
+            var query = _adminActivityViewRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
             //影院编码
             if (!string.IsNullOrEmpty(cinemaCode))
             {
@@ -69,6 +71,13 @@ namespace WeiXinTicketSystem.Service
             return await query.ToPageListAsync();
         }
 
+        /// <summary>
+        /// 查询活动
+        /// </summary>
+        /// <param name="cinemaCode"></param>
+        /// <param name="currentpage"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
         public async Task<IPageList<ActivityEntity>> QueryActivitysPagedAsync(string cinemaCode, int currentpage, int pagesize)
         {
             int offset = (currentpage - 1) * pagesize;
@@ -83,6 +92,59 @@ namespace WeiXinTicketSystem.Service
             }
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();
+        }
+
+        /// <summary>
+        /// 根据推荐等级查询活动
+        /// </summary>
+        /// <param name="cinemaCode"></param>
+        /// <param name="GradeCode"></param>
+        /// <returns></returns>
+        public async Task<IList<ActivityEntity>> QueryActivitysByGradeCode(string cinemaCode, string GradeCode)
+        {
+            try
+            {
+                var query = _activityRepository.Query.OrderBy(x => x.ActivitySequence);
+
+                if (!string.IsNullOrEmpty(cinemaCode))
+                {
+                    query.Where(x => x.CinemaCode == cinemaCode);
+                }
+                if (!string.IsNullOrEmpty(GradeCode))
+                {
+                    query.Where(x => x.GradeCode == GradeCode);
+                }
+                query.Where(x => !x.IsDel);
+                return await query.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 根据推荐等级和次序查询活动
+        /// </summary>
+        /// <param name="cinemaCode"></param>
+        /// <param name="GradeCode"></param>
+        /// <param name="ActivitySequence"></param>
+        /// <returns></returns>
+        public async Task<IList<ActivityEntity>> QueryActivitysByGradeCodeAndSequence(string cinemaCode, string GradeCode,int ActivitySequence)
+        {
+            var query = _activityRepository.Query.OrderByDescending(x => x.Id);
+
+            if (!string.IsNullOrEmpty(cinemaCode) && !string.IsNullOrEmpty(GradeCode))
+            {
+                query.Where(x => x.CinemaCode == cinemaCode && x.GradeCode == GradeCode);
+            }
+            if (ActivitySequence != null)
+            {
+                query.Where(x => x.ActivitySequence == ActivitySequence);
+            }
+
+            query.Where(x => !x.IsDel);
+            return await query.ToListAsync();
         }
 
 

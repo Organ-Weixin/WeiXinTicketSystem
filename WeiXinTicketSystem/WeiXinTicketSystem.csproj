@@ -267,6 +267,7 @@
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmInfoController.cs" />
     <Compile Include="Controllers\GiftController.cs" />
+    <Compile Include="Controllers\GivingConditionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MiniProgramLinkUrlController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="Controllers\PricePlanController.cs" />
     <Compile Include="Controllers\PriceSettingsController.cs" />
     <Compile Include="Controllers\PrintSettingController.cs" />
+    <Compile Include="Controllers\RecommendGradeController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RolePermissionsController.cs" />
     <Compile Include="Controllers\RootBaseController.cs" />
@@ -337,6 +339,9 @@
     <Compile Include="Models\Gift\GiftQueryModel.cs" />
     <Compile Include="Models\Gift\CreateOrUpdateGiftViewModel.cs" />
     <Compile Include="Models\Gift\ModelMapper.cs" />
+    <Compile Include="Models\GivingConditions\CreateOrUpdateGivingConditionsViewModel.cs" />
+    <Compile Include="Models\GivingConditions\GivingConditionsQueryModel.cs" />
+    <Compile Include="Models\GivingConditions\ModelMapper.cs" />
     <Compile Include="Models\Login\SysUserLoginViewModel.cs" />
     <Compile Include="Models\MemberCard\CreateOrUpdateMemberCardViewModel.cs" />
     <Compile Include="Models\MemberCard\MemberCardQueryModel.cs" />
@@ -351,6 +356,9 @@
     <Compile Include="Models\PricePlan\ModelMapper.cs" />
     <Compile Include="Models\PriceSettings\CreateOrUpdatePriceSettingViewModel.cs" />
     <Compile Include="Models\PriceSettings\ModelMapper.cs" />
+    <Compile Include="Models\RecommendGrade\CreateOrUpdateRecommendGradeViewModel.cs" />
+    <Compile Include="Models\RecommendGrade\ModelMapper.cs" />
+    <Compile Include="Models\RecommendGrade\RecommendGradeQueryModel.cs" />
     <Compile Include="Models\RolePermission\CreateOrUpdateRolePermissionViewModel.cs" />
     <Compile Include="Models\RolePermission\ModelMapper.cs" />
     <Compile Include="Models\RolePermission\RolePermissionQueryModel.cs" />
@@ -1431,6 +1439,10 @@
     <Content Include="Views\MiniProgramAccount\CreateOrUpdate.cshtml" />
     <Content Include="Views\MiniProgramLinkUrl\CreateOrUpdate.cshtml" />
     <Content Include="Views\MiniProgramLinkUrl\Index.cshtml" />
+    <Content Include="Views\GivingConditions\CreateOrUpdate.cshtml" />
+    <Content Include="Views\GivingConditions\Index.cshtml" />
+    <Content Include="Views\RecommendGrade\CreateOrUpdate.cshtml" />
+    <Content Include="Views\RecommendGrade\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

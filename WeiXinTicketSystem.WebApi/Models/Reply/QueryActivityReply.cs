@@ -23,6 +23,9 @@ namespace WeiXinTicketSystem.WebApi.Models
         public string ActivityContent { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public string LinkUrl { get; set; }
+        public string GradeCode { get; set; }
+        public string ActivitySequence { get; set; }
         public string Status { get; set; }
     }
 }
