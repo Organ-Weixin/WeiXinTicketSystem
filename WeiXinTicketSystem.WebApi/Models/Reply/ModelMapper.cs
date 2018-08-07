@@ -145,6 +145,27 @@ namespace WeiXinTicketSystem.WebApi.Models
             activity.Status = entity.Status.GetDescription();
             return activity;
         }
+
+        public static QueryActivitySequenceReplyActivity MapFrom(this QueryActivitySequenceReplyActivity activity, ActivityEntity entity)
+        {
+            activity.ActivityId = entity.Id;
+            activity.CinemaCode = entity.CinemaCode;
+            activity.Title = entity.Title;
+            activity.Image = entity.Image;
+            activity.ActivityContent = entity.ActivityContent;
+            activity.StartDate = entity.StartDate.ToFormatStringWithT();
+            activity.EndDate = entity.EndDate.ToFormatStringWithT();
+            activity.LinkUrl = entity.LinkUrl;
+            activity.GradeCode = entity.GradeCode;
+            if (entity.ActivitySequence != null)
+            {
+                activity.ActivitySequence = entity.ActivitySequence.ToString();
+            }
+
+            activity.Status = entity.Status.GetDescription();
+            return activity;
+        }
+
         public static QueryUserSnackOrdersReplyOrder MapFrom(this QueryUserSnackOrdersReplyOrder order, SnackOrderEntity entity)
         {
             order.OrderId = entity.Id;

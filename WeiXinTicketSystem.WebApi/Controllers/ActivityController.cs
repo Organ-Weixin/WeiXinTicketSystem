@@ -119,11 +119,11 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         #region  根据推荐等级和次序查询活动
 
         [HttpGet]
-        public async Task<QueryActivityReply> QueryActivitysByGradeCodeAndSequence(string UserName, string Password, string CinemaCode, string GradeCode, int ActivitySequence)
+        public async Task<QueryActivitySequenceReply> QueryActivitysByGradeCodeAndSequence(string UserName, string Password, string CinemaCode, string GradeCode, int ActivitySequence)
         {
-            QueryActivityReply queryActivityReply = new QueryActivityReply();
+            QueryActivitySequenceReply queryActivityReply = new QueryActivitySequenceReply();
             //校验参数
-            if (!queryActivityReply.RequestInfoGuard1(UserName, Password, CinemaCode, GradeCode, ActivitySequence.ToString()))
+            if (!queryActivityReply.RequestInfoGuard(UserName, Password, CinemaCode, GradeCode, ActivitySequence.ToString()))
             {
                 return queryActivityReply;
             }
@@ -141,17 +141,13 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 queryActivityReply.SetCinemaInvalidReply();
                 return queryActivityReply;
             }
-            var Activitys = await _activityService.QueryActivitysByGradeCodeAndSequence(CinemaCode, GradeCode, ActivitySequence);
+            var Activity = await _activityService.QueryActivitysByGradeCodeAndSequence(CinemaCode, GradeCode, ActivitySequence);
 
-            queryActivityReply.data = new QueryActivityReplyActivitys();
-            if (Activitys == null || Activitys.Count == 0)
+            queryActivityReply.data = new QueryActivitySequenceReplyActivity();
+
+            if (Activity != null)
             {
-                queryActivityReply.data.ActivityCount = 0;
-            }
-            else
-            {
-                queryActivityReply.data.ActivityCount = Activitys.Count;
-                queryActivityReply.data.Activitys = Activitys.Select(x => new QueryActivityReplyActivity().MapFrom(x)).ToList();
+                queryActivityReply.data.MapFrom(Activity);
             }
             queryActivityReply.SetSuccessReply();
             return queryActivityReply;
