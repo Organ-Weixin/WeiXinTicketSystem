@@ -550,7 +550,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard1(this QueryActivityReply reply, string Username, string Password, string CinemaCode, string GradeCode,string ActivitySequence)
+        public static bool RequestInfoGuard(this QueryActivitySequenceReply reply, string Username, string Password, string CinemaCode, string GradeCode,string ActivitySequence)
         {
             int rint = 0;
             if (string.IsNullOrEmpty(Username))

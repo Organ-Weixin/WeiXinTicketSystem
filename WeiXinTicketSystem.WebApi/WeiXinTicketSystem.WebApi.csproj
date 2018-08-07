@@ -269,6 +269,7 @@
     <Compile Include="Models\Reply\ModelMapper.cs" />
     <Compile Include="Models\Reply\PaySnackOrderReply.cs" />
     <Compile Include="Models\Reply\QueryActivityReply.cs" />
+    <Compile Include="Models\Reply\QueryActivitySequenceReply.cs" />
     <Compile Include="Models\Reply\QueryBnannersReply.cs" />
     <Compile Include="Models\Reply\QueryConponsReply.cs" />
     <Compile Include="Models\Reply\QueryGiftsReply.cs" />

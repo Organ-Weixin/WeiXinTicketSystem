@@ -130,7 +130,7 @@ namespace WeiXinTicketSystem.Service
         /// <param name="GradeCode"></param>
         /// <param name="ActivitySequence"></param>
         /// <returns></returns>
-        public async Task<IList<ActivityEntity>> QueryActivitysByGradeCodeAndSequence(string cinemaCode, string GradeCode,int ActivitySequence)
+        public async Task<ActivityEntity> QueryActivitysByGradeCodeAndSequence(string cinemaCode, string GradeCode,int ActivitySequence)
         {
             var query = _activityRepository.Query.OrderByDescending(x => x.Id);
 
@@ -144,7 +144,7 @@ namespace WeiXinTicketSystem.Service
             }
 
             query.Where(x => !x.IsDel);
-            return await query.ToListAsync();
+            return await query.SingleOrDefaultAsync();
         }
 
 
