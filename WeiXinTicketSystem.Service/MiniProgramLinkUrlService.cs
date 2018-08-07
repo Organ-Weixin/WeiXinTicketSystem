@@ -44,7 +44,7 @@ namespace WeiXinTicketSystem.Service
         public async Task<IPageList<MiniProgramLinkUrlEntity>> GetMiniProgramLinkUrlPagedAsync(string LinkName, string keyword, int offset, int perPage)
         {
             var query = _miniProgramLinkUrlRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
-            //影院编码
+            //链接名称
             if (!string.IsNullOrEmpty(LinkName))
             {
                 query.Where(x => x.LinkName.Contains(LinkName));

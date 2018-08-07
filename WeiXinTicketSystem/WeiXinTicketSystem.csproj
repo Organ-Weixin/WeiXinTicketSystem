@@ -281,6 +281,7 @@
     <Compile Include="Controllers\PricePlanController.cs" />
     <Compile Include="Controllers\PriceSettingsController.cs" />
     <Compile Include="Controllers\PrintSettingController.cs" />
+    <Compile Include="Controllers\RecommendGradeController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RolePermissionsController.cs" />
     <Compile Include="Controllers\RootBaseController.cs" />
@@ -355,6 +356,9 @@
     <Compile Include="Models\PricePlan\ModelMapper.cs" />
     <Compile Include="Models\PriceSettings\CreateOrUpdatePriceSettingViewModel.cs" />
     <Compile Include="Models\PriceSettings\ModelMapper.cs" />
+    <Compile Include="Models\RecommendGrade\CreateOrUpdateRecommendGradeViewModel.cs" />
+    <Compile Include="Models\RecommendGrade\ModelMapper.cs" />
+    <Compile Include="Models\RecommendGrade\RecommendGradeQueryModel.cs" />
     <Compile Include="Models\RolePermission\CreateOrUpdateRolePermissionViewModel.cs" />
     <Compile Include="Models\RolePermission\ModelMapper.cs" />
     <Compile Include="Models\RolePermission\RolePermissionQueryModel.cs" />
@@ -1437,6 +1441,8 @@
     <Content Include="Views\MiniProgramLinkUrl\Index.cshtml" />
     <Content Include="Views\GivingConditions\CreateOrUpdate.cshtml" />
     <Content Include="Views\GivingConditions\Index.cshtml" />
+    <Content Include="Views\RecommendGrade\CreateOrUpdate.cshtml" />
+    <Content Include="Views\RecommendGrade\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

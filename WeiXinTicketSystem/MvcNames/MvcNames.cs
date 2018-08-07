@@ -398,5 +398,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(GivingConditionsController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(GivingConditionsController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 推荐等级
+        /// </summary>
+        public static class RecommendGrade
+        {
+            public static string Name { get { return nameof(RecommendGrade); } }
+            public static string Index { get { return nameof(RecommendGradeController.Index); } }
+            public static string List { get { return nameof(RecommendGradeController.List); } }
+            public static string Create { get { return nameof(RecommendGradeController.Create); } }
+            public static string Update { get { return nameof(RecommendGradeController.Update); } }
+            public static string Delete { get { return nameof(RecommendGradeController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(RecommendGradeController._CreateOrUpdate); } }
+        }
     }
 }

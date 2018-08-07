@@ -121,6 +121,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["AdminSnacksView"]["IsRecommand"].PropertyType="YesOrNoEnum";
 	tables["GivingConditions"]["ConponType"].PropertyType="ConponTypeEnum";
 	tables["AdminGivingConditionsView"]["ConponType"].PropertyType="ConponTypeEnum";
+	tables["AdminActivityView"]["Status"].PropertyType="YesOrNoEnum";
 #>
 using System;
 using System.ComponentModel.DataAnnotations;

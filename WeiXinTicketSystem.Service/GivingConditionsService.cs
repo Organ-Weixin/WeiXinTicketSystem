@@ -87,7 +87,7 @@ namespace WeiXinTicketSystem.Service
                 //其他数据
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    query.Where(x => x.Conditions.Contains(Conditions));
+                    query.Where(x => x.Conditions.Contains(keyword));
                 }
                 query.Where(x => !x.Deleted);
                 return await query.ToPageListAsync();

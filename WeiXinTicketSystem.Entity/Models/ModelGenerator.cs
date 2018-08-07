@@ -670,26 +670,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the Activity table.
-    /// </summary>
-    [Table("Activity")]
-    [SqlLamTable(Name = "Activity")]
-    public partial class ActivityEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string Title { get; set; }
-		public virtual string Image { get; set; }
-		public virtual string ActivityContent { get; set; }
-		public virtual DateTime? StartDate { get; set; }
-		public virtual DateTime? EndDate { get; set; }
-		public virtual string LinkUrl { get; set; }
-		public virtual YesOrNoEnum Status { get; set; }
-		public virtual bool IsDel { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the Banner table.
     /// </summary>
     [Table("Banner")]
@@ -962,6 +942,21 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the RecommendGrade table.
+    /// </summary>
+    [Table("RecommendGrade")]
+    [SqlLamTable(Name = "RecommendGrade")]
+    public partial class RecommendGradeEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string GradeCode { get; set; }
+		public virtual string GradeName { get; set; }
+		public virtual string Remark { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the Stamps table.
     /// </summary>
     [Table("Stamps")]
@@ -1002,6 +997,28 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the Activity table.
+    /// </summary>
+    [Table("Activity")]
+    [SqlLamTable(Name = "Activity")]
+    public partial class ActivityEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
+		public virtual string ActivityContent { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual string LinkUrl { get; set; }
+		public virtual string GradeCode { get; set; }
+		public virtual int? ActivitySequence { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the AdminMemberCardView view.
     /// </summary>
     [Table("AdminMemberCardView")]
@@ -1021,6 +1038,29 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the AdminActivityView view.
+    /// </summary>
+    [Table("AdminActivityView")]
+    [SqlLamTable(Name = "AdminActivityView")]
+    public partial class AdminActivityViewEntity : EntityBase
+    {
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
+		public virtual string ActivityContent { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual string LinkUrl { get; set; }
+		public virtual string GradeCode { get; set; }
+		public virtual int? ActivitySequence { get; set; }
+		public virtual YesOrNoEnum Status { get; set; }
+		public virtual bool IsDel { get; set; }
+		public virtual string GradeName { get; set; }
+		public virtual string LinkName { get; set; }
 	}
 
     /// <summary>

@@ -15,7 +15,7 @@ namespace WeiXinTicketSystem.Models.Activity
         /// </summary>
         /// <param name="Activity"></param>
         /// <returns></returns>
-        public static dynamic ToDynatableItem(this ActivityEntity module)
+        public static dynamic ToDynatableItem(this AdminActivityViewEntity module)
         {
             return new
             {
@@ -26,6 +26,9 @@ namespace WeiXinTicketSystem.Models.Activity
                 ActivityContent = module.ActivityContent,
                 StartDate = module.StartDate.ToFormatDateString(),
                 EndDate = module.EndDate.ToFormatDateString(),
+                LinkName = module.LinkName,
+                GradeName = module.GradeName,
+                ActivitySequence = module.ActivitySequence,
                 Status = module.Status.GetDescription()
                
             };
@@ -51,8 +54,11 @@ namespace WeiXinTicketSystem.Models.Activity
                 module.EndDate =DateTime.Parse(model.EndDate);
             }
             module.LinkUrl = model.LinkUrl;
-
-
+            module.GradeCode = model.GradeCode;
+            if (!string.IsNullOrEmpty(model.ActivitySequence))
+            {
+                module.ActivitySequence = int.Parse(model.ActivitySequence);
+            }
             module.Status = (YesOrNoEnum)model.Status;
 
         }
@@ -72,6 +78,11 @@ namespace WeiXinTicketSystem.Models.Activity
             model.StartDate = module.StartDate.ToFormatDateString();
             model.EndDate = module.EndDate.ToFormatDateString();
             model.LinkUrl = module.LinkUrl;
+            model.GradeCode = module.GradeCode;
+            if (module.ActivitySequence != null)
+            {
+                model.ActivitySequence = module.ActivitySequence.ToString();
+            }
             model.Status = (int)module.Status;
 
         }

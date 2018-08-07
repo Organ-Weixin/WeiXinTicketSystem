@@ -94,6 +94,7 @@
     <Compile Include="BannerService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="PricePlanService.cs" />
+    <Compile Include="RecommendGradeService.cs" />
     <Compile Include="ScoreRecordService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenInfoService.cs" />

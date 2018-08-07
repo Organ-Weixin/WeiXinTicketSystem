@@ -135,6 +135,13 @@ namespace WeiXinTicketSystem.WebApi.Models
             activity.ActivityContent = entity.ActivityContent;
             activity.StartDate = entity.StartDate.ToFormatStringWithT();
             activity.EndDate = entity.EndDate.ToFormatStringWithT();
+            activity.LinkUrl = entity.LinkUrl;
+            activity.GradeCode = entity.GradeCode;
+            if(entity.ActivitySequence !=null)
+            {
+                activity.ActivitySequence = entity.ActivitySequence.ToString();
+            }
+            
             activity.Status = entity.Status.GetDescription();
             return activity;
         }
