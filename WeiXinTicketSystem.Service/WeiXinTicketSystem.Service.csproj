@@ -109,6 +109,8 @@
     <Compile Include="SystemRoleService.cs" />
     <Compile Include="SystemUserService.cs" />
     <Compile Include="TicketUsersService.cs" />
+    <Compile Include="UserCinemaService.cs" />
+    <Compile Include="UserInfoService.cs" />
     <Compile Include="UserStampService.cs" />
   </ItemGroup>
   <ItemGroup>

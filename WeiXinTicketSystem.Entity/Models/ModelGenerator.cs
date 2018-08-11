@@ -114,7 +114,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string PayType { get; set; }
 		public virtual decimal? RealPrice { get; set; }
 		public virtual DateTime? ExpDate { get; set; }
-		public virtual byte OpenSnacks { get; set; }
+		public virtual SnackInterfaceEnum OpenSnacks { get; set; }
 	}
 
     /// <summary>
@@ -1218,7 +1218,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string UserName { get; set; }
 		public virtual string Password { get; set; }
 		public virtual string PayType { get; set; }
-		public virtual byte OpenSnacks { get; set; }
+		public virtual SnackInterfaceEnum OpenSnacks { get; set; }
 		public virtual decimal? Fee { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string CinemaName { get; set; }
@@ -1227,7 +1227,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string YueKeId { get; set; }
 		public virtual string DY1905Id { get; set; }
 		public virtual byte CinemaOpen { get; set; }
-		public virtual int CinemaType { get; set; }
+		public virtual CinemaTypeEnum CinemaType { get; set; }
 		public virtual string Url { get; set; }
 		public virtual string DefaultUserName { get; set; }
 		public virtual string DefaultPassword { get; set; }

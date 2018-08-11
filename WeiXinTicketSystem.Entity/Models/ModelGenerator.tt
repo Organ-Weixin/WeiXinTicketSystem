@@ -112,9 +112,9 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["SystemRoles"]["Type"].PropertyType="SystemRoleTypeEnum";
 	tables["TicketUsers"]["Sex"].PropertyType="UserSexEnum";
 	tables["TicketUsers"]["IsActive"].PropertyType="YesOrNoEnum";
-	//tables["UserCinemaView"]["OpenSnacks"].PropertyType="SnackInterfaceEnum";
-	//tables["UserCinemaView"]["CinemaType"].PropertyType="CinemaTypeEnum";
-	//tables["User_Cinema"]["OpenSnacks"].PropertyType="SnackInterfaceEnum";
+	tables["UserCinemaView"]["OpenSnacks"].PropertyType="SnackInterfaceEnum";
+	tables["UserCinemaView"]["CinemaType"].PropertyType="CinemaTypeEnum";
+	tables["User_Cinema"]["OpenSnacks"].PropertyType="SnackInterfaceEnum";
 	tables["UserStamps"]["CollectType"].PropertyType="UserStampCollectTypeEnum";
 	tables["UserStamps"]["Status"].PropertyType="UserStampStatusEnum";
 	tables["Snacks"]["IsRecommand"].PropertyType="YesOrNoEnum";

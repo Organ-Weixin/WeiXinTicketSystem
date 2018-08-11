@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.CinemaConfig = "active";
+    ViewBag.UserInfo = "active";
+    ViewBag.Title = "接入商管理";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        接入商管理
+        <small>查看并管理接入商</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cine"></i> 影院配置</a></li>
+        <li class="active">接入商管理</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <!---表头-->
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.UserInfo.List)"
+                       data-row-template="cinem-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">登录名</th>
+                            <th data-dynatable-no-sort="true">密码</th>
+                            <th data-dynatable-no-sort="true">公司名称</th>
+                            <th data-dynatable-no-sort="true">联系电话</th>
+                            <th data-dynatable-no-sort="true">预付款</th>
+                            <th data-dynatable-no-sort="true">可访问影院</th>
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!---查询条件-->
+                <div class="dynatable-custom-filter">
+                    <input type="text" placeholder="标题" name="Title" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                </div>
+                <!---添加按钮-->
+                <div class="dynatable-operation">
+                    <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.UserInfo.Create)">
+                        <i class="fa fa-plus"></i>
+                        添加接入商
+                    </a>
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="cinem-row-template">
+                <tr>
+                    <td style="text-align: left;overflow:hidden;">{{row}}</td>
+                    <td style="text-align: left;overflow:hidden; ">{{UserName}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{Password}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{Company}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{Tel}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{Advance}}</td>
+                    <td style="text-align: left;overflow:hidden;"><a href="@Url.Action(MvcNames.UserCinema.Index, MvcNames.UserCinema.Name)?queries[UserId]={{id}}&UserId={{id}}">可访问影院</a></td>
+                    <td style="text-align: left;overflow:hidden;">
+                        <a href="@Url.Action(MvcNames.UserInfo.Update)/{{id}}">编辑</a>
+                        |
+                        <a href="javascript:void(0)"
+                           data-href="@Url.Action(MvcNames.UserInfo.Delete)/{{id}}" data-toggle="popover"
+                           data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                           data-message="确认删除?" data-type="confirm" data-placement="left"
+                           data-content-template="#delete-confirm-template">
+                            删除
+                        </a>
+                    </td>
+                </tr>
+            </script>
+        </div>
+    </div>
+</section>

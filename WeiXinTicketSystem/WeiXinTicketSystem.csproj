@@ -269,6 +269,7 @@
     <Compile Include="Controllers\GiftController.cs" />
     <Compile Include="Controllers\GivingConditionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MiddlewareController.cs" />
     <Compile Include="Controllers\MiniProgramLinkUrlController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberCardController.cs" />
@@ -294,7 +295,9 @@
     <Compile Include="Controllers\StampController.cs" />
     <Compile Include="Controllers\TicketSystemAccountController.cs" />
     <Compile Include="Controllers\TicketUsersController.cs" />
+    <Compile Include="Controllers\UserCinemaController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserInfoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -346,6 +349,9 @@
     <Compile Include="Models\MemberCard\CreateOrUpdateMemberCardViewModel.cs" />
     <Compile Include="Models\MemberCard\MemberCardQueryModel.cs" />
     <Compile Include="Models\MemberCard\ModelMapper.cs" />
+    <Compile Include="Models\Middleware\CreateOrUpdateMiddlewareViewModel.cs" />
+    <Compile Include="Models\Middleware\MiddlewareQueryModel.cs" />
+    <Compile Include="Models\Middleware\ModelMapper.cs" />
     <Compile Include="Models\MiniProgramLinkUrl\CreateOrUpdateMiniProgramLinkUrlViewModel.cs" />
     <Compile Include="Models\MiniProgramLinkUrl\MiniProgramLinkUrlQueryModel.cs" />
     <Compile Include="Models\MiniProgramLinkUrl\ModelMapper.cs" />
@@ -384,6 +390,12 @@
     <Compile Include="Models\Stamp\StampQueryModel.cs" />
     <Compile Include="Models\TicketUsers\ModelMapper.cs" />
     <Compile Include="Models\TicketUsers\TicketUsersQueryModel.cs" />
+    <Compile Include="Models\UserCinema\CreateOrUpdateUserCinemaViewModel.cs" />
+    <Compile Include="Models\UserCinema\ModelMapper.cs" />
+    <Compile Include="Models\UserCinema\UserCinemaQueryModel.cs" />
+    <Compile Include="Models\UserInfo\CreateOrUpdateUserInfoViewModel.cs" />
+    <Compile Include="Models\UserInfo\ModelMapper.cs" />
+    <Compile Include="Models\UserInfo\UserInfoQueryModel.cs" />
     <Compile Include="Models\User\ChangePasswordViewModel.cs" />
     <Compile Include="Models\User\CreateUserViewModel.cs" />
     <Compile Include="Models\User\ModelMapper.cs" />
@@ -1443,6 +1455,12 @@
     <Content Include="Views\GivingConditions\Index.cshtml" />
     <Content Include="Views\RecommendGrade\CreateOrUpdate.cshtml" />
     <Content Include="Views\RecommendGrade\Index.cshtml" />
+    <Content Include="Views\Middleware\CreateOrUpdate.cshtml" />
+    <Content Include="Views\Middleware\Index.cshtml" />
+    <Content Include="Views\UserCinema\CreateOrUpdate.cshtml" />
+    <Content Include="Views\UserCinema\Index.cshtml" />
+    <Content Include="Views\UserInfo\CreateOrUpdate.cshtml" />
+    <Content Include="Views\UserInfo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.CinemaConfig = "active";
+    ViewBag.Middleware = "active";
+    ViewBag.Title = "中间件管理";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        中间件管理
+        <small>查看并管理中间件</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="javascript:;"><i class="fa fa-cine"></i> 影院配置</a></li>
+        <li class="active">中间件管理</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dataTables_wrapper table-responsive no-padding">
+                <!---表头-->
+                <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
+                       data-toggle="dynatable-paged"
+                       data-url="@Url.Action(MvcNames.Middleware.List)"
+                       data-row-template="cinem-row-template">
+                    <thead>
+                        <tr>
+                            <th data-dynatable-no-sort="true">#</th>
+                            <th data-dynatable-no-sort="true">标题</th>
+                            <th data-dynatable-no-sort="true">URL</th>
+                            <th data-dynatable-no-sort="true">用户名</th>
+                            <th data-dynatable-no-sort="true">密码</th>
+                            <th data-dynatable-no-sort="true">类型</th>
+                            <th data-dynatable-no-sort="true">影院数</th>
+                            <th data-dynatable-no-sort="true" width="180px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!---查询条件-->
+                <div class="dynatable-custom-filter">
+                    <input type="text" placeholder="标题" name="Title" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+                </div>
+                <!---添加按钮-->
+                <div class="dynatable-operation">
+                    <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Middleware.Create)">
+                        <i class="fa fa-plus"></i>
+                        添加中间件
+                    </a>
+                </div>
+            </div>
+
+            <script type="text/x-handlebars-template" id="cinem-row-template">
+                <tr>
+                    <td style="text-align: left;overflow:hidden;">{{row}}</td>
+                    <td style="text-align: left;overflow:hidden; ">{{Title}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{Url}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{username}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{password}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{Type}}</td>
+                    <td style="text-align: left;overflow:hidden;">{{cinemaCount}}</td>
+                    <td style="text-align: left;overflow:hidden;">
+                        <a href="@Url.Action(MvcNames.Middleware.Update)/{{id}}">编辑</a>
+                        |
+                        <a href="javascript:void(0)"
+                           data-href="@Url.Action(MvcNames.Middleware.Delete)/{{id}}" data-toggle="popover"
+                           data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
+                           data-message="确认删除?" data-type="confirm" data-placement="left"
+                           data-content-template="#delete-confirm-template">
+                            删除
+                        </a>
+                    </td>
+                </tr>
+            </script>
+        </div>
+    </div>
+</section>

@@ -412,5 +412,45 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(RecommendGradeController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(RecommendGradeController._CreateOrUpdate); } }
         }
+		
+		/// <summary>
+        /// 中间件
+        /// </summary>
+        public static class Middleware
+        {
+            public static string Name { get { return nameof(Middleware); } }
+            public static string Index { get { return nameof(MiddlewareController.Index); } }
+            public static string List { get { return nameof(MiddlewareController.List); } }
+            public static string Create { get { return nameof(MiddlewareController.Create); } }
+            public static string Update { get { return nameof(MiddlewareController.Update); } }
+            public static string Delete { get { return nameof(MiddlewareController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(MiddlewareController._CreateOrUpdate); } }
+        }
+        /// <summary>
+        /// 接入商
+        /// </summary>
+        public static class UserInfo
+        {
+            public static string Name { get { return nameof(UserInfo); } }
+            public static string Index { get { return nameof(UserInfoController.Index); } }
+            public static string List { get { return nameof(UserInfoController.List); } }
+            public static string Create { get { return nameof(UserInfoController.Create); } }
+            public static string Update { get { return nameof(UserInfoController.Update); } }
+            public static string Delete { get { return nameof(UserInfoController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(UserInfoController._CreateOrUpdate); } }
+        }
+        /// <summary>
+        /// 接入商可访问影院
+        /// </summary>
+        public static class UserCinema
+        {
+            public static string Name { get { return nameof(UserCinema); } }
+            public static string Index { get { return nameof(UserCinemaController.Index); } }
+            public static string List { get { return nameof(UserCinemaController.List); } }
+            public static string Create { get { return nameof(UserCinemaController.Create); } }
+            public static string Update { get { return nameof(UserCinemaController.Update); } }
+            public static string Delete { get { return nameof(UserCinemaController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(UserCinemaController._CreateOrUpdate); } }
+        }
     }
 }
