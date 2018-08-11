@@ -85,7 +85,7 @@ namespace WeiXinTicketSystem.Service
         public async Task<IPageList<CinemaViewEntity>> QueryCinemasByAppIdPagedAsync(string AppId, int currentpage, int pagesize)
         {
             //先读出影院编码列表
-            IList<CinemaMiniProgramAccountEntity> accounts = _cinemaMiniProgramAccountRepository.Query.Where(x => x.AppId == AppId).ToList();
+            IList<CinemaMiniProgramAccountEntity> accounts = _cinemaMiniProgramAccountRepository.Query.Where(x => x.AppId == AppId && !x.IsDel).ToList();
             string strCinemaCodes = string.Join(",", accounts.Select(x => x.CinemaCode));//这里一定要分开写，不能连写，否则获取不到单独的CinemaCode列
             IList<string> CinemaCodes = strCinemaCodes.Split(',').ToList();
             int offset = (currentpage - 1) * pagesize;
