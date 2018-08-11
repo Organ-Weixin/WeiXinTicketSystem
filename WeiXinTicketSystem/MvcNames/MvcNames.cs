@@ -341,6 +341,24 @@ namespace WeiXinTicketSystem
             public static string Update { get { return nameof(ConponController.Update); } }
             public static string Delete { get { return nameof(ConponController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(ConponController._CreateOrUpdate); } }
+            public static string GenerateCoupon { get { return nameof(ConponController.GenerateCoupon); } }
+            public static string _GenerateCoupon { get { return nameof(ConponController._GenerateCoupon); } }
+
+        }
+
+        /// <summary>
+        /// 优惠券类型
+        /// </summary>
+        public static class ConponType
+        {
+            public static string Name { get { return nameof(ConponType); } }
+            public static string Index { get { return nameof(ConponTypeController.Index); } }
+            public static string List { get { return nameof(ConponTypeController.List); } }
+            public static string Create { get { return nameof(ConponTypeController.Create); } }
+            public static string Update { get { return nameof(ConponTypeController.Update); } }
+            public static string Delete { get { return nameof(ConponTypeController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(ConponTypeController._CreateOrUpdate); } }
+
         }
 
         /// <summary>
