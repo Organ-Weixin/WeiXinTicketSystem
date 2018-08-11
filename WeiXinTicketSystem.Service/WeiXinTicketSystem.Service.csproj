@@ -82,6 +82,7 @@
     <Compile Include="CinemaMiniProgramAccountService.cs" />
     <Compile Include="CinemaTicketSystemAccountService.cs" />
     <Compile Include="ConponService.cs" />
+    <Compile Include="ConponTypeService.cs" />
     <Compile Include="FilmCommentService.cs" />
     <Compile Include="FilmInfoService.cs" />
     <Compile Include="GiftService.cs" />

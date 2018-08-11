@@ -62,9 +62,9 @@ namespace WeiXinTicketSystem.Service
         /// <param name="offset"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public async Task<IPageList<AdminConponViewEntity>> GetConponPagedAsync(string cinemaCode, string ConponCode, string keyword, int offset, int perPage)
+        public async Task<IPageList<ConponEntity>> GetConponPagedAsync(string cinemaCode, string ConponCode, string keyword, int offset, int perPage)
         {
-            var query = _adminConponViewRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
+            var query = _conponRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
             //影院编码
             if (!string.IsNullOrEmpty(cinemaCode))
             {
@@ -78,7 +78,7 @@ namespace WeiXinTicketSystem.Service
             //其他数据
             if (!string.IsNullOrEmpty(keyword))
             {
-                query.Where(x => x.NickName.Contains(keyword) || x.Title.Contains(keyword));
+                query.Where(x => x.Title.Contains(keyword));
             }
             query.Where(x => !x.Deleted);
             return await query.ToPageListAsync();

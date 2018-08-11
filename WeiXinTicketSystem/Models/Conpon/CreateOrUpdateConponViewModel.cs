@@ -20,22 +20,17 @@ namespace WeiXinTicketSystem.Models
         public string CinemaCode { get; set; }
 
         [ListBox("_dd", Multiple = false)]
-        [Display(Name = "优惠券类型")]
-        public int ConponType { get; set; }
+        [Display(Name = "上级优惠券类型")]
+        public string ConponTypeParentId { get; set; }
 
         [ListBox("_dd", Multiple = false)]
-        [Display(Name = "用户")]
-        [Required(ErrorMessage = "{0}不能为空")]
-        public string OpenID { get; set; }
+        [Display(Name = "优惠券类型")]
+        public string ConponTypeCode { get; set; }
 
-        [Display(Name = "价格")]
+
+        [Display(Name = "优惠金额")]
         public decimal? Price { get; set; }
 
-
-        [Display(Name = "优惠券编码")]
-        [Required(ErrorMessage = "{0}不能为空")]
-        [StringLength(50, ErrorMessage = "{0}最多50个字符")]
-        public string ConponCode { get; set; }
 
         [Display(Name = "优惠券名称")]
         [Required(ErrorMessage = "{0}不能为空")]

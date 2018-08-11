@@ -222,7 +222,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         {
             conpon.ConponId = entity.Id;
             conpon.CinemaCode = entity.CinemaCode;
-            conpon.ConponType = entity.ConponType.GetDescription();
+            conpon.ConponTypeCode = entity.ConponTypeCode;
             conpon.OpenID = entity.OpenID;
             conpon.Price = entity.Price;
             conpon.ConponCode = entity.ConponCode;
@@ -236,7 +236,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         }
         public static ConponEntity MapFrom(this ConponEntity entity, SendConponQueryJson queryJson)
         {
-            entity.ConponType = (ConponTypeEnum)queryJson.ConponType;
+            entity.ConponTypeCode = queryJson.ConponTypeCode;
             entity.CinemaCode = queryJson.CinemaCode;
             entity.OpenID = queryJson.OpenID;
             entity.Price = queryJson.Price;
@@ -253,7 +253,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         {
             conpon.CinemaCode = entity.CinemaCode;
             conpon.Title = entity.Title;
-            conpon.ConponType = (int)entity.ConponType;
+            conpon.ConponTypeCode = entity.ConponTypeCode;
             conpon.ConponCode = entity.ConponCode;
             conpon.Price = entity.Price.HasValue ? entity.Price.Value : 0;
             conpon.ValidityDate = entity.ValidityDate.ToFormatStringWithT();
@@ -517,13 +517,14 @@ namespace WeiXinTicketSystem.WebApi.Models
             return ticketUser;
         }
 
-        public static QueryGivingConditionsReplyCondition MapFrom(this QueryGivingConditionsReplyCondition condition, GivingConditionEntity entity)
+        public static QueryGivingConditionsReplyCondition MapFrom(this QueryGivingConditionsReplyCondition condition, AdminGivingConditionsViewEntity entity)
         {
             condition.ConditionId = entity.Id;
             condition.CinemaCode = entity.CinemaCode;
-            condition.Conditions = entity.Conditions;
-            condition.ConponType = entity.ConponType.GetDescription();
             condition.Price = entity.Price;
+            condition.ConponTypeCode = entity.ConponTypeCode;
+            condition.ConponTypeName = entity.TypeName;
+            condition.Number = entity.Number;
             condition.StartDate = entity.StartDate.ToFormatStringWithT();
             condition.EndDate = entity.EndDate.ToFormatStringWithT();
             

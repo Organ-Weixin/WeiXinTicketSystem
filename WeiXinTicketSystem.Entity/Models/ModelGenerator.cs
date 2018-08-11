@@ -55,28 +55,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the Gifts table.
-    /// </summary>
-    [Table("Gifts")]
-    [SqlLamTable(Name = "Gifts")]
-    public partial class GiftEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string Title { get; set; }
-		public virtual string Details { get; set; }
-		public virtual decimal? OriginalPrice { get; set; }
-		public virtual decimal? Price { get; set; }
-		public virtual string Image { get; set; }
-		public virtual int? Stock { get; set; }
-		public virtual DateTime? StartDate { get; set; }
-		public virtual DateTime? EndDate { get; set; }
-		public virtual GiftStatusEnum Status { get; set; }
-		public virtual bool IsDel { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the UserInfo table.
     /// </summary>
     [Table("UserInfo")]
@@ -177,30 +155,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime UpdateTime { get; set; }
 		public virtual int? VistaLayoutId { get; set; }
 		public virtual string DY1905SeatCode { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the Conpons table.
-    /// </summary>
-    [Table("Conpons")]
-    [SqlLamTable(Name = "Conpons")]
-    public partial class ConponEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual ConponTypeEnum ConponType { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string OpenID { get; set; }
-		public virtual decimal? Price { get; set; }
-		public virtual string ConponCode { get; set; }
-		public virtual DateTime? ValidityDate { get; set; }
-		public virtual ConponStatusEnum Status { get; set; }
-		public virtual DateTime? UseDate { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual bool Deleted { get; set; }
-		public virtual string Title { get; set; }
-		public virtual string Image { get; set; }
 	}
 
     /// <summary>
@@ -902,26 +856,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the GivingConditions table.
-    /// </summary>
-    [Table("GivingConditions")]
-    [SqlLamTable(Name = "GivingConditions")]
-    public partial class GivingConditionEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string Conditions { get; set; }
-		public virtual ConponTypeEnum ConponType { get; set; }
-		public virtual decimal? Price { get; set; }
-		public virtual DateTime? StartDate { get; set; }
-		public virtual DateTime? EndDate { get; set; }
-		public virtual DateTime? Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual bool Deleted { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the AdminGivingConditionsView view.
     /// </summary>
     [Table("AdminGivingConditionsView")]
@@ -931,7 +865,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string CinemaCode { get; set; }
 		public virtual int Id { get; set; }
 		public virtual string Conditions { get; set; }
-		public virtual ConponTypeEnum ConponType { get; set; }
 		public virtual decimal? Price { get; set; }
 		public virtual DateTime? StartDate { get; set; }
 		public virtual DateTime? EndDate { get; set; }
@@ -939,6 +872,9 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool Deleted { get; set; }
 		public virtual string CinemaName { get; set; }
+		public virtual string ConponTypeCode { get; set; }
+		public virtual int? Number { get; set; }
+		public virtual string TypeName { get; set; }
 	}
 
     /// <summary>
@@ -1064,13 +1000,35 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the Gifts table.
+    /// </summary>
+    [Table("Gifts")]
+    [SqlLamTable(Name = "Gifts")]
+    public partial class GiftEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string GiftCode { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Details { get; set; }
+		public virtual decimal? OriginalPrice { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual string Image { get; set; }
+		public virtual int? Stock { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual GiftStatusEnum Status { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the AdminConponView view.
     /// </summary>
     [Table("AdminConponView")]
     [SqlLamTable(Name = "AdminConponView")]
     public partial class AdminConponViewEntity : EntityBase
     {
-		public virtual ConponTypeEnum ConponType { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string OpenID { get; set; }
 		public virtual decimal? Price { get; set; }
@@ -1085,6 +1043,25 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Id { get; set; }
 		public virtual string Title { get; set; }
 		public virtual string Image { get; set; }
+		public virtual string ConponTypeCode { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the ConponType table.
+    /// </summary>
+    [Table("ConponType")]
+    [SqlLamTable(Name = "ConponType")]
+    public partial class ConponTypeEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string TypeCode { get; set; }
+		public virtual string TypeName { get; set; }
+		public virtual int? TypeParentId { get; set; }
+		public virtual string Remark { get; set; }
+		public virtual bool IsDel { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
 	}
 
     /// <summary>
@@ -1132,6 +1109,52 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string WxpayRefundCert { get; set; }
 		public virtual YesOrNoEnum IsUserMemberCard { get; set; }
 		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the Conpons table.
+    /// </summary>
+    [Table("Conpons")]
+    [SqlLamTable(Name = "Conpons")]
+    public partial class ConponEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string ConponTypeCode { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual string ConponCode { get; set; }
+		public virtual DateTime? ValidityDate { get; set; }
+		public virtual ConponStatusEnum Status { get; set; }
+		public virtual DateTime? UseDate { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
+		public virtual string GiftCode { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the GivingConditions table.
+    /// </summary>
+    [Table("GivingConditions")]
+    [SqlLamTable(Name = "GivingConditions")]
+    public partial class GivingConditionEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string Conditions { get; set; }
+		public virtual string ConponTypeCode { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual int? Number { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
 	}
 
     /// <summary>

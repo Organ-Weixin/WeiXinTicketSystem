@@ -14,7 +14,7 @@ namespace WeiXinTicketSystem.WebApi.Models
     {
         public string CinemaCode { get; set; }
         public string Title { get; set; }
-        public int ConponType { get; set; }
+        public string ConponTypeCode { get; set; }
         public string ConponCode { get; set; }
         public decimal Price { get; set; }
         public string ValidityDate { get; set; }

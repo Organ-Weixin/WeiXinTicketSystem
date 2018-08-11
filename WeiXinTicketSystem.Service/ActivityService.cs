@@ -90,7 +90,7 @@ namespace WeiXinTicketSystem.Service
             {
                 query.Where(x => x.CinemaCode == cinemaCode);
             }
-            query.Where(x => !x.IsDel);
+            query.Where(x => !x.IsDel && x.Status == YesOrNoEnum.Yes);
             return await query.ToPageListAsync();
         }
 
@@ -114,7 +114,7 @@ namespace WeiXinTicketSystem.Service
                 {
                     query.Where(x => x.GradeCode == GradeCode);
                 }
-                query.Where(x => !x.IsDel);
+                query.Where(x => !x.IsDel && x.Status == YesOrNoEnum.Yes);
                 return await query.ToListAsync();
             }
             catch (Exception ex)
@@ -143,7 +143,7 @@ namespace WeiXinTicketSystem.Service
                 query.Where(x => x.ActivitySequence == ActivitySequence);
             }
 
-            query.Where(x => !x.IsDel);
+            query.Where(x => !x.IsDel && x.Status == YesOrNoEnum.Yes);
             return await query.SingleOrDefaultAsync();
         }
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WeiXinTicketSystem.Service;
 
 namespace WeiXinTicketSystem.Models.Conpon
 {
@@ -15,14 +16,13 @@ namespace WeiXinTicketSystem.Models.Conpon
         /// </summary>
         /// <param name="CinemaPaySetting"></param>
         /// <returns></returns>
-        public static dynamic ToDynatableItem(this AdminConponViewEntity module)
+        public static dynamic ToDynatableItem(this ConponEntity module)
         {
             return new
             {
                 id = module.Id,
                 CinemaCode = module.CinemaCode,
-                ConponType = module.ConponType.GetDescription(),
-                NickName = module.NickName,
+                ConponType = GetConponTypeName(module.ConponTypeCode),
                 Price = module.Price,
                 ConponCode = module.ConponCode,
                 ValidityDate = module.ValidityDate.ToFormatDateString(),
@@ -43,10 +43,9 @@ namespace WeiXinTicketSystem.Models.Conpon
         {
             module.CinemaCode = model.CinemaCode;
             //module.ConponType = (ConponTypeEnum)Enum.Parse(typeof(ConponTypeEnum), model.ConponType);
-            module.ConponType = (ConponTypeEnum)model.ConponType;
-            module.OpenID = model.OpenID;
+            module.ConponTypeCode = model.ConponTypeCode;
             module.Price = model.Price;
-            module.ConponCode = model.ConponCode;
+            //module.ConponCode = model.ConponCode;
             if (!string.IsNullOrEmpty(model.ValidityDate))
             {
                 module.ValidityDate = DateTime.Parse(model.ValidityDate);
@@ -71,10 +70,13 @@ namespace WeiXinTicketSystem.Models.Conpon
         {
             model.Id = module.Id;
             model.CinemaCode = module.CinemaCode;
-            model.ConponType = (int)module.ConponType; //Enum.GetName(module.ConponType.GetType(), module.ConponType); 
-            model.OpenID = module.OpenID;
+            if (GetConponTypeParentId(module.ConponTypeCode) != null)
+            {
+                model.ConponTypeParentId = GetConponTypeParentId(module.ConponTypeCode).ToString();
+            }
+            model.ConponTypeCode = module.ConponTypeCode; //Enum.GetName(module.ConponType.GetType(), module.ConponType); 
             model.Price = module.Price;
-            model.ConponCode = module.ConponCode;
+           // model.ConponCode = module.ConponCode;
             model.ValidityDate = module.ValidityDate.ToFormatDateString();
             model.Status = (int)module.Status;
             model.UseDate = module.UseDate.ToFormatDateString();
@@ -82,6 +84,21 @@ namespace WeiXinTicketSystem.Models.Conpon
 
         }
 
+        private static int? GetConponTypeParentId(string ConponTypeCode)
+        {
+            ConponTypeService _conponTypeService = new ConponTypeService();
+            ConponTypeEntity conponType = _conponTypeService.GetConponTypeByTypeCode(ConponTypeCode);
+            return conponType.TypeParentId;
+        }
+
+        private static string GetConponTypeName(string ConponTypeCode)
+        {
+            ConponTypeService _conponTypeService = new ConponTypeService();
+            ConponTypeEntity conponType = _conponTypeService.GetConponTypeByTypeCode(ConponTypeCode);
+            if (conponType == null)
+                return "";
+            return conponType.TypeName;
+        }
 
     }
 }

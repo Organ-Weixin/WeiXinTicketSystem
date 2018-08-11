@@ -49,7 +49,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["tablename"]["columnname"].PropertyName="newname";	// To change the property name of a column
 	tables["tablename"]["columnname"].PropertyType="bool";		// To change the property type of a column
 */
-	tables["AdminConponView"]["ConponType"].PropertyType="ConponTypeEnum";
+	
 	tables["AdminConponView"]["Status"].PropertyType="ConponStatusEnum";
     tables["AdminMemberCardView"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
 	tables["AdminMemberCardView"]["Status"].PropertyType="MemberCardStatusEnum";
@@ -88,7 +88,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["CinemaTicketSystemAccounts"]["TicketSystem"].PropertyType="CinemaTypeEnum";
 	tables["CinemaWeChatOfficialAccounts"]["AccountType"].PropertyType="WeChatOfficialAccountTypeEnum";
 
-    tables["Conpons"]["ConponType"].PropertyType="ConponTypeEnum";
+   
 	tables["Conpons"]["Status"].PropertyType="ConponStatusEnum";
 
 	tables["DefaultActions"]["ActionType"].PropertyType="DefaultActionTypeEnum";
@@ -119,8 +119,6 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["UserStamps"]["Status"].PropertyType="UserStampStatusEnum";
 	tables["Snacks"]["IsRecommand"].PropertyType="YesOrNoEnum";
 	tables["AdminSnacksView"]["IsRecommand"].PropertyType="YesOrNoEnum";
-	tables["GivingConditions"]["ConponType"].PropertyType="ConponTypeEnum";
-	tables["AdminGivingConditionsView"]["ConponType"].PropertyType="ConponTypeEnum";
 	tables["AdminActivityView"]["Status"].PropertyType="YesOrNoEnum";
 #>
 using System;

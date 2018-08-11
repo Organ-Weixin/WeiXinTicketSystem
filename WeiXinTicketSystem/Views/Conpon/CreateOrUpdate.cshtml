@@ -35,10 +35,9 @@
                     <div class="modal-body">
                         @Html.EditorFor(x => x.Id)
                         @Html.EditorFor(x => x.CinemaCode)
-                        @Html.EditorFor(x => x.ConponType)
-                        @Html.EditorFor(x => x.OpenID)
+                        @Html.EditorFor(x => x.ConponTypeParentId)
+                        @Html.EditorFor(x => x.ConponTypeCode)
                         @Html.EditorFor(x => x.Price)
-                        @Html.EditorFor(x => x.ConponCode)
                         @Html.EditorFor(x => x.Title)
                         @Html.EditorFor(x => x.Image)
                         @Html.EditorFor(x => x.ValidityDate, new { htmlAttributes = new { @class = "datepicker" } })
@@ -91,6 +90,27 @@
                 $("#CinemaName").val(CinemaName);
             }
         });
+
+
+        $('#ConponTypeParentId').on('change', function () {
+            //判断是否选取prompt属性，无返回值；
+            if ($(this).val()) {
+                var selectCode = $(this).find('option:selected').val();
+                doGetConponType(selectCode);
+            }
+        });
+
+
+        function doGetConponType(typeParentId) {
+            var selDom = $("#ConponTypeCode");//根据id获取select的jquery对象
+            $.post('@Url.Action("GetConponType", "Conpon")', { 'typeParentId': typeParentId }, function (result) {
+                var jsonObj = eval("(" + result + ")");
+                $("#ConponTypeCode").empty();
+                for (var i = 0; i < jsonObj.length; i++) {
+                    selDom.append("<option value='" + jsonObj[i].TypeCode + "'>" + jsonObj[i].TypeName + "</option>");//添加option
+                }
+            }, 'json');
+        }
     </script>
 }
 
