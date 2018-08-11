@@ -265,6 +265,7 @@
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\CinemaController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
+    <Compile Include="Controllers\ConponTypeController.cs" />
     <Compile Include="Controllers\FilmInfoController.cs" />
     <Compile Include="Controllers\GiftController.cs" />
     <Compile Include="Controllers\GivingConditionsController.cs" />
@@ -325,8 +326,11 @@
     <Compile Include="Models\Cinema\CinemaQueryModel.cs" />
     <Compile Include="Models\Cinema\CreateOrUpdateCinemaViewModel.cs" />
     <Compile Include="Models\Cinema\ModelMapper.cs" />
+    <Compile Include="Models\ConponType\CreateOrUpdateConponTypeViewModel.cs" />
+    <Compile Include="Models\ConponType\ModelMapper.cs" />
     <Compile Include="Models\Conpon\ConponQueryModel.cs" />
     <Compile Include="Models\Conpon\CreateOrUpdateConponViewModel.cs" />
+    <Compile Include="Models\Conpon\GenerateCouponViewModel.cs" />
     <Compile Include="Models\Conpon\ModelMapper.cs" />
     <Compile Include="Models\DynatablePageModel.cs" />
     <Compile Include="Models\DynatableResultModel.cs" />
@@ -1443,6 +1447,9 @@
     <Content Include="Views\GivingConditions\Index.cshtml" />
     <Content Include="Views\RecommendGrade\CreateOrUpdate.cshtml" />
     <Content Include="Views\RecommendGrade\Index.cshtml" />
+    <Content Include="Views\ConponType\CreateOrUpdate.cshtml" />
+    <Content Include="Views\ConponType\Index.cshtml" />
+    <Content Include="Views\Conpon\GenerateCoupon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

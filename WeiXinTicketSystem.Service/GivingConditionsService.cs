@@ -53,7 +53,7 @@ namespace WeiXinTicketSystem.Service
         /// <param name="offset"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public async Task<IPageList<AdminGivingConditionsViewEntity>> GetGivingConditionPagedAsync(string cinemaCode, string Conditions, int ConponType, string keyword, int offset, int perPage)
+        public async Task<IPageList<AdminGivingConditionsViewEntity>> GetGivingConditionPagedAsync(string cinemaCode, string keyword, int offset, int perPage)
         {
             try
             {
@@ -63,31 +63,10 @@ namespace WeiXinTicketSystem.Service
                 {
                     query.Where(x => x.CinemaCode == cinemaCode);
                 }
-                //赠送条件
-                if (!string.IsNullOrEmpty(Conditions))
-                {
-                    query.Where(x => x.Conditions.Contains(Conditions));
-                }
-                //优惠券类型
-                if (ConponType != 0)
-                {
-                    if (ConponType == 1)
-                    {
-                        query.Where(x => x.ConponType == ConponTypeEnum.Coupon);
-                    }
-                    else if (ConponType == 2)
-                    {
-                        query.Where(x => x.ConponType == ConponTypeEnum.Exchange);
-                    }
-                    else if (ConponType == 3)
-                    {
-                        query.Where(x => x.ConponType == ConponTypeEnum.Gift);
-                    }
-                }
                 //其他数据
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    query.Where(x => x.Conditions.Contains(keyword));
+                    query.Where(x => x.TypeName.Contains(keyword) || x.Conditions.Contains(keyword));
                 }
                 query.Where(x => !x.Deleted);
                 return await query.ToPageListAsync();
@@ -109,6 +88,15 @@ namespace WeiXinTicketSystem.Service
             return await _givingConditionRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.Deleted).ToListAsync();
         }
 
+        /// <summary>
+        /// 根据影院编码获取该影院下所有赠送条件信息(视图异步)
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <returns></returns>
+        public async Task<IList<AdminGivingConditionsViewEntity>> GetGivingConditionViewByCinemaCodeAsync(string CinemaCode)
+        {
+            return await _adminGivingConditionsViewRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.Deleted).ToListAsync();
+        }
 
         /// <summary>
         /// 根据赠送条件ID获取赠送条件信息

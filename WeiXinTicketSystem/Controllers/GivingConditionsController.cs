@@ -20,12 +20,14 @@ namespace WeiXinTicketSystem.Controllers
     {
         private GivingConditionsService _givingConditionsService;
         private CinemaService _cinemaService;
+        private ConponTypeService _conponTypeService;
 
         #region ctor
         public GivingConditionsController()
         {
             _givingConditionsService = new GivingConditionsService();
             _cinemaService = new CinemaService();
+            _conponTypeService = new ConponTypeService();
         }
         #endregion
 
@@ -53,8 +55,6 @@ namespace WeiXinTicketSystem.Controllers
         {
             var givingConditions = await _givingConditionsService.GetGivingConditionPagedAsync(
                 CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? pageModel.Query.CinemaCode_dd : CurrentUser.CinemaCode,
-                pageModel.Query.Conditions,
-                pageModel.Query.ConponType_dd,
                 pageModel.Query.Search,
                 pageModel.Offset,
                 pageModel.PerPage
@@ -88,6 +88,14 @@ namespace WeiXinTicketSystem.Controllers
             CreateOrUpdateGivingConditionsViewModel model = new CreateOrUpdateGivingConditionsViewModel();
             model.MapFrom(givingConditions);
             await PreparyCreateOrEditViewData();
+
+            //绑定优惠券类型
+            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
+            if (model.ConponTypeParentId != null)
+            {
+                conponTypes.AddRange(await _conponTypeService.GetConponTypeByParentIdAsync(int.Parse(model.ConponTypeParentId)));
+                ViewBag.ConponTypeCode_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode });
+            }
             return CreateOrUpdate(model);
         }
 
@@ -170,9 +178,28 @@ namespace WeiXinTicketSystem.Controllers
                 };
             }
 
-            //绑定优惠券类型枚举
-            ViewBag.ConponType_dd = EnumUtil.GetSelectList<ConponTypeEnum>();
+            //绑定上级优惠券类型下拉框
+            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
+            conponTypes.AddRange(await _conponTypeService.GetRootConponTypeAsync());
+            ViewBag.ConponTypeParentId_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.Id.ToString() });
 
+            //优惠券类型下拉框
+            ViewBag.ConponTypeCode_dd = new List<SelectListItem>();
+
+        }
+
+        /// <summary>
+        /// 绑定优惠券类型
+        /// </summary>
+        /// <param name="typeParentId"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> GetConponType(int typeParentId)
+        {
+            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
+            IList<ConponTypeEntity> iconponTypes = await _conponTypeService.GetConponTypeByParentIdAsync(typeParentId);
+            conponTypes.AddRange(iconponTypes);
+            string jsonresult = JSONHelper.ToJson(conponTypes);
+            return Json(jsonresult, JsonRequestBehavior.AllowGet);
         }
     }
 }

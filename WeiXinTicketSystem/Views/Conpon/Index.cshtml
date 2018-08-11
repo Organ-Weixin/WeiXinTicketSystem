@@ -33,7 +33,6 @@
                             <th data-dynatable-no-sort="true">影院编码</th>
                             <th data-dynatable-no-sort="true">优惠券类型</th>
                             <th data-dynatable-no-sort="true">图片</th>
-                            <th data-dynatable-no-sort="true">用户</th>
                             <th data-dynatable-no-sort="true">价格</th>
                             <th data-dynatable-no-sort="true">优惠券编码</th>
                             <th data-dynatable-no-sort="true">优惠券名称</th>
@@ -53,6 +52,10 @@
                 <div class="dynatable-operation">
                     @if (CurrentPermissions.Contains(2))
                     {
+					    <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Conpon.GenerateCoupon)">
+                            <i class="fa fa-plus"></i>
+                            生成优惠券
+                        </a>
                         <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.Conpon.Create)">
                             <i class="fa fa-plus"></i>
                             新建优惠券
@@ -67,7 +70,6 @@
                     <td style="text-align: left; vertical-align: top;">{{CinemaCode}}</td>
                     <td style="text-align: left;">{{ConponType}}</td>
                     <td style="text-align: left;"><img style="width:32px;height: 32px;" src="{{Image}}" onmouseover="ShowImg('{{Image}}')" onmouseout="CloseImg()" /></td>
-                    <td style="text-align: left;">{{NickName}}</td>
                     <td style="text-align: left;">{{Price}}</td>
                     <td style="text-align: left;">{{ConponCode}}</td>
                     <td style="text-align: left;">{{Title}}</td>

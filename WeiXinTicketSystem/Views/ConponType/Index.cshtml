@@ -1,19 +1,20 @@
-﻿@{
+﻿
+@{
     ViewData["CinemaManage"] = "active";
-    ViewData["GivingConditions"] = "active";
-    ViewBag.Title = "赠送条件管理";
+    ViewData["ConponType"] = "active";
+    ViewBag.Title = "优惠券类型管理";
     List<int> CurrentPermissions = ViewBag.CurrentPermissions;
 }
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        赠送条件管理
+        优惠券类型管理
         <small>管理系统模块</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
-        <li class="active">赠送条件管理</li>
+        <li class="active">优惠券类型管理</li>
     </ol>
 </section>
 
@@ -25,56 +26,56 @@
             <div class="dataTables_wrapper table-responsive no-padding">
                 <table id="DataTable" class="table table-bordered-edge table-hover dataTable"
                        data-toggle="dynatable-paged"
-                       data-url="@Url.Action(MvcNames.GivingConditions.List)"
-                       data-row-template="givingConditions-row-template">
+                       data-url="@Url.Action(MvcNames.ConponType.List)"
+                       data-row-template="conponType-row-template">
                     <thead>
                         <tr>
                             <th data-dynatable-no-sort="true">#</th>
-                            <th data-dynatable-no-sort="true">影院名称</th>
-                            <th data-dynatable-no-sort="true">赠送条件</th>
-                            <th data-dynatable-no-sort="true">赠送张数</th>
-                            <th data-dynatable-no-sort="true">开始时间</th>
-                            <th data-dynatable-no-sort="true">结束时间</th>
+                            <th data-dynatable-no-sort="true">优惠券类型编号</th>
+                            <th data-dynatable-no-sort="true">优惠券类型名称</th>
+                            <th data-dynatable-no-sort="true">备注</th>
+                            <th data-dynatable-no-sort="true">创建时间</th>
+
                             <th data-dynatable-no-sort="true" width="180px">操作</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
-                <!---查询条件-->
                 <div class="dynatable-custom-filter">
-                    @Html.DropDownList("CinemaCode_dd", null, "影院", new { style = "width:175px;", @class = "dynatable-query", data_toggle = "select2" })
+                    <div>
+
+                    </div>
                 </div>
                 <div class="dynatable-operation">
                     @if (CurrentPermissions.Contains(2))
                     {
-                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.GivingConditions.Create)">
+                        <a class="btn btn-success btn-sm" href="@Url.Action(MvcNames.ConponType.Create)">
                             <i class="fa fa-plus"></i>
-                            新建赠送条件
+                            新建优惠券类型
                         </a>
                     }
                 </div>
             </div>
 
-            <script type="text/x-handlebars-template" id="givingConditions-row-template">
+            <script type="text/x-handlebars-template" id="conponType-row-template">
                 <tr>
                     <td style="text-align: left;">{{row}}</td>
-                    <td style="text-align: left; vertical-align: top;">{{CinemaName}}</td>
-                    <td style="text-align: left;">{{Conditions}}</td>
-                    <td style="text-align: left;">{{Number}}</td>
-                    <td style="text-align: left;">{{StartDate}}</td>
-                    <td style="text-align: left;">{{EndDate}}</td>
+                    <td style="text-align: left; vertical-align: top;">{{TypeCode}}</td>
+                    <td style="text-align: left;">{{TypeName}}</td>
+                    <td style="text-align: left;">{{Remark}}</td>
+                    <td style="text-align: left;">{{created}}</td>
                     <td style="text-align: left;">
 
                         @if (CurrentPermissions.Contains(3))
                         {
-                            <a href="@Url.Action(MvcNames.GivingConditions.Update)/{{id}}">编辑</a>
+                            <a href="@Url.Action(MvcNames.ConponType.Update)/{{id}}">编辑</a>
                         }
 
                         @if (CurrentPermissions.Contains(4))
                         {
                             <span>|</span>
                             <a href="javascript:void(0)"
-                               data-href="@Url.Action(MvcNames.GivingConditions.Delete)/{{id}}" data-toggle="popover"
+                               data-href="@Url.Action(MvcNames.ConponType.Delete)/{{id}}" data-toggle="popover"
                                data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
                                data-message="确认删除?" data-type="confirm" data-placement="left"
                                data-content-template="#delete-confirm-template">
@@ -88,4 +89,3 @@
         </div>
     </div>
 </section>
-

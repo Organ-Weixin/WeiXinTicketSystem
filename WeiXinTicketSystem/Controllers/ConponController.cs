@@ -22,12 +22,14 @@ namespace WeiXinTicketSystem.Controllers
         private ConponService _conponService;
         private TicketUsersService _ticketUsersService;
         private CinemaService _cinemaService;
+        private ConponTypeService _conponTypeService;
         #region ctor
         public ConponController()
         {
             _conponService = new ConponService();
             _ticketUsersService = new TicketUsersService();
             _cinemaService = new CinemaService();
+            _conponTypeService = new ConponTypeService();
         }
         #endregion
 
@@ -75,6 +77,19 @@ namespace WeiXinTicketSystem.Controllers
         }
 
         /// <summary>
+        /// 生成优惠券
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> GenerateCoupon()
+        {
+            GenerateCouponViewModel model = new GenerateCouponViewModel();
+            await PreparyCreateOrEditViewData();
+            return View(nameof(GenerateCoupon), model);
+        }
+
+
+
+        /// <summary>
         /// 修改优惠券
         /// </summary>
         /// <param name="id"></param>
@@ -89,6 +104,15 @@ namespace WeiXinTicketSystem.Controllers
             CreateOrUpdateConponViewModel model = new CreateOrUpdateConponViewModel();
             model.MapFrom(conpon);
             await PreparyCreateOrEditViewData();
+
+            //绑定优惠券类型
+            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
+            if (model.ConponTypeParentId != null)
+            {
+                conponTypes.AddRange(await _conponTypeService.GetConponTypeByParentIdAsync(int.Parse(model.ConponTypeParentId)));
+                ViewBag.ConponTypeCode_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode });
+            }
+
             return CreateOrUpdate(model);
         }
 
@@ -149,6 +173,7 @@ namespace WeiXinTicketSystem.Controllers
 
             if (conpon.Id == 0)
             {
+                conpon.ConponCode = RandomHelper.CreateRandomCode();
                 conpon.Created = DateTime.Now;
                 await _conponService.InsertAsync(conpon);
             }
@@ -156,6 +181,78 @@ namespace WeiXinTicketSystem.Controllers
             {
                 conpon.Updated = DateTime.Now;
                 await _conponService.UpdateAsync(conpon);
+            }
+
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
+            ViewBag.CurrentPermissions = CurrentPermissions;
+            return View(nameof(Index));
+        }
+
+
+        /// <summary>
+        /// 生成优惠券
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> _GenerateCoupon(GenerateCouponViewModel model, HttpPostedFileBase Image)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errorMessages = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
+                return ErrorObject(string.Join("/n", errorMessages));
+            }
+
+            ConponEntity conpon = new ConponEntity();
+
+            //图片处理
+            if (Image != null)
+            {
+                string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
+                string savePath = @"upload\ConponImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/ConponImg/" + DateTime.Now.ToString("yyyyMM") + "/";
+                System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                //判断原图片是否存在
+                if (!string.IsNullOrEmpty(conpon.Image))
+                {
+                    string file = conpon.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    if (System.IO.File.Exists(file))
+                    {
+                        //如果存在则删除
+                        System.IO.File.Delete(file);
+                    }
+                }
+                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
+                conpon.Image = basePath + accessPath + fileName;
+            }
+
+            //生成优惠券
+            if (model.GenerateNum != null)
+            {
+                int intNum = int.Parse(model.GenerateNum);
+                if (intNum > 0)
+                {
+                    for (int i = 1; i <= intNum; i++)
+                    {
+                        ConponEntity conponNew = new ConponEntity();
+                        conponNew.CinemaCode = model.CinemaCode;
+                        conponNew.ConponTypeCode = model.ConponTypeCode;
+                        conponNew.Price = model.Price;
+                        conponNew.Title = model.Title;
+                        if (!string.IsNullOrEmpty(model.ValidityDate))
+                        {
+                            conponNew.ValidityDate = DateTime.Parse(model.ValidityDate);
+                        }
+                        conponNew.Image = conpon.Image;
+                        conponNew.ConponCode = RandomHelper.CreateRandomCode();
+                        conponNew.Created = DateTime.Now;
+                        conponNew.Status = ConponStatusEnum.NotUsed;
+
+                        await _conponService.InsertAsync(conponNew);
+                    }
+                }
             }
 
             var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
@@ -186,8 +283,10 @@ namespace WeiXinTicketSystem.Controllers
 
         private async Task PreparyCreateOrEditViewData()
         {
-            //绑定优惠券类型枚举
-            ViewBag.ConponType_dd = EnumUtil.GetSelectList<ConponTypeEnum>();
+            //绑定上级优惠券类型下拉框
+            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
+            conponTypes.AddRange(await _conponTypeService.GetRootConponTypeAsync());
+            ViewBag.ConponTypeParentId_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.Id.ToString() });
 
             //绑定是否使用枚举
             ViewBag.Status_dd = EnumUtil.GetSelectList<ConponStatusEnum>();
@@ -213,7 +312,25 @@ namespace WeiXinTicketSystem.Controllers
                 };
             }
 
+            //优惠券类型下拉框
+            ViewBag.ConponTypeCode_dd = new List<SelectListItem>();
+
+        }
+
+        /// <summary>
+        /// 绑定优惠券类型
+        /// </summary>
+        /// <param name="typeParentId"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> GetConponType(int typeParentId)
+        {
+            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
+            IList<ConponTypeEntity> iconponTypes = await _conponTypeService.GetConponTypeByParentIdAsync(typeParentId);
+            conponTypes.AddRange(iconponTypes);
+            string jsonresult = JSONHelper.ToJson(conponTypes);
+            return Json(jsonresult, JsonRequestBehavior.AllowGet);
         }
 
     }
+
 }

@@ -1,33 +1,25 @@
-﻿@model CreateOrUpdateGivingConditionsViewModel
+﻿@model GenerateCouponViewModel
 @{
     ViewData["CinemaManage"] = "active";
-    ViewData["GivingConditions"] = "active";
-    ViewBag.Title = Model.Id > 0 ? "赠送条件编辑" : "赠送条件添加";
+    ViewData["Conpon"] = "active";
+    ViewBag.Title = "生成优惠券";
 }
-
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        @(Model.Id > 0 ? "赠送条件编辑" : "赠送条件添加")
-        <small>赠送条件管理</small>
-
+        @("生成优惠券")
+        <small>优惠券管理</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院配置</a></li>
-        <li><a href="@Url.Action(MvcNames.GivingConditions.Index)"><i class="fa fa-group"></i> 赠送条件管理</a></li>
-        <li class="active">@(Model.Id > 0 ? "赠送条件编辑" : "赠送条件添加")</li>
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
+        <li><a href="@Url.Action(MvcNames.Conpon.Index)"><i class="fa fa-group"></i> 优惠券管理</a></li>
+        <li class="active">@("生成优惠券")</li>
     </ol>
 </section>
 
 
-@using (Ajax.BeginForm(MvcNames.GivingConditions._CreateOrUpdate, null, null, new AjaxOptions
-{
-    HttpMethod = "POST",
-    OnSuccess = "App.onOperationSuccessSimple",
-    OnBegin = "App.onFormCommitBegin",
-    OnComplete = "App.onFormCommitComplete"
-}, new { @class = "form-horizontal" }))
+@using (Html.BeginForm(MvcNames.Conpon._GenerateCoupon, MvcNames.Conpon.Name, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
 {
     <!-- Main content -->
     <section class="content">
@@ -42,17 +34,18 @@
                     <div class="modal-body">
                         @Html.EditorFor(x => x.Id)
                         @Html.EditorFor(x => x.CinemaCode)
-                        @Html.EditorFor(x => x.Price)
                         @Html.EditorFor(x => x.ConponTypeParentId)
                         @Html.EditorFor(x => x.ConponTypeCode)
-                        @Html.EditorFor(x => x.Number)
-                        @Html.EditorFor(x => x.StartDate, new { htmlAttributes = new { @class = "datepicker" } })
-                        @Html.EditorFor(x => x.EndDate, new { htmlAttributes = new { @class = "datepicker" } })
-                    </div>
+                        @Html.EditorFor(x => x.Price)
+                        @Html.EditorFor(x => x.Title)
+                        @Html.EditorFor(x => x.Image)
+                        @Html.EditorFor(x => x.ValidityDate, new { htmlAttributes = new { @class = "datepicker" } })
+                        @Html.EditorFor(x => x.GenerateNum)
+                     </div>
                 </div>
                 <fieldset>
-                    <button type="submit" class="btn btn-primary col-xs-2 col-xs-offset-3">保存</button>
-                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.GivingConditions.Index)">取消</a>
+                    <button type="submit" class="btn btn-primary col-xs-2 col-xs-offset-3">生成优惠券</button>
+                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.Conpon.Index)">取消</a>
                 </fieldset>
             </div>
         </div>
@@ -62,7 +55,7 @@
 
 @section scripts{
     <script type="text/javascript">
-        $('#StartDate').datetimepicker({
+        $('#ValidityDate').datetimepicker({
             language: 'zh-CN',
             weekStart: 1,
             todayBtn: 1,
@@ -75,20 +68,16 @@
             format: 'yyyy-mm-dd'
         });
 
-        $('#EndDate').datetimepicker({
-            language: 'zh-CN',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            minView: 2,
-            showMeridian: 0,
-            forceParse: 0,
-            startView: 2,
-            format: 'yyyy-mm-dd'
+        $('#CinemaCode').on('change', function () {
+            //判断是否选取prompt属性，无返回值；
+            if ($(this).val()) {
+                var CinemaName = $(this).find('option:selected').text();
+                $("#CinemaName").val(CinemaName);
+            }
         });
 
-		$('#ConponTypeParentId').on('change', function () {
+
+        $('#ConponTypeParentId').on('change', function () {
             //判断是否选取prompt属性，无返回值；
             if ($(this).val()) {
                 var selectCode = $(this).find('option:selected').val();
@@ -99,7 +88,7 @@
 
         function doGetConponType(typeParentId) {
             var selDom = $("#ConponTypeCode");//根据id获取select的jquery对象
-            $.post('@Url.Action("GetConponType", "GivingConditions")', { 'typeParentId': typeParentId }, function (result) {
+            $.post('@Url.Action("GetConponType", "Conpon")', { 'typeParentId': typeParentId }, function (result) {
                 var jsonObj = eval("(" + result + ")");
                 $("#ConponTypeCode").empty();
                 for (var i = 0; i < jsonObj.length; i++) {
@@ -107,6 +96,7 @@
                 }
             }, 'json');
         }
-
     </script>
 }
+
+

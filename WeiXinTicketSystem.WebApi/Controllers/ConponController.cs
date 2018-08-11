@@ -97,7 +97,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         {
             SendConponReply sendConponReply = new SendConponReply();
             //校验参数
-            if (!sendConponReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.Title, QueryJson.ConponType.ToString(), QueryJson.Price.ToString(), QueryJson.ValidityDate.ToString(), QueryJson.Image, QueryJson.OpenID))
+            if (!sendConponReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.Title, QueryJson.ConponTypeCode.ToString(), QueryJson.Price.ToString(), QueryJson.ValidityDate.ToString(), QueryJson.Image, QueryJson.OpenID))
             {
                 return sendConponReply;
             }
@@ -210,7 +210,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 return queryGivingConditionsReply;
             }
             
-            var givingConditions = await _givingConditionsService.GetGivingConditionByCinemaCodeAsync(CinemaCode);
+            var givingConditions = await _givingConditionsService.GetGivingConditionViewByCinemaCodeAsync(CinemaCode);
 
             queryGivingConditionsReply.data = new QueryGivingConditionsReplyConditions();
             if (givingConditions == null || givingConditions.Count == 0)

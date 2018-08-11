@@ -20,9 +20,10 @@ namespace WeiXinTicketSystem.WebApi.Models
     {
         public int ConditionId { get; set; }
         public string CinemaCode { get; set; }
-        public string Conditions { get; set; }
-        public string ConponType { get; set; }
         public decimal? Price { get; set; }
+        public string ConponTypeCode { get; set; }
+        public string ConponTypeName { get; set; }
+        public int? Number { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
     }
