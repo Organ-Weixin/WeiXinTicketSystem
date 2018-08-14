@@ -424,7 +424,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-        public static bool RequestInfoGuard(this SendConponReply reply, string UserName, string Password, string CinemaCode, string Title, string ConponType, string Price, string ValidityDate, string Image,string OpenID)
+        public static bool RequestInfoGuard(this SendConponReply reply, string UserName, string Password, string CinemaCode, string ConponTypeCode, string Number,string OpenID)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -441,31 +441,16 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(CinemaCode));
                 return false;
             }
-            if (string.IsNullOrEmpty(Title))
+            if (string.IsNullOrEmpty(ConponTypeCode))
             {
-                reply.SetNecessaryParamMissReply(nameof(Title));
+                reply.SetNecessaryParamMissReply(nameof(ConponTypeCode));
                 return false;
             }
-            if (string.IsNullOrEmpty(ConponType))
+            if (string.IsNullOrEmpty(Number))
             {
-                reply.SetNecessaryParamMissReply(nameof(ConponType));
+                reply.SetNecessaryParamMissReply(nameof(Number));
                 return false;
             }
-            //if (string.IsNullOrEmpty(Price))
-            //{
-            //    reply.SetNecessaryParamMissReply(nameof(Price));
-            //    return false;
-            //}
-            if (string.IsNullOrEmpty(ValidityDate))
-            {
-                reply.SetNecessaryParamMissReply(nameof(ValidityDate));
-                return false;
-            }
-            //if (string.IsNullOrEmpty(Image))
-            //{
-            //    reply.SetNecessaryParamMissReply(nameof(Image));
-            //    return false;
-            //}
             if (string.IsNullOrEmpty(OpenID))
             {
                 reply.SetNecessaryParamMissReply(nameof(OpenID));

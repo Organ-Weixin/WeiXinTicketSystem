@@ -36,9 +36,9 @@
                         @Html.EditorFor(x => x.Id)
                         @Html.EditorFor(x => x.CinemaCode)
                         @Html.EditorFor(x => x.ConponTypeParentId)
-                        @Html.EditorFor(x => x.ConponTypeCode)
-                        @Html.EditorFor(x => x.Price)
+                        @Html.EditorFor(x => x.SnackCode)
                         @Html.EditorFor(x => x.Title)
+						@Html.EditorFor(x => x.Price)
                         @Html.EditorFor(x => x.Image)
                         @Html.EditorFor(x => x.ValidityDate, new { htmlAttributes = new { @class = "datepicker" } })
                         @Html.EditorFor(x => x.Status)
@@ -83,31 +83,26 @@
             format: 'yyyy-mm-dd'
         });
 
-        $('#CinemaCode').on('change', function () {
-            //判断是否选取prompt属性，无返回值；
-            if ($(this).val()) {
-                var CinemaName = $(this).find('option:selected').text();
-                $("#CinemaName").val(CinemaName);
-            }
-        });
 
-
-        $('#ConponTypeParentId').on('change', function () {
+         $('#CinemaCode').on('change', function () {
             //判断是否选取prompt属性，无返回值；
             if ($(this).val()) {
                 var selectCode = $(this).find('option:selected').val();
-                doGetConponType(selectCode);
+                doGetSnackCode(selectCode);
             }
         });
 
 
-        function doGetConponType(typeParentId) {
-            var selDom = $("#ConponTypeCode");//根据id获取select的jquery对象
-            $.post('@Url.Action("GetConponType", "Conpon")', { 'typeParentId': typeParentId }, function (result) {
+        function doGetSnackCode(cinemaCode) {
+            var selDom = $("#SnackCode");//根据id获取select的jquery对象
+            $.post('@Url.Action("GetSnackCode", "Conpon")', { 'cinemaCode': cinemaCode }, function (result) {
                 var jsonObj = eval("(" + result + ")");
-                $("#ConponTypeCode").empty();
+                $("#SnackCode").empty();
+				var vcode="999999";
+				var vname="请选择...";
+				selDom.append("<option value='" + vcode + "'>" + vname + "</option>");//添加option
                 for (var i = 0; i < jsonObj.length; i++) {
-                    selDom.append("<option value='" + jsonObj[i].TypeCode + "'>" + jsonObj[i].TypeName + "</option>");//添加option
+                    selDom.append("<option value='" + jsonObj[i].SnackCode + "'>" + jsonObj[i].SnackName + "</option>");//添加option
                 }
             }, 'json');
         }

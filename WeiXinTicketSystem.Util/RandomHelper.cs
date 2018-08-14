@@ -74,5 +74,26 @@ namespace WeiXinTicketSystem.Util
             Monitor.Exit(orderFormNumberLock); //释放资源
             return sb.ToString();
         }
+
+        /// <summary>
+        /// 8位字母数字混合随机码
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateRandomNum(int num)
+        {
+            List<char> chars = new List<char>(10);
+            for (int i = 0; i < 10; i++)
+                chars.Add((char)('0' + i));
+            string result = "";
+            int index;
+            Random r = new Random();
+            for (int i = 0; i < num; i++)
+            {
+                index = r.Next(chars.Count);
+                result += chars[index].ToString();
+                chars.RemoveAt(index);
+            }
+            return result;
+        }
     }
 }

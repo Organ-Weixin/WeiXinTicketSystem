@@ -97,7 +97,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         {
             SendConponReply sendConponReply = new SendConponReply();
             //校验参数
-            if (!sendConponReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.Title, QueryJson.ConponTypeCode.ToString(), QueryJson.Price.ToString(), QueryJson.ValidityDate.ToString(), QueryJson.Image, QueryJson.OpenID))
+            if (!sendConponReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.ConponTypeCode, QueryJson.Number.ToString(), QueryJson.OpenID))
             {
                 return sendConponReply;
             }
@@ -123,14 +123,36 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 return sendConponReply;
             }
 
-            //将请求参数转为优惠券
-            var Conpon = new ConponEntity();
-            Conpon.MapFrom(QueryJson);
-            await _conponService.InsertAsync(Conpon);
+            ////将请求参数转为优惠券
+            //var Conpon = new ConponEntity();
+            //Conpon.MapFrom(QueryJson);
+            //await _conponService.InsertAsync(Conpon);
 
-            sendConponReply.data = new SendConponReplyConpon();
-            sendConponReply.data.MapFrom(Conpon);
-            sendConponReply.SetSuccessReply();
+            //sendConponReply.data = new SendConponReplyConpon();
+            //sendConponReply.data.MapFrom(Conpon);
+            //sendConponReply.SetSuccessReply();
+            List<ConponEntity> conpons = new List<ConponEntity>();
+            IList<ConponEntity> iconpons = _conponService.GetConponByTypeCodeAsync(QueryJson.ConponTypeCode, QueryJson.Number);
+            conpons.AddRange(iconpons);
+            foreach (ConponEntity conpon in conpons)
+            {
+                conpon.OpenID = QueryJson.OpenID;
+                conpon.ReceivedDate = DateTime.Now;
+                //await _conponService.UpdateAsync(conpon);
+            }
+
+
+            sendConponReply.data = new SendConponReplyConpons();
+            if (conpons == null || conpons.Count == 0)
+            {
+                sendConponReply.data.ConponCount = 0;
+            }
+            else
+            {
+                sendConponReply.data.ConponCount = conpons.Count;
+                sendConponReply.data.Conpons = conpons.Select(x => new SendConponReplyConpon().MapFrom(x)).ToList();
+            }
+
 
             return sendConponReply;
         }

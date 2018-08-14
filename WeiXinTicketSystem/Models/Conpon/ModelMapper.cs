@@ -43,7 +43,12 @@ namespace WeiXinTicketSystem.Models.Conpon
         {
             module.CinemaCode = model.CinemaCode;
             //module.ConponType = (ConponTypeEnum)Enum.Parse(typeof(ConponTypeEnum), model.ConponType);
-            module.ConponTypeCode = model.ConponTypeCode;
+            if (!string.IsNullOrEmpty(model.ConponTypeParentId))
+            {
+                module.ConponTypeParentId =int.Parse(model.ConponTypeParentId);
+            }
+            
+            module.SnackCode = model.SnackCode;
             module.Price = model.Price;
             //module.ConponCode = model.ConponCode;
             if (!string.IsNullOrEmpty(model.ValidityDate))
@@ -70,11 +75,15 @@ namespace WeiXinTicketSystem.Models.Conpon
         {
             model.Id = module.Id;
             model.CinemaCode = module.CinemaCode;
-            if (GetConponTypeParentId(module.ConponTypeCode) != null)
+            if (module.ConponTypeParentId != null)
             {
-                model.ConponTypeParentId = GetConponTypeParentId(module.ConponTypeCode).ToString();
+                model.ConponTypeParentId = module.ConponTypeParentId.ToString();
             }
-            model.ConponTypeCode = module.ConponTypeCode; //Enum.GetName(module.ConponType.GetType(), module.ConponType); 
+            //if (GetConponTypeParentId(module.ConponTypeCode) != null)
+            //{
+            //    model.ConponTypeParentId = GetConponTypeParentId(module.ConponTypeCode).ToString();
+            //}
+            model.SnackCode = module.SnackCode; //Enum.GetName(module.ConponType.GetType(), module.ConponType); 
             model.Price = module.Price;
            // model.ConponCode = module.ConponCode;
             model.ValidityDate = module.ValidityDate.ToFormatDateString();

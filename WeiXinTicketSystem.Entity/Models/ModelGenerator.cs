@@ -1112,31 +1112,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the Conpons table.
-    /// </summary>
-    [Table("Conpons")]
-    [SqlLamTable(Name = "Conpons")]
-    public partial class ConponEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string ConponTypeCode { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string OpenID { get; set; }
-		public virtual decimal? Price { get; set; }
-		public virtual string ConponCode { get; set; }
-		public virtual DateTime? ValidityDate { get; set; }
-		public virtual ConponStatusEnum Status { get; set; }
-		public virtual DateTime? UseDate { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual bool Deleted { get; set; }
-		public virtual string Title { get; set; }
-		public virtual string Image { get; set; }
-		public virtual string GiftCode { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the GivingConditions table.
     /// </summary>
     [Table("GivingConditions")]
@@ -1226,6 +1201,35 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string ConponCode { get; set; }
 		public virtual decimal? ConponPrice { get; set; }
 		public virtual string OpenID { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the Conpons table.
+    /// </summary>
+    [Table("Conpons")]
+    [SqlLamTable(Name = "Conpons")]
+    public partial class ConponEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string ConponTypeCode { get; set; }
+		public virtual string ConponTypeName { get; set; }
+		public virtual int? ConponTypeParentId { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual string ConponCode { get; set; }
+		public virtual string SnackCode { get; set; }
+		public virtual DateTime? ValidityDate { get; set; }
+		public virtual DateTime? ReceivedDate { get; set; }
+		public virtual ConponStatusEnum Status { get; set; }
+		public virtual DateTime? UseDate { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+		public virtual string Title { get; set; }
+		public virtual string Image { get; set; }
+		public virtual string GiftCode { get; set; }
 	}
 
     /// <summary>

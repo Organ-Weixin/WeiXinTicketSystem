@@ -24,6 +24,10 @@ namespace WeiXinTicketSystem.Entity.Enum
 
         [XmlEnum("3")]
         [Description("未使用")]
-        NotUsed = 3
+        NotUsed = 3,
+
+        [XmlEnum("4")]
+        [Description("已领取")]
+        AlreadyReceived = 4
     }
 }
