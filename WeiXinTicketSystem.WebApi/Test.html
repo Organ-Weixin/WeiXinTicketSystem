@@ -94,11 +94,28 @@
         //    });
         //});
 
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "QueryXml": "<LockSeat CinemaCode=\"22113901\"><Order PayType=\"0\" SessionCode=\"727662840\" Count=\"2\"><Seat SeatCode=\"04010425\" Price=\"60.00\" Fee=\"0\"/><Seat SeatCode=\"04010424\" Price=\"60.00\" Fee=\"0\"/></Order></LockSeat>" };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "https://xcx.80piao.com/api/Ticket/LockSeat",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
+
         $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "QueryXml": "<LockSeat CinemaCode=\"22113901\"><Order PayType=\"0\" SessionCode=\"727662840\" Count=\"2\"><Seat SeatCode=\"04010425\" Price=\"60.00\" Fee=\"0\"/><Seat SeatCode=\"04010424\" Price=\"60.00\" Fee=\"0\"/></Order></LockSeat>" };
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "ConponTypeCode": "25034829", "Number": "2", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo" };
             $.ajax({
                 type: "post",
-                url: "https://xcx.80piao.com/api/Ticket/LockSeat",
+                url: "http://localhost:28442/api/Conpon/SendConpon",
                 //contentType: 'application/json',
                 //data: JSON.stringify(postdata),
                 data: postdata,
@@ -110,6 +127,7 @@
                 }
             });
         });
+
     </script>
 </head>
 <body>

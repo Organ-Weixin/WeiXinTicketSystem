@@ -41,6 +41,28 @@ namespace WeiXinTicketSystem.Service
         }
 
         /// <summary>
+        /// 获取影院在指定时间段内的排期的影片信息
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <param name="StartDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        public IList<SessionInfoEntity> GetSessionsFilm(string CinemaCode, int UserId, DateTime StartDate, DateTime EndDate)
+        {
+            try
+            {
+                EndDate = EndDate.AddDays(1);
+                return _sessionInfoRepository.Query.GroupBy(a => a.FilmName ).Select(x => new { x.FilmName }).Where(x => x.CCode == CinemaCode && x.UserID == UserId
+                      && x.StartTime > StartDate && x.StartTime < EndDate).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        /// <summary>
         /// 根据排期编码获取排期信息
         /// </summary>
         /// <param name="CinemaCode"></param>

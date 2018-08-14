@@ -23,6 +23,8 @@ namespace WeiXinTicketSystem.Controllers
         private TicketUsersService _ticketUsersService;
         private CinemaService _cinemaService;
         private ConponTypeService _conponTypeService;
+        private SnackService _snackService;
+        private SessionInfoService _sessionInfoService;
         #region ctor
         public ConponController()
         {
@@ -30,6 +32,8 @@ namespace WeiXinTicketSystem.Controllers
             _ticketUsersService = new TicketUsersService();
             _cinemaService = new CinemaService();
             _conponTypeService = new ConponTypeService();
+            _snackService = new SnackService();
+            _sessionInfoService = new SessionInfoService();
         }
         #endregion
 
@@ -105,12 +109,20 @@ namespace WeiXinTicketSystem.Controllers
             model.MapFrom(conpon);
             await PreparyCreateOrEditViewData();
 
-            //绑定优惠券类型
-            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
-            if (model.ConponTypeParentId != null)
+            ////绑定优惠券类型SnackCode_dd
+            //List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
+            //if (model.ConponTypeParentId != null)
+            //{
+            //    conponTypes.AddRange(await _conponTypeService.GetConponTypeByParentIdAsync(int.Parse(model.ConponTypeParentId)));
+            //    ViewBag.ConponTypeCode_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode });
+            //}
+
+            //绑定套餐
+            List<SnackEntity> snacks = new List<SnackEntity>();
+            if (!string.IsNullOrEmpty(model.CinemaCode))
             {
-                conponTypes.AddRange(await _conponTypeService.GetConponTypeByParentIdAsync(int.Parse(model.ConponTypeParentId)));
-                ViewBag.ConponTypeCode_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode });
+                snacks.AddRange(_snackService.GetSnacksByCinemaCodeAndStatus(model.CinemaCode, SnackStatusEnum.On));
+                ViewBag.SnackCode_dd = snacks.Select(x => new SelectListItem { Text = x.SnackName, Value = x.SnackCode });
             }
 
             return CreateOrUpdate(model);
@@ -234,13 +246,20 @@ namespace WeiXinTicketSystem.Controllers
                 int intNum = int.Parse(model.GenerateNum);
                 if (intNum > 0)
                 {
+                    string strCode= model.ConponTypeParentId + RandomHelper.CreateRandomNum(6);
                     for (int i = 1; i <= intNum; i++)
                     {
                         ConponEntity conponNew = new ConponEntity();
                         conponNew.CinemaCode = model.CinemaCode;
-                        conponNew.ConponTypeCode = model.ConponTypeCode;
-                        conponNew.Price = model.Price;
+                        if (!string.IsNullOrEmpty(model.ConponTypeParentId))
+                        {
+                            conponNew.ConponTypeParentId =int.Parse(model.ConponTypeParentId);
+                        }
+                        conponNew.SnackCode = model.SnackCode;
                         conponNew.Title = model.Title;
+                        conponNew.Price = model.Price;
+                        conponNew.ConponTypeCode = strCode;
+                        conponNew.ConponTypeName = model.Title;
                         if (!string.IsNullOrEmpty(model.ValidityDate))
                         {
                             conponNew.ValidityDate = DateTime.Parse(model.ValidityDate);
@@ -252,8 +271,21 @@ namespace WeiXinTicketSystem.Controllers
 
                         await _conponService.InsertAsync(conponNew);
                     }
+                    //生成优惠券类型二级目录
+                    if (!string.IsNullOrEmpty(model.ConponTypeParentId))
+                    {
+                        ConponTypeEntity conponType = new ConponTypeEntity();
+                        conponType.TypeCode = strCode;
+                        conponType.TypeName = model.Title;
+                        conponType.TypeParentId = int.Parse(model.ConponTypeParentId);
+                        conponType.Created = DateTime.Now;
+                        conponType.IsDel = false;
+                        
+                        await _conponTypeService.InsertAsync(conponType);
+                    }
                 }
             }
+
 
             var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
@@ -313,21 +345,53 @@ namespace WeiXinTicketSystem.Controllers
             }
 
             //优惠券类型下拉框
-            ViewBag.ConponTypeCode_dd = new List<SelectListItem>();
+            //ViewBag.ConponTypeCode_dd = new List<SelectListItem>();
+
+            //套餐下拉框
+            ViewBag.SnackCode_dd = new List<SelectListItem>();
 
         }
 
+        ///// <summary>
+        ///// 绑定优惠券类型
+        ///// </summary>
+        ///// <param name="typeParentId"></param>
+        ///// <returns></returns>
+        //public async Task<ActionResult> GetConponType(int typeParentId)
+        //{
+        //    List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
+        //    IList<ConponTypeEntity> iconponTypes = await _conponTypeService.GetConponTypeByParentIdAsync(typeParentId);
+        //    conponTypes.AddRange(iconponTypes);
+        //    string jsonresult = JSONHelper.ToJson(conponTypes);
+        //    return Json(jsonresult, JsonRequestBehavior.AllowGet);
+        //}
+
         /// <summary>
-        /// 绑定优惠券类型
+        /// 绑定套餐
         /// </summary>
         /// <param name="typeParentId"></param>
         /// <returns></returns>
-        public async Task<ActionResult> GetConponType(int typeParentId)
+        public ActionResult GetSnackCode(string cinemaCode)
         {
-            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
-            IList<ConponTypeEntity> iconponTypes = await _conponTypeService.GetConponTypeByParentIdAsync(typeParentId);
-            conponTypes.AddRange(iconponTypes);
-            string jsonresult = JSONHelper.ToJson(conponTypes);
+            List<SnackEntity> snacks = new List<SnackEntity>();
+            IList<SnackEntity> isnacksv =  _snackService.GetSnacksByCinemaCodeAndStatus(cinemaCode, SnackStatusEnum.On);
+            snacks.AddRange(isnacksv);
+            string jsonresult = JSONHelper.ToJson(snacks);
+            return Json(jsonresult, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 绑定影片
+        /// </summary>
+        /// <param name="typeParentId"></param>
+        /// <returns></returns>
+        public ActionResult GetSessinsFilm(string cinemaCode)
+        {
+            List<SessionInfoEntity> sessions = new List<SessionInfoEntity>();
+            IList<SessionInfoEntity> isessions = _sessionInfoService.GetSessionsFilm(cinemaCode,12,DateTime.Now.AddDays(-3),DateTime.Now);
+            //var iisessions = isessions.GroupBy(x => x.FilmName);
+            sessions.AddRange(isessions);
+            string jsonresult = JSONHelper.ToJson(sessions);
             return Json(jsonresult, JsonRequestBehavior.AllowGet);
         }
 

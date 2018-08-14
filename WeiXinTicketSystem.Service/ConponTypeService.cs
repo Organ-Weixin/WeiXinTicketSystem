@@ -52,7 +52,7 @@ namespace WeiXinTicketSystem.Service
         }
 
         /// <summary>
-        /// 根据优惠券类型编号读取优惠券类型信息
+        /// 根据优惠券类型编号读取优惠券类型信息(异步)
         /// </summary>
         /// <returns></returns>
         public async Task<ConponTypeEntity> GetConponTypeByTypeCodeAsync(string typeCode)
@@ -84,7 +84,7 @@ namespace WeiXinTicketSystem.Service
             {
                 query.Where(x => x.TypeName.Contains(keyword) || x.Remark.Contains(keyword));
             }
-            query.Where(x => !x.IsDel);
+            query.Where(x => !x.IsDel && x.TypeParentId == 0);
             return await query.ToPageListAsync();
         }
 

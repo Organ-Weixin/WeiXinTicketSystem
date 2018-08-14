@@ -234,32 +234,32 @@ namespace WeiXinTicketSystem.WebApi.Models
             conpon.Image = entity.Image;
             return conpon;
         }
-        public static ConponEntity MapFrom(this ConponEntity entity, SendConponQueryJson queryJson)
-        {
-            entity.ConponTypeCode = queryJson.ConponTypeCode;
-            entity.CinemaCode = queryJson.CinemaCode;
-            entity.OpenID = queryJson.OpenID;
-            entity.Price = queryJson.Price;
-            entity.ConponCode = RandomHelper.CreateRandomCode();
-            entity.ValidityDate = queryJson.ValidityDate;
-            entity.Status = ConponStatusEnum.NotUsed;
-            entity.Created = DateTime.Now;
-            entity.Deleted = false;
-            entity.Title = queryJson.Title;
-            entity.Image = queryJson.Image;
-            return entity;
-        }
+        //public static ConponEntity MapFrom(this ConponEntity entity, SendConponQueryJson queryJson)
+        //{
+        //    entity.ConponTypeCode = queryJson.ConponTypeCode;
+        //    entity.CinemaCode = queryJson.CinemaCode;
+        //    entity.OpenID = queryJson.OpenID;
+        //    entity.Price = queryJson.Price;
+        //    entity.ConponCode = RandomHelper.CreateRandomCode();
+        //    entity.ValidityDate = queryJson.ValidityDate;
+        //    entity.Status = ConponStatusEnum.NotUsed;
+        //    entity.Created = DateTime.Now;
+        //    entity.Deleted = false;
+        //    entity.Title = queryJson.Title;
+        //    entity.Image = queryJson.Image;
+        //    return entity;
+        //}
         public static SendConponReplyConpon MapFrom(this SendConponReplyConpon conpon, ConponEntity entity)
         {
             conpon.CinemaCode = entity.CinemaCode;
             conpon.Title = entity.Title;
             conpon.ConponTypeCode = entity.ConponTypeCode;
+            conpon.ConponTypeName = entity.ConponTypeName;
             conpon.ConponCode = entity.ConponCode;
             conpon.Price = entity.Price.HasValue ? entity.Price.Value : 0;
             conpon.ValidityDate = entity.ValidityDate.ToFormatStringWithT();
             conpon.Image = entity.Image;
-            conpon.SendTime = entity.Created.ToFormatStringWithT();
-            conpon.OpenID = entity.OpenID;
+
             return conpon;
         }
 

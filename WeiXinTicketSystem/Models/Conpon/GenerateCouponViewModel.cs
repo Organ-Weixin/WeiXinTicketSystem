@@ -24,18 +24,16 @@ namespace WeiXinTicketSystem.Models
         public string ConponTypeParentId { get; set; }
 
         [ListBox("_dd", Multiple = false)]
-        [Display(Name = "优惠券类型")]
-        public string ConponTypeCode { get; set; }
-
-
-        [Display(Name = "优惠金额")]
-        public decimal? Price { get; set; }
-
+        [Display(Name = "套餐")]
+        public string SnackCode { get; set; }
 
         [Display(Name = "优惠券名称")]
         [Required(ErrorMessage = "{0}不能为空")]
         [StringLength(300, ErrorMessage = "{0}最多300个字符")]
         public string Title { get; set; }
+
+        [Display(Name = "优惠金额")]
+        public decimal? Price { get; set; }
 
         [File]
         [Display(Name = "优惠券图标")]

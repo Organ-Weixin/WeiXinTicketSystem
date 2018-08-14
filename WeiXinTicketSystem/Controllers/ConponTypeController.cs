@@ -154,7 +154,7 @@ namespace WeiXinTicketSystem.Controllers
 
             List<SelectListItem> rootConponTypeList = new List<SelectListItem>();
 
-            rootConponTypeList = rootConponType.Select(x => new SelectListItem { Text = x.TypeName, Value = x.Id.ToString() }).ToList();
+            //rootConponTypeList = rootConponType.Select(x => new SelectListItem { Text = x.TypeName, Value = x.Id.ToString() }).ToList();
             rootConponTypeList.Add(new SelectListItem { Text = "根模块", Value = "0" });
 
             ViewBag.TypeParentId_dd = rootConponTypeList;

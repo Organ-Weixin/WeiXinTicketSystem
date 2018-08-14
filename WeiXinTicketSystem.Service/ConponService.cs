@@ -158,5 +158,33 @@ namespace WeiXinTicketSystem.Service
             await _conponRepository.InsertAsync(entity);
         }
 
+        /// <summary>
+        /// 根据优惠券类型编号随机抽取优惠券
+        /// </summary>
+        /// <param name="conponTypeCode"></param>
+        /// <param name="perPage"></param>
+        /// <returns></returns>
+        public IList<ConponEntity> GetConponByTypeCodeAsync(string conponTypeCode, int perPage)
+        {
+            try
+            { //Questions.OrderBy(q=>Guid.NewGuid()).Take(6)
+                //var query = _conponRepository.Query.OrderBy(x => Guid.NewGuid()).Skip(0).Take(perPage);
+                var query = _conponRepository.Query.OrderBy(x => Guid.NewGuid());
+                //var aa= ConponEntity.
+                //优惠券类型编号
+                if (!string.IsNullOrEmpty(conponTypeCode))
+                {
+                    query.Where(x => x.ConponTypeCode == conponTypeCode);
+                }
+
+                query.Where(x => !x.Deleted);
+                return query.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
