@@ -84,14 +84,25 @@
         });
 
 
-         $('#CinemaCode').on('change', function () {
+         $('#ConponTypeParentId').change(function () {
             //判断是否选取prompt属性，无返回值；
             if ($(this).val()) {
-                var selectCode = $(this).find('option:selected').val();
-                doGetSnackCode(selectCode);
+                var selectCode = $('#CinemaCode').find('option:selected').val();
+				var vid=$(this).val();
+				if(vid == 25 || vid == 31)
+				{
+                   doGetSnackCode(selectCode);
+				}
+				else if(vid == 26 ||vid == 28)
+				{
+					doGetSessinsFilm(selectCode);
+				}
+				else
+				{
+					doGetEmpty();
+				}
             }
         });
-
 
         function doGetSnackCode(cinemaCode) {
             var selDom = $("#SnackCode");//根据id获取select的jquery对象
@@ -105,6 +116,28 @@
                     selDom.append("<option value='" + jsonObj[i].SnackCode + "'>" + jsonObj[i].SnackName + "</option>");//添加option
                 }
             }, 'json');
+        }
+
+		 function doGetSessinsFilm(cinemaCode) {
+            var selDom = $("#SnackCode");//根据id获取select的jquery对象
+            $.post('@Url.Action("GetSessinsFilm", "Conpon")', { 'cinemaCode': cinemaCode }, function (result) {
+                var jsonObj = eval("(" + result + ")");
+                $("#SnackCode").empty();
+				var vcode="999999";
+				var vname="请选择...";
+				selDom.append("<option value='" + vcode + "'>" + vname + "</option>");//添加option
+                for (var i = 0; i < jsonObj.length; i++) {
+                    selDom.append("<option value='" + jsonObj[i].FilmName + "'>" + jsonObj[i].FilmName + "</option>");//添加option
+                }
+            }, 'json');
+        }
+
+		function doGetEmpty() {
+            var selDom = $("#SnackCode");
+            $("#SnackCode").empty();
+				var vcode="999999";
+				var vname="请选择...";
+				selDom.append("<option value='" + vcode + "'>" + vname + "</option>");//添加option
         }
     </script>
 }

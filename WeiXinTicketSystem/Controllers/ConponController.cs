@@ -118,11 +118,24 @@ namespace WeiXinTicketSystem.Controllers
             //}
 
             //绑定套餐
-            List<SnackEntity> snacks = new List<SnackEntity>();
-            if (!string.IsNullOrEmpty(model.CinemaCode))
+            int intParentId = int.Parse(model.ConponTypeParentId);
+            if (intParentId == 25 || intParentId == 31)
             {
-                snacks.AddRange(_snackService.GetSnacksByCinemaCodeAndStatus(model.CinemaCode, SnackStatusEnum.On));
-                ViewBag.SnackCode_dd = snacks.Select(x => new SelectListItem { Text = x.SnackName, Value = x.SnackCode });
+                List<SnackEntity> snacks = new List<SnackEntity>();
+                if (!string.IsNullOrEmpty(model.CinemaCode))
+                {
+                    snacks.AddRange(_snackService.GetSnacksByCinemaCodeAndStatus(model.CinemaCode, SnackStatusEnum.On));
+                    ViewBag.SnackCode_dd = snacks.Select(x => new SelectListItem { Text = x.SnackName, Value = x.SnackCode });
+                }
+            }
+            else if (intParentId == 26 || intParentId == 28)
+            {
+                List<SessionInfoEntity> sessionFilm = new List<SessionInfoEntity>();
+                if (!string.IsNullOrEmpty(model.CinemaCode))
+                {
+                    sessionFilm.AddRange(_sessionInfoService.GetSessionsFilm(model.CinemaCode, 12, DateTime.Now.AddDays(-3), DateTime.Now));
+                    ViewBag.SnackCode_dd = sessionFilm.Select(x => new SelectListItem { Text = x.FilmName, Value = x.FilmName });
+                }
             }
 
             return CreateOrUpdate(model);

@@ -74,7 +74,7 @@
             if ($(this).val()) {
                 var selectCode = $('#CinemaCode').find('option:selected').val();
 				var vid=$(this).val();
-				if(vid == 25 ||vid == 30||vid == 31)
+				if(vid == 25 ||vid == 31)
 				{
                    doGetSnackCode(selectCode);
 				}
@@ -82,12 +82,12 @@
 				{
 					doGetSessinsFilm(selectCode);
 				}
+				else
+				{
+					doGetEmpty();
+				}
             }
         });
-
-
-
-
 
         function doGetSnackCode(cinemaCode) {
             var selDom = $("#SnackCode");//根据id获取select的jquery对象
@@ -115,6 +115,14 @@
                     selDom.append("<option value='" + jsonObj[i].FilmName + "'>" + jsonObj[i].FilmName + "</option>");//添加option
                 }
             }, 'json');
+        }
+
+		function doGetEmpty() {
+            var selDom = $("#SnackCode");
+            $("#SnackCode").empty();
+				var vcode="999999";
+				var vname="请选择...";
+				selDom.append("<option value='" + vcode + "'>" + vname + "</option>");//添加option
         }
 
     </script>

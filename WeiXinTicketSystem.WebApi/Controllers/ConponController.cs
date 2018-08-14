@@ -123,24 +123,17 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 return sendConponReply;
             }
 
-            ////将请求参数转为优惠券
-            //var Conpon = new ConponEntity();
-            //Conpon.MapFrom(QueryJson);
-            //await _conponService.InsertAsync(Conpon);
 
-            //sendConponReply.data = new SendConponReplyConpon();
-            //sendConponReply.data.MapFrom(Conpon);
-            //sendConponReply.SetSuccessReply();
             List<ConponEntity> conpons = new List<ConponEntity>();
-            IList<ConponEntity> iconpons = _conponService.GetConponByTypeCodeAsync(QueryJson.ConponTypeCode, QueryJson.Number);
-            conpons.AddRange(iconpons);
+            IList<ConponEntity> iconpons = _conponService.GetConponByTypeCodeAsync(QueryJson.ConponTypeCode);
+            var iconpons2 = iconpons.OrderBy(x => Guid.NewGuid()).Take(QueryJson.Number);
+            conpons.AddRange(iconpons2);
             foreach (ConponEntity conpon in conpons)
             {
                 conpon.OpenID = QueryJson.OpenID;
                 conpon.ReceivedDate = DateTime.Now;
-                //await _conponService.UpdateAsync(conpon);
+                await _conponService.UpdateAsync(conpon);
             }
-
 
             sendConponReply.data = new SendConponReplyConpons();
             if (conpons == null || conpons.Count == 0)
@@ -153,7 +146,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 sendConponReply.data.Conpons = conpons.Select(x => new SendConponReplyConpon().MapFrom(x)).ToList();
             }
 
-
+            sendConponReply.SetSuccessReply();
             return sendConponReply;
         }
         #endregion

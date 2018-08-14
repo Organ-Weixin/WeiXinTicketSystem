@@ -24,7 +24,7 @@ namespace WeiXinTicketSystem.Models
         public string ConponTypeParentId { get; set; }
 
         [ListBox("_dd", Multiple = false)]
-        [Display(Name = "套餐")]
+        [Display(Name = "套餐/影片")]
         public string SnackCode { get; set; }
 
         [Display(Name = "优惠券名称")]

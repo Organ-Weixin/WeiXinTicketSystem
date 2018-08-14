@@ -223,12 +223,15 @@ namespace WeiXinTicketSystem.WebApi.Models
             conpon.ConponId = entity.Id;
             conpon.CinemaCode = entity.CinemaCode;
             conpon.ConponTypeCode = entity.ConponTypeCode;
+            conpon.ConponTypeName = entity.ConponTypeName;
             conpon.OpenID = entity.OpenID;
             conpon.Price = entity.Price;
             conpon.ConponCode = entity.ConponCode;
+            conpon.SnackCode = entity.SnackCode;
             conpon.ValidityDate = entity.ValidityDate.ToFormatStringWithT();
             conpon.Status = entity.Status.GetDescription();
             conpon.UseDate = entity.UseDate.ToFormatStringWithT();
+            conpon.ReceivedDate = entity.ReceivedDate.ToFormatStringWithT();
             conpon.Title = entity.Title;
             conpon.Deleted = entity.Deleted;
             conpon.Image = entity.Image;

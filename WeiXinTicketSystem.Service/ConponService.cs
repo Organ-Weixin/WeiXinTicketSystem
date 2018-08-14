@@ -32,7 +32,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public ConponEntity GetConponByCinemaCode(string CinemaCode)
         {
-            return _conponRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefault();
+            return _conponRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.Deleted).SingleOrDefault();
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public ConponEntity GetConponByConponCode(string ConponCode)
         {
-            return _conponRepository.Query.Where(x => x.ConponCode == ConponCode).SingleOrDefault();
+            return _conponRepository.Query.Where(x => x.ConponCode == ConponCode && !x.Deleted).SingleOrDefault();
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public async Task<ConponEntity> GetConponByCinemaCodeAsync(string CinemaCode)
         {
-            return await _conponRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefaultAsync();
+            return await _conponRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.Deleted).SingleOrDefaultAsync();
         }
 
         /// <summary>
@@ -164,20 +164,19 @@ namespace WeiXinTicketSystem.Service
         /// <param name="conponTypeCode"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public IList<ConponEntity> GetConponByTypeCodeAsync(string conponTypeCode, int perPage)
+        public IList<ConponEntity> GetConponByTypeCodeAsync(string conponTypeCode)
         {
             try
-            { //Questions.OrderBy(q=>Guid.NewGuid()).Take(6)
-                //var query = _conponRepository.Query.OrderBy(x => Guid.NewGuid()).Skip(0).Take(perPage);
-                var query = _conponRepository.Query.OrderBy(x => Guid.NewGuid());
-                //var aa= ConponEntity.
+            {
+                DateTime Now = DateTime.Now.Date;
+                var query = _conponRepository.Query.OrderByDescending(x => x.Id);
                 //优惠券类型编号
                 if (!string.IsNullOrEmpty(conponTypeCode))
                 {
                     query.Where(x => x.ConponTypeCode == conponTypeCode);
                 }
 
-                query.Where(x => !x.Deleted);
+                query.Where(x => !x.Deleted && x.Status == ConponStatusEnum.NotUsed && (x.ValidityDate==null || x.ValidityDate >= Now));
                 return query.ToList();
             }
             catch (Exception ex)
