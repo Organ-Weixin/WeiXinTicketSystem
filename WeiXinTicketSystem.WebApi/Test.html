@@ -43,22 +43,22 @@
         //    });
         //});
 
-        //$(function () {
-        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "Code": "011g6bkt00QGvd1T8Fkt0GsWjt0g6bk4", "EncryptedData": "lEXp9aqrVjKhgj6OCDbLHu4M5Vj1FiCm5abzC4YWfJzyDzZ1cxmHfb14WqjC+w+tAe5HPJ41DBuvtG+6pMSqV+ioneOSH7Km1oC5FsWw4vEWzMr5xnQcgt/3KoX0G0OWlCAwQHNU2Uu7Sv4iaCM2Xa7JBy23RuXTgZANF0amPnE0jl8zEiwpptBV0uyDbJl5yFGw6Ye5dolHi0xJrODw9tQc3yTrOSVyNuklGN4k60Xe2bxLGQ/nWIF9kKyfqTN3qSjy+J3UONNxD21ldTnb1qiXIivW05Z/JGy1dQF/2zx3pxZXwQjVHbmVJ9geoHzRNb2vOmqWhJ0bA2OHK1ko5FE3gVhEeJykGFlNwq+tEUDsHWrHIIfYt1DcR/AoEZZtwSFtFsE5A2WNhIDF5fLISlDLa+y+Yekn7jwFPJNhBGzkGYpDp6IGMYidx15jA4K8Ia6w+IOAYbBBAanX+iE9tg==", "Iv": "jvxrE6tlzXOrBtx+sCrk7Q==" };
-        //    $.ajax({
-        //        type: "post",
-        //        url: "http://localhost:28442/api/User/TicketUserLogin",
-        //        //contentType: 'application/json',
-        //        //data: JSON.stringify(postdata),
-        //        data: postdata,
-        //        success: function (data, status) {
-        //            if (status == "success") {
-        //                console.log(data.Status);
-        //                $("#div_test").append(JSON.stringify(data));
-        //            }
-        //        }
-        //    });
-        //});
+        $(function () {
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "Code": "011Cexz01glO6Z19DsA015ZAz01CexzX", "EncryptedData": "K+i87ecZle9xZIgrDtsHUDlvgIbJM44JdpJPe1/EMcp4mkWhVGQu59/iXUmaXG9wmwOuAUWSO2rPHjk5njGV90ihAnXp0MXswpxAh6sJ494itS92zNeOrga5kjFj0YHRqrR2rWfO+3pWuvqyNz//LSMFJdooQWfIMq3sDoTiaswrspv+/MEDiRvQJtko8gTmTWZWeAez/RFxl95mKEnAl8OGR9sSaOWHAqIy58eubvL0RTs6/Pu3/x+rJbUoFSaTS5PrD3NGuCg7mM8ERB7B+22mNCAT64LqNR4dZk02t4Sz4y009AGvzc3Mq2pZeg/0wEYDbHcbF/llFtFkEXjWAlOEBBfvMILLGPZKPdKLDmrw5Qw+/zG9EjHSGVbvr2Bc2fOhfKS5tR1VSHHMDSnK3SEv0KnN48KqMGZFqhV9e/1ARDxvHqqfpQhfF7jzinM8HmIS6zHOSq46CnwuhXIpaw==", "Iv": "0KUVbQ+1J5htaKZvlhNhyQ==" };
+            $.ajax({
+                type: "post",
+                url: "http://localhost:28442/api/User/UserLogin",
+                //contentType: 'application/json',
+                //data: JSON.stringify(postdata),
+                data: postdata,
+                success: function (data, status) {
+                    if (status == "success") {
+                        console.log(data.Status);
+                        $("#div_test").append(JSON.stringify(data));
+                    }
+                }
+            });
+        });
 
         //$(function () {
         //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "QueryXml": "<SubmitOrder CinemaCode=\"33111001\"><Order PaySeqNo=\"\" OrderCode=\"1683180716000076\" SessionCode=\"1683201807160028\" Count=\"1\" MobilePhone=\"13736146034\"><Seat SeatCode=\"3311100108#01#10\" Price=\"25.00\" RealPrice=\"25.00\" Fee=\"0.00\"/></Order></SubmitOrder>" };
@@ -94,22 +94,22 @@
         //    });
         //});
 
-        $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "QueryXml": "<LockSeat CinemaCode=\"22113901\"><Order PayType=\"0\" SessionCode=\"727662840\" Count=\"2\"><Seat SeatCode=\"04010425\" Price=\"60.00\" Fee=\"0\"/><Seat SeatCode=\"04010424\" Price=\"60.00\" Fee=\"0\"/></Order></LockSeat>" };
-            $.ajax({
-                type: "post",
-                url: "https://xcx.80piao.com/api/Ticket/LockSeat",
-                //contentType: 'application/json',
-                //data: JSON.stringify(postdata),
-                data: postdata,
-                success: function (data, status) {
-                    if (status == "success") {
-                        console.log(data.Status);
-                        $("#div_test").append(JSON.stringify(data));
-                    }
-                }
-            });
-        });
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "QueryXml": "<LockSeat CinemaCode=\"22113901\"><Order PayType=\"0\" SessionCode=\"727662840\" Count=\"2\"><Seat SeatCode=\"04010425\" Price=\"60.00\" Fee=\"0\"/><Seat SeatCode=\"04010424\" Price=\"60.00\" Fee=\"0\"/></Order></LockSeat>" };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "https://xcx.80piao.com/api/Ticket/LockSeat",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
     </script>
 </head>
 <body>
