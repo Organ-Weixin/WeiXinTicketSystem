@@ -132,6 +132,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             {
                 conpon.OpenID = QueryJson.OpenID;
                 conpon.ReceivedDate = DateTime.Now;
+                conpon.Status = ConponStatusEnum.AlreadyReceived;
                 await _conponService.UpdateAsync(conpon);
             }
 
