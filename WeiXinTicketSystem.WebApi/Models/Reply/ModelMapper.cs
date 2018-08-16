@@ -533,5 +533,53 @@ namespace WeiXinTicketSystem.WebApi.Models
             
             return condition;
         }
+
+        public static QueryOrdersReplyOrder MapFrom(this QueryOrdersReplyOrder conpon, OrderEntity entity)
+        {
+            conpon.OrderId = entity.Id;
+            //影院编码
+            conpon.CinemaCode = entity.CinemaCode;
+            //放映计划编码
+            conpon.SessionCode = entity.SessionCode;
+            //影厅编码
+            conpon.ScreenCode = entity.ScreenCode;
+            //放映计划时间
+            conpon.SessionTime = entity.SessionTime;
+            //影片编码
+            conpon.FilmCode = entity.FilmCode;
+            //影片名称
+            conpon.FilmName = entity.FilmName;
+            //座位数量
+            conpon.TicketCount = entity.TicketCount;
+            //总的上报价格
+            conpon.TotalPrice = entity.TotalPrice;
+            //总服务费
+            conpon.TotalFee = entity.TotalFee;
+            //总实际销售价格
+            conpon.TotalSalePrice = entity.TotalSalePrice;
+            //订单状态(New : 新建订单，SeatLocked: 已锁座， Payed: 已支付， Complete: 订单完成，TicketRefund 退票， Refund：退款)
+            conpon.OrderStatus = (int)entity.OrderStatus;
+            //手机号码
+            conpon.MobilePhone = entity.MobilePhone;
+            //锁座时间
+            conpon.LockTime = entity.LockTime;
+            //自动解锁时间
+            conpon.AutoUnlockDatetime = entity.AutoUnlockDatetime;
+            //锁座订单号
+            conpon.LockOrderCode = entity.LockOrderCode;
+            //提交时间
+            conpon.SubmitTime = entity.SubmitTime;
+            //提交订单号
+            conpon.SubmitOrderCode = entity.SubmitOrderCode;
+            //取票码
+            conpon.PrintNo = entity.PrintNo;
+            //验证码
+            conpon.VerifyCode = entity.VerifyCode;
+            //打印时间
+            conpon.PrintTime = entity.PrintTime;
+            //退单时间
+            conpon.RefundTime = entity.RefundTime;
+            return conpon;
+        }
     }
 }

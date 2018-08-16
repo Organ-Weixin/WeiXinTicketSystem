@@ -163,6 +163,50 @@ namespace WeiXinTicketSystem.Service
 
             return await query.ToPageListAsync();
         }
+
+        /// <summary>
+        /// 根据用户openID获取用户购票订单列表
+        /// </summary>
+        /// <param name="cinemaCode"></param>
+        /// <param name="offset"></param>
+        /// <param name="perPage"></param>
+        /// <param name="openID"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        public async Task<IPageList<OrderEntity>> GetOrdersByOpenIDPagedAsync(string cinemaCode,
+            string openID, DateTime? startDate, DateTime? endDate, int currentpage, int pagesize)
+        {
+            int offset = (currentpage - 1) * pagesize;
+            var query = _orderRepository.Query
+                .OrderByDescending(x => x.Created)
+                .Skip(offset)
+                .Take(pagesize);
+
+            if (!string.IsNullOrEmpty(cinemaCode))
+            {
+                query.Where(x => x.CinemaCode == cinemaCode);
+            }
+
+            if (!string.IsNullOrEmpty(openID))
+            {
+                query.Where(x => x.OpenID == openID);
+            }
+
+            if (startDate.HasValue)
+            {
+                query.Where(x => x.Created > startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                DateTime deadline = endDate.Value.AddDays(1);
+                query.Where(x => x.Created < deadline);
+            }
+            query.Where(x => x.UserId == 12);
+            return await query.ToPageListAsync();
+        }
+
         /// <summary>
         /// 后台不分页获取订单
         /// </summary>

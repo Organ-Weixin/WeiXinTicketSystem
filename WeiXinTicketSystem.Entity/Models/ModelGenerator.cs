@@ -776,6 +776,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual bool? IsUseConpons { get; set; }
 		public virtual string ConponCode { get; set; }
 		public virtual string CinemaName { get; set; }
+		public virtual decimal? ConponPrice { get; set; }
 	}
 
     /// <summary>
@@ -1044,6 +1045,10 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string Title { get; set; }
 		public virtual string Image { get; set; }
 		public virtual string ConponTypeCode { get; set; }
+		public virtual string ConponTypeName { get; set; }
+		public virtual int? ConponTypeParentId { get; set; }
+		public virtual string SnackCode { get; set; }
+		public virtual DateTime? ReceivedDate { get; set; }
 	}
 
     /// <summary>
@@ -1204,6 +1209,34 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the UserCinemaView view.
+    /// </summary>
+    [Table("UserCinemaView")]
+    [SqlLamTable(Name = "UserCinemaView")]
+    public partial class UserCinemaViewEntity : EntityBase
+    {
+		public virtual int Id { get; set; }
+		public virtual int UserId { get; set; }
+		public virtual DateTime? ExpDate { get; set; }
+		public virtual string UserName { get; set; }
+		public virtual string Password { get; set; }
+		public virtual string PayType { get; set; }
+		public virtual SnackInterfaceEnum OpenSnacks { get; set; }
+		public virtual decimal? Fee { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string CinemaName { get; set; }
+		public virtual string CinemaAddress { get; set; }
+		public virtual int? DingXinId { get; set; }
+		public virtual string YueKeId { get; set; }
+		public virtual string DY1905Id { get; set; }
+		public virtual byte CinemaOpen { get; set; }
+		public virtual CinemaTypeEnum CinemaType { get; set; }
+		public virtual string Url { get; set; }
+		public virtual string DefaultUserName { get; set; }
+		public virtual string DefaultPassword { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the Conpons table.
     /// </summary>
     [Table("Conpons")]
@@ -1230,34 +1263,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string Title { get; set; }
 		public virtual string Image { get; set; }
 		public virtual string GiftCode { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the UserCinemaView view.
-    /// </summary>
-    [Table("UserCinemaView")]
-    [SqlLamTable(Name = "UserCinemaView")]
-    public partial class UserCinemaViewEntity : EntityBase
-    {
-		public virtual int Id { get; set; }
-		public virtual int UserId { get; set; }
-		public virtual DateTime? ExpDate { get; set; }
-		public virtual string UserName { get; set; }
-		public virtual string Password { get; set; }
-		public virtual string PayType { get; set; }
-		public virtual SnackInterfaceEnum OpenSnacks { get; set; }
-		public virtual decimal? Fee { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string CinemaName { get; set; }
-		public virtual string CinemaAddress { get; set; }
-		public virtual int? DingXinId { get; set; }
-		public virtual string YueKeId { get; set; }
-		public virtual string DY1905Id { get; set; }
-		public virtual byte CinemaOpen { get; set; }
-		public virtual CinemaTypeEnum CinemaType { get; set; }
-		public virtual string Url { get; set; }
-		public virtual string DefaultUserName { get; set; }
-		public virtual string DefaultPassword { get; set; }
 	}
 
     /// <summary>

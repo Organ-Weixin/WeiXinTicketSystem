@@ -28,7 +28,11 @@ namespace WeiXinTicketSystem.Models.SnackOrder
                 SubmitTime = order.SubmitTime.GetValueOrDefault().ToFormatString(),
                 mobile = order.MobilePhone,
                 orderStatus = order.OrderStatus.GetDescription(),
-                statusClass = GetStatusClass(order.OrderStatus)
+                statusClass = GetStatusClass(order.OrderStatus),
+                //优惠金额
+                ConponPrice = order.ConponPrice,
+                //实际支付金额
+                ActualPrice = GetActualPrice(order.TotalPrice, order.ConponPrice,order.OrderPayFlag)
             };
         }
 
@@ -56,6 +60,18 @@ namespace WeiXinTicketSystem.Models.SnackOrder
                 default:
                     return "darkorange";
             }
+        }
+
+        public static decimal? GetActualPrice(decimal totalPrice, decimal? conponPrice,bool? orderPayFlag)
+        {
+            if (orderPayFlag ==null || orderPayFlag == false)
+                return null;
+            if (conponPrice == null)
+            {
+                conponPrice = 0;
+            }
+            decimal actualPrice = totalPrice - decimal.Parse(conponPrice.ToString());
+            return actualPrice;
         }
     }
 }

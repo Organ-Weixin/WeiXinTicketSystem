@@ -245,6 +245,7 @@
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\SnackController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
@@ -274,6 +275,7 @@
     <Compile Include="Models\Reply\QueryConponsReply.cs" />
     <Compile Include="Models\Reply\QueryGiftsReply.cs" />
     <Compile Include="Models\Reply\QueryGivingConditionsReply.cs" />
+    <Compile Include="Models\Reply\QueryOrdersReply.cs" />
     <Compile Include="Models\Reply\QuerySnackOrderReply.cs" />
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />
     <Compile Include="Models\Reply\QuerySnackTypesReply.cs" />
