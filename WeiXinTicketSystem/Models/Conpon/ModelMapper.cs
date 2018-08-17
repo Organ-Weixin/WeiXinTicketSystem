@@ -11,6 +11,31 @@ namespace WeiXinTicketSystem.Models.Conpon
 {
     public static class ModelMapper
     {
+
+        /// <summary>
+        /// 转为Dynatable内容
+        /// </summary>
+        /// <param name="CinemaPaySetting"></param>
+        /// <returns></returns>
+        public static dynamic ToDynatableItemGroup(this ConponGroupViewEntity module)
+        {
+            return new
+            {
+                id = module.Id,
+                CinemaCode = module.CinemaCode,
+                GroupName = module.GroupName,
+                Price = module.Price,
+                ConponNumber = module.ConponNumber,
+                ValidityDate = module.ValidityDate.ToFormatDateString(),
+                UsedNumber = module.UsedNumber,
+                NotUsedNumber = module.NotUsedNumber,
+                ReceivedNumber = module.ReceivedNumber,
+                GroupCode = module.GroupCode,
+                Remark = module.Remark,
+            };
+        }
+
+
         /// <summary>
         /// 转为Dynatable内容
         /// </summary>
@@ -22,14 +47,14 @@ namespace WeiXinTicketSystem.Models.Conpon
             {
                 id = module.Id,
                 CinemaCode = module.CinemaCode,
-                ConponType = GetConponTypeName(module.ConponTypeCode),
+                ConponType = module.Title,
                 Price = module.Price,
                 ConponCode = module.ConponCode,
                 ValidityDate = module.ValidityDate.ToFormatDateString(),
                 Status = module.Status.GetDescription(),
                 UseDate = module.UseDate.ToFormatDateString(),
                 Title = module.Title,
-                Image = module.Image
+                Remark =module.Remark,
 
             };
         }
@@ -43,11 +68,8 @@ namespace WeiXinTicketSystem.Models.Conpon
         {
             module.CinemaCode = model.CinemaCode;
             //module.ConponType = (ConponTypeEnum)Enum.Parse(typeof(ConponTypeEnum), model.ConponType);
-            if (!string.IsNullOrEmpty(model.ConponTypeParentId))
-            {
-                module.ConponTypeParentId =int.Parse(model.ConponTypeParentId);
-            }
-            
+            module.TypeCode = model.TypeCode;
+
             module.SnackCode = model.SnackCode;
             module.Price = model.Price;
             //module.ConponCode = model.ConponCode;
@@ -62,6 +84,7 @@ namespace WeiXinTicketSystem.Models.Conpon
                 module.UseDate =DateTime.Parse(model.UseDate);
             }
             module.Title = model.Title;
+            module.Remark = model.Remark;
 
         }
 
@@ -75,10 +98,7 @@ namespace WeiXinTicketSystem.Models.Conpon
         {
             model.Id = module.Id;
             model.CinemaCode = module.CinemaCode;
-            if (module.ConponTypeParentId != null)
-            {
-                model.ConponTypeParentId = module.ConponTypeParentId.ToString();
-            }
+            model.TypeCode = module.TypeCode;
             //if (GetConponTypeParentId(module.ConponTypeCode) != null)
             //{
             //    model.ConponTypeParentId = GetConponTypeParentId(module.ConponTypeCode).ToString();
@@ -90,24 +110,25 @@ namespace WeiXinTicketSystem.Models.Conpon
             model.Status = (int)module.Status;
             model.UseDate = module.UseDate.ToFormatDateString();
             model.Title = module.Title;
+            model.Remark = module.Remark;
 
         }
 
-        private static int? GetConponTypeParentId(string ConponTypeCode)
-        {
-            ConponTypeService _conponTypeService = new ConponTypeService();
-            ConponTypeEntity conponType = _conponTypeService.GetConponTypeByTypeCode(ConponTypeCode);
-            return conponType.TypeParentId;
-        }
+        ////private static int? GetConponTypeParentId(string ConponTypeCode)
+        ////{
+        ////    ConponTypeService _conponTypeService = new ConponTypeService();
+        ////    ConponTypeEntity conponType = _conponTypeService.GetConponTypeByTypeCode(ConponTypeCode);
+        ////    return conponType.TypeParentId;
+        ////}
 
-        private static string GetConponTypeName(string ConponTypeCode)
-        {
-            ConponTypeService _conponTypeService = new ConponTypeService();
-            ConponTypeEntity conponType = _conponTypeService.GetConponTypeByTypeCode(ConponTypeCode);
-            if (conponType == null)
-                return "";
-            return conponType.TypeName;
-        }
+        ////private static string GetConponTypeName(string ConponTypeCode)
+        ////{
+        ////    ConponTypeService _conponTypeService = new ConponTypeService();
+        ////    ConponTypeEntity conponType = _conponTypeService.GetConponTypeByTypeCode(ConponTypeCode);
+        ////    if (conponType == null)
+        ////        return "";
+        ////    return conponType.TypeName;
+        ////}
 
     }
 }

@@ -25,11 +25,11 @@ namespace WeiXinTicketSystem.Models
 
         [ListBox("_dd", Multiple = false)]
         [Display(Name = "上级优惠券类型")]
-        public string ConponTypeParentId { get; set; }
+        public string TypeCode { get; set; }
 
         [ListBox("_dd", Multiple = false)]
         [Display(Name = "优惠券类型")]
-        public string ConponTypeCode { get; set; }
+        public string GroupCode { get; set; }
 
         [Display(Name = "赠送张数")]
         public string Number { get; set; }

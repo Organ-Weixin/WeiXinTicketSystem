@@ -43,8 +43,8 @@
                         @Html.EditorFor(x => x.Id)
                         @Html.EditorFor(x => x.CinemaCode)
                         @Html.EditorFor(x => x.Price)
-                        @Html.EditorFor(x => x.ConponTypeParentId)
-                        @Html.EditorFor(x => x.ConponTypeCode)
+                        @Html.EditorFor(x => x.TypeCode)
+                        @Html.EditorFor(x => x.GroupCode)
                         @Html.EditorFor(x => x.Number)
                         @Html.EditorFor(x => x.StartDate, new { htmlAttributes = new { @class = "datepicker" } })
                         @Html.EditorFor(x => x.EndDate, new { htmlAttributes = new { @class = "datepicker" } })
@@ -88,22 +88,24 @@
             format: 'yyyy-mm-dd'
         });
 
-		$('#ConponTypeParentId').on('change', function () {
+
+		$('#TypeCode').change(function () {
             //判断是否选取prompt属性，无返回值；
             if ($(this).val()) {
-                var selectCode = $(this).find('option:selected').val();
-                doGetConponType(selectCode);
+                var selectCode = $('#CinemaCode').find('option:selected').val();
+				var vid=$(this).val();
+				doGetConponType(selectCode,vid);
             }
         });
 
 
-        function doGetConponType(typeParentId) {
-            var selDom = $("#ConponTypeCode");//根据id获取select的jquery对象
-            $.post('@Url.Action("GetConponType", "GivingConditions")', { 'typeParentId': typeParentId }, function (result) {
+        function doGetConponType(cinemaCode,typeCode) {
+            var selDom = $("#GroupCode");//根据id获取select的jquery对象
+            $.post('@Url.Action("GetConponType", "GivingConditions")', { 'cinemaCode': cinemaCode, 'typeCode': typeCode}, function (result) {
                 var jsonObj = eval("(" + result + ")");
-                $("#ConponTypeCode").empty();
+                $("#GroupCode").empty();
                 for (var i = 0; i < jsonObj.length; i++) {
-                    selDom.append("<option value='" + jsonObj[i].TypeCode + "'>" + jsonObj[i].TypeName + "</option>");//添加option
+                    selDom.append("<option value='" + jsonObj[i].GroupCode + "'>" + jsonObj[i].GroupName + "</option>");//添加option
                 }
             }, 'json');
         }

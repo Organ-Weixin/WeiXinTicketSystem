@@ -21,6 +21,7 @@ namespace WeiXinTicketSystem.Controllers
         private GivingConditionsService _givingConditionsService;
         private CinemaService _cinemaService;
         private ConponTypeService _conponTypeService;
+        private ConponGroupService _conponGroupService;
 
         #region ctor
         public GivingConditionsController()
@@ -28,6 +29,7 @@ namespace WeiXinTicketSystem.Controllers
             _givingConditionsService = new GivingConditionsService();
             _cinemaService = new CinemaService();
             _conponTypeService = new ConponTypeService();
+            _conponGroupService = new ConponGroupService();
         }
         #endregion
 
@@ -90,12 +92,9 @@ namespace WeiXinTicketSystem.Controllers
             await PreparyCreateOrEditViewData();
 
             //绑定优惠券类型
-            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
-            if (model.ConponTypeParentId != null)
-            {
-                conponTypes.AddRange(await _conponTypeService.GetConponTypeByParentIdAsync(int.Parse(model.ConponTypeParentId)));
-                ViewBag.ConponTypeCode_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode });
-            }
+            List<ConponGroupEntity> conponGroups = new List<ConponGroupEntity>();
+            conponGroups.AddRange(_conponGroupService.GetConponGroupByCinemaCodeAndTypeCode(model.CinemaCode, model.TypeCode));
+            ViewBag.GroupCode_dd = conponGroups.Select(x => new SelectListItem { Text = x.GroupName, Value = x.GroupCode });
             return CreateOrUpdate(model);
         }
 
@@ -124,20 +123,38 @@ namespace WeiXinTicketSystem.Controllers
             }
 
             GivingConditionEntity givingConditions = new GivingConditionEntity();
+            decimal? ylPrice = 0;
             if (model.Id > 0)
             {
                 givingConditions = await _givingConditionsService.GetGivingConditionByIdAsync(model.Id);
+                ylPrice = givingConditions.Price;
             }
-
+            
             givingConditions.MapFrom(model);
+            //备注
+            ConponGroupEntity conponGroup = _conponGroupService.GetConponGroupByCinemaCodeAndGroupCode(model.CinemaCode,model.GroupCode);
+            givingConditions.Remark = conponGroup.Remark;
 
             if (givingConditions.Id == 0)
             {
+                IList<GivingConditionEntity> givingConditionPrice =await _givingConditionsService.GetGivingConditionByCinemaCodeAndPriceAsync(model.CinemaCode,model.Price);
+                if (givingConditionPrice.Count>0)
+                {
+                    return ErrorObject("满额金额已存在！请重新填写！");
+                }
                 givingConditions.Created = DateTime.Now;
                 await _givingConditionsService.InsertAsync(givingConditions);
             }
             else
             {
+                if (ylPrice != model.Price)
+                {
+                    IList<GivingConditionEntity> givingConditionPrice = await _givingConditionsService.GetGivingConditionByCinemaCodeAndPriceAsync(model.CinemaCode, model.Price);
+                    if (givingConditionPrice.Count > 0)
+                    {
+                        return ErrorObject("满额金额已存在！请重新填写！");
+                    }
+                }
                 givingConditions.Updated = DateTime.Now;
                 await _givingConditionsService.UpdateAsync(givingConditions);
             }
@@ -181,10 +198,10 @@ namespace WeiXinTicketSystem.Controllers
             //绑定上级优惠券类型下拉框
             List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
             conponTypes.AddRange(await _conponTypeService.GetRootConponTypeAsync());
-            ViewBag.ConponTypeParentId_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.Id.ToString() });
+            ViewBag.TypeCode_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode });
 
             //优惠券类型下拉框
-            ViewBag.ConponTypeCode_dd = new List<SelectListItem>();
+            ViewBag.GroupCode_dd = new List<SelectListItem>();
 
         }
 
@@ -193,12 +210,12 @@ namespace WeiXinTicketSystem.Controllers
         /// </summary>
         /// <param name="typeParentId"></param>
         /// <returns></returns>
-        public async Task<ActionResult> GetConponType(int typeParentId)
+        public ActionResult GetConponType(string cinemaCode, string typeCode)
         {
-            List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
-            IList<ConponTypeEntity> iconponTypes = await _conponTypeService.GetConponTypeByParentIdAsync(typeParentId);
-            conponTypes.AddRange(iconponTypes);
-            string jsonresult = JSONHelper.ToJson(conponTypes);
+            List<ConponGroupEntity> conponGroups = new List<ConponGroupEntity>();
+            IList<ConponGroupEntity> iconponGroups = _conponGroupService.GetConponGroupByCinemaCodeAndTypeCode(cinemaCode,typeCode);
+            conponGroups.AddRange(iconponGroups);
+            string jsonresult = JSONHelper.ToJson(conponGroups);
             return Json(jsonresult, JsonRequestBehavior.AllowGet);
         }
     }
