@@ -154,6 +154,81 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the SnackOrderDetailsView view.
+    /// </summary>
+    [Table("SnackOrderDetailsView")]
+    [SqlLamTable(Name = "SnackOrderDetailsView")]
+    public partial class SnackOrderDetailsViewEntity : EntityBase
+    {
+		public virtual int Id { get; set; }
+		public virtual int OrderId { get; set; }
+		public virtual string SnackCode { get; set; }
+		public virtual decimal StandardPrice { get; set; }
+		public virtual decimal SalePrice { get; set; }
+		public virtual int Number { get; set; }
+		public virtual decimal SubTotalPrice { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool? Deleted { get; set; }
+		public virtual string ConponCode { get; set; }
+		public virtual decimal? ConponPrice { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OrderCode { get; set; }
+		public virtual string MobilePhone { get; set; }
+		public virtual int SnacksCount { get; set; }
+		public virtual decimal TotalPrice { get; set; }
+		public virtual DateTime? ReleaseTime { get; set; }
+		public virtual DateTime? SubmitTime { get; set; }
+		public virtual string VoucherCode { get; set; }
+		public virtual byte OrderStatus { get; set; }
+		public virtual DateTime? RefundTime { get; set; }
+		public virtual DateTime? FetchTime { get; set; }
+		public virtual DateTime AutoUnLockDateTime { get; set; }
+		public virtual string DeliveryAddress { get; set; }
+		public virtual DateTime SendTime { get; set; }
+		public virtual bool? OrderPayFlag { get; set; }
+		public virtual byte? OrderPayType { get; set; }
+		public virtual DateTime? OrderPayTime { get; set; }
+		public virtual string OrderTradeNo { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual bool? IsUseConpons { get; set; }
+		public virtual string CinemaName { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the Cinema table.
+    /// </summary>
+    [Table("Cinema")]
+    [SqlLamTable(Name = "Cinema")]
+    public partial class CinemaEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual int MId { get; set; }
+		public virtual string Code { get; set; }
+		public virtual string Name { get; set; }
+		public virtual string Address { get; set; }
+		public virtual int? ScreenCount { get; set; }
+		public virtual bool IsDel { get; set; }
+		public virtual int? ManualAdd { get; set; }
+		public virtual int? DingXinId { get; set; }
+		public virtual string YueKeId { get; set; }
+		public virtual CinemaOpenEnum IsOpen { get; set; }
+		public virtual string DY1905Id { get; set; }
+		public virtual string ContactName { get; set; }
+		public virtual string ContactMobile { get; set; }
+		public virtual TheaterChainEnum TheaterChain { get; set; }
+		public virtual double? Latitude { get; set; }
+		public virtual double? Longitude { get; set; }
+		public virtual CinemaOpenEnum IsOpenSnacks { get; set; }
+		public virtual string CinemaPhone { get; set; }
+		public virtual string TicketHint { get; set; }
+		public virtual string CinemaLabel { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the UserInfo table.
     /// </summary>
     [Table("UserInfo")]
@@ -516,36 +591,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual YesOrNoEnum IsCustomTicketTemplet { get; set; }
 		public virtual YesOrNoEnum IsCustomPackageTemplet { get; set; }
 		public virtual bool IsDel { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the Cinema table.
-    /// </summary>
-    [Table("Cinema")]
-    [SqlLamTable(Name = "Cinema")]
-    public partial class CinemaEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual int MId { get; set; }
-		public virtual string Code { get; set; }
-		public virtual string Name { get; set; }
-		public virtual string Address { get; set; }
-		public virtual int? ScreenCount { get; set; }
-		public virtual bool IsDel { get; set; }
-		public virtual int? ManualAdd { get; set; }
-		public virtual int? DingXinId { get; set; }
-		public virtual string YueKeId { get; set; }
-		public virtual CinemaOpenEnum IsOpen { get; set; }
-		public virtual string DY1905Id { get; set; }
-		public virtual string ContactName { get; set; }
-		public virtual string ContactMobile { get; set; }
-		public virtual TheaterChainEnum TheaterChain { get; set; }
-		public virtual double? Latitude { get; set; }
-		public virtual double? Longitude { get; set; }
-		public virtual CinemaOpenEnum IsOpenSnacks { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
 	}
 
     /// <summary>
@@ -1165,6 +1210,8 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool? Deleted { get; set; }
+		public virtual string ConponCode { get; set; }
+		public virtual decimal? ConponPrice { get; set; }
 	}
 
     /// <summary>

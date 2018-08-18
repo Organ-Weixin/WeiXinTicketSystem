@@ -73,6 +73,7 @@
                     <td style="text-align: left;">{{ReceivedNumber}}</td>
 					<td style="text-align: left;">{{Remark}}</td>
                     <td style="text-align: left;">
+
                         @if (CurrentPermissions.Contains(3))
                         {
                             <a href="@Url.Action(MvcNames.Conpon.CouponIndex)?CinemaCode={{CinemaCode}}&GroupCode={{GroupCode}}">券码管理</a>
@@ -80,7 +81,7 @@
 
                         @if (CurrentPermissions.Contains(4))
                         {
-                            <span>|</span>
+                            <span style="{{statusClass}}" >|</span>
                             <a style="{{statusClass}}" href="javascript:void(0)"
                                data-href="@Url.Action(MvcNames.Conpon.DeleteGroup)?id={{id}}&CinemaCode={{CinemaCode}}&GroupCode={{GroupCode}}" data-toggle="popover"
                                data-ajaxsuccess="App.onOperationSuccessWithinPagedList"
