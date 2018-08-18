@@ -424,7 +424,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-        public static bool RequestInfoGuard(this SendConponReply reply, string UserName, string Password, string CinemaCode, string ConponTypeCode, string Number,string OpenID)
+        public static bool RequestInfoGuard(this SendConponReply reply, string UserName, string Password, string CinemaCode, string GroupCode, string Number,string OpenID)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -441,9 +441,9 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(CinemaCode));
                 return false;
             }
-            if (string.IsNullOrEmpty(ConponTypeCode))
+            if (string.IsNullOrEmpty(GroupCode))
             {
-                reply.SetNecessaryParamMissReply(nameof(ConponTypeCode));
+                reply.SetNecessaryParamMissReply(nameof(GroupCode));
                 return false;
             }
             if (string.IsNullOrEmpty(Number))

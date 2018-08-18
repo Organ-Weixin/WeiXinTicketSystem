@@ -248,8 +248,7 @@ namespace WeiXinTicketSystem.Controllers
             var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
-            return View("Conpon/CouponIndex?CinemaCode=" + conpon.CinemaCode + "&GroupCode=" + conpon.GroupCode+"");
-            //return RedirectObject(Url.Action(nameof(CouponIndex)) + "?CinemaCode=" + conpon.CinemaCode + "&GroupCode=" + conpon.GroupCode);
+            return Redirect(Url.Action(nameof(CouponIndex)) + "?CinemaCode=" + conpon.CinemaCode + "&GroupCode=" + conpon.GroupCode);
         }
 
 

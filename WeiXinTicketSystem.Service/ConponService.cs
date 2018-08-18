@@ -180,7 +180,7 @@ namespace WeiXinTicketSystem.Service
                 {
                     query.Where(x => x.CinemaCode == cinemaCode);
                 }
-                //优惠券类型编号
+                //优惠券组编号
                 if (!string.IsNullOrEmpty(groupCode))
                 {
                     query.Where(x => x.GroupCode == groupCode);

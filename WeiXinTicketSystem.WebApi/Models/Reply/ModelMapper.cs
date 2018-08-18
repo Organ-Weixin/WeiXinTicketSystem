@@ -222,8 +222,8 @@ namespace WeiXinTicketSystem.WebApi.Models
         {
             conpon.ConponId = entity.Id;
             conpon.CinemaCode = entity.CinemaCode;
-            conpon.ConponTypeCode = entity.ConponTypeCode;
-            conpon.ConponTypeName = entity.ConponTypeName;
+            conpon.TypeCode = entity.TypeCode;
+            conpon.GroupCode = entity.GroupCode;
             conpon.OpenID = entity.OpenID;
             conpon.Price = entity.Price;
             conpon.ConponCode = entity.ConponCode;
@@ -234,7 +234,7 @@ namespace WeiXinTicketSystem.WebApi.Models
             conpon.ReceivedDate = entity.ReceivedDate.ToFormatStringWithT();
             conpon.Title = entity.Title;
             conpon.Deleted = entity.Deleted;
-            conpon.Image = entity.Image;
+            conpon.Remark = entity.Remark;
             return conpon;
         }
         //public static ConponEntity MapFrom(this ConponEntity entity, SendConponQueryJson queryJson)
@@ -256,13 +256,14 @@ namespace WeiXinTicketSystem.WebApi.Models
         {
             conpon.CinemaCode = entity.CinemaCode;
             conpon.Title = entity.Title;
-            conpon.ConponTypeCode = entity.ConponTypeCode;
-            conpon.ConponTypeName = entity.ConponTypeName;
+            conpon.TypeCode = entity.TypeCode;
+            conpon.GroupCode = entity.GroupCode;
             conpon.ConponCode = entity.ConponCode;
+            conpon.SnackCode = entity.SnackCode;
             conpon.Price = entity.Price.HasValue ? entity.Price.Value : 0;
             conpon.ValidityDate = entity.ValidityDate.ToFormatStringWithT();
-            conpon.Image = entity.Image;
-
+            conpon.Remark = entity.Remark;
+            
             return conpon;
         }
 
@@ -282,21 +283,21 @@ namespace WeiXinTicketSystem.WebApi.Models
             return member;
         }
 
-        public static QueryGiftsReplyGift MapFrom(this QueryGiftsReplyGift gift, GiftEntity entity)
-        {
-            gift.GiftId = entity.Id;
-            gift.CinemaCode = entity.CinemaCode;
-            gift.Title = entity.Title;
-            gift.Details = entity.Details;
-            gift.OriginalPrice = entity.OriginalPrice.HasValue ? entity.OriginalPrice.Value : 0;
-            gift.Price = entity.Price.HasValue ? entity.Price.Value : 0;
-            gift.Image = entity.Image;
-            gift.Stock = entity.Stock.HasValue ? entity.Stock.Value : 0;
-            gift.StartDate = entity.StartDate.ToFormatStringWithT();
-            gift.EndDate = entity.EndDate.ToFormatStringWithT();
-            gift.Status = entity.Status.GetDescription();
-            return gift;
-        }
+        //public static QueryGiftsReplyGift MapFrom(this QueryGiftsReplyGift gift, GiftEntity entity)
+        //{
+        //    gift.GiftId = entity.Id;
+        //    gift.CinemaCode = entity.CinemaCode;
+        //    gift.Title = entity.Title;
+        //    gift.Details = entity.Details;
+        //    gift.OriginalPrice = entity.OriginalPrice.HasValue ? entity.OriginalPrice.Value : 0;
+        //    gift.Price = entity.Price.HasValue ? entity.Price.Value : 0;
+        //    gift.Image = entity.Image;
+        //    gift.Stock = entity.Stock.HasValue ? entity.Stock.Value : 0;
+        //    gift.StartDate = entity.StartDate.ToFormatStringWithT();
+        //    gift.EndDate = entity.EndDate.ToFormatStringWithT();
+        //    gift.Status = entity.Status.GetDescription();
+        //    return gift;
+        //}
 
         public static MemberCardEntity MapFrom(this MemberCardEntity member, RegisterMemberQueryJson Queryjson)
         {
@@ -525,12 +526,13 @@ namespace WeiXinTicketSystem.WebApi.Models
             condition.ConditionId = entity.Id;
             condition.CinemaCode = entity.CinemaCode;
             condition.Price = entity.Price;
-            condition.ConponTypeCode = entity.ConponTypeCode;
-            condition.ConponTypeName = entity.TypeName;
+            condition.TypeCode = entity.TypeCode;
+            condition.GroupCode = entity.GroupCode;
+            condition.GroupName = entity.GroupName;
             condition.Number = entity.Number;
             condition.StartDate = entity.StartDate.ToFormatStringWithT();
             condition.EndDate = entity.EndDate.ToFormatStringWithT();
-            
+            condition.Remark = entity.Remark;
             return condition;
         }
 
