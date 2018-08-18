@@ -32,9 +32,21 @@ namespace WeiXinTicketSystem.Models.Conpon
                 ReceivedNumber = module.ReceivedNumber,
                 GroupCode = module.GroupCode,
                 Remark = module.Remark,
+                statusClass = GetStatusClass(module.UsedNumber ?? 0, module.ReceivedNumber ?? 0)
             };
         }
 
+        public static string GetStatusClass(int UsedNumber, int ReceivedNumber)
+        {
+            if (UsedNumber > 0 || ReceivedNumber > 0)
+            {
+                return "display:none;";
+            }
+            else
+            {
+                return "";
+            }
+        }
 
         /// <summary>
         /// 转为Dynatable内容
@@ -55,8 +67,21 @@ namespace WeiXinTicketSystem.Models.Conpon
                 UseDate = module.UseDate.ToFormatDateString(),
                 Title = module.Title,
                 Remark =module.Remark,
+                StatusClassConpon = GetStatusClassConpon(module.Status)
 
             };
+        }
+
+        public static string GetStatusClassConpon(ConponStatusEnum status)
+        {
+            if (status == ConponStatusEnum.AlreadyReceived || status == ConponStatusEnum.Used)
+            {
+                return "display:none;";
+            }
+            else
+            {
+                return "";
+            }
         }
 
         /// <summary>
