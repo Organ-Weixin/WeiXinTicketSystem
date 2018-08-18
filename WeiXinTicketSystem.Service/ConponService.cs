@@ -164,12 +164,17 @@ namespace WeiXinTicketSystem.Service
         /// <param name="conponTypeCode"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public IList<ConponEntity> GetConponByTypeCodeAsync(string conponTypeCode)
+        public IList<ConponEntity> GetConponByTypeCodeAsync(string CinemaCode,string conponTypeCode)
         {
             try
             {
                 DateTime Now = DateTime.Now.Date;
                 var query = _conponRepository.Query.OrderByDescending(x => x.Id);
+                //影院编码
+                if(!string.IsNullOrEmpty(CinemaCode))
+                {
+                    query.Where(x => x.CinemaCode == CinemaCode);
+                }
                 //优惠券类型编号
                 if (!string.IsNullOrEmpty(conponTypeCode))
                 {
