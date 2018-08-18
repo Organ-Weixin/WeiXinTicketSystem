@@ -55,5 +55,17 @@ namespace WeiXinTicketSystem.Models
         [Display(Name = "是否开通套餐")]
         public int OpenSnacks { get; set; }
 
+        [Display(Name = "购票提示")]
+        [StringLength(500, ErrorMessage = "{0}最多500个字符")]
+        public string TicketHint { get; set; }
+
+        [Display(Name = "影院标签")]
+        [StringLength(500, ErrorMessage = "{0}最多500个字符")]
+        public string CinemaLabel { get; set; }
+
+        [Display(Name = "影院电话")]
+        [StringLength(100, ErrorMessage = "{0}最多100个字符")]
+        public string CinemaPhone { get; set; }
+
     }
 }

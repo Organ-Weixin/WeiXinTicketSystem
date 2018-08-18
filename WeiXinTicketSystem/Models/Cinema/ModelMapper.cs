@@ -28,6 +28,7 @@ namespace WeiXinTicketSystem.Models.Cinema
                 Latitude = entity.Latitude,
                 Longitude = entity.Longitude,
                 OpenSnacks = entity.IsOpenSnacks.GetDescription(),
+                
 
                 Created = entity.Created
             };
@@ -52,6 +53,9 @@ namespace WeiXinTicketSystem.Models.Cinema
             module.Latitude = model.Latitude;
             module.Longitude = model.Longitude;
             module.IsOpenSnacks = (CinemaOpenEnum)model.OpenSnacks;
+            module.TicketHint = model.TicketHint;
+            module.CinemaLabel = model.CinemaLabel;
+            module.CinemaPhone = model.CinemaPhone;
             //module.Created = model.Created;
 
         }
@@ -75,6 +79,9 @@ namespace WeiXinTicketSystem.Models.Cinema
             model.Latitude = module.Latitude;
             model.Longitude = module.Longitude;
             model.OpenSnacks = (int)module.IsOpenSnacks;
+            model.TicketHint = module.TicketHint;
+            model.CinemaLabel = module.CinemaLabel;
+            model.CinemaPhone = module.CinemaPhone;
             //model.Created = module.Created;
 
         }
