@@ -30,9 +30,9 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="CinemaCode"></param>
         /// <returns></returns>
-        public ConponEntity GetConponByCinemaCode(string CinemaCode)
+        public IList<ConponEntity> GetConponByCinemaCode(string CinemaCode)
         {
-            return _conponRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.Deleted).SingleOrDefault();
+            return _conponRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.Deleted).ToList();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace WeiXinTicketSystem.Service
         /// <param name="offset"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public async Task<IPageList<ConponEntity>> GetConponPagedAsync(string cinemaCode, string ConponCode, string keyword, int offset, int perPage)
+        public async Task<IPageList<ConponEntity>> GetConponPagedAsync(string cinemaCode, string ConponCode, string GroupCode,string keyword, int offset, int perPage)
         {
             var query = _conponRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
             //影院编码
@@ -74,6 +74,11 @@ namespace WeiXinTicketSystem.Service
             if (!string.IsNullOrEmpty(ConponCode))
             {
                 query.Where(x => x.ConponCode.Contains(ConponCode));
+            }
+            //优惠券组编码
+            if (!string.IsNullOrEmpty(GroupCode))
+            {
+                query.Where(x => x.GroupCode == GroupCode);
             }
             //其他数据
             if (!string.IsNullOrEmpty(keyword))
@@ -114,9 +119,9 @@ namespace WeiXinTicketSystem.Service
         /// </summary>
         /// <param name="CinemaCode"></param>
         /// <returns></returns>
-        public async Task<ConponEntity> GetConponByCinemaCodeAsync(string CinemaCode)
+        public async Task<IList<ConponEntity>> GetConponByCinemaCodeAsync(string CinemaCode)
         {
-            return await _conponRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.Deleted).SingleOrDefaultAsync();
+            return await _conponRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.Deleted).ToListAsync();
         }
 
         /// <summary>
@@ -164,21 +169,21 @@ namespace WeiXinTicketSystem.Service
         /// <param name="conponTypeCode"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public IList<ConponEntity> GetConponByTypeCodeAsync(string CinemaCode,string conponTypeCode)
+        public IList<ConponEntity> GetConponByTypeCodeAsync(string cinemaCode, string groupCode)
         {
             try
             {
                 DateTime Now = DateTime.Now.Date;
                 var query = _conponRepository.Query.OrderByDescending(x => x.Id);
                 //影院编码
-                if(!string.IsNullOrEmpty(CinemaCode))
+                if (!string.IsNullOrEmpty(cinemaCode))
                 {
-                    query.Where(x => x.CinemaCode == CinemaCode);
+                    query.Where(x => x.CinemaCode == cinemaCode);
                 }
-                //优惠券类型编号
-                if (!string.IsNullOrEmpty(conponTypeCode))
+                //优惠券组编号
+                if (!string.IsNullOrEmpty(groupCode))
                 {
-                    query.Where(x => x.ConponTypeCode == conponTypeCode);
+                    query.Where(x => x.GroupCode == groupCode);
                 }
 
                 query.Where(x => !x.Deleted && x.Status == ConponStatusEnum.NotUsed && (x.ValidityDate==null || x.ValidityDate >= Now));
@@ -188,6 +193,18 @@ namespace WeiXinTicketSystem.Service
             {
                 throw ex;
             }
+        }
+
+        /// <summary>
+        /// 根据影院编码和优惠券组编号获取优惠券组下面所有未使用的优惠券信息
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <returns></returns>
+        public IList<ConponEntity> GetConponByCinemaCodeAndGroupCode(string CinemaCode,string GroupCode)
+        {
+            if (string.IsNullOrEmpty(CinemaCode) || string.IsNullOrEmpty(GroupCode))
+                return new List<ConponEntity>();
+            return _conponRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.GroupCode == GroupCode && x.Status == ConponStatusEnum.NotUsed && !x.Deleted).ToList();
         }
 
     }

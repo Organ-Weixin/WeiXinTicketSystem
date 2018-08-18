@@ -22,12 +22,12 @@ namespace WeiXinTicketSystem.Models.GivingConditions
             {
                 id = module.Id,
                 CinemaName = module.CinemaName,
-                Conditions = "满"+module.Price+"元送"+module.TypeName,
-                ConponType = module.ConponTypeCode,
+                Conditions = "满"+module.Price+"元送"+module.GroupName,
+                TypeCode = module.TypeCode,
                 Number = module.Number,
                 StartDate = module.StartDate.ToFormatDateString(),
                 EndDate = module.EndDate.ToFormatDateString(),
-
+                Remark = module.Remark,
             };
         }
 
@@ -40,7 +40,8 @@ namespace WeiXinTicketSystem.Models.GivingConditions
         {
             module.CinemaCode = model.CinemaCode;
             module.Price = model.Price;
-            module.ConponTypeCode = model.ConponTypeCode;
+            module.TypeCode = model.TypeCode;
+            module.GroupCode = model.GroupCode;
             if (!string.IsNullOrEmpty(model.Number))
             {
                 module.Number = int.Parse(model.Number);
@@ -67,11 +68,8 @@ namespace WeiXinTicketSystem.Models.GivingConditions
             model.Id = module.Id;
             model.CinemaCode = module.CinemaCode;
             model.Price = module.Price;
-            if (GetConponTypeParentId(module.ConponTypeCode) != null)
-            {
-                model.ConponTypeParentId = GetConponTypeParentId(module.ConponTypeCode).ToString();
-            }
-            model.ConponTypeCode = module.ConponTypeCode;
+            model.TypeCode = module.TypeCode;
+            model.GroupCode = module.GroupCode;
             if (module.Number != null)
             {
                 model.Number = module.Number.ToString();
@@ -81,12 +79,12 @@ namespace WeiXinTicketSystem.Models.GivingConditions
 
         }
 
-        private static int? GetConponTypeParentId(string ConponTypeCode)
-        {
-            ConponTypeService _conponTypeService = new ConponTypeService();
-            ConponTypeEntity conponType = _conponTypeService.GetConponTypeByTypeCode(ConponTypeCode);
-            return conponType.TypeParentId;
-        }
+        //private static int? GetConponTypeParentId(string ConponTypeCode)
+        //{
+        //    ConponTypeService _conponTypeService = new ConponTypeService();
+        //    ConponTypeEntity conponType = _conponTypeService.GetConponTypeByTypeCode(ConponTypeCode);
+        //    return conponType.TypeParentId;
+        //}
 
     }
 }

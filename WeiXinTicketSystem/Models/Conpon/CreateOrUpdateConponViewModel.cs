@@ -21,7 +21,7 @@ namespace WeiXinTicketSystem.Models
 
         [ListBox("_dd", Multiple = false)]
         [Display(Name = "上级优惠券类型")]
-        public string ConponTypeParentId { get; set; }
+        public string TypeCode { get; set; }
 
         [ListBox("_dd", Multiple = false)]
         [Display(Name = "套餐/影片")]
@@ -35,11 +35,6 @@ namespace WeiXinTicketSystem.Models
         [Display(Name = "优惠金额")]
         public decimal? Price { get; set; }
 
-        [File]
-        [Display(Name = "优惠券图标")]
-        [StringLength(300, ErrorMessage = "{0}最多300个字符")]
-        public string Image { get; set; }
-
         [Display(Name = "有效期")]
         public string ValidityDate { get; set; }
 
@@ -49,5 +44,9 @@ namespace WeiXinTicketSystem.Models
 
         [Display(Name = "使用时间")]
         public string UseDate { get; set; }
+
+        [Display(Name = "备注")]
+        [StringLength(300, ErrorMessage = "{0}最多300个字符")]
+        public string Remark { get; set; }
     }
 }

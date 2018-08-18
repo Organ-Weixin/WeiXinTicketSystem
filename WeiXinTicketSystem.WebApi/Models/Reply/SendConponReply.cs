@@ -19,11 +19,13 @@ namespace WeiXinTicketSystem.WebApi.Models
     {
         public string CinemaCode { get; set; }
         public string Title { get; set; }
-        public string ConponTypeCode { get; set; }
-        public string ConponTypeName { get; set; }
+        public string TypeCode { get; set; }
+        public string GroupCode { get; set; }
         public string ConponCode { get; set; }
+        public string SnackCode { get; set; }
         public decimal Price { get; set; }
         public string ValidityDate { get; set; }
-        public string Image { get; set; }
+        public string Remark { get; set; }
+        
     }
 }

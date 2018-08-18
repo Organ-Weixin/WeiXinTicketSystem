@@ -66,7 +66,7 @@ namespace WeiXinTicketSystem.Service
                 //其他数据
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    query.Where(x => x.TypeName.Contains(keyword) || x.Conditions.Contains(keyword));
+                    query.Where(x => x.GroupName.Contains(keyword) || x.Conditions.Contains(keyword));
                 }
                 query.Where(x => !x.Deleted);
                 return await query.ToPageListAsync();
@@ -135,6 +135,16 @@ namespace WeiXinTicketSystem.Service
         public async Task InsertAsync(GivingConditionEntity entity)
         {
             await _givingConditionRepository.InsertAsync(entity);
+        }
+
+        /// <summary>
+        /// 根据影院编码和满额获取赠送条件信息(异步)
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <returns></returns>
+        public async Task<IList<GivingConditionEntity>> GetGivingConditionByCinemaCodeAndPriceAsync(string CinemaCode,decimal? price)
+        {
+            return await _givingConditionRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.Price == price && !x.Deleted).ToListAsync();
         }
 
     }

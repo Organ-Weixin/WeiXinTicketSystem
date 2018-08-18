@@ -18,8 +18,8 @@ namespace WeiXinTicketSystem.WebApi.Models
     {
         public int ConponId { get; set; }
         public string CinemaCode { get; set; }
-        public string ConponTypeCode { get; set; }
-        public string ConponTypeName { get; set; }
+        public string TypeCode { get; set; }
+        public string GroupCode { get; set; }
         public string OpenID { get; set; }
         public decimal? Price { get; set; }
         public string ConponCode { get; set; }
@@ -30,6 +30,6 @@ namespace WeiXinTicketSystem.WebApi.Models
         public string ReceivedDate { get; set; }
         public bool Deleted { get; set; }
         public string Title { get; set; }
-        public string Image { get; set; }
+        public string Remark { get; set; }
     }
 }

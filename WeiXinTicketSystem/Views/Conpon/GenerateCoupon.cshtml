@@ -34,13 +34,13 @@
                     <div class="modal-body">
                         @Html.EditorFor(x => x.Id)
                         @Html.EditorFor(x => x.CinemaCode)
-                        @Html.EditorFor(x => x.ConponTypeParentId)
+                        @Html.EditorFor(x => x.TypeCode)
                         @Html.EditorFor(x => x.SnackCode)
                         @Html.EditorFor(x => x.Title)
-						 @Html.EditorFor(x => x.Price)
-                        @Html.EditorFor(x => x.Image)
+	     				 @Html.EditorFor(x => x.Price)
                         @Html.EditorFor(x => x.ValidityDate, new { htmlAttributes = new { @class = "datepicker" } })
                         @Html.EditorFor(x => x.GenerateNum)
+						 @Html.EditorFor(x => x.Remark)
                      </div>
                 </div>
                 <fieldset>
@@ -69,16 +69,16 @@
         });
 
 
-		$('#ConponTypeParentId').change(function () {
+		$('#TypeCode').change(function () {
             //判断是否选取prompt属性，无返回值；
             if ($(this).val()) {
                 var selectCode = $('#CinemaCode').find('option:selected').val();
 				var vid=$(this).val();
-				if(vid == 25 ||vid == 31)
+				if(vid == "01" ||vid == "07")
 				{
                    doGetSnackCode(selectCode);
 				}
-				else if(vid == 26 ||vid == 28)
+				else if(vid == "02" ||vid == "04")
 				{
 					doGetSessinsFilm(selectCode);
 				}

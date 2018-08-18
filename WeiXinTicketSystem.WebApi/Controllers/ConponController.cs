@@ -21,7 +21,6 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         SystemUserService _userService;
         CinemaService _cinemaService;
         TicketUsersService _ticketUserService;
-        GiftService _giftService;
         GivingConditionsService _givingConditionsService;
 
         #region ctor
@@ -31,7 +30,6 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             _userService = new SystemUserService();
             _cinemaService = new CinemaService();
             _ticketUserService = new TicketUsersService();
-            _giftService = new GiftService();
             _givingConditionsService = new GivingConditionsService();
         }
         #endregion
@@ -97,7 +95,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         {
             SendConponReply sendConponReply = new SendConponReply();
             //校验参数
-            if (!sendConponReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.ConponTypeCode, QueryJson.Number.ToString(), QueryJson.OpenID))
+            if (!sendConponReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.GroupCode, QueryJson.Number.ToString(), QueryJson.OpenID))
             {
                 return sendConponReply;
             }
@@ -125,14 +123,14 @@ namespace WeiXinTicketSystem.WebApi.Controllers
 
 
             List<ConponEntity> conpons = new List<ConponEntity>();
-            IList<ConponEntity> iconpons = _conponService.GetConponByTypeCodeAsync(QueryJson.CinemaCode,QueryJson.ConponTypeCode);
+            IList<ConponEntity> iconpons = _conponService.GetConponByTypeCodeAsync(QueryJson.CinemaCode, QueryJson.GroupCode);
             var iconpons2 = iconpons.OrderBy(x => Guid.NewGuid()).Take(QueryJson.Number);
             conpons.AddRange(iconpons2);
             foreach (ConponEntity conpon in conpons)
             {
                 conpon.OpenID = QueryJson.OpenID;
-                conpon.Status = ConponStatusEnum.AlreadyReceived;
                 conpon.ReceivedDate = DateTime.Now;
+                conpon.Status = ConponStatusEnum.AlreadyReceived;
                 await _conponService.UpdateAsync(conpon);
             }
 
@@ -152,53 +150,53 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
         #endregion
 
-        #region 查询小卖赠品信息
-        [HttpGet]
-        public async Task<QueryGiftsReply> QueryGifts(string UserName, string Password, string CinemaCode, string Status, string CurrentPage, string PageSize)
-        {
-            QueryGiftsReply queryGiftsReply = new QueryGiftsReply();
-            //校验参数
-            if (!queryGiftsReply.RequestInfoGuard(UserName, Password, CinemaCode, Status, CurrentPage, PageSize))
-            {
-                return queryGiftsReply;
-            }
-            //获取用户信息
-            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
-            if (UserInfo == null)
-            {
-                queryGiftsReply.SetUserCredentialInvalidReply();
-                return queryGiftsReply;
-            }
-            //验证影院是否存在且可访问
-            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
-            if (cinema == null)
-            {
-                queryGiftsReply.SetCinemaInvalidReply();
-                return queryGiftsReply;
-            }
-            //验证赠品状态
-            var StatusEnum = Status.CastToEnum<GiftStatusEnum>();
-            if (StatusEnum == default(GiftStatusEnum))
-            {
-                queryGiftsReply.SetGiftStatusInvalidReply();
-                return queryGiftsReply;
-            }
+        //#region 查询小卖赠品信息
+        //[HttpGet]
+        //public async Task<QueryGiftsReply> QueryGifts(string UserName, string Password, string CinemaCode, string Status, string CurrentPage, string PageSize)
+        //{
+        //    QueryGiftsReply queryGiftsReply = new QueryGiftsReply();
+        //    //校验参数
+        //    if (!queryGiftsReply.RequestInfoGuard(UserName, Password, CinemaCode, Status, CurrentPage, PageSize))
+        //    {
+        //        return queryGiftsReply;
+        //    }
+        //    //获取用户信息
+        //    SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+        //    if (UserInfo == null)
+        //    {
+        //        queryGiftsReply.SetUserCredentialInvalidReply();
+        //        return queryGiftsReply;
+        //    }
+        //    //验证影院是否存在且可访问
+        //    var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+        //    if (cinema == null)
+        //    {
+        //        queryGiftsReply.SetCinemaInvalidReply();
+        //        return queryGiftsReply;
+        //    }
+        //    //验证赠品状态
+        //    var StatusEnum = Status.CastToEnum<GiftStatusEnum>();
+        //    if (StatusEnum == default(GiftStatusEnum))
+        //    {
+        //        queryGiftsReply.SetGiftStatusInvalidReply();
+        //        return queryGiftsReply;
+        //    }
 
-            var Gifts = await _giftService.GetGiftPagedAsync(CinemaCode, StatusEnum, int.Parse(CurrentPage), int.Parse(PageSize));
-            queryGiftsReply.data = new QueryGiftsReplyGifts();
-            if (Gifts == null || Gifts.Count==0)
-            {
-                queryGiftsReply.data.GiftsCount = 0;
-            }
-            else
-            {
-                queryGiftsReply.data.GiftsCount = Gifts.Count;
-                queryGiftsReply.data.Gifts = Gifts.Select(x => new QueryGiftsReplyGift().MapFrom(x)).ToList();
-            }
-            queryGiftsReply.SetSuccessReply();
-            return queryGiftsReply;
-        }
-        #endregion
+        //    var Gifts = await _giftService.GetGiftPagedAsync(CinemaCode, StatusEnum, int.Parse(CurrentPage), int.Parse(PageSize));
+        //    queryGiftsReply.data = new QueryGiftsReplyGifts();
+        //    if (Gifts == null || Gifts.Count==0)
+        //    {
+        //        queryGiftsReply.data.GiftsCount = 0;
+        //    }
+        //    else
+        //    {
+        //        queryGiftsReply.data.GiftsCount = Gifts.Count;
+        //        queryGiftsReply.data.Gifts = Gifts.Select(x => new QueryGiftsReplyGift().MapFrom(x)).ToList();
+        //    }
+        //    queryGiftsReply.SetSuccessReply();
+        //    return queryGiftsReply;
+        //}
+        //#endregion
 
         #region 查询该影院下所有赠送条件
 

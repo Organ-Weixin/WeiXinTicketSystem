@@ -93,7 +93,6 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 
 	tables["DefaultActions"]["ActionType"].PropertyType="DefaultActionTypeEnum";
 	tables["FilmInfo"]["Status"].PropertyType="FilmStatusEnum";
-	tables["Gifts"]["Status"].PropertyType="GiftStatusEnum";
 	tables["Middleware"]["Type"].PropertyType="CinemaTypeEnum";
 	tables["MemberCard"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
 	tables["MemberCard"]["Status"].PropertyType="MemberCardStatusEnum";

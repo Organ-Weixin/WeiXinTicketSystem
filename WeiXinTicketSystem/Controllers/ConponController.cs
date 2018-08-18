@@ -25,6 +25,7 @@ namespace WeiXinTicketSystem.Controllers
         private ConponTypeService _conponTypeService;
         private SnackService _snackService;
         private SessionInfoService _sessionInfoService;
+        private ConponGroupService _conponGroupService;
         #region ctor
         public ConponController()
         {
@@ -34,6 +35,7 @@ namespace WeiXinTicketSystem.Controllers
             _conponTypeService = new ConponTypeService();
             _snackService = new SnackService();
             _sessionInfoService = new SessionInfoService();
+            _conponGroupService = new ConponGroupService();
         }
         #endregion
 
@@ -56,11 +58,12 @@ namespace WeiXinTicketSystem.Controllers
         ///// </summary>
         ///// <param name="pageModel"></param>
         ///// <returns></returns>
-        public async Task<ActionResult> List(DynatablePageModel<ConponQueryModel> pageModel)
+        public async Task<ActionResult> List(DynatablePageModel<ConponQueryModel> pageModel,string CinemaCode,string GroupCode)
         {
             var conpon = await _conponService.GetConponPagedAsync(
-                 CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? pageModel.Query.CinemaCode : CurrentUser.CinemaCode,
+                 CinemaCode,
                 pageModel.Query.ConponCode,
+                GroupCode,
                 pageModel.Query.Search,
                 pageModel.Offset,
                 pageModel.PerPage
@@ -68,6 +71,21 @@ namespace WeiXinTicketSystem.Controllers
             return DynatableResult(conpon.ToDynatableModel(conpon.TotalCount, pageModel.Offset, x => x.ToDynatableItem()));
         }
 
+        ///// <summary>
+        ///// 优惠券组列表
+        ///// </summary>
+        ///// <param name="pageModel"></param>
+        ///// <returns></returns>
+        public async Task<ActionResult> GroupList(DynatablePageModel<ConponQueryModel> pageModel)
+        {
+            var conpon = await _conponGroupService.GetConponGroupPagedAsync(
+                 CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? pageModel.Query.CinemaCode : CurrentUser.CinemaCode,
+                 pageModel.Query.Search,
+                pageModel.Offset,
+                pageModel.PerPage
+            );
+            return DynatableResult(conpon.ToDynatableModel(conpon.TotalCount, pageModel.Offset, x => x.ToDynatableItemGroup()));
+        }
 
         /// <summary>
         /// 添加优惠券
@@ -92,13 +110,29 @@ namespace WeiXinTicketSystem.Controllers
         }
 
 
+        /// <summary>
+        /// 券码管理
+        /// </summary>
+        /// <returns></returns>
+        public  ActionResult CouponIndex(string CinemaCode,string GroupCode)
+        {
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
+            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
+            ViewBag.CurrentPermissions = CurrentPermissions;
+
+            ViewBag.CinemaCode = CinemaCode;
+            ViewBag.GroupCode = GroupCode;
+            return View(nameof(CouponIndex));
+        }
+
+
 
         /// <summary>
         /// 修改优惠券
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ActionResult> Update(int id)
+        public async Task<ActionResult> Update(int id, string CinemaCode, string GroupCode)
         {
             var conpon = await _conponService.GetConponByIdAsync(id);
             if (conpon == null)
@@ -118,8 +152,8 @@ namespace WeiXinTicketSystem.Controllers
             //}
 
             //绑定套餐
-            int intParentId = int.Parse(model.ConponTypeParentId);
-            if (intParentId == 25 || intParentId == 31)
+            string typeCode = model.TypeCode;
+            if (typeCode == "01" || typeCode == "07")
             {
                 List<SnackEntity> snacks = new List<SnackEntity>();
                 if (!string.IsNullOrEmpty(model.CinemaCode))
@@ -128,7 +162,7 @@ namespace WeiXinTicketSystem.Controllers
                     ViewBag.SnackCode_dd = snacks.Select(x => new SelectListItem { Text = x.SnackName, Value = x.SnackCode });
                 }
             }
-            else if (intParentId == 26 || intParentId == 28)
+            else if (typeCode == "02" || typeCode == "04")
             {
                 List<SessionInfoEntity> sessionFilm = new List<SessionInfoEntity>();
                 if (!string.IsNullOrEmpty(model.CinemaCode))
@@ -138,6 +172,9 @@ namespace WeiXinTicketSystem.Controllers
                 }
             }
 
+
+            ViewBag.CinemaCode = CinemaCode;
+            ViewBag.GroupCode = GroupCode;
             return CreateOrUpdate(model);
         }
 
@@ -174,27 +211,27 @@ namespace WeiXinTicketSystem.Controllers
 
             conpon.MapFrom(model);
 
-            //图片处理
-            if (Image != null)
-            {
-                string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
-                string savePath = @"upload\ConponImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                string accessPath = "upload/ConponImg/" + DateTime.Now.ToString("yyyyMM") + "/";
-                System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                //判断原图片是否存在
-                if (!string.IsNullOrEmpty(conpon.Image))
-                {
-                    string file = conpon.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
-                    if (System.IO.File.Exists(file))
-                    {
-                        //如果存在则删除
-                        System.IO.File.Delete(file);
-                    }
-                }
-                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                conpon.Image = basePath + accessPath + fileName;
-            }
+            //////图片处理
+            ////if (Image != null)
+            ////{
+            ////    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+            ////    string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
+            ////    string savePath = @"upload\ConponImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+            ////    string accessPath = "upload/ConponImg/" + DateTime.Now.ToString("yyyyMM") + "/";
+            ////    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+            ////    //////判断原图片是否存在
+            ////    ////if (!string.IsNullOrEmpty(conpon.Image))
+            ////    ////{
+            ////    ////    string file = conpon.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+            ////    ////    if (System.IO.File.Exists(file))
+            ////    ////    {
+            ////    ////        //如果存在则删除
+            ////    ////        System.IO.File.Delete(file);
+            ////    ////    }
+            ////    ////}
+            ////    ////string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
+            ////    ////conpon.Image = basePath + accessPath + fileName;
+            ////}
 
             if (conpon.Id == 0)
             {
@@ -211,7 +248,7 @@ namespace WeiXinTicketSystem.Controllers
             var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
-            return View(nameof(Index));
+            return Redirect(Url.Action(nameof(CouponIndex)) + "?CinemaCode=" + conpon.CinemaCode + "&GroupCode=" + conpon.GroupCode);
         }
 
 
@@ -223,87 +260,98 @@ namespace WeiXinTicketSystem.Controllers
         [HttpPost]
         public async Task<ActionResult> _GenerateCoupon(GenerateCouponViewModel model, HttpPostedFileBase Image)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                var errorMessages = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
-                return ErrorObject(string.Join("/n", errorMessages));
-            }
-
-            ConponEntity conpon = new ConponEntity();
-
-            //图片处理
-            if (Image != null)
-            {
-                string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
-                string savePath = @"upload\ConponImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                string accessPath = "upload/ConponImg/" + DateTime.Now.ToString("yyyyMM") + "/";
-                System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                //判断原图片是否存在
-                if (!string.IsNullOrEmpty(conpon.Image))
+                if (!ModelState.IsValid)
                 {
-                    string file = conpon.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
-                    if (System.IO.File.Exists(file))
-                    {
-                        //如果存在则删除
-                        System.IO.File.Delete(file);
-                    }
+                    var errorMessages = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
+                    return ErrorObject(string.Join("/n", errorMessages));
                 }
-                string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                conpon.Image = basePath + accessPath + fileName;
-            }
 
-            //生成优惠券
-            if (model.GenerateNum != null)
-            {
-                int intNum = int.Parse(model.GenerateNum);
-                if (intNum > 0)
+                ConponEntity conpon = new ConponEntity();
+
+                ////////图片处理
+                //////if (Image != null)
+                //////{
+                //////    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
+                //////    string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
+                //////    string savePath = @"upload\ConponImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                //////    string accessPath = "upload/ConponImg/" + DateTime.Now.ToString("yyyyMM") + "/";
+                //////    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
+                //////    //////判断原图片是否存在
+                //////    ////if (!string.IsNullOrEmpty(conpon.Image))
+                //////    ////{
+                //////    ////    string file = conpon.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                //////    ////    if (System.IO.File.Exists(file))
+                //////    ////    {
+                //////    ////        //如果存在则删除
+                //////    ////        System.IO.File.Delete(file);
+                //////    ////    }
+                //////    ////}
+                //////    ////string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
+                //////    ////conpon.Image = basePath + accessPath + fileName;
+                //////}
+
+                //生成优惠券
+                if (model.GenerateNum != null)
                 {
-                    string strCode= model.ConponTypeParentId + RandomHelper.CreateRandomNum(6);
-                    for (int i = 1; i <= intNum; i++)
+                    int intNum = int.Parse(model.GenerateNum);
+                    if (intNum > 0)
                     {
-                        ConponEntity conponNew = new ConponEntity();
-                        conponNew.CinemaCode = model.CinemaCode;
-                        if (!string.IsNullOrEmpty(model.ConponTypeParentId))
-                        {
-                            conponNew.ConponTypeParentId =int.Parse(model.ConponTypeParentId);
-                        }
-                        conponNew.SnackCode = model.SnackCode;
-                        conponNew.Title = model.Title;
-                        conponNew.Price = model.Price;
-                        conponNew.ConponTypeCode = strCode;
-                        conponNew.ConponTypeName = model.Title;
+                        string strCode = model.TypeCode + RandomHelper.CreateRandomNum(6);
+                        //生成优惠券组
+                        ConponGroupEntity conponGroup = new ConponGroupEntity();
+                        conponGroup.CinemaCode = model.CinemaCode;
+                        conponGroup.TypeCode = model.TypeCode;
+                        conponGroup.GroupCode = strCode;
+                        conponGroup.GroupName = model.Title;
+                        conponGroup.Price = model.Price;
+                        conponGroup.ConponNumber = intNum;
+                        conponGroup.SnackOrFilmCode = model.SnackCode;
                         if (!string.IsNullOrEmpty(model.ValidityDate))
                         {
-                            conponNew.ValidityDate = DateTime.Parse(model.ValidityDate);
+                            conponGroup.ValidityDate = DateTime.Parse(model.ValidityDate);
                         }
-                        conponNew.Image = conpon.Image;
-                        conponNew.ConponCode = RandomHelper.CreateRandomCode();
-                        conponNew.Created = DateTime.Now;
-                        conponNew.Status = ConponStatusEnum.NotUsed;
+                        conponGroup.Remark = model.Remark;
+                        conponGroup.Created = DateTime.Now;
 
-                        await _conponService.InsertAsync(conponNew);
-                    }
-                    //生成优惠券类型二级目录
-                    if (!string.IsNullOrEmpty(model.ConponTypeParentId))
-                    {
-                        ConponTypeEntity conponType = new ConponTypeEntity();
-                        conponType.TypeCode = strCode;
-                        conponType.TypeName = model.Title;
-                        conponType.TypeParentId = int.Parse(model.ConponTypeParentId);
-                        conponType.Created = DateTime.Now;
-                        conponType.IsDel = false;
-                        
-                        await _conponTypeService.InsertAsync(conponType);
+                        await _conponGroupService.InsertAsync(conponGroup);
+
+                        //生成优惠券
+                        for (int i = 1; i <= intNum; i++)
+                        {
+                            ConponEntity conponNew = new ConponEntity();
+                            conponNew.CinemaCode = model.CinemaCode;
+                            conponNew.TypeCode = model.TypeCode;
+                            conponNew.SnackCode = model.SnackCode;
+                            conponNew.Title = model.Title;
+                            conponNew.Price = model.Price;
+                            conponNew.GroupCode = strCode;
+                            if (!string.IsNullOrEmpty(model.ValidityDate))
+                            {
+                                conponNew.ValidityDate = DateTime.Parse(model.ValidityDate);
+                            }
+                            conponNew.ConponCode = RandomHelper.CreateRandomCode();
+                            conponNew.Created = DateTime.Now;
+                            conponNew.Status = ConponStatusEnum.NotUsed;
+                            conponNew.Remark = model.Remark;
+
+                            await _conponService.InsertAsync(conponNew);
+                        }
+
                     }
                 }
+
+
+                var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
+                List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
+                ViewBag.CurrentPermissions = CurrentPermissions;
+                return View(nameof(Index));
             }
-
-
-            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
-            List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
-            ViewBag.CurrentPermissions = CurrentPermissions;
-            return View(nameof(Index));
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
 
@@ -325,13 +373,47 @@ namespace WeiXinTicketSystem.Controllers
             return Object();
         }
 
+        /// <summary>
+        /// 删除优惠券组和组下面所有优惠券
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> DeleteGroup(int id,string CinemaCode, string GroupCode)
+        {
+            try
+            {
+                var conponGroup = await _conponGroupService.GetConponGroupByIdAsync(id);
+
+                if (conponGroup != null)
+                {
+                    await _conponGroupService.DeleteAsync(conponGroup);
+
+                    //删除优惠券
+                    List<ConponEntity> conpons = new List<ConponEntity>();
+                    IList<ConponEntity> iconpons = _conponService.GetConponByCinemaCodeAndGroupCode(CinemaCode, GroupCode);
+                    conpons.AddRange(iconpons);
+                    foreach (ConponEntity conpon in conpons)
+                    {
+                        conpon.Deleted = true;
+                        conpon.Updated = DateTime.Now;
+                        await _conponService.UpdateAsync(conpon);
+                    }
+                }
+                return Object();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         private async Task PreparyCreateOrEditViewData()
         {
             //绑定上级优惠券类型下拉框
             List<ConponTypeEntity> conponTypes = new List<ConponTypeEntity>();
             conponTypes.AddRange(await _conponTypeService.GetRootConponTypeAsync());
-            ViewBag.ConponTypeParentId_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.Id.ToString() });
+            ViewBag.TypeCode_dd = conponTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode });
 
             //绑定是否使用枚举
             ViewBag.Status_dd = EnumUtil.GetSelectList<ConponStatusEnum>();

@@ -266,7 +266,6 @@
     <Compile Include="Controllers\CinemaController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmInfoController.cs" />
-    <Compile Include="Controllers\GiftController.cs" />
     <Compile Include="Controllers\GivingConditionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MiddlewareController.cs" />
@@ -298,7 +297,7 @@
     <Compile Include="Controllers\UserCinemaController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
-	<Compile Include="Controllers\ConponTypeController.cs" />
+    <Compile Include="Controllers\ConponTypeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -340,9 +339,6 @@
     <Compile Include="Models\FilmInfo\YKFilmInfomation.cs" />
     <Compile Include="Models\FilmInfo\FilmInfoQueryModel.cs" />
     <Compile Include="Models\FilmInfo\ModelMapper.cs" />
-    <Compile Include="Models\Gift\GiftQueryModel.cs" />
-    <Compile Include="Models\Gift\CreateOrUpdateGiftViewModel.cs" />
-    <Compile Include="Models\Gift\ModelMapper.cs" />
     <Compile Include="Models\GivingConditions\CreateOrUpdateGivingConditionsViewModel.cs" />
     <Compile Include="Models\GivingConditions\GivingConditionsQueryModel.cs" />
     <Compile Include="Models\GivingConditions\ModelMapper.cs" />
@@ -403,7 +399,7 @@
     <Compile Include="Models\User\ModifyPasswordViewModel.cs" />
     <Compile Include="Models\User\UpdateUserViewModel.cs" />
     <Compile Include="Models\User\UserBaseViewModel.cs" />
-	<Compile Include="Models\ConponType\CreateOrUpdateConponTypeViewModel.cs" />
+    <Compile Include="Models\ConponType\CreateOrUpdateConponTypeViewModel.cs" />
     <Compile Include="Models\ConponType\ModelMapper.cs" />
     <Compile Include="Models\Conpon\GenerateCouponViewModel.cs" />
     <Compile Include="MvcNames\MvcNames.cs" />
@@ -1445,7 +1441,7 @@
     <Content Include="Views\Banner\CreateOrUpdate.cshtml" />
     <Content Include="Views\Banner\Index.cshtml" />
     <Content Include="Views\Conpon\CreateOrUpdate.cshtml" />
-    <Content Include="Views\Conpon\Index.cshtml" />
+    <Content Include="Views\Conpon\CouponIndex.cshtml" />
     <Content Include="Views\Gift\CreateOrUpdate.cshtml" />
     <Content Include="Views\Gift\Index.cshtml" />
     <None Include="Properties\PublishProfiles\WeiXinTicket.Admin.pubxml" />
@@ -1465,9 +1461,10 @@
     <Content Include="Views\UserCinema\Index.cshtml" />
     <Content Include="Views\UserInfo\CreateOrUpdate.cshtml" />
     <Content Include="Views\UserInfo\Index.cshtml" />
-	<Content Include="Views\ConponType\CreateOrUpdate.cshtml" />
+    <Content Include="Views\ConponType\CreateOrUpdate.cshtml" />
     <Content Include="Views\ConponType\Index.cshtml" />
     <Content Include="Views\Conpon\GenerateCoupon.cshtml" />
+    <Content Include="Views\Conpon\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
