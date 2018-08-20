@@ -31,16 +31,16 @@
                             <th data-dynatable-no-sort="true">#</th>
                             <th data-dynatable-no-sort="true">影院名称</th>
                             <th data-dynatable-no-sort="true">订单号</th>
-                            <th data-dynatable-no-sort="true">套餐数</th>
-                            <th data-dynatable-no-sort="true">总金额</th>
-							<th data-dynatable-no-sort="true">优惠券抵扣金额</th>
+                            <th data-dynatable-no-sort="true">套餐名称</th>
+                            <th data-dynatable-no-sort="true">数量</th>
+							<th data-dynatable-no-sort="true">优惠券名称</th>
+							<th data-dynatable-no-sort="true">销售金额</th>
+                            <th data-dynatable-no-sort="true">合计</th>
 							<th data-dynatable-no-sort="true">实际支付金额</th>
-                            <th data-dynatable-no-sort="true">凭证号</th>
-                            <th data-dynatable-no-sort="true">预订时间</th>
+                            <th data-dynatable-no-sort="true">创建时间</th>
                             <th data-dynatable-no-sort="true">手机号码</th>
                             <th data-dynatable-no-sort="true">状态</th>
                             
-                            <th data-dynatable-no-sort="true">操作</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -67,19 +67,17 @@
                     <td style="text-align: left;">{{row}}</td>
                     <td style="text-align: left; ">{{cinemaName}}</td>
                     <td style="text-align: left;">{{orderCode}}</td>
-                    <td style="text-align: left;">{{snacksCount}}</td>
-                    <td style="text-align: left;">{{totalPrice}}</td>
-					<td style="text-align: left;">{{ConponPrice}}</td>
+                    <td style="text-align: left;">{{SnackName}}</td>
+                    <td style="text-align: left;">{{Number}}</td>
+					<td style="text-align: left;">{{ConponTitle}}</td>
+					<td style="text-align: left;">{{SalePrice}}</td>
+                    <td style="text-align: left;">{{SubTotalPrice}}</td>
 					<td style="text-align: left;">{{ActualPrice}}</td>
-                    <td style="text-align: left;">{{voucherCode}}</td>
-                    <td style="text-align: left;">{{SubmitTime}}</td>
+                    <td style="text-align: left;">{{Created}}</td>
                     <td style="text-align: left;">{{mobile}}</td>
                     <td style="text-align: left; color:{{statusClass}}">{{orderStatus}}</td>
 
-                    <td style="text-align: left;">
-                        详情
-                    </td>
-                </tr>
+                 </tr>
             </script>
         </div>
     </div>

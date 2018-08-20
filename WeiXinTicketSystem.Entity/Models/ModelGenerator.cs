@@ -163,14 +163,16 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int Id { get; set; }
 		public virtual int OrderId { get; set; }
 		public virtual string SnackCode { get; set; }
+		public virtual string SnackName { get; set; }
 		public virtual decimal StandardPrice { get; set; }
 		public virtual decimal SalePrice { get; set; }
 		public virtual int Number { get; set; }
 		public virtual decimal SubTotalPrice { get; set; }
+		public virtual decimal? ActualPrice { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
-		public virtual bool? Deleted { get; set; }
 		public virtual string ConponCode { get; set; }
+		public virtual string Title { get; set; }
 		public virtual decimal? ConponPrice { get; set; }
 		public virtual string CinemaCode { get; set; }
 		public virtual string OrderCode { get; set; }
@@ -180,19 +182,37 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime? ReleaseTime { get; set; }
 		public virtual DateTime? SubmitTime { get; set; }
 		public virtual string VoucherCode { get; set; }
-		public virtual byte OrderStatus { get; set; }
+		public virtual SnackOrderStatusEnum OrderStatus { get; set; }
 		public virtual DateTime? RefundTime { get; set; }
 		public virtual DateTime? FetchTime { get; set; }
-		public virtual DateTime AutoUnLockDateTime { get; set; }
 		public virtual string DeliveryAddress { get; set; }
 		public virtual DateTime SendTime { get; set; }
 		public virtual bool? OrderPayFlag { get; set; }
 		public virtual byte? OrderPayType { get; set; }
 		public virtual DateTime? OrderPayTime { get; set; }
 		public virtual string OrderTradeNo { get; set; }
-		public virtual string OpenID { get; set; }
 		public virtual bool? IsUseConpons { get; set; }
 		public virtual string CinemaName { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the UserInfo table.
+    /// </summary>
+    [Table("UserInfo")]
+    [SqlLamTable(Name = "UserInfo")]
+    public partial class UserInfoEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string UserName { get; set; }
+		public virtual string Password { get; set; }
+		public virtual string Company { get; set; }
+		public virtual string Address { get; set; }
+		public virtual string Tel { get; set; }
+		public virtual int? Advance { get; set; }
+		public virtual bool IsDel { get; set; }
+		public virtual DateTime? BeginDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
 	}
 
     /// <summary>
@@ -224,28 +244,9 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string CinemaPhone { get; set; }
 		public virtual string TicketHint { get; set; }
 		public virtual string CinemaLabel { get; set; }
+		public virtual YesOrNoEnum? IsSnackDistribution { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the UserInfo table.
-    /// </summary>
-    [Table("UserInfo")]
-    [SqlLamTable(Name = "UserInfo")]
-    public partial class UserInfoEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string UserName { get; set; }
-		public virtual string Password { get; set; }
-		public virtual string Company { get; set; }
-		public virtual string Address { get; set; }
-		public virtual string Tel { get; set; }
-		public virtual int? Advance { get; set; }
-		public virtual bool IsDel { get; set; }
-		public virtual DateTime? BeginDate { get; set; }
-		public virtual DateTime? EndDate { get; set; }
 	}
 
     /// <summary>
@@ -1212,6 +1213,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual bool? Deleted { get; set; }
 		public virtual string ConponCode { get; set; }
 		public virtual decimal? ConponPrice { get; set; }
+		public virtual decimal? ActualPrice { get; set; }
 	}
 
     /// <summary>

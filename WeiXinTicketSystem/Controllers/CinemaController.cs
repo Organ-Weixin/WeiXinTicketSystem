@@ -162,11 +162,14 @@ namespace WeiXinTicketSystem.Controllers
             //绑定所属院线枚举
             ViewBag.TheaterChain_dd = EnumUtil.GetSelectList<TheaterChainEnum>();
 
-            //绑定状态(0-未开通，1-已开通)枚举
+            //绑定状态(1-开通，2-关闭)枚举
             ViewBag.IsOpen_dd = EnumUtil.GetSelectList<CinemaOpenEnum>();
 
             //绑定是否开通套餐枚举
             ViewBag.OpenSnacks_dd = EnumUtil.GetSelectList<CinemaOpenEnum>();
+
+            //绑定是否小卖配送枚举
+            ViewBag.IsSnackDistribution_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
 
         }
 

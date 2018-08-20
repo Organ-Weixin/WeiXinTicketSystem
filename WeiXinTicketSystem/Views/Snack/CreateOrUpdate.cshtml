@@ -59,3 +59,26 @@
         </div>
     </section>
 }
+
+@section scripts{
+    <script type="text/javascript">
+		$('#CinemaCode').on('change', function () {
+            //判断是否选取prompt属性，无返回值；
+            if ($(this).val()) {
+                var selectCode = $(this).find('option:selected').val();
+                doGetSnackType(selectCode);
+            }
+        });
+
+		 function doGetSnackType(cinemaCode) {
+            var selDom = $("#TypeCode");//根据id获取select的jquery对象
+            $.post('@Url.Action("GetSnackType", "Snack")', { 'cinemaCode': cinemaCode }, function (result) {
+                var jsonObj = eval("(" + result + ")");
+                $("#TypeCode").empty();
+                for (var i = 0; i < jsonObj.length; i++) {
+                    selDom.append("<option value='" + jsonObj[i].TypeCode + "'>" + jsonObj[i].TypeName + "</option>");//添加option
+                }
+            }, 'json');
+        }
+	</script>
+}

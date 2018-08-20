@@ -61,6 +61,18 @@ namespace WeiXinTicketSystem.Service
         }
 
         /// <summary>
+        /// 根据影院编码和优惠券组编号获取优惠券组信息(视图)
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <returns></returns>
+        public ConponGroupViewEntity GetConponGroupViewByCinemaCodeAndGroupCode(string CinemaCode, string groupCode)
+        {
+            if (string.IsNullOrEmpty(CinemaCode) || string.IsNullOrEmpty(groupCode))
+                return new ConponGroupViewEntity();
+            return _conponGroupViewRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.GroupCode == groupCode).SingleOrDefault();
+        }
+
+        /// <summary>
         /// 后台分页读取优惠券组信息
         /// </summary>
         /// <param name="cinemaCode"></param>

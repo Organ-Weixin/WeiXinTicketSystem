@@ -119,6 +119,8 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["Snacks"]["IsRecommand"].PropertyType="YesOrNoEnum";
 	tables["AdminSnacksView"]["IsRecommand"].PropertyType="YesOrNoEnum";
 	tables["AdminActivityView"]["Status"].PropertyType="YesOrNoEnum";
+	tables["SnackOrderDetailsView"]["OrderStatus"].PropertyType="SnackOrderStatusEnum";
+	tables["Cinema"]["IsSnackDistribution"].PropertyType="YesOrNoEnum";
 #>
 using System;
 using System.ComponentModel.DataAnnotations;

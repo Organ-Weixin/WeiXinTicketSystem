@@ -4,6 +4,7 @@ using WeiXinTicketSystem.Entity.Models;
 using WeiXinTicketSystem.Util;
 using WeiXinTicketSystem.Entity.Enum;
 using NetSaleSvc.Api.Models;
+using WeiXinTicketSystem.Service;
 
 namespace WeiXinTicketSystem.WebApi.Models
 {
@@ -533,7 +534,15 @@ namespace WeiXinTicketSystem.WebApi.Models
             condition.StartDate = entity.StartDate.ToFormatStringWithT();
             condition.EndDate = entity.EndDate.ToFormatStringWithT();
             condition.Remark = entity.Remark;
+            condition.NotUsedNumber = GetNotUsedNumber(entity.CinemaCode, entity.GroupCode);
             return condition;
+        }
+
+        private static int? GetNotUsedNumber(string cinemaCode,string groupCode)
+        {
+            ConponGroupService _conponGroupService = new ConponGroupService();
+            ConponGroupViewEntity conpon = _conponGroupService.GetConponGroupViewByCinemaCodeAndGroupCode(cinemaCode,groupCode);
+            return conpon.NotUsedNumber;
         }
 
         public static QueryOrdersReplyOrder MapFrom(this QueryOrdersReplyOrder conpon, OrderEntity entity)
