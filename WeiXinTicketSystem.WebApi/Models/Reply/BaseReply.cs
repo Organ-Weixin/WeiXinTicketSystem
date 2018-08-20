@@ -284,6 +284,16 @@ namespace WeiXinTicketSystem.WebApi.Models
             ErrorCode = ErrorCodeEnum.CinemaMiniProgramAccountNotExist.GetValueString();
             ErrorMessage = ErrorCodeEnum.CinemaMiniProgramAccountNotExist.GetDescription();
         }
+
+        /// <summary>
+        /// 优惠券数量小于赠送数量
+        /// </summary>
+        public void SetCouponNumberLessThanReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.CouponNumberLessThan.GetValueString();
+            ErrorMessage = ErrorCodeEnum.CouponNumberLessThan.GetDescription();
+        }
         #endregion
 
         /// <summary>

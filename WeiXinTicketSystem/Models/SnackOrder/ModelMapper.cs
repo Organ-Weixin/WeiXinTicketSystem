@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WeiXinTicketSystem.Service;
 
 namespace WeiXinTicketSystem.Models.SnackOrder
 {
@@ -15,24 +16,31 @@ namespace WeiXinTicketSystem.Models.SnackOrder
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        public static dynamic ToDynatableItem(this AdminSnackOrdersViewEntity order)
+        public static dynamic ToDynatableItem(this SnackOrderDetailsViewEntity orderDetail)
         {
             return new
             {
-                id = order.Id,
-                cinemaName = order.CinemaName,
-                orderCode = order.OrderCode,
-                snacksCount = order.SnacksCount,
-                totalPrice = order.TotalPrice.ToString("0.##"),
-                voucherCode = order.VoucherCode,
-                SubmitTime = order.SubmitTime.GetValueOrDefault().ToFormatString(),
-                mobile = order.MobilePhone,
-                orderStatus = order.OrderStatus.GetDescription(),
-                statusClass = GetStatusClass(order.OrderStatus),
-                //优惠金额
-                ConponPrice = order.ConponPrice,
+                id = orderDetail.Id,
+                cinemaName = orderDetail.CinemaName,
+                orderCode = orderDetail.OrderCode,
+                SnackName = orderDetail.SnackName,
+                Number = orderDetail.Number,
+                //优惠券名称
+                ConponTitle = orderDetail.Title,
+                //销售金额
+                SalePrice = orderDetail.SalePrice,
+                //合计
+                SubTotalPrice = orderDetail.SubTotalPrice,
                 //实际支付金额
-                ActualPrice = GetActualPrice(order.TotalPrice, order.ConponPrice,order.OrderPayFlag)
+                ActualPrice =orderDetail.ActualPrice,
+                Created = orderDetail.Created.ToFormatString(),
+                mobile = orderDetail.MobilePhone,
+                orderStatus = orderDetail.OrderStatus.GetDescription(),
+                statusClass = GetStatusClass(orderDetail.OrderStatus),
+                //优惠金额
+                //ConponPrice = orderDetail.ConponPrice,
+                //实际支付金额
+                //ActualPrice = GetActualPrice(orderDetail.TotalPrice, orderDetail.ConponPrice, orderDetail.OrderPayFlag)
             };
         }
 
@@ -62,16 +70,17 @@ namespace WeiXinTicketSystem.Models.SnackOrder
             }
         }
 
-        public static decimal? GetActualPrice(decimal totalPrice, decimal? conponPrice,bool? orderPayFlag)
-        {
-            if (orderPayFlag ==null || orderPayFlag == false)
-                return null;
-            if (conponPrice == null)
-            {
-                conponPrice = 0;
-            }
-            decimal actualPrice = totalPrice - decimal.Parse(conponPrice.ToString());
-            return actualPrice;
-        }
+        //public static decimal? GetActualPrice(decimal totalPrice, decimal? conponPrice,bool? orderPayFlag)
+        //{
+        //    if (orderPayFlag ==null || orderPayFlag == false)
+        //        return null;
+        //    if (conponPrice == null)
+        //    {
+        //        conponPrice = 0;
+        //    }
+        //    decimal actualPrice = totalPrice - decimal.Parse(conponPrice.ToString());
+        //    return actualPrice;
+        //}
+
     }
 }

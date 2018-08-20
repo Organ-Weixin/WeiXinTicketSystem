@@ -32,12 +32,13 @@ namespace WeiXinTicketSystem.Service
             {
                 query.Where(x => x.Status == Status.Value);
             }
+            query.Where(x => !x.IsDel);
             return query.ToList();
         }
 
         public IList<SnackEntity> GetSnacks(string CinemaCode, IEnumerable<string> SnackCodes)
         {
-           return _snackRepository.Query.Where(x => x.CinemaCode == CinemaCode)
+           return _snackRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.IsDel)
                     .WhereIsIn(x => x.SnackCode,SnackCodes).ToList();
         }
         public async Task<IPageList<AdminSnacksViewEntity>> GetSnacksPagedAsync(string cinemaCode,string snackcode, string typeCode,
@@ -105,7 +106,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public async Task<SnackEntity> GetSnackByCinemaCodeAndNameAsync(string CinemaCode,string SnackName)
         {
-            return await _snackRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.SnackName == SnackName).SingleOrDefaultAsync();
+            return await _snackRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.SnackName == SnackName && !x.IsDel).SingleOrDefaultAsync();
         }
 
         /// <summary>

@@ -124,6 +124,11 @@ namespace WeiXinTicketSystem.WebApi.Controllers
 
             List<ConponEntity> conpons = new List<ConponEntity>();
             IList<ConponEntity> iconpons = _conponService.GetConponByTypeCodeAsync(QueryJson.CinemaCode, QueryJson.GroupCode);
+            if (iconpons.Count < QueryJson.Number)
+            {
+                sendConponReply.SetCouponNumberLessThanReply();
+                return sendConponReply;
+            }
             var iconpons2 = iconpons.OrderBy(x => Guid.NewGuid()).Take(QueryJson.Number);
             conpons.AddRange(iconpons2);
             foreach (ConponEntity conpon in conpons)

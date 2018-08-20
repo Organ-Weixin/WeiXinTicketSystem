@@ -56,6 +56,7 @@ namespace WeiXinTicketSystem.Models.Cinema
             module.TicketHint = model.TicketHint;
             module.CinemaLabel = model.CinemaLabel;
             module.CinemaPhone = model.CinemaPhone;
+            module.IsSnackDistribution = (YesOrNoEnum)model.IsSnackDistribution;
             //module.Created = model.Created;
 
         }
@@ -82,6 +83,11 @@ namespace WeiXinTicketSystem.Models.Cinema
             model.TicketHint = module.TicketHint;
             model.CinemaLabel = module.CinemaLabel;
             model.CinemaPhone = module.CinemaPhone;
+            if (module.IsSnackDistribution != null)
+            {
+                model.IsSnackDistribution = (int)module.IsSnackDistribution;
+            }
+            
             //model.Created = module.Created;
 
         }

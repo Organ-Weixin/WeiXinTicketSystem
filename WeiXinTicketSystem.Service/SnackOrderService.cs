@@ -19,6 +19,7 @@ namespace WeiXinTicketSystem.Service
         private readonly IRepository<SnackOrderDetailEntity> _snackOrderDetailRepository;
         private readonly IRepository<SnackEntity> _snackRepository;
         private readonly IRepository<AdminSnackOrdersViewEntity> _adminSnackOrderViewRepository;
+        private readonly IRepository<SnackOrderDetailsViewEntity> _snackOrderDetailsViewRepository;
         private readonly IRepository<ConponEntity> _conponRepository;
         public SnackOrderService()
         {
@@ -26,6 +27,7 @@ namespace WeiXinTicketSystem.Service
             _snackOrderDetailRepository = new Repository<SnackOrderDetailEntity>();
             _snackRepository = new Repository<SnackEntity>();
             _adminSnackOrderViewRepository = new Repository<AdminSnackOrdersViewEntity>();
+            _snackOrderDetailsViewRepository = new Repository<SnackOrderDetailsViewEntity>();
             _conponRepository = new Repository<ConponEntity>();
         }
         #endregion
@@ -184,11 +186,11 @@ namespace WeiXinTicketSystem.Service
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public async Task<IPageList<AdminSnackOrdersViewEntity>> GetOrdersPagedAsync(string cinemaCode,
+        public async Task<IPageList<SnackOrderDetailsViewEntity>> GetOrdersPagedAsync(string cinemaCode,
             int offset, int perPage, string keyword, SnackOrderStatusEnum? orderStatus,
             DateTime? startDate, DateTime? endDate)
         {
-            var query = _adminSnackOrderViewRepository.Query
+            var query = _snackOrderDetailsViewRepository.Query
                 .OrderByDescending(x => x.Id)
                 .Skip(offset)
                 .Take(perPage);
@@ -260,9 +262,9 @@ namespace WeiXinTicketSystem.Service
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public async Task<IList<AdminSnackOrdersViewEntity>> GetOrdersAsync(string cinemaCode, string keyword, SnackOrderStatusEnum? orderStatus, DateTime? startDate, DateTime? endDate)
+        public async Task<IList<SnackOrderDetailsViewEntity>> GetOrdersAsync(string cinemaCode, string keyword, SnackOrderStatusEnum? orderStatus, DateTime? startDate, DateTime? endDate)
         {
-            var query = _adminSnackOrderViewRepository.Query.OrderByDescending(x => x.Id);
+            var query = _snackOrderDetailsViewRepository.Query.OrderByDescending(x => x.Id);
 
             if (!string.IsNullOrEmpty(cinemaCode))
             {

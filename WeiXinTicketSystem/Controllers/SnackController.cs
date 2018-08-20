@@ -85,6 +85,12 @@ namespace WeiXinTicketSystem.Controllers
             CreateOrUpdateSnackViewModel model = new CreateOrUpdateSnackViewModel();
             model.MapFrom(snack);
             await PrepareIndexViewData();
+
+            //初始化套餐类型
+            List<SnackTypeEntity> snacksTypes = new List<SnackTypeEntity>();
+            snacksTypes.AddRange(await _snacksTypeService.GetAllSnacksTypesAsync(snack.CinemaCode));
+            ViewBag.TypeCode_dd = snacksTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode });
+
             return CreateOrUpdate(model);
         }
 
@@ -204,12 +210,29 @@ namespace WeiXinTicketSystem.Controllers
                 };
             }
 
-            List<SnackTypeEntity> snacksTypes = new List<SnackTypeEntity>();
-            snacksTypes.AddRange(await _snacksTypeService.GetAllSnacksTypesAsync(CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? "" : CurrentUser.CinemaCode));
-            ViewBag.TypeCode_dd = snacksTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode.ToString() });
+            //List<SnackTypeEntity> snacksTypes = new List<SnackTypeEntity>();
+            //snacksTypes.AddRange(await _snacksTypeService.GetAllSnacksTypesAsync(CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? "" : CurrentUser.CinemaCode));
+            //ViewBag.TypeCode_dd = snacksTypes.Select(x => new SelectListItem { Text = x.TypeName, Value = x.TypeCode.ToString() });
 
             //绑定是否推荐枚举
             ViewBag.IsRecommand_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
+
+            //套餐类型下拉框
+            ViewBag.TypeCode_dd = new List<SelectListItem>();
+        }
+
+        /// <summary>
+        /// 绑定套餐类型
+        /// </summary>
+        /// <param name="typeParentId"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> GetSnackType(string cinemaCode)
+        {
+            List<SnackTypeEntity> snackTypes = new List<SnackTypeEntity>();
+            IList<SnackTypeEntity> isnackTypes = await _snacksTypeService.GetAllSnacksTypesAsync(cinemaCode);
+            snackTypes.AddRange(isnackTypes);
+            string jsonresult = JSONHelper.ToJson(snackTypes);
+            return Json(jsonresult, JsonRequestBehavior.AllowGet);
         }
     }
 }

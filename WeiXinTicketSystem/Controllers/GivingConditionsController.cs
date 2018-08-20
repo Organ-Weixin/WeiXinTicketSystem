@@ -138,7 +138,7 @@ namespace WeiXinTicketSystem.Controllers
             if (givingConditions.Id == 0)
             {
                 IList<GivingConditionEntity> givingConditionPrice =await _givingConditionsService.GetGivingConditionByCinemaCodeAndPriceAsync(model.CinemaCode,model.Price);
-                if (givingConditionPrice.Count>0)
+                if (givingConditionPrice.Count>0 && model.Price !=0)
                 {
                     return ErrorObject("满额金额已存在！请重新填写！");
                 }
@@ -147,7 +147,7 @@ namespace WeiXinTicketSystem.Controllers
             }
             else
             {
-                if (ylPrice != model.Price)
+                if (ylPrice != model.Price && model.Price != 0)
                 {
                     IList<GivingConditionEntity> givingConditionPrice = await _givingConditionsService.GetGivingConditionByCinemaCodeAndPriceAsync(model.CinemaCode, model.Price);
                     if (givingConditionPrice.Count > 0)

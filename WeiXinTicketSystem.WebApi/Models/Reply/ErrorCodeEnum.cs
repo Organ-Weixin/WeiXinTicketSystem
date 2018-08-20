@@ -177,6 +177,12 @@ namespace WeiXinTicketSystem.WebApi.Models
         /// 小程序appid不存在
         /// </summary>
         [Description("影院小程序APPID不存在或不合法！")]
-        CinemaMiniProgramAccountNotExist = 10000027
+        CinemaMiniProgramAccountNotExist = 10000027,
+
+        /// <summary>
+        /// 优惠券数量小于赠送数量
+        /// </summary>
+        [Description("优惠券数量小于赠送数量！")]
+        CouponNumberLessThan = 10000028
     }
 }

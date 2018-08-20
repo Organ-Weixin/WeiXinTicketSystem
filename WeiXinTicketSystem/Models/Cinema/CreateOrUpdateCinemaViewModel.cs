@@ -67,5 +67,9 @@ namespace WeiXinTicketSystem.Models
         [StringLength(100, ErrorMessage = "{0}最多100个字符")]
         public string CinemaPhone { get; set; }
 
+        [ListBox("_dd", Multiple = false)]
+        [Display(Name = "小卖配送")]
+        public int IsSnackDistribution { get; set; }
+
     }
 }

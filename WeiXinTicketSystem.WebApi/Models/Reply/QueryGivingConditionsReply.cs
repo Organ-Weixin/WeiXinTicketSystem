@@ -28,5 +28,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string Remark { get; set; }
+
+        public int? NotUsedNumber { get; set; }
     }
 }
