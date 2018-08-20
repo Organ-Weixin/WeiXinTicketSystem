@@ -1112,6 +1112,41 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
+        public static bool RequestInfoGuard(this QueryMobilePhoneReply reply, string Username, string Password, string CinemaCode, string Code, string EncryptedData, string Iv)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Code))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Code));
+                return false;
+            }
+            if (string.IsNullOrEmpty(EncryptedData))
+            {
+                reply.SetNecessaryParamMissReply(nameof(EncryptedData));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Iv))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Iv));
+                return false;
+            }
+            return true;
+        }
+
         public static bool RequestInfoGuard(this QueryGivingConditionsReply reply, string Username, string Password, string CinemaCode)
         {
             int rint = 0;

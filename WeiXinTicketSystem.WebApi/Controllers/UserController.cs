@@ -103,6 +103,71 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
         #endregion
 
+        #region 获取手机号
+        [HttpPost]
+        public QueryMobilePhoneReply QueryMobilePhone(QueryMobilePhoneQueryJson QueryJson)
+        {
+            QueryMobilePhoneReply queryMobilePhoneReply = new QueryMobilePhoneReply();
+            //校验参数
+            if (!queryMobilePhoneReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.Code, QueryJson.EncryptedData, QueryJson.Iv))
+            {
+                return queryMobilePhoneReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(QueryJson.UserName, QueryJson.Password);
+            if (UserInfo == null)
+            {
+                queryMobilePhoneReply.SetUserCredentialInvalidReply();
+                return queryMobilePhoneReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(QueryJson.CinemaCode);
+            if (cinema == null)
+            {
+                queryMobilePhoneReply.SetCinemaInvalidReply();
+                return queryMobilePhoneReply;
+            }
+            //验证并获取AppID和AppSecret
+            var miniProgramAccount = _miniProgramAccountService.GetCinemaMiniProgramAccountByCinemaCode(QueryJson.CinemaCode);
+            if (miniProgramAccount == null)
+            {
+                queryMobilePhoneReply.SetCinemaMiniProgramAccountInvalidReply();
+                return queryMobilePhoneReply;
+            }
+            //获取sessionKey
+            string url = string.Format("https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code", miniProgramAccount.AppId, miniProgramAccount.AppSecret, QueryJson.Code);
+            string returnStr = HttpUtil.Send("", url);
+            jscode2sessionReply jscode2sessionReply = returnStr.JsonDeserialize<jscode2sessionReply>();
+            //string openid = jscode2sessionReply.openid;
+            string sessionkey = jscode2sessionReply.session_key;
+
+            string swxUserInfo = AESHelper.AesDecrypt(QueryJson.EncryptedData, sessionkey, QueryJson.Iv);
+            WxUserInfo wxUserInfo = swxUserInfo.JsonDeserialize<WxUserInfo>();
+
+            //var ticketUser = _ticketUserService.GetTicketUserByOpenID(wxUserInfo.openId);
+            //if (ticketUser == null)
+            //{
+            //    ticketUser = new TicketUserEntity();
+            //    ticketUser.MapFrom(wxUserInfo);
+            //    ticketUser.CinemaCode = QueryJson.CinemaCode;
+            //    ticketUser.IsActive = YesOrNoEnum.Yes;
+            //    ticketUser.Created = DateTime.Now;
+            //    ticketUser.TotalScore = 0;
+            //    ticketUser.Id = _ticketUserService.Insert(ticketUser);
+            //}
+            //else
+            //{
+            //    ticketUser.MapFrom(wxUserInfo);
+            //    _ticketUserService.Update(ticketUser);
+            //}
+
+            //ticketUserLoginReply.data = new TicketUserLoginTicketUser();
+            //ticketUserLoginReply.data.MapFrom(ticketUser);
+            //ticketUserLoginReply.SetSuccessReply();
+            return queryMobilePhoneReply;
+        }
+        #endregion
+
         #region 用户签到
 
 
