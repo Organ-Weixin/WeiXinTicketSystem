@@ -76,7 +76,7 @@ namespace WeiXinTicketSystem.Util
         }
 
         /// <summary>
-        /// 8位字母数字混合随机码
+        /// 随机位纯数字
         /// </summary>
         /// <returns></returns>
         public static string CreateRandomNum(int num)
@@ -94,6 +94,23 @@ namespace WeiXinTicketSystem.Util
                 chars.RemoveAt(index);
             }
             return result;
+        }
+        /// <summary>
+        /// 使用NewGuid快速生成不重复随机数
+        /// </summary>
+        /// <param name="Length"></param>
+        /// <returns></returns>
+        private static char[] constant ={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+        //随机数长度
+        public static string GenerateRandomNumber(int Length)
+        {
+            System.Text.StringBuilder newRandom = new System.Text.StringBuilder(36);
+            Random rd = new Random(Guid.NewGuid().GetHashCode());
+            for (int i = 0; i < Length; i++)
+            {
+                newRandom.Append(constant[rd.Next(36)]);
+            }
+            return newRandom.ToString();
         }
     }
 }

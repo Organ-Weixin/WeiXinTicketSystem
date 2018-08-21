@@ -95,6 +95,7 @@
     <Compile Include="Enum\ScoreRecordTypeEnum.cs" />
     <Compile Include="Enum\UserStampCollectTypeEnum.cs" />
     <Compile Include="Enum\UserStampStatusEnum.cs" />
+    <Compile Include="Models\Conpon\ConponViewEntity.cs" />
     <Compile Include="Models\EntityBase.cs" />
     <Compile Include="Models\Home\TicketCountAccordMonth.cs" />
     <Compile Include="Models\ModelGenerator.cs">

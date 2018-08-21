@@ -258,7 +258,7 @@ namespace WeiXinTicketSystem.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> _GenerateCoupon(GenerateCouponViewModel model, HttpPostedFileBase Image)
+        public ActionResult _GenerateCoupon(GenerateCouponViewModel model, HttpPostedFileBase Image)
         {
             try
             {
@@ -267,82 +267,53 @@ namespace WeiXinTicketSystem.Controllers
                     var errorMessages = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
                     return ErrorObject(string.Join("/n", errorMessages));
                 }
-
-                ConponEntity conpon = new ConponEntity();
-
-                ////////图片处理
-                //////if (Image != null)
-                //////{
-                //////    string rootPath = HttpRuntime.AppDomainAppPath.ToString();
-                //////    string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
-                //////    string savePath = @"upload\ConponImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                //////    string accessPath = "upload/ConponImg/" + DateTime.Now.ToString("yyyyMM") + "/";
-                //////    System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
-                //////    //////判断原图片是否存在
-                //////    ////if (!string.IsNullOrEmpty(conpon.Image))
-                //////    ////{
-                //////    ////    string file = conpon.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
-                //////    ////    if (System.IO.File.Exists(file))
-                //////    ////    {
-                //////    ////        //如果存在则删除
-                //////    ////        System.IO.File.Delete(file);
-                //////    ////    }
-                //////    ////}
-                //////    ////string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                //////    ////conpon.Image = basePath + accessPath + fileName;
-                //////}
+                ConponViewEntity ConponGroupView = new ConponViewEntity();
+                //生成优惠券
+                string strCode = model.TypeCode + RandomHelper.CreateRandomNum(6);
+                //生成优惠券组
+                ConponGroupEntity conponGroup = new ConponGroupEntity();
+                conponGroup.CinemaCode = model.CinemaCode;
+                conponGroup.TypeCode = model.TypeCode;
+                conponGroup.GroupCode = strCode;
+                conponGroup.GroupName = model.Title;
+                conponGroup.Price = model.Price;
+                conponGroup.ConponNumber = int.Parse(model.GenerateNum.ToString());
+                conponGroup.SnackOrFilmCode = model.SnackCode;
+                if (!string.IsNullOrEmpty(model.ValidityDate))
+                {
+                    conponGroup.ValidityDate = DateTime.Parse(model.ValidityDate);
+                }
+                conponGroup.Remark = model.Remark;
+                conponGroup.Created = DateTime.Now;
+                ConponGroupView.ConponGroupInfo = conponGroup;
 
                 //生成优惠券
-                if (model.GenerateNum != null)
+                List<ConponEntity> Conpons = new List<ConponEntity>();
+                ConponEntity conponNew;
+                for (int i = 0; i < model.GenerateNum; i++)
                 {
-                    int intNum = int.Parse(model.GenerateNum);
-                    if (intNum > 0)
+                    conponNew = new ConponEntity();
+                    conponNew.CinemaCode = model.CinemaCode;
+                    conponNew.TypeCode = model.TypeCode;
+                    conponNew.SnackCode = model.SnackCode;
+                    conponNew.Title = model.Title;
+                    conponNew.Price = model.Price;
+                    conponNew.GroupCode = strCode;
+                    if (!string.IsNullOrEmpty(model.ValidityDate))
                     {
-                        string strCode = model.TypeCode + RandomHelper.CreateRandomNum(6);
-                        //生成优惠券组
-                        ConponGroupEntity conponGroup = new ConponGroupEntity();
-                        conponGroup.CinemaCode = model.CinemaCode;
-                        conponGroup.TypeCode = model.TypeCode;
-                        conponGroup.GroupCode = strCode;
-                        conponGroup.GroupName = model.Title;
-                        conponGroup.Price = model.Price;
-                        conponGroup.ConponNumber = intNum;
-                        conponGroup.SnackOrFilmCode = model.SnackCode;
-                        if (!string.IsNullOrEmpty(model.ValidityDate))
-                        {
-                            conponGroup.ValidityDate = DateTime.Parse(model.ValidityDate);
-                        }
-                        conponGroup.Remark = model.Remark;
-                        conponGroup.Created = DateTime.Now;
-
-                        await _conponGroupService.InsertAsync(conponGroup);
-
-                        //生成优惠券
-                        for (int i = 1; i <= intNum; i++)
-                        {
-                            ConponEntity conponNew = new ConponEntity();
-                            conponNew.CinemaCode = model.CinemaCode;
-                            conponNew.TypeCode = model.TypeCode;
-                            conponNew.SnackCode = model.SnackCode;
-                            conponNew.Title = model.Title;
-                            conponNew.Price = model.Price;
-                            conponNew.GroupCode = strCode;
-                            if (!string.IsNullOrEmpty(model.ValidityDate))
-                            {
-                                conponNew.ValidityDate = DateTime.Parse(model.ValidityDate);
-                            }
-                            conponNew.ConponCode = RandomHelper.CreateRandomCode();
-                            conponNew.Created = DateTime.Now;
-                            conponNew.Status = ConponStatusEnum.NotUsed;
-                            conponNew.Remark = model.Remark;
-
-                            await _conponService.InsertAsync(conponNew);
-                        }
-
+                        conponNew.ValidityDate = DateTime.Parse(model.ValidityDate);
                     }
+                    conponNew.ConponCode = RandomHelper.GenerateRandomNumber(8);
+                    conponNew.Created = DateTime.Now;
+                    conponNew.Status = ConponStatusEnum.NotUsed;
+                    conponNew.Remark = model.Remark;
+
+                    Conpons.Add(conponNew);
                 }
+                ConponGroupView.ConponGroupConpons = Conpons;
 
-
+                _conponGroupService.Insert(ConponGroupView);
+                
                 var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Conpon").SingleOrDefault();
                 List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
                 ViewBag.CurrentPermissions = CurrentPermissions;

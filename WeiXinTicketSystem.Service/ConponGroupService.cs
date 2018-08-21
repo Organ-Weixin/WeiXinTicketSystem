@@ -14,12 +14,14 @@ namespace WeiXinTicketSystem.Service
     public class ConponGroupService
     {
         #region ctor
+        private readonly IRepository<ConponEntity> _conponRepository;
         private readonly IRepository<ConponGroupEntity> _conponGroupRepository;
         private readonly IRepository<ConponGroupViewEntity> _conponGroupViewRepository;
 
         public ConponGroupService()
         {
             //TODO: 移除内部依赖
+            _conponRepository= new Repository<ConponEntity>();
             _conponGroupRepository = new Repository<ConponGroupEntity>();
             _conponGroupViewRepository=new Repository<ConponGroupViewEntity>();
         }
@@ -125,7 +127,14 @@ namespace WeiXinTicketSystem.Service
         {
             await _conponGroupRepository.UpdateAsync(entity);
         }
-
+        /// <summary>
+        /// 新增优惠券组
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Insert(ConponGroupEntity entity)
+        {
+            _conponGroupRepository.Insert(entity);
+        }
         /// <summary>
         /// 新增优惠券组
         /// </summary>
@@ -144,6 +153,34 @@ namespace WeiXinTicketSystem.Service
         public async Task DeleteAsync(ConponGroupEntity entity)
         {
             await _conponGroupRepository.DeleteAsync(entity);
+        }
+        /// <summary>
+        /// 添加优惠券组和优惠券
+        /// </summary>
+        /// <param name="ConponGroupView"></param>
+        public void Insert(ConponViewEntity ConponGroupView)
+        {
+            using (var connection = DbConnectionFactory.OpenConnection())
+            {
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        _conponGroupRepository.InsertWithTransaction(ConponGroupView.ConponGroupInfo,
+                            connection, transaction);
+                        ConponGroupView.ConponGroupConpons.ForEach(x =>
+                        {
+                            _conponRepository.InsertWithTransaction(x, connection, transaction);
+                        });
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
         }
 
     }
