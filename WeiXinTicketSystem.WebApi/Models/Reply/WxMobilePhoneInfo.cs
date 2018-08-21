@@ -5,18 +5,14 @@ using System.Web;
 
 namespace WeiXinTicketSystem.WebApi.Models
 {
-    public class QueryMobilePhoneReply: BaseReply
-    {
-        public QueryMobilePhoneReplyData data { get; set; }
-    }
-    public class QueryMobilePhoneReplyData
+    public class WxMobilePhoneInfo
     {
         public string phoneNumber { get; set; }
         public string purePhoneNumber { get; set; }
         public string countryCode { get; set; }
-        public QueryMobilePhoneReplyWatermark watermark { get; set; }
+        public WxMobilePhoneInfowatermark watermark { get; set; }
     }
-    public class QueryMobilePhoneReplyWatermark
+    public class WxMobilePhoneInfowatermark
     {
         public string timestamp { get; set; }
         public string appid { get; set; }

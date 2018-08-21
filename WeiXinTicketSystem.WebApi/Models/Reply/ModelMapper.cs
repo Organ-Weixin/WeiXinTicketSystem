@@ -541,6 +541,17 @@ namespace WeiXinTicketSystem.WebApi.Models
             return ticketUser;
         }
 
+        public static QueryMobilePhoneReplyData MapFrom(this QueryMobilePhoneReplyData data,WxMobilePhoneInfo info)
+        {
+            data.phoneNumber = info.phoneNumber;
+            data.purePhoneNumber = info.purePhoneNumber;
+            data.countryCode = info.countryCode;
+            data.watermark = new QueryMobilePhoneReplyWatermark();
+            data.watermark.timestamp = info.watermark.timestamp;
+            data.watermark.appid = info.watermark.appid;
+            return data;
+        }
+
         public static QueryGivingConditionsReplyCondition MapFrom(this QueryGivingConditionsReplyCondition condition, AdminGivingConditionsViewEntity entity)
         {
             condition.ConditionId = entity.Id;

@@ -138,32 +138,14 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             string url = string.Format("https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code", miniProgramAccount.AppId, miniProgramAccount.AppSecret, QueryJson.Code);
             string returnStr = HttpUtil.Send("", url);
             jscode2sessionReply jscode2sessionReply = returnStr.JsonDeserialize<jscode2sessionReply>();
-            //string openid = jscode2sessionReply.openid;
             string sessionkey = jscode2sessionReply.session_key;
 
-            string swxUserInfo = AESHelper.AesDecrypt(QueryJson.EncryptedData, sessionkey, QueryJson.Iv);
-            WxUserInfo wxUserInfo = swxUserInfo.JsonDeserialize<WxUserInfo>();
-
-            //var ticketUser = _ticketUserService.GetTicketUserByOpenID(wxUserInfo.openId);
-            //if (ticketUser == null)
-            //{
-            //    ticketUser = new TicketUserEntity();
-            //    ticketUser.MapFrom(wxUserInfo);
-            //    ticketUser.CinemaCode = QueryJson.CinemaCode;
-            //    ticketUser.IsActive = YesOrNoEnum.Yes;
-            //    ticketUser.Created = DateTime.Now;
-            //    ticketUser.TotalScore = 0;
-            //    ticketUser.Id = _ticketUserService.Insert(ticketUser);
-            //}
-            //else
-            //{
-            //    ticketUser.MapFrom(wxUserInfo);
-            //    _ticketUserService.Update(ticketUser);
-            //}
-
-            //ticketUserLoginReply.data = new TicketUserLoginTicketUser();
-            //ticketUserLoginReply.data.MapFrom(ticketUser);
-            //ticketUserLoginReply.SetSuccessReply();
+            string swxMobilePhoneInfo = AESHelper.AesDecrypt(QueryJson.EncryptedData, sessionkey, QueryJson.Iv);
+            //string swxMobilePhoneInfo = "{ \"phoneNumber\":\"15058598907\",\"purePhoneNumber\":\"15058598907\",\"countryCode\":\"86\",\"watermark\":{ \"timestamp\":1534814999,\"appid\":\"wxe9ac67c34cccb15d\"} }";
+            WxMobilePhoneInfo wxMobilePhoneInfo = swxMobilePhoneInfo.JsonDeserialize<WxMobilePhoneInfo>();
+            queryMobilePhoneReply.data = new QueryMobilePhoneReplyData();
+            queryMobilePhoneReply.data.MapFrom(wxMobilePhoneInfo);
+            queryMobilePhoneReply.SetSuccessReply();
             return queryMobilePhoneReply;
         }
         #endregion
