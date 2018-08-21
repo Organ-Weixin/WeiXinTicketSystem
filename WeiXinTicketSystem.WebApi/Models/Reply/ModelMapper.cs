@@ -204,8 +204,8 @@ namespace WeiXinTicketSystem.WebApi.Models
             data.OrderPayTime = order.OrderBaseInfo.OrderPayTime.ToFormatStringWithT();
             data.OrderTradeNo = order.OrderBaseInfo.OrderTradeNo;
             data.IsUseConpons = order.OrderBaseInfo.IsUseConpons.HasValue ? order.OrderBaseInfo.IsUseConpons.Value : false;
-            data.ConponCode = order.OrderBaseInfo.ConponCode;
-            data.ConponPrice = order.OrderBaseInfo.ConponPrice.HasValue ? order.OrderBaseInfo.ConponPrice.Value : 0;
+            //data.ConponCode = order.OrderBaseInfo.ConponCode;
+            //data.ConponPrice = order.OrderBaseInfo.ConponPrice.HasValue ? order.OrderBaseInfo.ConponPrice.Value : 0;
             data.OpenID = order.OrderBaseInfo.OpenID;
             data.Snacks = order.SnackOrderDetails.Select(
                 x => new QuerySnackOrderReplySnack()
@@ -214,7 +214,11 @@ namespace WeiXinTicketSystem.WebApi.Models
                     StandardPrice = x.StandardPrice,
                     SalePrice = x.SalePrice,
                     Number = x.Number,
-                    SubTotalPrice = x.SubTotalPrice
+                    SubTotalPrice = x.SubTotalPrice,
+                    ConponCode = x.ConponCode,
+                    ConponPrice = x.ConponPrice,
+                    ActualPrice = x.ActualPrice
+
                 }).ToList();
             return data;
         }
@@ -401,6 +405,21 @@ namespace WeiXinTicketSystem.WebApi.Models
             cinema.Latitude = entity.Latitude;
             cinema.Longitude = entity.Longitude;
             cinema.OpenSnacks = entity.IsOpenSnacks.GetDescription();
+            cinema.TicketHint = entity.TicketHint;
+            cinema.CinemaLabel = entity.CinemaLabel;
+            cinema.CinemaPhone = entity.CinemaPhone;
+            if(entity.IsSnackDistribution !=null)
+            {
+                if (entity.IsSnackDistribution == YesOrNoEnum.No)
+                {
+                    cinema.IsSnackDistribution = "否";
+                }
+                else if (entity.IsSnackDistribution == YesOrNoEnum.Yes)
+                {
+                    cinema.IsSnackDistribution = "是";
+                }
+            }
+            
             return cinema;
         }
 
