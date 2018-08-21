@@ -39,7 +39,9 @@ namespace WeiXinTicketSystem.Models
         public string ValidityDate { get; set; }
 
         [Display(Name = "张数")]
-        public string GenerateNum { get; set; }
+        [Required(ErrorMessage = "{0}不能为空")]
+        [Range(1,99999, ErrorMessage = "张数应该在{1}-{2}之间")]
+        public decimal GenerateNum { get; set; }
 
         [Display(Name = "备注")]
         [StringLength(300, ErrorMessage = "{0}最多300个字符")]

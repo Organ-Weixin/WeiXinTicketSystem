@@ -152,7 +152,14 @@ namespace WeiXinTicketSystem.Service
         {
             await _conponRepository.UpdateAsync(entity);
         }
-
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Insert(ConponEntity entity)
+        {
+            _conponRepository.Insert(entity);
+        }
         /// <summary>
         /// 新增优惠券
         /// </summary>
