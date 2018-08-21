@@ -61,7 +61,7 @@
         //});
 
         $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "Code": "001nXTG90JCNjx1SRWE90hsZG90nXTGP", "EncryptedData": "nRATlQbK2VDhQKz6qYhwuuDUz+C+EGFu7le+YsWJohTllJP/6K820UaJPLdG5cyVfli3Wer2J6t7o/94v/98hxZDGSQfLN1XGq9iy8/5p0NPFZSZhid366Hamy4OuAdRx8ySyiAiNrJBGSuj+uAb0B0CjoSC6oXz7jEXLyrYT4ZcJwcPT2D1BB1U8iMeDs59R6b5S2RYWTvwKQKaAna4TA==", "Iv": "3SmdmogpIvcaqay4t/Fmtg==" };
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "Code": "0617jMvq1z5eCp0wZhwq1vCUvq17jMvF", "EncryptedData": "MnFnjAsxd6Vrn0q6uWVcY6MAAKNdGYgTRjaXjHGoMmmDM2yjE2G1l6yzxcLn6ugwX2K8MsMSir+ijylCG6oZA/ExNOCj+R02NTFeid5F/vyhbwycNPl27xZ511sCIf0nhofmmuTxuyNnAZz3Cq+k5bq7pzk0nYZZPfsWrbwferRTxES6Gx7aJlcKAI2a01UxgygWV/u6stJv/oJxsj728w==", "Iv": "V4e921fKX+sA23xsew2ACw==" };
             $.ajax({
                 type: "post",
                 url: "http://localhost:28442/api/User/QueryMobilePhone",
@@ -146,22 +146,22 @@
         //    });
         //});
 
-        $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "GroupCode": "07510627", "Number": "100", "OpenID": "oNCc65EhjU4Hia7iatDY9lkvwV24" };
-            $.ajax({
-                type: "post",
-                url: "http://localhost:28442/api/Conpon/SendConpon",
-                //contentType: 'application/json',
-                //data: JSON.stringify(postdata),
-                data: postdata,
-                success: function (data, status) {
-                    if (status == "success") {
-                        console.log(data.Status);
-                        $("#div_test").append(JSON.stringify(data));
-                    }
-                }
-            });
-        });
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "GroupCode": "07510627", "Number": "100", "OpenID": "oNCc65EhjU4Hia7iatDY9lkvwV24" };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "http://localhost:28442/api/Conpon/SendConpon",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
     </script>
 </head>
 <body>
