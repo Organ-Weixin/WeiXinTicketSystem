@@ -60,6 +60,23 @@
         //    });
         //});
 
+        $(function () {
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "Code": "001nXTG90JCNjx1SRWE90hsZG90nXTGP", "EncryptedData": "nRATlQbK2VDhQKz6qYhwuuDUz+C+EGFu7le+YsWJohTllJP/6K820UaJPLdG5cyVfli3Wer2J6t7o/94v/98hxZDGSQfLN1XGq9iy8/5p0NPFZSZhid366Hamy4OuAdRx8ySyiAiNrJBGSuj+uAb0B0CjoSC6oXz7jEXLyrYT4ZcJwcPT2D1BB1U8iMeDs59R6b5S2RYWTvwKQKaAna4TA==", "Iv": "3SmdmogpIvcaqay4t/Fmtg==" };
+            $.ajax({
+                type: "post",
+                url: "http://localhost:28442/api/User/QueryMobilePhone",
+                //contentType: 'application/json',
+                //data: JSON.stringify(postdata),
+                data: postdata,
+                success: function (data, status) {
+                    if (status == "success") {
+                        console.log(data.Status);
+                        $("#div_test").append(JSON.stringify(data));
+                    }
+                }
+            });
+        });
+
         //$(function () {
         //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "QueryXml": "<SubmitOrder CinemaCode=\"33111001\"><Order PaySeqNo=\"\" OrderCode=\"1683180716000076\" SessionCode=\"1683201807160028\" Count=\"1\" MobilePhone=\"13736146034\"><Seat SeatCode=\"3311100108#01#10\" Price=\"25.00\" RealPrice=\"25.00\" Fee=\"0.00\"/></Order></SubmitOrder>" };
         //    $.ajax({
