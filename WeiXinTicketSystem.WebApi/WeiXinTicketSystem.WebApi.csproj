@@ -260,6 +260,7 @@
     <Compile Include="Models\Query\BookSnacksQueryJson.cs" />
     <Compile Include="Models\Query\NetSaleQueryJson.cs" />
     <Compile Include="Models\Query\PaySnackOrderQueryJson.cs" />
+    <Compile Include="Models\Query\QueryMobilePhoneQueryJson.cs" />
     <Compile Include="Models\Query\SendConponQueryJson.cs" />
     <Compile Include="Models\Query\SubmitSnacksQueryJson.cs" />
     <Compile Include="Models\Query\TicketUserLoginQueryJson.cs" />
@@ -276,7 +277,9 @@
     <Compile Include="Models\Reply\QueryConponsReply.cs" />
     <Compile Include="Models\Reply\QueryGiftsReply.cs" />
     <Compile Include="Models\Reply\QueryGivingConditionsReply.cs" />
+    <Compile Include="Models\Reply\QueryMobilePhoneReply.cs" />
     <Compile Include="Models\Reply\QueryOrdersReply.cs" />
+    <Compile Include="Models\Reply\QueryScreenSeatsReply.cs" />
     <Compile Include="Models\Reply\QueryScreensReply.cs" />
     <Compile Include="Models\Reply\QuerySnackOrderReply.cs" />
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />

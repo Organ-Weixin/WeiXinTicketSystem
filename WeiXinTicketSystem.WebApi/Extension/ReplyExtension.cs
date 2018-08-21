@@ -1248,5 +1248,32 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
+        public static bool RequestInfoGuard(this QueryScreenSeatsReply reply, string Username, string Password, string CinemaCode,string ScreenCode)
+        {
+            int rint = 0;
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(ScreenCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(ScreenCode));
+                return false;
+            }
+
+            return true;
+        }
+
     }
 }

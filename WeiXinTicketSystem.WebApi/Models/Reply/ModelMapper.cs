@@ -633,5 +633,22 @@ namespace WeiXinTicketSystem.WebApi.Models
             screen.Type = entity.Type;
             return screen;
         }
+
+        public static QueryScreenSeatsReplySeat MapFrom(this QueryScreenSeatsReplySeat seat, ScreenSeatInfoEntity entity)
+        {
+            seat.SeatId = entity.Id;
+            seat.CinemaCode = entity.CinemaCode;
+            seat.ScreenCode = entity.ScreenCode;
+            seat.SeatCode = entity.SeatCode;
+            seat.GroupCode = entity.GroupCode;
+            seat.RowNum = entity.RowNum;
+            seat.ColumnNum = entity.ColumnNum;
+            seat.XCoord = entity.XCoord;
+            seat.YCoord = entity.YCoord;
+            seat.Status = entity.Status;
+            seat.LoveFlag = entity.LoveFlag;
+            seat.Type = entity.Type;
+            return seat;
+        }
     }
 }
