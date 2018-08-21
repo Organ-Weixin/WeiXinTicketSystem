@@ -622,5 +622,16 @@ namespace WeiXinTicketSystem.WebApi.Models
             conpon.RefundTime = entity.RefundTime;
             return conpon;
         }
+
+        public static QueryScreensReplyScreen MapFrom(this QueryScreensReplyScreen screen, ScreenInfoEntity entity)
+        {
+            screen.ScreenId = entity.Id;
+            screen.CinemaCode = entity.CCode;
+            screen.ScreenCode = entity.SCode;
+            screen.ScreenName = entity.SName;
+            screen.SeatCount = entity.SeatCount;
+            screen.Type = entity.Type;
+            return screen;
+        }
     }
 }
