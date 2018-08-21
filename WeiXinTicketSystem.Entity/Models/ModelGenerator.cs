@@ -621,6 +621,10 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime? Updated { get; set; }
 		public virtual CinemaOpenEnum IsOpen { get; set; }
 		public virtual CinemaTypeEnum CinemaType { get; set; }
+		public virtual string CinemaPhone { get; set; }
+		public virtual string TicketHint { get; set; }
+		public virtual string CinemaLabel { get; set; }
+		public virtual YesOrNoEnum? IsSnackDistribution { get; set; }
 	}
 
     /// <summary>

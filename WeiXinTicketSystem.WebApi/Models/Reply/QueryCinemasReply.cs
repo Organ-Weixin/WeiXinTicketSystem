@@ -30,6 +30,10 @@ namespace WeiXinTicketSystem.WebApi.Models
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
         public string OpenSnacks { get; set; }
+        public string TicketHint { get; set; }
+        public string CinemaLabel { get; set; }
+        public string CinemaPhone { get; set; }
+        public string IsSnackDistribution { get; set; }
 
     }
 }
