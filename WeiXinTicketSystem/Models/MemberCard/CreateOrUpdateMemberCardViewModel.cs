@@ -23,6 +23,9 @@ namespace WeiXinTicketSystem.Models
         [Display(Name = "购票用户")]
         public string OpenID { get; set; }
 
+        [Display(Name = "手机号码")]
+        [StringLength(50, ErrorMessage = "{0}最多50个字符")]
+        public string MobilePhone { get; set; }
 
         [Display(Name = "卡号")]
         [Required(ErrorMessage = "{0}不能为空")]

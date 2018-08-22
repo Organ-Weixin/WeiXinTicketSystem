@@ -69,7 +69,7 @@ namespace WeiXinTicketSystem.Service
             //其他数据
             if (!string.IsNullOrEmpty(keyword))
             {
-                query.Where(x => x.CardNo.Contains(keyword) || x.NickName.Contains(keyword));
+                query.Where(x => x.CardNo.Contains(keyword) || x.NickName.Contains(keyword) || x.MobilePhone.Contains(keyword));
             }
             query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();
