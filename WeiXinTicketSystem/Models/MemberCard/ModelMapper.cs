@@ -22,6 +22,7 @@ namespace WeiXinTicketSystem.Models.MemberCard
                 id = module.Id,
                 CinemaCode = module.CinemaCode,
                 NickName = module.NickName,
+                MobilePhone = module.MobilePhone,
                 CardNo = module.CardNo,
                 CardPassword = module.CardPassword,
                 Balance = module.Balance,
@@ -42,6 +43,7 @@ namespace WeiXinTicketSystem.Models.MemberCard
         {
             membercard.CinemaCode = model.CinemaCode;
             membercard.OpenID =model.OpenID;
+            membercard.MobilePhone = model.MobilePhone;
             membercard.CardNo = model.CardNo;
             membercard.CardPassword = model.CardPassword;
             membercard.Balance = model.Balance;
@@ -61,6 +63,7 @@ namespace WeiXinTicketSystem.Models.MemberCard
             model.Id = membercard.Id;
             model.CinemaCode = membercard.CinemaCode;
             model.OpenID = membercard.OpenID;
+            model.MobilePhone = membercard.MobilePhone;
             model.CardNo = membercard.CardNo;
             model.CardPassword = membercard.CardPassword;
             model.Balance = membercard.Balance;

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Reflection;
 using System.Web;
 using WeiXinTicketSystem.Properties;
+using System.Web.UI.WebControls;
 
 namespace WeiXinTicketSystem.Controllers
 {

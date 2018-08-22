@@ -271,6 +271,29 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the MemberCard table.
+    /// </summary>
+    [Table("MemberCard")]
+    [SqlLamTable(Name = "MemberCard")]
+    public partial class MemberCardEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual string MobilePhone { get; set; }
+		public virtual string CardNo { get; set; }
+		public virtual string CardPassword { get; set; }
+		public virtual decimal? Balance { get; set; }
+		public virtual int? Score { get; set; }
+		public virtual MemberCardGradeEnum MemberGrade { get; set; }
+		public virtual MemberCardStatusEnum Status { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the Middleware table.
     /// </summary>
     [Table("Middleware")]
@@ -1063,28 +1086,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the MemberCard table.
-    /// </summary>
-    [Table("MemberCard")]
-    [SqlLamTable(Name = "MemberCard")]
-    public partial class MemberCardEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string OpenID { get; set; }
-		public virtual string CardNo { get; set; }
-		public virtual string CardPassword { get; set; }
-		public virtual decimal? Balance { get; set; }
-		public virtual int? Score { get; set; }
-		public virtual MemberCardGradeEnum MemberGrade { get; set; }
-		public virtual MemberCardStatusEnum Status { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual bool IsDel { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the Activity table.
     /// </summary>
     [Table("Activity")]
@@ -1126,6 +1127,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 		public virtual bool IsDel { get; set; }
+		public virtual string MobilePhone { get; set; }
 	}
 
     /// <summary>

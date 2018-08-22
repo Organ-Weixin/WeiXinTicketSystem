@@ -21,6 +21,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         SystemUserService _userService;
         CinemaService _cinemaService;
         TicketUsersService _ticketUserService;
+        SeatInfoService _seatInfoService;
 
         #region ctor
         public ScreenController()
@@ -29,13 +30,14 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             _userService = new SystemUserService();
             _cinemaService = new CinemaService();
             _ticketUserService = new TicketUsersService();
+            _seatInfoService = new SeatInfoService();
         }
         #endregion
 
         #region 获取影厅信息
 
         [HttpGet]
-        public QueryScreensReply QueryFilmComments(string UserName, string Password, string CinemaCode)
+        public QueryScreensReply QueryScreens(string UserName, string Password, string CinemaCode)
         {
             QueryScreensReply queryScreensReply = new QueryScreensReply();
             //校验参数
@@ -72,6 +74,50 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             }
             queryScreensReply.SetSuccessReply();
             return queryScreensReply;
+        }
+
+        #endregion
+
+        #region 获取影厅座位信息
+
+        [HttpGet]
+        public QueryScreenSeatsReply QueryScreenSeats(string UserName, string Password, string CinemaCode,string ScreenCode)
+        {
+            QueryScreenSeatsReply queryScreenSeatsReply = new QueryScreenSeatsReply();
+            //校验参数
+            if (!queryScreenSeatsReply.RequestInfoGuard(UserName, Password, CinemaCode, ScreenCode))
+            {
+                return queryScreenSeatsReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryScreenSeatsReply.SetUserCredentialInvalidReply();
+                return queryScreenSeatsReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryScreenSeatsReply.SetCinemaInvalidReply();
+                return queryScreenSeatsReply;
+            }
+
+            var Seats = _seatInfoService.GetScreenSeats(CinemaCode, ScreenCode);
+
+            queryScreenSeatsReply.data = new QueryScreenSeatsReplySeats();
+            if (Seats == null || Seats.Count == 0)
+            {
+                queryScreenSeatsReply.data.SeatCount = 0;
+            }
+            else
+            {
+                queryScreenSeatsReply.data.SeatCount = Seats.Count;
+                queryScreenSeatsReply.data.Seats = Seats.Select(x => new QueryScreenSeatsReplySeat().MapFrom(x)).ToList();
+            }
+            queryScreenSeatsReply.SetSuccessReply();
+            return queryScreenSeatsReply;
         }
 
         #endregion
