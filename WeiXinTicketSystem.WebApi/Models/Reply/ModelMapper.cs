@@ -509,6 +509,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         {
             ticketUser.TicketUserId = entity.Id;
             ticketUser.CinemaCode = entity.CinemaCode;
+            ticketUser.MobilePhone = entity.MobilePhone;
             ticketUser.OpenID = entity.OpenID;
             ticketUser.NickName = entity.NickName;
             ticketUser.Sex = entity.Sex.GetDescription();
@@ -527,6 +528,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         {
             ticketUser.TicketUserId = entity.Id;
             ticketUser.CinemaCode = entity.CinemaCode;
+            ticketUser.MobilePhone = entity.MobilePhone;
             ticketUser.OpenID = entity.OpenID;
             ticketUser.NickName = entity.NickName;
             ticketUser.Sex = entity.Sex.GetDescription();
