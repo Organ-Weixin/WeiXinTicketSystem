@@ -460,5 +460,19 @@ namespace WeiXinTicketSystem
             public static string Delete { get { return nameof(UserCinemaController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(UserCinemaController._CreateOrUpdate); } }
         }
+
+        /// <summary>
+        /// 活动弹窗
+        /// </summary>
+        public static class ActivityPopup
+        {
+            public static string Name { get { return nameof(ActivityPopup); } }
+            public static string Index { get { return nameof(ActivityPopupController.Index); } }
+            public static string List { get { return nameof(ActivityPopupController.List); } }
+            public static string Create { get { return nameof(ActivityPopupController.Create); } }
+            public static string Update { get { return nameof(ActivityPopupController.Update); } }
+            public static string Delete { get { return nameof(ActivityPopupController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(ActivityPopupController._CreateOrUpdate); } }
+        }
     }
 }

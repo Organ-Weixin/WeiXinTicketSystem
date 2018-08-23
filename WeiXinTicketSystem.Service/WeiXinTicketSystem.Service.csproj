@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityPopupService.cs" />
     <Compile Include="ActivityService.cs" />
     <Compile Include="CinemaMemberCardSettingService.cs" />
     <Compile Include="CinemaPaySettingsService.cs" />

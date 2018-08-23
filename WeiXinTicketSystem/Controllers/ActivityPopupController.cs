@@ -1,5 +1,5 @@
 ﻿using WeiXinTicketSystem.Models;
-using WeiXinTicketSystem.Models.Activity;
+using WeiXinTicketSystem.Models.ActivityPopup;
 using WeiXinTicketSystem.Utils;
 using WeiXinTicketSystem.Entity.Enum;
 using WeiXinTicketSystem.Entity.Models;
@@ -21,102 +21,98 @@ using System.Configuration;
 
 namespace WeiXinTicketSystem.Controllers
 {
-    public class ActivityController : RootExraController
+    public class ActivityPopupController : RootExraController
     {
-        private ActivityService _activityService;
+        private ActivityPopupService _activityPopupService;
         private CinemaService _cinemaService;
-        private MiniProgramLinkUrlService _miniProgramLinkUrlService;
         private RecommendGradeService _recommendGradeService;
+
         #region ctor
-        public ActivityController()
+        public ActivityPopupController()
         {
-            _activityService = new ActivityService();
+            _activityPopupService = new ActivityPopupService();
             _cinemaService = new CinemaService();
-            _miniProgramLinkUrlService = new MiniProgramLinkUrlService();
             _recommendGradeService = new RecommendGradeService();
         }
         #endregion
 
+
         /// <summary>
-        /// 活动表管理首页
+        /// 活动弹窗管理首页
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
         {
-            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Activity").SingleOrDefault();
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "ActivityPopup").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
             return View();
 
         }
 
-
         ///// <summary>
-        ///// 活动表列表
+        ///// 活动弹窗列表
         ///// </summary>
         ///// <param name="pageModel"></param>
         ///// <returns></returns>
-        public async Task<ActionResult> List(DynatablePageModel<ActivityQueryModel> pageModel)
+        public async Task<ActionResult> List(DynatablePageModel<ActivityPopupQueryModel> pageModel)
         {
-            var activitys = await _activityService.GetActivityPagedAsync(
+            var activityPopups = await _activityPopupService.GetActivityPopupPagedAsync(
                 CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE ? pageModel.Query.CinemaCode : CurrentUser.CinemaCode,
                 pageModel.Query.Search,
                 pageModel.Offset,
                 pageModel.PerPage
             );
-            return DynatableResult(activitys.ToDynatableModel(activitys.TotalCount, pageModel.Offset, x => x.ToDynatableItem()));
+            return DynatableResult(activityPopups.ToDynatableModel(activityPopups.TotalCount, pageModel.Offset, x => x.ToDynatableItem()));
         }
 
-
         /// <summary>
-        /// 添加活动表
+        /// 添加活动弹窗
         /// </summary>
         /// <returns></returns>
         public async Task<ActionResult> Create()
         {
-            CreateOrUpdateActivityViewModel model = new CreateOrUpdateActivityViewModel();
+            CreateOrUpdateActivityPopupViewModel model = new CreateOrUpdateActivityPopupViewModel();
             await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
-
         /// <summary>
-        /// 修改活动表
+        /// 修改活动弹窗
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<ActionResult> Update(int id)
         {
-            var activity = await _activityService.GetActivityByIdAsync(id);
+            var activity = await _activityPopupService.GetActivityPopupByIdAsync(id);
             if (activity == null)
             {
                 return HttpBadRequest();
             }
-            CreateOrUpdateActivityViewModel model = new CreateOrUpdateActivityViewModel();
+            CreateOrUpdateActivityPopupViewModel model = new CreateOrUpdateActivityPopupViewModel();
             model.MapFrom(activity);
             await PreparyCreateOrEditViewData();
             return CreateOrUpdate(model);
         }
 
         /// <summary>
-        /// 添加或修改活动表
+        /// 添加或修改活动弹窗
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public ActionResult CreateOrUpdate(CreateOrUpdateActivityViewModel model)
+        public ActionResult CreateOrUpdate(CreateOrUpdateActivityPopupViewModel model)
         {
             return View(nameof(CreateOrUpdate), model);
         }
 
-
         /// <summary>
-        /// 添加或修改活动表
+        /// 添加或修改活动弹窗
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
-        public async Task<ActionResult> _CreateOrUpdate(CreateOrUpdateActivityViewModel model, HttpPostedFileBase Image)
+        public async Task<ActionResult> _CreateOrUpdate(CreateOrUpdateActivityPopupViewModel model, HttpPostedFileBase Image)
         {
             if (!ModelState.IsValid)
             {
@@ -124,26 +120,26 @@ namespace WeiXinTicketSystem.Controllers
                 return ErrorObject(string.Join("/n", errorMessages));
             }
 
-            ActivityEntity activity = new ActivityEntity();
+            ActivityPopupEntity activityPopup = new ActivityPopupEntity();
             if (model.Id > 0)
             {
-                activity = await _activityService.GetActivityByIdAsync(model.Id);
+                activityPopup = await _activityPopupService.GetActivityPopupByIdAsync(model.Id);
             }
 
-            activity.MapFrom(model);
+            activityPopup.MapFrom(model);
 
             //图片处理
             if (Image != null)
             {
                 string rootPath = HttpRuntime.AppDomainAppPath.ToString();
                 string basePath = ConfigurationManager.AppSettings["ImageBasePath"].ToString();
-                string savePath = @"upload\ActivityImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
-                string accessPath = "upload/ActivityImg/" + DateTime.Now.ToString("yyyyMM") + "/";
+                string savePath = @"upload\ActivityPopupImg\" + DateTime.Now.ToString("yyyyMM") + @"\";
+                string accessPath = "upload/ActivityPopupImg/" + DateTime.Now.ToString("yyyyMM") + "/";
                 System.Drawing.Image image = System.Drawing.Image.FromStream(Image.InputStream);
                 //判断原图片是否存在
-                if (!string.IsNullOrEmpty(activity.Image))
+                if (!string.IsNullOrEmpty(activityPopup.Image))
                 {
-                    string file = activity.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
+                    string file = activityPopup.Image.Replace(basePath, rootPath).Replace(accessPath, savePath);
                     if (System.IO.File.Exists(file))
                     {
                         //如果存在则删除
@@ -151,46 +147,46 @@ namespace WeiXinTicketSystem.Controllers
                     }
                 }
                 string fileName = ImageHelper.SaveImageToDisk(rootPath + savePath, DateTime.Now.ToString("yyyyMMddHHmmss"), image);
-                activity.Image = basePath + accessPath + fileName;
+                activityPopup.Image = basePath + accessPath + fileName;
             }
 
-            if (activity.Id == 0)
+            if (activityPopup.Id == 0)
             {
-                await _activityService.InsertAsync(activity);
+                await _activityPopupService.InsertAsync(activityPopup);
             }
             else
             {
-                await _activityService.UpdateAsync(activity);
+                await _activityPopupService.UpdateAsync(activityPopup);
             }
 
             //return RedirectObject(Url.Action(nameof(Index)));
-            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "Activity").SingleOrDefault();
+            var menu = CurrentSystemMenu.Where(x => x.ModuleFlag == "ActivityPopup").SingleOrDefault();
             List<int> CurrentPermissions = menu.Permissions.Split(',').Select(x => int.Parse(x)).ToList();
             ViewBag.CurrentPermissions = CurrentPermissions;
             return View(nameof(Index));
         }
 
         /// <summary>
-        /// 删除活动表
+        /// 删除活动弹窗
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<ActionResult> Delete(int id)
         {
-            var activity = await _activityService.GetActivityByIdAsync(id);
+            var activityPopup = await _activityPopupService.GetActivityPopupByIdAsync(id);
 
-            if (activity != null)
+            if (activityPopup != null)
             {
-                activity.IsDel = true;
-                await _activityService.UpdateAsync(activity);
+                activityPopup.IsDel = true;
+                await _activityPopupService.UpdateAsync(activityPopup);
             }
             return Object();
         }
 
         private async Task PreparyCreateOrEditViewData()
         {
-            //绑定是否启用枚举
-            ViewBag.Status_dd = EnumUtil.GetSelectList<YesOrNoEnum>();
+            //绑定弹窗类枚举
+            ViewBag.Popup_dd = EnumUtil.GetSelectList<ActivityPopupEnum>();
             //影院下拉
             if (CurrentUser.CinemaCode == Resources.DEFAULT_CINEMACODE)
             {
@@ -205,11 +201,6 @@ namespace WeiXinTicketSystem.Controllers
                     new SelectListItem { Text = CurrentUser.CinemaName, Value = CurrentUser.CinemaCode }
                 };
             }
-
-            //链接地址下拉框
-            List<MiniProgramLinkUrlEntity> miniProgramLinkUrls = new List<MiniProgramLinkUrlEntity>();
-            miniProgramLinkUrls.AddRange(await _miniProgramLinkUrlService.GetAllMiniProgramLinkUrlAsync());
-            ViewBag.LinkUrl_dd = miniProgramLinkUrls.Select(x => new SelectListItem { Text = x.LinkName, Value = x.LinkUrl });
 
             //推荐等级下拉框
             List<RecommendGradeEntity> recommendGrade = new List<RecommendGradeEntity>();

@@ -356,6 +356,25 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the AdminActivityPopupView view.
+    /// </summary>
+    [Table("AdminActivityPopupView")]
+    [SqlLamTable(Name = "AdminActivityPopupView")]
+    public partial class AdminActivityPopupViewEntity : EntityBase
+    {
+		public virtual string CinemaCode { get; set; }
+		public virtual string GradeCode { get; set; }
+		public virtual string Image { get; set; }
+		public virtual bool IsDel { get; set; }
+		public virtual string CinemaName { get; set; }
+		public virtual string GradeName { get; set; }
+		public virtual int Id { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual ActivityPopupEnum Popup { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the ScreenInfo table.
     /// </summary>
     [Table("ScreenInfo")]
@@ -388,6 +407,24 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual int UserID { get; set; }
 		public virtual decimal Price { get; set; }
 		public virtual PricePlanTypeEnum Type { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the ActivityPopup table.
+    /// </summary>
+    [Table("ActivityPopup")]
+    [SqlLamTable(Name = "ActivityPopup")]
+    public partial class ActivityPopupEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual ActivityPopupEnum Popup { get; set; }
+		public virtual string GradeCode { get; set; }
+		public virtual string Image { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual bool IsDel { get; set; }
 	}
 
     /// <summary>

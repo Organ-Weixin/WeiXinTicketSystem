@@ -30,7 +30,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public CinemaPaymentSettingEntity GetCinemaPaySettingsByCinemaCode(string CinemaCode)
         {
-            return _cinemaPaySettingsRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefault();
+            return _cinemaPaySettingsRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.IsDel).SingleOrDefault();
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public async Task<CinemaPaymentSettingEntity> GetCinemaPaySettingsByCinemaCodeAsync(string CinemaCode)
         {
-            return await _cinemaPaySettingsRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefaultAsync();
+            return await _cinemaPaySettingsRepository.Query.Where(x => x.CinemaCode == CinemaCode && !x.IsDel).SingleOrDefaultAsync();
         }
 
         /// <summary>

@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\ActivityPopupEnum.cs" />
     <Compile Include="Enum\ActivityStatusEnum.cs" />
     <Compile Include="Enum\CinemaFeeGatherTypeEnum.cs" />
     <Compile Include="Enum\CinemaFeePayTypeEnum.cs" />

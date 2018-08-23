@@ -262,6 +262,7 @@
     <Compile Include="Attributes\UI\PasswordAttribute.cs" />
     <Compile Include="Attributes\UI\TextAreaAttribute.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\ActivityPopupController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\CinemaController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
@@ -301,6 +302,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActivityPopup\ActivityPopupQueryModel.cs" />
+    <Compile Include="Models\ActivityPopup\CreateOrUpdateActivityPopupViewModel.cs" />
+    <Compile Include="Models\ActivityPopup\ModelMapper.cs" />
     <Compile Include="Models\Activity\ActivityQueryModel.cs" />
     <Compile Include="Models\Activity\CreateOrUpdateActivityViewModel.cs" />
     <Compile Include="Models\Activity\ModelMapper.cs" />
@@ -1465,6 +1469,8 @@
     <Content Include="Views\ConponType\Index.cshtml" />
     <Content Include="Views\Conpon\GenerateCoupon.cshtml" />
     <Content Include="Views\Conpon\Index.cshtml" />
+    <Content Include="Views\ActivityPopup\CreateOrUpdate.cshtml" />
+    <Content Include="Views\ActivityPopup\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
