@@ -10,6 +10,7 @@ namespace WeiXinTicketSystem.WebApi.Models
         public string UserName { get; set; }
         public string Password { get; set; }
         public string CinemaCode { get; set; }
+        public string OpenID { get; set; }
         public string Code { get; set; }
         public string EncryptedData { get; set; }
         public string Iv { get; set; }

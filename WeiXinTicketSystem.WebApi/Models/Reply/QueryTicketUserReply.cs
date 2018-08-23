@@ -13,6 +13,7 @@ namespace WeiXinTicketSystem.WebApi.Models
     {
         public int TicketUserId { get; set; }
         public string CinemaCode { get; set; }
+        public string MobilePhone { get; set; }
         public string OpenID { get; set; }
         public string NickName { get; set; }
         public string Sex { get; set; }

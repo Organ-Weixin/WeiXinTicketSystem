@@ -134,6 +134,13 @@ namespace WeiXinTicketSystem.WebApi.Controllers
                 queryMobilePhoneReply.SetCinemaMiniProgramAccountInvalidReply();
                 return queryMobilePhoneReply;
             }
+            //验证用户OpenID是否存在
+            var ticketUser = _ticketUserService.GetTicketUserByOpenID(QueryJson.OpenID);
+            if(ticketUser==null)
+            {
+                queryMobilePhoneReply.SetOpenIDNotExistReply();
+                return queryMobilePhoneReply;
+            }
             //获取sessionKey
             string url = string.Format("https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code", miniProgramAccount.AppId, miniProgramAccount.AppSecret, QueryJson.Code);
             string returnStr = HttpUtil.Send("", url);
@@ -143,6 +150,10 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             string swxMobilePhoneInfo = AESHelper.AesDecrypt(QueryJson.EncryptedData, sessionkey, QueryJson.Iv);
             //string swxMobilePhoneInfo = "{ \"phoneNumber\":\"15058598907\",\"purePhoneNumber\":\"15058598907\",\"countryCode\":\"86\",\"watermark\":{ \"timestamp\":1534814999,\"appid\":\"wxe9ac67c34cccb15d\"} }";
             WxMobilePhoneInfo wxMobilePhoneInfo = swxMobilePhoneInfo.JsonDeserialize<WxMobilePhoneInfo>();
+            //把手机号更新到用户表
+            ticketUser.MobilePhone = wxMobilePhoneInfo.phoneNumber;
+            _ticketUserService.Update(ticketUser);
+
             queryMobilePhoneReply.data = new QueryMobilePhoneReplyData();
             queryMobilePhoneReply.data.MapFrom(wxMobilePhoneInfo);
             queryMobilePhoneReply.SetSuccessReply();
