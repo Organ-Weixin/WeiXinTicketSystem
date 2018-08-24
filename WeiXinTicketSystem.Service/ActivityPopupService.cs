@@ -72,6 +72,60 @@ namespace WeiXinTicketSystem.Service
         }
 
         /// <summary>
+        /// 根据影院编码查询该影院下所有弹窗信息
+        /// </summary>
+        /// <param name="cinemaCode"></param>
+        /// <param name="currentpage"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public async Task<IPageList<AdminActivityPopupViewEntity>> QueryActivityPopupsByCinemaCodePagedAsync(string cinemaCode, int currentpage, int pagesize)
+        {
+            int offset = (currentpage - 1) * pagesize;
+            var query = _adminActivityPopupViewRepository.Query
+                .OrderByDescending(x => x.Id)
+                .Skip(offset)
+                .Take(pagesize);
+
+            if (!string.IsNullOrEmpty(cinemaCode))
+            {
+                query.Where(x => x.CinemaCode == cinemaCode);
+            }
+            query.Where(x => !x.IsDel );
+            return await query.ToPageListAsync();
+        }
+
+        /// <summary>
+        /// 根据影院编码和等级类型编码获取活动弹窗信息
+        /// </summary>
+        /// <param name="cinemaCode"></param>
+        /// <param name="GradeCode"></param>
+        /// <returns></returns>
+        public async Task<IList<AdminActivityPopupViewEntity>> QueryActivityPopupsByGradeCode(string cinemaCode, string GradeCode)
+        {
+            try
+            {
+                var query = _adminActivityPopupViewRepository.Query.OrderBy(x => x.Id);
+
+                if (!string.IsNullOrEmpty(cinemaCode))
+                {
+                    query.Where(x => x.CinemaCode == cinemaCode);
+                }
+                if (!string.IsNullOrEmpty(GradeCode))
+                {
+                    query.Where(x => x.GradeCode == GradeCode);
+                }
+                query.Where(x => !x.IsDel);
+                return await query.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        /// <summary>
         /// 根据影院编码获取活动弹窗信息(异步)
         /// </summary>
         /// <param name="CinemaCode"></param>

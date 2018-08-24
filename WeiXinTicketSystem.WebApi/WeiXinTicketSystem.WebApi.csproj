@@ -241,6 +241,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\ActivityPopupController.cs" />
     <Compile Include="Controllers\CinemaController.cs" />
     <Compile Include="Controllers\ConponController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="Models\Reply\jscode2sessionReply.cs" />
     <Compile Include="Models\Reply\ModelMapper.cs" />
     <Compile Include="Models\Reply\PaySnackOrderReply.cs" />
+    <Compile Include="Models\Reply\QueryActivityPopupsReply.cs" />
     <Compile Include="Models\Reply\QueryActivityReply.cs" />
     <Compile Include="Models\Reply\QueryActivitySequenceReply.cs" />
     <Compile Include="Models\Reply\QueryBnannersReply.cs" />

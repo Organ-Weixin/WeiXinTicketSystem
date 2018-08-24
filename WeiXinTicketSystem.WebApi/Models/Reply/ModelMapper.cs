@@ -652,5 +652,19 @@ namespace WeiXinTicketSystem.WebApi.Models
             seat.Type = entity.Type;
             return seat;
         }
+
+        public static QueryActivityPopupsReplyPopup MapFrom(this QueryActivityPopupsReplyPopup activityPopup, AdminActivityPopupViewEntity entity)
+        {
+            activityPopup.ActivityPopupId = entity.Id;
+            activityPopup.CinemaCode = entity.CinemaCode;
+            activityPopup.Popup = entity.Popup.GetDescription();
+            activityPopup.GradeCode = entity.GradeCode;
+            activityPopup.GradeName = entity.GradeName;
+            activityPopup.Image = entity.Image;
+            activityPopup.StartDate = entity.StartDate.ToFormatStringWithT();
+            activityPopup.EndDate = entity.EndDate.ToFormatStringWithT();
+            
+            return activityPopup;
+        }
     }
 }
