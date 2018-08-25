@@ -294,10 +294,7 @@
     <Compile Include="Models\Reply\StatusEnum.cs" />
     <Compile Include="Models\Reply\SubmitSnacksReply.cs" />
     <Compile Include="Models\Reply\QueryFilmsReply.cs" />
-    <Compile Include="Models\Reply\QueryMembersReply.cs" />
-    <Compile Include="Models\Query\RegisterMemberQueryJson.cs" />
     <Compile Include="Models\Query\SubmitFilmCommentQueryJson.cs" />
-    <Compile Include="Models\Reply\RegisterMemberReply.cs" />
     <Compile Include="Models\Reply\SubmitFilmCommentReply.cs" />
     <Compile Include="Models\Query\CollectStampQueryJson.cs" />
     <Compile Include="Models\Query\SignInQueryJson.cs" />

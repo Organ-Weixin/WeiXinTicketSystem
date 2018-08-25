@@ -27,7 +27,7 @@ namespace WeiXinTicketSystem.Models.MemberCard
                 CardPassword = module.CardPassword,
                 Balance = module.Balance,
                 Score = module.Score,
-                MemberGrade = module.MemberGrade.GetDescription(),
+                LevelCode = module.LevelCode,
                 Status = module.Status.GetDescription(),
                 Created = module.Created.ToFormatString()
 
@@ -48,7 +48,7 @@ namespace WeiXinTicketSystem.Models.MemberCard
             membercard.CardPassword = model.CardPassword;
             membercard.Balance = model.Balance;
             membercard.Score = (int?)model.Score;
-            membercard.MemberGrade = (MemberCardGradeEnum)model.MemberGrade;
+            membercard.LevelCode = model.LevelCode;
             membercard.Status = (MemberCardStatusEnum)model.Status;
 
         }
@@ -68,7 +68,7 @@ namespace WeiXinTicketSystem.Models.MemberCard
             model.CardPassword = membercard.CardPassword;
             model.Balance = membercard.Balance;
             model.Score = membercard.Score;
-            model.MemberGrade = (int)membercard.MemberGrade;
+            model.LevelCode = membercard.LevelCode;
             model.Status = (int)membercard.Status;
 
         }

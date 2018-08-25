@@ -272,66 +272,6 @@ namespace WeiXinTicketSystem.WebApi.Models
             return conpon;
         }
 
-        public static QueryMembersReplyMember MapFrom(this QueryMembersReplyMember member, MemberCardEntity entity)
-        {
-            member.MemberId = entity.Id;
-            member.CinemaCode = entity.CinemaCode;
-            member.OpenID = entity.OpenID;
-            member.CardNo = entity.CardNo;
-            member.CardPassword = entity.CardPassword;
-            member.Balance = entity.Balance;
-            member.Score = entity.Score;
-            member.MemberGrade = entity.MemberGrade.GetDescription();
-            member.Status = entity.Status.GetDescription();
-            member.Created = entity.Created;
-
-            return member;
-        }
-
-        //public static QueryGiftsReplyGift MapFrom(this QueryGiftsReplyGift gift, GiftEntity entity)
-        //{
-        //    gift.GiftId = entity.Id;
-        //    gift.CinemaCode = entity.CinemaCode;
-        //    gift.Title = entity.Title;
-        //    gift.Details = entity.Details;
-        //    gift.OriginalPrice = entity.OriginalPrice.HasValue ? entity.OriginalPrice.Value : 0;
-        //    gift.Price = entity.Price.HasValue ? entity.Price.Value : 0;
-        //    gift.Image = entity.Image;
-        //    gift.Stock = entity.Stock.HasValue ? entity.Stock.Value : 0;
-        //    gift.StartDate = entity.StartDate.ToFormatStringWithT();
-        //    gift.EndDate = entity.EndDate.ToFormatStringWithT();
-        //    gift.Status = entity.Status.GetDescription();
-        //    return gift;
-        //}
-
-        public static MemberCardEntity MapFrom(this MemberCardEntity member, RegisterMemberQueryJson Queryjson)
-        {
-            member.CinemaCode = Queryjson.CinemaCode;
-            member.OpenID = Queryjson.OpenID;
-            member.CardNo = Queryjson.CardNo;
-            member.CardPassword = Queryjson.CardPassword;
-            member.Balance = Queryjson.Balance;
-            member.Score = Queryjson.Score;
-            member.MemberGrade = (MemberCardGradeEnum)Queryjson.MemberGrade;
-            member.Status = MemberCardStatusEnum.Enable;
-            member.Created = DateTime.Now;
-            return member;
-        }
-
-        public static RegisterMemberReplyMember MapFrom(this RegisterMemberReplyMember data, MemberCardEntity member)
-        {
-            data.CinemaCode = member.CinemaCode;
-            data.OpenID = member.OpenID;
-            data.CardNo = member.CardNo;
-            data.CardPassword = member.CardPassword;
-            data.Balance = member.Balance;
-            data.Score = member.Score;
-            data.MemberGrade = member.MemberGrade.GetDescription();
-            data.Status = member.Status.GetDescription();
-            data.Created = member.Created;
-
-            return data;
-        }
 
         public static FilmCommentEntity MapFrom(this FilmCommentEntity comment, SubmitFilmCommentQueryJson Queryjson)
         {

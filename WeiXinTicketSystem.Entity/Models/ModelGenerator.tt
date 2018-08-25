@@ -51,7 +51,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 */
 	
 	tables["AdminConponView"]["Status"].PropertyType="ConponStatusEnum";
-    tables["AdminMemberCardView"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
+    
 	tables["AdminMemberCardView"]["Status"].PropertyType="MemberCardStatusEnum";
 	tables["AdminOrderView"]["OrderStatus"].PropertyType="OrderStatusEnum";
 	tables["AdminSessionView"]["PricePlanType"].PropertyType="PricePlanTypeEnum";
@@ -94,7 +94,7 @@ It is based on the T4 template from the PetaPoco project which in turn is based 
 	tables["DefaultActions"]["ActionType"].PropertyType="DefaultActionTypeEnum";
 	tables["FilmInfo"]["Status"].PropertyType="FilmStatusEnum";
 	tables["Middleware"]["Type"].PropertyType="CinemaTypeEnum";
-	tables["MemberCard"]["MemberGrade"].PropertyType="MemberCardGradeEnum";
+	
 	tables["MemberCard"]["Status"].PropertyType="MemberCardStatusEnum";
 	tables["MemberCardChargeRecords"]["ChargeType"].PropertyType="PayTypeEnum";
 	
