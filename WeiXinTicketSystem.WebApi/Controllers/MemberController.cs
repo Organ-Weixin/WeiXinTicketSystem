@@ -13,6 +13,9 @@ using WeiXinTicketSystem.WebApi.Models;
 using WeiXinTicketSystem.WebApi.Extension;
 using WeiXinTicketSystem.Entity.Enum;
 
+using NetSaleSvc.Api.Models;
+using NetSaleSvc.Api.Core;
+
 namespace WeiXinTicketSystem.WebApi.Controllers
 {
     public class MemberController : ApiController
@@ -21,6 +24,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         SystemUserService _userService;
         CinemaService _cinemaService;
         TicketUsersService _ticketUserService;
+        private NetSaleSvcCore netSaleService = NetSaleSvcCore.Instance;
 
         #region ctor
         public MemberController()
@@ -32,103 +36,66 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
         #endregion
 
-
-        #region 查询会员信息
         [HttpGet]
-        public async Task<QueryMembersReply> QueryMember(string UserName, string Password, string CinemaCode, string OpenID)
+        public LoginCardReply LoginCard(string UserName, string Password, string CinemaCode,string OpenID, string CardNo, string CardPassword)
         {
-            QueryMembersReply queryMembersReply = new QueryMembersReply();
-
-            //校验参数
-            if (!queryMembersReply.RequestInfoGuard(UserName, Password, CinemaCode, OpenID))
+            LoginCardReply loginCardReply = netSaleService.LoginCard(UserName, Password, CinemaCode, CardNo, CardPassword);
+            //新增会员卡需要传入OpenID,之后修改就不需要再操作
+            if (loginCardReply.Status == "Success")
             {
-                return queryMembersReply;
+                var membercard = _memberCardService.GetMemberCardByCardNo(CinemaCode, CardNo);
+                membercard.OpenID = OpenID;
+                _memberCardService.Update(membercard);
             }
-            //获取用户信息
-            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
-            if (UserInfo == null)
-            {
-                queryMembersReply.SetUserCredentialInvalidReply();
-                return queryMembersReply;
-            }
-            //验证影院是否存在且可访问
-            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
-            if (cinema == null)
-            {
-                queryMembersReply.SetCinemaInvalidReply();
-                return queryMembersReply;
-            }
-            //验证用户OpenId是否存在
-            var ticketuser = _ticketUserService.GetTicketUserByOpenID(OpenID);
-            if (ticketuser == null)
-            {
-                queryMembersReply.SetOpenIDNotExistReply();
-                return queryMembersReply;
-            }
-            var Members =await _memberCardService.GetMemberCardByOpenIDAsync(CinemaCode, OpenID);
-            queryMembersReply.data = new QueryMembersReplyMembers();
-            if (Members == null || Members.Count == 0)
-            {
-                queryMembersReply.data.MemberCount = 0;
-            }
-            else
-            {
-                queryMembersReply.data.MemberCount = Members.Count;
-                queryMembersReply.data.Members = Members.Select(x => new QueryMembersReplyMember().MapFrom(x)).ToList();
-            }
-            queryMembersReply.SetSuccessReply();
-            return queryMembersReply;
+            return loginCardReply;
         }
 
-        #endregion
+        [HttpGet]
+        public QueryCardReply QueryCard(string UserName, string Password, string CinemaCode, string CardNo, string CardPassword)
+        {
+            return netSaleService.QueryCard(UserName, Password, CinemaCode, CardNo, CardPassword);
+        }
 
-        #region 开通会员
         [HttpPost]
-        public RegisterMemberReply RegisterMember(RegisterMemberQueryJson QueryJson)
+        public QueryDiscountReply QueryDiscount(NetSaleQueryJson QueryJson)
         {
-            RegisterMemberReply registerMemberReply = new RegisterMemberReply();
-            //校验参数
-            if (!registerMemberReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.OpenID, QueryJson.CardNo, QueryJson.CardPassword, QueryJson.Balance.ToString(), QueryJson.Score.ToString(),QueryJson.MemberGrade.ToString()))
-            {
-                return registerMemberReply;
-            }
-            //获取用户信息
-            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(QueryJson.UserName, QueryJson.Password);
-            if (UserInfo == null)
-            {
-                registerMemberReply.SetUserCredentialInvalidReply();
-                return registerMemberReply;
-            }
-            //验证影院是否存在且可访问
-            var cinema = _cinemaService.GetCinemaByCinemaCode(QueryJson.CinemaCode);
-            if (cinema == null)
-            {
-                registerMemberReply.SetCinemaInvalidReply();
-                return registerMemberReply;
-            }
-            //验证用户OpenId是否存在
-            var ticketuser = _ticketUserService.GetTicketUserByOpenID(QueryJson.OpenID);
-            if (ticketuser == null)
-            {
-                registerMemberReply.SetOpenIDNotExistReply();
-                return registerMemberReply;
-            }
-
-            
-            //将请求参数转为会员卡信息
-            var memberCard = new MemberCardEntity();
-            memberCard.MapFrom(QueryJson);
-
-
-            _memberCardService.Insert(memberCard);
-
-            registerMemberReply.data = new RegisterMemberReplyMember();
-            registerMemberReply.data.MapFrom(memberCard);
-            registerMemberReply.SetSuccessReply();
-
-            return registerMemberReply;
-
+            return netSaleService.QueryDiscount(QueryJson.UserName, QueryJson.Password, QueryJson.QueryXml);
         }
-        #endregion
+
+        [HttpGet]
+        public CardPayReply CardPay(string UserName, string Password, string CinemaCode, string CardNo, string CardPassword, string PayAmount, string SessionCode, string FilmCode, string TicketNum)
+        {
+            return netSaleService.CardPay(UserName, Password, CinemaCode, CardNo, CardPassword, PayAmount, SessionCode, FilmCode, TicketNum);
+        }
+
+        [HttpGet]
+        public CardPayBackReply CardPayBack(string UserName, string Password, string CinemaCode, string CardNo, string CardPassword, string TradeNo, string PayBackAmount)
+        {
+            return netSaleService.CardPayBack(UserName, Password, CinemaCode, CardNo, CardPassword, TradeNo, PayBackAmount);
+        }
+
+        [HttpGet]
+        public QueryCardTradeRecordReply QueryCardTradeRecord(string UserName, string Password, string CinemaCode, string CardNo, string CardPassword, string StartDate, string EndDate, string PageSize, string PageNum)
+        {
+            return netSaleService.QueryCardTradeRecord(UserName, Password, CinemaCode, CardNo, CardPassword, StartDate, EndDate, PageSize, PageNum);
+        }
+
+        [HttpGet]
+        public CardChargeReply CardCharge(string UserName, string Password, string CinemaCode, string CardNo, string CardPassword, string ChargeType, string ChargeAmount)
+        {
+            return netSaleService.CardCharge(UserName, Password, CinemaCode, CardNo, CardPassword, ChargeType, ChargeAmount);
+        }
+
+        [HttpGet]
+        public QueryCardLevelReply QueryCardLevel(string UserName, string Password, string CinemaCode)
+        {
+            return netSaleService.QueryCardLevel(UserName, Password, CinemaCode);
+        }
+
+        [HttpGet]
+        public CardRegisterReply CardRegister(string UserName, string Password, string CinemaCode, string CardPassword, string LevelCode, string InitialAmount, string CardUserName, string MobilePhone, string IDNumber, string Sex)
+        {
+            return netSaleService.CardRegister(UserName, Password, CinemaCode, CardPassword, LevelCode, InitialAmount, CardUserName, MobilePhone, IDNumber, Sex);
+        }
     }
 }

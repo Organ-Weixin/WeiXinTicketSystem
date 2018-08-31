@@ -43,9 +43,8 @@ namespace WeiXinTicketSystem.Models
         [Display(Name = "会员卡积分")]
         public double? Score { get; set; }
 
-        [ListBox("_dd", Multiple = false)]
-        [Display(Name = "会员卡等级")]
-        public int MemberGrade { get; set; }
+        [Display(Name = "会员卡等级编码")]
+        public string LevelCode { get; set; }
 
         [ListBox("_dd", Multiple = false)]
         [Display(Name = "状态")]

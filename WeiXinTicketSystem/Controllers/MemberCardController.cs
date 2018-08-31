@@ -126,7 +126,7 @@ namespace WeiXinTicketSystem.Controllers
 
             if (memberCard.Id == 0)
             {
-                memberCard.CreateTime = DateTime.Now;
+                memberCard.Created = DateTime.Now;
                 await _memberCardService.InsertAsync(memberCard);
             }
             else
@@ -150,9 +150,7 @@ namespace WeiXinTicketSystem.Controllers
 
             if (memberCard != null)
             {
-               // memberCard.IsDel = true;
-                memberCard.Updated = DateTime.Now;
-                await _memberCardService.UpdateAsync(memberCard);
+                await _memberCardService.DeleteAsync(memberCard);
             }
             return Object();
         }

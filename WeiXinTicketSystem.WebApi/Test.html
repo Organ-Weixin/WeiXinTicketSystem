@@ -60,22 +60,22 @@
         //    });
         //});
 
-        $(function () {
-            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "Code": "0617jMvq1z5eCp0wZhwq1vCUvq17jMvF", "EncryptedData": "MnFnjAsxd6Vrn0q6uWVcY6MAAKNdGYgTRjaXjHGoMmmDM2yjE2G1l6yzxcLn6ugwX2K8MsMSir+ijylCG6oZA/ExNOCj+R02NTFeid5F/vyhbwycNPl27xZ511sCIf0nhofmmuTxuyNnAZz3Cq+k5bq7pzk0nYZZPfsWrbwferRTxES6Gx7aJlcKAI2a01UxgygWV/u6stJv/oJxsj728w==", "Iv": "V4e921fKX+sA23xsew2ACw==" };
-            $.ajax({
-                type: "post",
-                url: "http://localhost:28442/api/User/QueryMobilePhone",
-                //contentType: 'application/json',
-                //data: JSON.stringify(postdata),
-                data: postdata,
-                success: function (data, status) {
-                    if (status == "success") {
-                        console.log(data.Status);
-                        $("#div_test").append(JSON.stringify(data));
-                    }
-                }
-            });
-        });
+        //$(function () {
+        //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "Code": "0617jMvq1z5eCp0wZhwq1vCUvq17jMvF", "EncryptedData": "MnFnjAsxd6Vrn0q6uWVcY6MAAKNdGYgTRjaXjHGoMmmDM2yjE2G1l6yzxcLn6ugwX2K8MsMSir+ijylCG6oZA/ExNOCj+R02NTFeid5F/vyhbwycNPl27xZ511sCIf0nhofmmuTxuyNnAZz3Cq+k5bq7pzk0nYZZPfsWrbwferRTxES6Gx7aJlcKAI2a01UxgygWV/u6stJv/oJxsj728w==", "Iv": "V4e921fKX+sA23xsew2ACw==" };
+        //    $.ajax({
+        //        type: "post",
+        //        url: "http://localhost:28442/api/User/QueryMobilePhone",
+        //        //contentType: 'application/json',
+        //        //data: JSON.stringify(postdata),
+        //        data: postdata,
+        //        success: function (data, status) {
+        //            if (status == "success") {
+        //                console.log(data.Status);
+        //                $("#div_test").append(JSON.stringify(data));
+        //            }
+        //        }
+        //    });
+        //});
 
         //$(function () {
         //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "QueryXml": "<SubmitOrder CinemaCode=\"33111001\"><Order PaySeqNo=\"\" OrderCode=\"1683180716000076\" SessionCode=\"1683201807160028\" Count=\"1\" MobilePhone=\"13736146034\"><Seat SeatCode=\"3311100108#01#10\" Price=\"25.00\" RealPrice=\"25.00\" Fee=\"0.00\"/></Order></SubmitOrder>" };
@@ -93,6 +93,23 @@
         //        }
         //    });
         //});
+
+        $(function () {
+            var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "QueryXml": "<QueryDiscount CinemaCode=\"33097601\"><Card CardNo=\"82800246\" CardPassword=\"123456\" LevelCode=\"2\"></Card><Session SessionCode=\"1925978\" SessionTime=\"2018-08-27T22:40:00\" FilmCode=\"2038\" ScreenType=\"3d\" ListingPrice=\"26.00\" LowestPrice=\"25.00\"></Session></QueryDiscount>" };
+            $.ajax({
+                type: "post",
+                url: "http://localhost:28442/api/Member/QueryDiscount",
+                //contentType: 'application/json',
+                //data: JSON.stringify(postdata),
+                data: postdata,
+                success: function (data, status) {
+                    if (status == "success") {
+                        console.log(data.Status);
+                        $("#div_test").append(JSON.stringify(data));
+                    }
+                }
+            });
+        });
 
         //$(function () {
         //    var postdata = { "UserName": "MiniProgram", "Password": "6BF477EBCC446F54E6512AFC0E976C41", "CinemaCode": "33097601", "MobilePhone": "15000002025", "DeliveryAddress": "衢州新天地影城2号厅1排2座", "SendTime": "2018-06-08 15:00:00", "OpenID": "op2p6jrEvV8v0alTJ060Fu6cAreo", "Snacks": [{ "SnackCode": "31754854", "StandardPrice": "5.00", "SalePrice": "1.00", "Number": 2, "SubTotalPrice": "2.00" }] };

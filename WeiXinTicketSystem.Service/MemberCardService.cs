@@ -26,22 +26,23 @@ namespace WeiXinTicketSystem.Service
 
 
         /// <summary>
-        /// 根据影院编码获取会员卡信息
-        /// </summary>
-        /// <param name="CinemaCode"></param>
-        /// <returns></returns>
-        public MemberCardEntity GetMemberCardByCinemaCode(string CinemaCode)
-        {
-            return _memberCardRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefault();
-        }
-
-        /// <summary>
         /// 获取所有会员卡列表
         /// </summary>
         /// <returns></returns>
         public async Task<IList<MemberCardEntity>> GetAllMemberCardAsync()
         {
             return await _memberCardRepository.Query.ToListAsync();
+        }
+
+        /// <summary>
+        /// 根据卡号获取会员卡
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <param name="CardNo"></param>
+        /// <returns></returns>
+        public MemberCardEntity GetMemberCardByCardNo(string CinemaCode,string CardNo)
+        {
+            return _memberCardRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.CardNo == CardNo).SingleOrDefault();
         }
 
         /// <summary>
@@ -75,15 +76,6 @@ namespace WeiXinTicketSystem.Service
             return await query.ToPageListAsync();
         }
 
-        /// <summary>
-        /// 获取MemberCardEntity实体
-        /// </summary>
-        /// <param name="CinemaCode"></param>
-        /// <returns></returns>
-        public async Task<MemberCardEntity> GetMemberCardByCinemaCodeAsync(string CinemaCode)
-        {
-            return await _memberCardRepository.Query.Where(x => x.CinemaCode == CinemaCode).SingleOrDefaultAsync();
-        }
 
         /// <summary>
         /// 根据会员卡ID获取会员卡信息
@@ -136,12 +128,22 @@ namespace WeiXinTicketSystem.Service
         }
 
         /// <summary>
+        /// 删除会员卡
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(MemberCardEntity entity)
+        {
+            await _memberCardRepository.DeleteAsync(entity);
+        }
+
+        /// <summary>
         /// 根据影院编码和OpenID获取会员卡信息
         /// </summary>
         /// <param name="CinemaCode"></param>
         /// <param name="OpenID"></param>
         /// <returns></returns>
-        public async Task<IList<MemberCardEntity>> GetMemberCardByOpenIDAsync(string CinemaCode,String OpenID)
+        public async Task<IList<MemberCardEntity>> GetMemberCardByOpenIDAsync(string CinemaCode,string OpenID)
         {
             return await _memberCardRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.OpenID == OpenID).ToListAsync();
         }
