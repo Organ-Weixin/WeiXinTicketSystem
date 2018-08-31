@@ -22,6 +22,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         CinemaService _cinemaService;
         TicketUsersService _ticketUserService;
         GivingConditionsService _givingConditionsService;
+        MemberChargeSettingService _memberChargeSettingService;
 
         #region ctor
         public ConponController()
@@ -31,6 +32,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             _cinemaService = new CinemaService();
             _ticketUserService = new TicketUsersService();
             _givingConditionsService = new GivingConditionsService();
+            _memberChargeSettingService = new MemberChargeSettingService();
         }
         #endregion
 
@@ -243,6 +245,52 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             }
             queryGivingConditionsReply.SetSuccessReply();
             return queryGivingConditionsReply;
+        }
+
+
+        #endregion
+
+
+        #region 查询该影院下所有会员卡充值赠送条件
+
+        [HttpGet]
+        public async Task<QueryMemberChargeSettingReply> QueryMemberChargeSettings(string UserName, string Password, string CinemaCode)
+        {
+            QueryMemberChargeSettingReply queryMemberChargeSettingsReply = new QueryMemberChargeSettingReply();
+            //校验参数
+            if (!queryMemberChargeSettingsReply.RequestInfoGuard(UserName, Password, CinemaCode))
+            {
+                return queryMemberChargeSettingsReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryMemberChargeSettingsReply.SetUserCredentialInvalidReply();
+                return queryMemberChargeSettingsReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryMemberChargeSettingsReply.SetCinemaInvalidReply();
+                return queryMemberChargeSettingsReply;
+            }
+
+            var memberChargeSetting = await _memberChargeSettingService.GetMemberChargeSettingViewByCinemaCodeAsync(CinemaCode);
+
+            queryMemberChargeSettingsReply.data = new QueryMemberChargeSettingReplySettings();
+            if (memberChargeSetting == null || memberChargeSetting.Count == 0)
+            {
+                queryMemberChargeSettingsReply.data.MemberChargeSettingCount = 0;
+            }
+            else
+            {
+                queryMemberChargeSettingsReply.data.MemberChargeSettingCount = memberChargeSetting.Count;
+                queryMemberChargeSettingsReply.data.MemberChargeSettings = memberChargeSetting.Select(x => new QueryMemberChargeSettingReplySetting().MapFrom(x)).ToList();
+            }
+            queryMemberChargeSettingsReply.SetSuccessReply();
+            return queryMemberChargeSettingsReply;
         }
 
 

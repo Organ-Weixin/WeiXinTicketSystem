@@ -281,9 +281,9 @@ namespace WeiXinTicketSystem.WebApi.Models
             member.CardPassword = entity.CardPassword;
             member.Balance = entity.Balance;
             member.Score = entity.Score;
-            member.MemberGrade = entity.MemberGrade.GetDescription();
+            //member.MemberGrade = entity.MemberGrade.GetDescription();
             member.Status = entity.Status.GetDescription();
-            member.Created = entity.Created;
+            //member.Created = entity.CreateTime;
 
             return member;
         }
@@ -312,9 +312,9 @@ namespace WeiXinTicketSystem.WebApi.Models
             member.CardPassword = Queryjson.CardPassword;
             member.Balance = Queryjson.Balance;
             member.Score = Queryjson.Score;
-            member.MemberGrade = (MemberCardGradeEnum)Queryjson.MemberGrade;
+            //member.MemberGrade = (MemberCardGradeEnum)Queryjson.MemberGrade;
             member.Status = MemberCardStatusEnum.Enable;
-            member.Created = DateTime.Now;
+            member.CreateTime = DateTime.Now;
             return member;
         }
 
@@ -326,9 +326,9 @@ namespace WeiXinTicketSystem.WebApi.Models
             data.CardPassword = member.CardPassword;
             data.Balance = member.Balance;
             data.Score = member.Score;
-            data.MemberGrade = member.MemberGrade.GetDescription();
+            //data.MemberGrade = member.MemberGrade.GetDescription();
             data.Status = member.Status.GetDescription();
-            data.Created = member.Created;
+            //data.Created = member.Created;
 
             return data;
         }
@@ -665,6 +665,33 @@ namespace WeiXinTicketSystem.WebApi.Models
             activityPopup.EndDate = entity.EndDate.ToFormatStringWithT();
             
             return activityPopup;
+        }
+
+        public static QueryScreenInfoReplyScreenInfo MapFrom(this QueryScreenInfoReplyScreenInfo screen, ScreenInfoEntity entity)
+        {
+            screen.ScreenId = entity.Id;
+            screen.CinemaCode = entity.CCode;
+            screen.ScreenCode = entity.SCode;
+            screen.ScreenName = entity.SName;
+            screen.SeatCount = entity.SeatCount;
+            screen.Type = entity.Type;
+            return screen;
+        }
+
+        public static QueryMemberChargeSettingReplySetting MapFrom(this QueryMemberChargeSettingReplySetting memberChargeSetting, AdminMemberChargeSettingViewEntity entity)
+        {
+            memberChargeSetting.MemberChargeSettingId = entity.Id;
+            memberChargeSetting.CinemaCode = entity.CinemaCode;
+            memberChargeSetting.Price = entity.Price;
+            memberChargeSetting.TypeCode = entity.TypeCode;
+            memberChargeSetting.GroupCode = entity.GroupCode;
+            memberChargeSetting.GroupName = entity.GroupName;
+            memberChargeSetting.Number = entity.Number;
+            memberChargeSetting.StartDate = entity.StartDate.ToFormatStringWithT();
+            memberChargeSetting.EndDate = entity.EndDate.ToFormatStringWithT();
+            memberChargeSetting.Remark = entity.Remark;
+            memberChargeSetting.NotUsedNumber = GetNotUsedNumber(entity.CinemaCode, entity.GroupCode);
+            return memberChargeSetting;
         }
     }
 }

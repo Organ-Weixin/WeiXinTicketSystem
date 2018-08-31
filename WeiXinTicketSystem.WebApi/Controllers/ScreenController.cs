@@ -34,7 +34,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
         #endregion
 
-        #region 获取影厅信息
+        #region 获取影厅信息列表
 
         [HttpGet]
         public QueryScreensReply QueryScreens(string UserName, string Password, string CinemaCode)
@@ -74,6 +74,46 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             }
             queryScreensReply.SetSuccessReply();
             return queryScreensReply;
+        }
+
+        #endregion
+
+        #region 根据影厅编码获取影厅信息
+
+        [HttpGet]
+        public QueryScreenInfoReply QueryScreenInfo(string UserName, string Password, string CinemaCode,string ScreenCode)
+        {
+            QueryScreenInfoReply queryScreenInfoReply = new QueryScreenInfoReply();
+            //校验参数
+            if (!queryScreenInfoReply.RequestInfoGuard(UserName, Password, CinemaCode, ScreenCode))
+            {
+                return queryScreenInfoReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryScreenInfoReply.SetUserCredentialInvalidReply();
+                return queryScreenInfoReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryScreenInfoReply.SetCinemaInvalidReply();
+                return queryScreenInfoReply;
+            }
+
+            var ScreenInfo = _screenInfoService.GetScreenInfo(CinemaCode, ScreenCode);
+
+            queryScreenInfoReply.data = new QueryScreenInfoReplyScreenInfo();
+
+            if (ScreenInfo != null)
+            {
+                queryScreenInfoReply.data.MapFrom(ScreenInfo);
+            }
+            queryScreenInfoReply.SetSuccessReply();
+            return queryScreenInfoReply;
         }
 
         #endregion

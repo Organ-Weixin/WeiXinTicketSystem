@@ -73,9 +73,9 @@ namespace WeiXinTicketSystem.Service
         /// <param name="offset"></param>
         /// <param name="perPage"></param>
         /// <returns></returns>
-        public async Task<IPageList<FilmInfoEntity>> GetFilmInfoPagedAsync(string filmCode, string filmName, string keyword, int offset, int perPage)
+        public async Task<IPageList<FilmInfoEntity>> GetFilmInfoPagedAsync(string filmCode, string filmName, string keyword, int offset, int perPage, DateTime? startDate, DateTime? endDate)
         {
-            var query = _filmInfoRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
+            var query = _filmInfoRepository.Query.OrderByDescending(x => x.PublishDate).Skip(offset).Take(perPage);
             //影片编码
             if (!string.IsNullOrEmpty(filmCode))
             {
@@ -90,6 +90,17 @@ namespace WeiXinTicketSystem.Service
             if (!string.IsNullOrEmpty(keyword))
             {
                 query.Where(x => x.Publisher.Contains(keyword) || x.Producer.Contains(keyword) || x.Director.Contains(keyword) || x.Cast.Contains(keyword) || x.Introduction.Contains(keyword));
+            }
+
+            if (startDate.HasValue)
+            {
+                query.Where(x => x.PublishDate > startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                DateTime deadline = endDate.Value.AddDays(1);
+                query.Where(x => x.PublishDate < deadline);
             }
             //query.Where(x => !x.IsDel);
             return await query.ToPageListAsync();

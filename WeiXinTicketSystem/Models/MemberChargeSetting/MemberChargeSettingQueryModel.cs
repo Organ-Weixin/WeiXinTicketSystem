@@ -6,20 +6,21 @@ using System.Web;
 
 namespace WeiXinTicketSystem.Models
 {
-    public class FilmInfoQueryModel : DynatablePageQueryModel
+    public class MemberChargeSettingQueryModel : DynatablePageQueryModel
     {
         /// <summary>
-        /// 影片编码
+        ///影院编码
         /// </summary>
-        public string FilmCode { get; set; }
-        /// <summary>
-        /// 影片名称
-        /// </summary>
-        public string FilmName { get; set; }
+        public string CinemaCode_dd { get; set; }
 
         /// <summary>
-        /// 时间范围
+        /// 赠送条件
         /// </summary>
-        public string filmDateRange { get; set; }
+        public string Conditions { get; set; }
+
+        /// <summary>
+        /// 优惠券类型
+        /// </summary>
+        public int ConponType_dd { get; set; }
     }
 }

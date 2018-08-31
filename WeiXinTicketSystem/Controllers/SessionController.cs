@@ -125,18 +125,18 @@ namespace WeiXinTicketSystem.Controllers
 
             PreparySetPriceViewData();
 
-            return PricePlan(model);
+            return View(model);
         }
 
-        /// <summary>
-        /// 价格计划
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        public ActionResult PricePlan(SetPriceViewModel model)
-        {
-            return View(nameof(PricePlan), model);
-        }
+        ///// <summary>
+        ///// 价格计划
+        ///// </summary>
+        ///// <param name="model"></param>
+        ///// <returns></returns>
+        //public ActionResult PricePlan(SetPriceViewModel model)
+        //{
+        //    return View(nameof(PricePlan), model);
+        //}
 
         /// <summary>
         /// 价格设置
@@ -144,7 +144,7 @@ namespace WeiXinTicketSystem.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> _SetPrice(SetPriceViewModel model)
+        public async Task<ActionResult> SetPrice(SetPriceViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -177,7 +177,8 @@ namespace WeiXinTicketSystem.Controllers
                 await _pricePlanService.UpdateAsync(priceplan);
             }
 
-            return RedirectObject(Url.Action(nameof(Index)));
+            //return RedirectObject(Url.Action(nameof(Index)));
+            return Object();
         }
 
         /// <summary>

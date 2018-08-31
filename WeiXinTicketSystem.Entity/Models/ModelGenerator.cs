@@ -216,40 +216,6 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
-    /// A class which represents the Cinema table.
-    /// </summary>
-    [Table("Cinema")]
-    [SqlLamTable(Name = "Cinema")]
-    public partial class CinemaEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual int MId { get; set; }
-		public virtual string Code { get; set; }
-		public virtual string Name { get; set; }
-		public virtual string Address { get; set; }
-		public virtual int? ScreenCount { get; set; }
-		public virtual bool IsDel { get; set; }
-		public virtual int? ManualAdd { get; set; }
-		public virtual int? DingXinId { get; set; }
-		public virtual string YueKeId { get; set; }
-		public virtual CinemaOpenEnum IsOpen { get; set; }
-		public virtual string DY1905Id { get; set; }
-		public virtual string ContactName { get; set; }
-		public virtual string ContactMobile { get; set; }
-		public virtual TheaterChainEnum TheaterChain { get; set; }
-		public virtual double? Latitude { get; set; }
-		public virtual double? Longitude { get; set; }
-		public virtual CinemaOpenEnum IsOpenSnacks { get; set; }
-		public virtual string CinemaPhone { get; set; }
-		public virtual string TicketHint { get; set; }
-		public virtual string CinemaLabel { get; set; }
-		public virtual YesOrNoEnum? IsSnackDistribution { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-	}
-
-    /// <summary>
     /// A class which represents the User_Cinema table.
     /// </summary>
     [Table("User_Cinema")]
@@ -268,29 +234,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual decimal? RealPrice { get; set; }
 		public virtual DateTime? ExpDate { get; set; }
 		public virtual SnackInterfaceEnum OpenSnacks { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the MemberCard table.
-    /// </summary>
-    [Table("MemberCard")]
-    [SqlLamTable(Name = "MemberCard")]
-    public partial class MemberCardEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string OpenID { get; set; }
-		public virtual string MobilePhone { get; set; }
-		public virtual string CardNo { get; set; }
-		public virtual string CardPassword { get; set; }
-		public virtual decimal? Balance { get; set; }
-		public virtual int? Score { get; set; }
-		public virtual MemberCardGradeEnum MemberGrade { get; set; }
-		public virtual MemberCardStatusEnum Status { get; set; }
-		public virtual DateTime Created { get; set; }
-		public virtual DateTime? Updated { get; set; }
-		public virtual bool IsDel { get; set; }
 	}
 
     /// <summary>
@@ -471,6 +414,129 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual decimal MemberFee { get; set; }
 		public virtual CinemaFeePayTypeEnum FeePayType { get; set; }
 		public virtual CinemaFeeGatherTypeEnum FeeGatherType { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the MemberCard table.
+    /// </summary>
+    [Table("MemberCard")]
+    [SqlLamTable(Name = "MemberCard")]
+    public partial class MemberCardEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string OpenID { get; set; }
+		public virtual string MobilePhone { get; set; }
+		public virtual string CardNo { get; set; }
+		public virtual string CardPassword { get; set; }
+		public virtual decimal? Balance { get; set; }
+		public virtual int? Score { get; set; }
+		public virtual string LevelCode { get; set; }
+		public virtual string LevelName { get; set; }
+		public virtual string UserName { get; set; }
+		public virtual string Sex { get; set; }
+		public virtual string CreditNum { get; set; }
+		public virtual DateTime? Birthday { get; set; }
+		public virtual DateTime? ExpireDate { get; set; }
+		public virtual DateTime? CreateTime { get; set; }
+		public virtual MemberCardStatusEnum Status { get; set; }
+		public virtual DateTime? Updated { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the MemberCardLevel table.
+    /// </summary>
+    [Table("MemberCardLevel")]
+    [SqlLamTable(Name = "MemberCardLevel")]
+    public partial class MemberCardLevelEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string LevelCode { get; set; }
+		public virtual string LevelName { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the Cinema table.
+    /// </summary>
+    [Table("Cinema")]
+    [SqlLamTable(Name = "Cinema")]
+    public partial class CinemaEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual int MId { get; set; }
+		public virtual string Code { get; set; }
+		public virtual string Name { get; set; }
+		public virtual string Address { get; set; }
+		public virtual int? ScreenCount { get; set; }
+		public virtual bool IsDel { get; set; }
+		public virtual int? ManualAdd { get; set; }
+		public virtual int? DingXinId { get; set; }
+		public virtual string YueKeId { get; set; }
+		public virtual CinemaOpenEnum IsOpen { get; set; }
+		public virtual string DY1905Id { get; set; }
+		public virtual string ContactName { get; set; }
+		public virtual string ContactMobile { get; set; }
+		public virtual TheaterChainEnum TheaterChain { get; set; }
+		public virtual double? Latitude { get; set; }
+		public virtual double? Longitude { get; set; }
+		public virtual CinemaOpenEnum IsOpenSnacks { get; set; }
+		public virtual string CinemaPhone { get; set; }
+		public virtual string TicketHint { get; set; }
+		public virtual string CinemaLabel { get; set; }
+		public virtual YesOrNoEnum? IsSnackDistribution { get; set; }
+		public virtual string CardNo { get; set; }
+		public virtual string CardPassword { get; set; }
+		public virtual DateTime Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the MemberChargeSetting table.
+    /// </summary>
+    [Table("MemberChargeSetting")]
+    [SqlLamTable(Name = "MemberChargeSetting")]
+    public partial class MemberChargeSettingEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string TypeCode { get; set; }
+		public virtual string GroupCode { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual int? Number { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+		public virtual string Remark { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the AdminMemberChargeSettingView view.
+    /// </summary>
+    [Table("AdminMemberChargeSettingView")]
+    [SqlLamTable(Name = "AdminMemberChargeSettingView")]
+    public partial class AdminMemberChargeSettingViewEntity : EntityBase
+    {
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string TypeCode { get; set; }
+		public virtual string GroupCode { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual int? Number { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+		public virtual string Remark { get; set; }
+		public virtual string CinemaName { get; set; }
+		public virtual string GroupName { get; set; }
 	}
 
     /// <summary>
@@ -1159,7 +1225,7 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string CardPassword { get; set; }
 		public virtual decimal? Balance { get; set; }
 		public virtual int? Score { get; set; }
-		public virtual MemberCardGradeEnum MemberGrade { get; set; }
+		public virtual string LevelCode { get; set; }
 		public virtual MemberCardStatusEnum Status { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }

@@ -39,7 +39,7 @@
                             <th data-dynatable-no-sort="true">标准价</th>
                             <th data-dynatable-no-sort="true">最低价</th>
                             <th data-dynatable-no-sort="true">设置价</th>
-                            <th data-dynatable-no-sort="true">操作</th>
+                           <!-- <th data-dynatable-no-sort="true">操作</th> -->
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -72,12 +72,12 @@
                     <td style="text-align: left;">{{standardPrice}}</td>
                     <td style="text-align: left;">{{lowestPrice}}</td>
                     <td style="text-align: left;color:red;">{{pricePlanPrice}}</td>
-                    <td style="text-align: left;">
-                    @if (CurrentPermissions.Contains(3))
+                    <!-- <td style="text-align: left;">
+                   @if (CurrentPermissions.Contains(3))
                     {
-                        <a href="@Url.Action(MvcNames.Session.SetPrice)/{{id}}">价格设置</a>
-                    }
-                    </td>
+                        <a href="@Url.Action(MvcNames.Session.SetPrice)/{{id}}"  data-toggle="modal-form">价格设置</a>
+                    } 
+                    </td>-->
                 </tr>
             </script>
         </div>

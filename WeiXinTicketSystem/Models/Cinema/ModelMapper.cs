@@ -57,6 +57,8 @@ namespace WeiXinTicketSystem.Models.Cinema
             module.CinemaLabel = model.CinemaLabel;
             module.CinemaPhone = model.CinemaPhone;
             module.IsSnackDistribution = (YesOrNoEnum)model.IsSnackDistribution;
+            module.CardNo = model.CardNo;
+            module.CardPassword = model.CardPassword;
             //module.Created = model.Created;
 
         }
@@ -87,7 +89,8 @@ namespace WeiXinTicketSystem.Models.Cinema
             {
                 model.IsSnackDistribution = (int)module.IsSnackDistribution;
             }
-            
+            model.CardNo = module.CardNo;
+            model.CardPassword = module.CardPassword;
             //model.Created = module.Created;
 
         }

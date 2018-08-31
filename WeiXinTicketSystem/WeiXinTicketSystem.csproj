@@ -269,6 +269,7 @@
     <Compile Include="Controllers\FilmInfoController.cs" />
     <Compile Include="Controllers\GivingConditionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MemberChargeSettingController.cs" />
     <Compile Include="Controllers\MiddlewareController.cs" />
     <Compile Include="Controllers\MiniProgramLinkUrlController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -350,6 +351,9 @@
     <Compile Include="Models\MemberCard\CreateOrUpdateMemberCardViewModel.cs" />
     <Compile Include="Models\MemberCard\MemberCardQueryModel.cs" />
     <Compile Include="Models\MemberCard\ModelMapper.cs" />
+    <Compile Include="Models\MemberChargeSetting\CreateOrUpdateMemberChargeSettingViewModel.cs" />
+    <Compile Include="Models\MemberChargeSetting\MemberChargeSettingQueryModel.cs" />
+    <Compile Include="Models\MemberChargeSetting\ModelMapper.cs" />
     <Compile Include="Models\Middleware\CreateOrUpdateMiddlewareViewModel.cs" />
     <Compile Include="Models\Middleware\MiddlewareQueryModel.cs" />
     <Compile Include="Models\Middleware\ModelMapper.cs" />
@@ -1471,6 +1475,9 @@
     <Content Include="Views\Conpon\Index.cshtml" />
     <Content Include="Views\ActivityPopup\CreateOrUpdate.cshtml" />
     <Content Include="Views\ActivityPopup\Index.cshtml" />
+    <Content Include="Views\Session\SetPrice.cshtml" />
+    <Content Include="Views\MemberChargeSetting\CreateOrUpdate.cshtml" />
+    <Content Include="Views\MemberChargeSetting\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

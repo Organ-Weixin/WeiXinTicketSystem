@@ -53,12 +53,22 @@ namespace WeiXinTicketSystem.Controllers
         ///// <returns></returns>
         public async Task<ActionResult> List(DynatablePageModel<FilmInfoQueryModel> pageModel)
         {
+            DateTime? startDate = null, endDate = null;
+            if (!string.IsNullOrEmpty(pageModel.Query.filmDateRange))
+            {
+                var dates = pageModel.Query.filmDateRange.Split(new string[] { " - " }, StringSplitOptions.RemoveEmptyEntries);
+                startDate = DateTime.Parse(dates[0]);
+                endDate = DateTime.Parse(dates[1]);
+            }
+
             var filmInfo = await _filmInfoService.GetFilmInfoPagedAsync(
                 pageModel.Query.FilmCode,
                 pageModel.Query.FilmName,
                 pageModel.Query.Search,
                 pageModel.Offset,
-                pageModel.PerPage
+                pageModel.PerPage,
+                startDate,
+                endDate
             );
             return DynatableResult(filmInfo.ToDynatableModel(filmInfo.TotalCount, pageModel.Offset, x => x.ToDynatableItem()));
         }

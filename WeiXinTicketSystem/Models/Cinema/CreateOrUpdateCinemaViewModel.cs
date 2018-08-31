@@ -71,5 +71,13 @@ namespace WeiXinTicketSystem.Models
         [Display(Name = "小卖配送")]
         public int IsSnackDistribution { get; set; }
 
+        [Display(Name = "会员卡卡号")]
+        [StringLength(50, ErrorMessage = "{0}最多50个字符")]
+        public string CardNo { get; set; }
+
+        [Display(Name = "会员卡密码")]
+        [StringLength(50, ErrorMessage = "{0}最多50个字符")]
+        public string CardPassword { get; set; }
+
     }
 }

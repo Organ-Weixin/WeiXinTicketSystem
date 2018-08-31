@@ -41,7 +41,7 @@ namespace WeiXinTicketSystem.Service
         /// <returns></returns>
         public async Task<IList<MemberCardEntity>> GetAllMemberCardAsync()
         {
-            return await _memberCardRepository.Query.Where(x => !x.IsDel).ToListAsync();
+            return await _memberCardRepository.Query.ToListAsync();
         }
 
         /// <summary>

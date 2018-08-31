@@ -1,27 +1,27 @@
-﻿@model CreateOrUpdateGivingConditionsViewModel
+﻿@model CreateOrUpdateMemberChargeSettingViewModel
 @{
     ViewData["CinemaManage"] = "active";
-    ViewData["GivingConditions"] = "active";
-    ViewBag.Title = Model.Id > 0 ? "赠送条件编辑" : "赠送条件添加";
+    ViewData["MemberChargeSetting"] = "active";
+    ViewBag.Title = Model.Id > 0 ? "会员充值设置编辑" : "会员充值设置添加";
 }
 
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        @(Model.Id > 0 ? "赠送条件编辑" : "赠送条件添加")
-        <small>赠送条件管理</small>
+        @(Model.Id > 0 ? "会员充值设置编辑" : "会员充值设置添加")
+        <small>会员充值设置</small>
 
     </h1>
     <ol class="breadcrumb">
         <li><a href="javascript:;"><i class="fa fa-cog"></i> 影院管理</a></li>
-        <li><a href="@Url.Action(MvcNames.GivingConditions.Index)"><i class="fa fa-group"></i> 赠送条件管理</a></li>
-        <li class="active">@(Model.Id > 0 ? "赠送条件编辑" : "赠送条件添加")</li>
+        <li><a href="@Url.Action(MvcNames.MemberChargeSetting.Index)"><i class="fa fa-group"></i> 会员充值设置</a></li>
+        <li class="active">@(Model.Id > 0 ? "会员充值设置编辑" : "会员充值设置添加")</li>
     </ol>
 </section>
 
 
-@using (Ajax.BeginForm(MvcNames.GivingConditions._CreateOrUpdate, null, null, new AjaxOptions
+@using (Ajax.BeginForm(MvcNames.MemberChargeSetting._CreateOrUpdate, null, null, new AjaxOptions
 {
     HttpMethod = "POST",
     OnSuccess = "App.onOperationSuccessSimple",
@@ -52,7 +52,7 @@
                 </div>
                 <fieldset>
                     <button type="submit" class="btn btn-primary col-xs-2 col-xs-offset-3">保存</button>
-                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.GivingConditions.Index)">取消</a>
+                    <a class="btn btn-default col-xs-2 col-xs-offset-1" href="@Url.Action(MvcNames.MemberChargeSetting.Index)">取消</a>
                 </fieldset>
             </div>
         </div>
@@ -101,7 +101,7 @@
 
         function doGetConponType(cinemaCode,typeCode) {
             var selDom = $("#GroupCode");//根据id获取select的jquery对象
-            $.post('@Url.Action("GetConponType", "GivingConditions")', { 'cinemaCode': cinemaCode, 'typeCode': typeCode}, function (result) {
+            $.post('@Url.Action("GetConponType", "MemberChargeSetting")', { 'cinemaCode': cinemaCode, 'typeCode': typeCode}, function (result) {
                 var jsonObj = eval("(" + result + ")");
                 $("#GroupCode").empty();
                 for (var i = 0; i < jsonObj.length; i++) {

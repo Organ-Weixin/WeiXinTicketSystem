@@ -44,6 +44,7 @@
                 <div class="dynatable-custom-filter">
                     <input type="text" placeholder="影片编码" name="FilmCode" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
                     <input type="text" placeholder="影片名称" name="FilmName" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
+					<input type="text" placeholder="影片日期" id="filmDateRange" name="filmDateRange" style="display:inline-block;width:195px;font-size:14px;height:34px;margin-left:5px;" class="form-control dynatable-query js-date-range" />
                 </div>
                 <div class="dynatable-operation">
                     @if (CurrentPermissions.Contains(2))
@@ -101,6 +102,16 @@
 
 @section scripts{
     <script type="text/javascript">
+	    $('.js-date-range').daterangepicker({
+            "locale": App.dateRangePickerLocal,
+            'autoUpdateInput': false
+        }).on('cancel.daterangepicker', function () {
+            $(this).val(null).trigger('change')
+        }).on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY')).trigger('change')
+        })
+
+	   
         //隐藏图片
         function CloseImg()
         {

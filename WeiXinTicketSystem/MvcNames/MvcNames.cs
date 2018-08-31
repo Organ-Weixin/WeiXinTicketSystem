@@ -107,7 +107,6 @@ namespace WeiXinTicketSystem
             public static string Index { get { return nameof(SessionController.Index); } }
             public static string List { get { return nameof(SessionController.List); } }
             public static string SetPrice { get { return nameof(SessionController.SetPrice); } }
-            public static string _SetPrice { get { return nameof(SessionController._SetPrice); } }
             public static string Update { get { return nameof(SessionController.Update); } }
             public static string _Update { get { return nameof(SessionController._Update); } }
         }
@@ -473,6 +472,20 @@ namespace WeiXinTicketSystem
             public static string Update { get { return nameof(ActivityPopupController.Update); } }
             public static string Delete { get { return nameof(ActivityPopupController.Delete); } }
             public static string _CreateOrUpdate { get { return nameof(ActivityPopupController._CreateOrUpdate); } }
+        }
+
+        /// <summary>
+        /// 会员充值设置
+        /// </summary>
+        public static class MemberChargeSetting
+        {
+            public static string Name { get { return nameof(MemberChargeSetting); } }
+            public static string Index { get { return nameof(MemberChargeSettingController.Index); } }
+            public static string List { get { return nameof(MemberChargeSettingController.List); } }
+            public static string Create { get { return nameof(MemberChargeSettingController.Create); } }
+            public static string Update { get { return nameof(MemberChargeSettingController.Update); } }
+            public static string Delete { get { return nameof(MemberChargeSettingController.Delete); } }
+            public static string _CreateOrUpdate { get { return nameof(MemberChargeSettingController._CreateOrUpdate); } }
         }
     }
 }
