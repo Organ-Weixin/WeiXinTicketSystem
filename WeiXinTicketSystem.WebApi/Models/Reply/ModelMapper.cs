@@ -627,5 +627,32 @@ namespace WeiXinTicketSystem.WebApi.Models
 
             return order;
         }
+
+        public static QueryScreenInfoReplyScreenInfo MapFrom(this QueryScreenInfoReplyScreenInfo screen, ScreenInfoEntity entity)
+        {
+            screen.ScreenId = entity.Id;
+            screen.CinemaCode = entity.CCode;
+            screen.ScreenCode = entity.SCode;
+            screen.ScreenName = entity.SName;
+            screen.SeatCount = entity.SeatCount;
+            screen.Type = entity.Type;
+            return screen;
+        }
+
+        public static QueryMemberChargeSettingReplySetting MapFrom(this QueryMemberChargeSettingReplySetting memberChargeSetting, AdminMemberChargeSettingViewEntity entity)
+        {
+            memberChargeSetting.MemberChargeSettingId = entity.Id;
+            memberChargeSetting.CinemaCode = entity.CinemaCode;
+            memberChargeSetting.Price = entity.Price;
+            memberChargeSetting.TypeCode = entity.TypeCode;
+            memberChargeSetting.GroupCode = entity.GroupCode;
+            memberChargeSetting.GroupName = entity.GroupName;
+            memberChargeSetting.Number = entity.Number;
+            memberChargeSetting.StartDate = entity.StartDate.ToFormatStringWithT();
+            memberChargeSetting.EndDate = entity.EndDate.ToFormatStringWithT();
+            memberChargeSetting.Remark = entity.Remark;
+            memberChargeSetting.NotUsedNumber = GetNotUsedNumber(entity.CinemaCode, entity.GroupCode);
+            return memberChargeSetting;
+        }
     }
 }
