@@ -126,7 +126,7 @@ namespace WeiXinTicketSystem.Controllers
 
             if (memberCard.Id == 0)
             {
-                memberCard.Created = DateTime.Now;
+                memberCard.CreateTime = DateTime.Now;
                 await _memberCardService.InsertAsync(memberCard);
             }
             else

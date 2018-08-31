@@ -441,7 +441,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual DateTime? ExpireDate { get; set; }
 		public virtual DateTime? CreateTime { get; set; }
 		public virtual MemberCardStatusEnum Status { get; set; }
-		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
 	}
 
@@ -493,6 +492,51 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string CardPassword { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the MemberChargeSetting table.
+    /// </summary>
+    [Table("MemberChargeSetting")]
+    [SqlLamTable(Name = "MemberChargeSetting")]
+    public partial class MemberChargeSettingEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string TypeCode { get; set; }
+		public virtual string GroupCode { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual int? Number { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+		public virtual string Remark { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the AdminMemberChargeSettingView view.
+    /// </summary>
+    [Table("AdminMemberChargeSettingView")]
+    [SqlLamTable(Name = "AdminMemberChargeSettingView")]
+    public partial class AdminMemberChargeSettingViewEntity : EntityBase
+    {
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string TypeCode { get; set; }
+		public virtual string GroupCode { get; set; }
+		public virtual decimal? Price { get; set; }
+		public virtual int? Number { get; set; }
+		public virtual DateTime? StartDate { get; set; }
+		public virtual DateTime? EndDate { get; set; }
+		public virtual DateTime? Created { get; set; }
+		public virtual DateTime? Updated { get; set; }
+		public virtual bool Deleted { get; set; }
+		public virtual string Remark { get; set; }
+		public virtual string CinemaName { get; set; }
+		public virtual string GroupName { get; set; }
 	}
 
     /// <summary>
