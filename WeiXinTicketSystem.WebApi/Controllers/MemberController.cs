@@ -37,9 +37,17 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         #endregion
 
         [HttpGet]
-        public LoginCardReply LoginCard(string UserName, string Password, string CinemaCode, string CardNo, string CardPassword)
+        public LoginCardReply LoginCard(string UserName, string Password, string CinemaCode,string OpenID, string CardNo, string CardPassword)
         {
-            return netSaleService.LoginCard(UserName, Password, CinemaCode, CardNo, CardPassword);
+            LoginCardReply loginCardReply = netSaleService.LoginCard(UserName, Password, CinemaCode, CardNo, CardPassword);
+            //新增会员卡需要传入OpenID,之后修改就不需要再操作
+            if (loginCardReply.Status == "Success")
+            {
+                var membercard = _memberCardService.GetMemberCardByCardNo(CinemaCode, CardNo);
+                membercard.OpenID = OpenID;
+                _memberCardService.Update(membercard);
+            }
+            return loginCardReply;
         }
 
         [HttpGet]
@@ -49,9 +57,9 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
 
         [HttpPost]
-        public QueryDiscountReply QueryDiscount(string UserName, string Password, string QueryXml)
+        public QueryDiscountReply QueryDiscount(NetSaleQueryJson QueryJson)
         {
-            return netSaleService.QueryDiscount(UserName,Password,QueryXml);
+            return netSaleService.QueryDiscount(QueryJson.UserName, QueryJson.Password, QueryJson.QueryXml);
         }
 
         [HttpGet]

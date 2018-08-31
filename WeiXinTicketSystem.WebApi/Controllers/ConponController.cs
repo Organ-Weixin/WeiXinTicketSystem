@@ -155,54 +155,6 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
         #endregion
 
-        //#region 查询小卖赠品信息
-        //[HttpGet]
-        //public async Task<QueryGiftsReply> QueryGifts(string UserName, string Password, string CinemaCode, string Status, string CurrentPage, string PageSize)
-        //{
-        //    QueryGiftsReply queryGiftsReply = new QueryGiftsReply();
-        //    //校验参数
-        //    if (!queryGiftsReply.RequestInfoGuard(UserName, Password, CinemaCode, Status, CurrentPage, PageSize))
-        //    {
-        //        return queryGiftsReply;
-        //    }
-        //    //获取用户信息
-        //    SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
-        //    if (UserInfo == null)
-        //    {
-        //        queryGiftsReply.SetUserCredentialInvalidReply();
-        //        return queryGiftsReply;
-        //    }
-        //    //验证影院是否存在且可访问
-        //    var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
-        //    if (cinema == null)
-        //    {
-        //        queryGiftsReply.SetCinemaInvalidReply();
-        //        return queryGiftsReply;
-        //    }
-        //    //验证赠品状态
-        //    var StatusEnum = Status.CastToEnum<GiftStatusEnum>();
-        //    if (StatusEnum == default(GiftStatusEnum))
-        //    {
-        //        queryGiftsReply.SetGiftStatusInvalidReply();
-        //        return queryGiftsReply;
-        //    }
-
-        //    var Gifts = await _giftService.GetGiftPagedAsync(CinemaCode, StatusEnum, int.Parse(CurrentPage), int.Parse(PageSize));
-        //    queryGiftsReply.data = new QueryGiftsReplyGifts();
-        //    if (Gifts == null || Gifts.Count==0)
-        //    {
-        //        queryGiftsReply.data.GiftsCount = 0;
-        //    }
-        //    else
-        //    {
-        //        queryGiftsReply.data.GiftsCount = Gifts.Count;
-        //        queryGiftsReply.data.Gifts = Gifts.Select(x => new QueryGiftsReplyGift().MapFrom(x)).ToList();
-        //    }
-        //    queryGiftsReply.SetSuccessReply();
-        //    return queryGiftsReply;
-        //}
-        //#endregion
-
         #region 查询该影院下所有赠送条件
 
         [HttpGet]

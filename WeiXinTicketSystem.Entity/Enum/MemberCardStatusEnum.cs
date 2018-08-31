@@ -16,6 +16,10 @@ namespace WeiXinTicketSystem.Entity.Enum
 
         [XmlEnum("1")]
         [Description("注销")]
-        Cancellation = 1
+        Cancellation = 1,
+
+        [XmlEnum("2")]
+        [Description("已绑定")]
+        Bind = 2,
     }
 }

@@ -110,6 +110,7 @@
     <Compile Include="Models\ReturnData.cs" />
     <Compile Include="Models\SessionInfo\SessionInfoWithCustomPrice.cs" />
     <Compile Include="Models\Snack\SnackOrderViewEntity.cs" />
+    <Compile Include="Models\UserCinema\UserCinemaViewEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DBConnectionFactory.cs" />
     <Compile Include="Repository\Impl\Repository.cs" />

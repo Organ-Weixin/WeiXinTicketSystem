@@ -606,5 +606,26 @@ namespace WeiXinTicketSystem.WebApi.Models
             
             return activityPopup;
         }
+
+        public static OrderViewEntity MapFrom(this OrderViewEntity order, SubmitOrder_1905CardPayQueryJson QueryJson)
+        {
+            order.orderBaseInfo.TotalPrice = QueryJson.Seats.Sum(x => x.Price);
+            order.orderBaseInfo.TotalSalePrice = QueryJson.Seats.Sum(x => x.MemberPrice);
+            order.orderBaseInfo.TotalFee = QueryJson.Seats.Sum(x => x.Fee);
+            //order.orderBaseInfo.MobilePhone = queryXmlObj.Order.MobilePhone;
+
+            order.orderSeatDetails.ForEach(x =>
+            {
+                var newInfo = QueryJson.Seats.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
+                if (newInfo != null)
+                {
+                    x.Price = newInfo.Price;
+                    x.SalePrice = newInfo.MemberPrice;
+                    x.Fee = newInfo.Fee;
+                }
+            });
+
+            return order;
+        }
     }
 }

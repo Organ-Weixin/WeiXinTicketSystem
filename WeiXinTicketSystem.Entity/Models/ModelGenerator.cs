@@ -443,7 +443,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual MemberCardStatusEnum Status { get; set; }
 		public virtual DateTime Created { get; set; }
 		public virtual DateTime? Updated { get; set; }
-		public virtual bool IsDel { get; set; }
 	}
 
     /// <summary>

@@ -181,7 +181,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
 
             return true;
         }
-        public static bool RequestInfoGuard(this PaySnackOrderReply reply, string UserName, string Password,string CinemaCode,string OrderCode,string OrderPayType,string OrderPayTime,string OrderTradeNo,string IsUseConpons,string ConponCode,string OpenID)
+        public static bool RequestInfoGuard(this PaySnackOrderReply reply, string UserName, string Password, string CinemaCode, string OrderCode, string OrderPayType, string OrderPayTime, string OrderTradeNo, string IsUseConpons, string ConponCode, string OpenID)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -235,7 +235,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-        public static bool RequestInfoGuard(this Models.SubmitSnacksReply reply, string Username, string Password, string CinemaCode,string OrderCode,string OrderTradeNo,string MobilePhone,string OpenID, List<SubmitSnacksQueryJsonSnack> Snacks)
+        public static bool RequestInfoGuard(this Models.SubmitSnacksReply reply, string Username, string Password, string CinemaCode, string OrderCode, string OrderTradeNo, string MobilePhone, string OpenID, List<SubmitSnacksQueryJsonSnack> Snacks)
         {
             if (string.IsNullOrEmpty(Username))
             {
@@ -280,7 +280,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-        public static bool RequestInfoGuard(this FetchSnacksReply reply, string UserName, string Password, string CinemaCode, string OrderCode,string VoucherCode)
+        public static bool RequestInfoGuard(this FetchSnacksReply reply, string UserName, string Password, string CinemaCode, string OrderCode, string VoucherCode)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -424,7 +424,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-        public static bool RequestInfoGuard(this SendConponReply reply, string UserName, string Password, string CinemaCode, string GroupCode, string Number,string OpenID)
+        public static bool RequestInfoGuard(this SendConponReply reply, string UserName, string Password, string CinemaCode, string GroupCode, string Number, string OpenID)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -535,7 +535,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this QueryActivitySequenceReply reply, string Username, string Password, string CinemaCode, string GradeCode,string ActivitySequence)
+        public static bool RequestInfoGuard(this QueryActivitySequenceReply reply, string Username, string Password, string CinemaCode, string GradeCode, string ActivitySequence)
         {
             int rint = 0;
             if (string.IsNullOrEmpty(Username))
@@ -616,7 +616,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             }
             return true;
         }
-        public static bool RequestInfoGuard(this QueryGiftsReply reply, string Username, string Password, string CinemaCode,string Status, string CurrentPage, string PageSize)
+        public static bool RequestInfoGuard(this QueryGiftsReply reply, string Username, string Password, string CinemaCode, string Status, string CurrentPage, string PageSize)
         {
             if (string.IsNullOrEmpty(Username))
             {
@@ -651,7 +651,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this QueryFilmsReply reply, string Username, string Password, string CinemaCode,string FilmCode)
+        public static bool RequestInfoGuard(this QueryFilmsReply reply, string Username, string Password, string CinemaCode, string FilmCode)
         {
             if (string.IsNullOrEmpty(Username))
             {
@@ -676,66 +676,6 @@ namespace WeiXinTicketSystem.WebApi.Extension
 
             return true;
         }
-
-        public static bool RequestInfoGuard(this QuerySessionReply reply, string Username, string Password, string CinemaCode, string StartDate,string EndDate)
-        {
-            if (string.IsNullOrEmpty(Username))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Username));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(StartDate))
-            {
-                reply.SetNecessaryParamMissReply(nameof(StartDate));
-                return false;
-            }
-            if (string.IsNullOrEmpty(EndDate))
-            {
-                reply.SetNecessaryParamMissReply(nameof(EndDate));
-                return false;
-            }
-            return true;
-        }
-        public static bool RequestInfoGuard(this QuerySessionSeatReply reply, string Username, string Password, string CinemaCode, string SessionCode, string Status)
-        {
-            if (string.IsNullOrEmpty(Username))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Username));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Password))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Password));
-                return false;
-            }
-            if (string.IsNullOrEmpty(CinemaCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(SessionCode))
-            {
-                reply.SetNecessaryParamMissReply(nameof(SessionCode));
-                return false;
-            }
-            if (string.IsNullOrEmpty(Status))
-            {
-                reply.SetNecessaryParamMissReply(nameof(Status));
-                return false;
-            }
-            return true;
-        }
-
 
         public static bool RequestInfoGuard(this SubmitFilmCommentReply reply, string UserName, string Password, string FilmCode, string FilmName, string Score, string CommentContent, string OpenID)
         {
@@ -774,7 +714,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(OpenID));
                 return false;
             }
-           
+
             return true;
         }
 
@@ -1002,7 +942,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
-        public static bool RequestInfoGuard(this TicketUserLoginReply reply, string Username, string Password,string CinemaCode, string Code, string EncryptedData, string Iv)
+        public static bool RequestInfoGuard(this TicketUserLoginReply reply, string Username, string Password, string CinemaCode, string Code, string EncryptedData, string Iv)
         {
             if (string.IsNullOrEmpty(Username))
             {
@@ -1090,7 +1030,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(CinemaCode));
                 return false;
             }
-            
+
             return true;
         }
 
@@ -1169,11 +1109,11 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(CinemaCode));
                 return false;
             }
-            
+
             return true;
         }
 
-        public static bool RequestInfoGuard(this QueryScreenSeatsReply reply, string Username, string Password, string CinemaCode,string ScreenCode)
+        public static bool RequestInfoGuard(this QueryScreenSeatsReply reply, string Username, string Password, string CinemaCode, string ScreenCode)
         {
             int rint = 0;
             if (string.IsNullOrEmpty(Username))
@@ -1265,7 +1205,52 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(GradeCode));
                 return false;
             }
-            
+
+            return true;
+        }
+
+        public static bool RequestInfoGuard(this SubmitOrderReply reply, string UserName, string Password, string CinemaCode,string CardNo,string CardPassword,string OrderCode,string LowestPrice, List<SubmitOrder_1905CardPayQueryJsonSeat> Seats)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                reply.SetNecessaryParamMissReply(nameof(UserName));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CardNo))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CardNo));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CardPassword))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CardPassword));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OrderCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OrderCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(LowestPrice))
+            {
+                reply.SetNecessaryParamMissReply(nameof(LowestPrice));
+                return false;
+            }
+            if(Seats.Count<=0)
+            {
+                reply.SetNecessaryParamMissReply(nameof(Seats));
+                return false;
+            }
             return true;
         }
     }
