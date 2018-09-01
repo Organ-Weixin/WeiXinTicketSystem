@@ -11,15 +11,11 @@ namespace WeiXinTicketSystem.Entity.Enum
     public enum MemberCardStatusEnum : byte
     {
         [XmlEnum("0")]
-        [Description("启用")]
-        Enable = 0,
-
-        [XmlEnum("1")]
-        [Description("注销")]
-        Cancellation = 1,
+        [Description("未绑定")]
+        NoBind = 0,
 
         [XmlEnum("2")]
         [Description("已绑定")]
-        Bind = 2,
+        Bind = 2
     }
 }

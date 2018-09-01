@@ -89,6 +89,15 @@ namespace WeiXinTicketSystem.Service
             return await query.ToPageListAsync();
         }
 
+        /// <summary>
+        /// 获取用户优惠券(分页)
+        /// </summary>
+        /// <param name="cinemaCode"></param>
+        /// <param name="OpenID"></param>
+        /// <param name="status"></param>
+        /// <param name="currentpage"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
         public async Task<IPageList<ConponEntity>> QueryConponsPagedAsync(string cinemaCode, string OpenID, ConponStatusEnum status, int currentpage, int pagesize)
         {
             int offset = (currentpage - 1) * pagesize;
@@ -111,6 +120,42 @@ namespace WeiXinTicketSystem.Service
             }
             query.Where(x => !x.Deleted);
             return await query.ToPageListAsync();
+        }
+
+
+        /// <summary>
+        /// 获取用户优惠券(不分页)
+        /// </summary>
+        /// <param name="cinemaCode"></param>
+        /// <param name="OpenID"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public async Task<IList<ConponEntity>> QueryConponsAsync(string cinemaCode, string OpenID, ConponStatusEnum status)
+        {
+            try
+            {
+                var query = _conponRepository.Query
+                    .OrderByDescending(x => x.Id);
+
+                if (!string.IsNullOrEmpty(cinemaCode))
+                {
+                    query.Where(x => x.CinemaCode == cinemaCode);
+                }
+                if (!string.IsNullOrEmpty(OpenID))
+                {
+                    query.Where(x => x.OpenID == OpenID);
+                }
+                if (status != ConponStatusEnum.All)
+                {
+                    query.Where(x => x.Status == status);
+                }
+                query.Where(x => !x.Deleted);
+                return await query.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
 

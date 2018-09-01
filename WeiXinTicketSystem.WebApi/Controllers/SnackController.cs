@@ -720,5 +720,45 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
 
         #endregion
+
+        #region 查询单个套餐详情
+
+        [HttpGet]
+        public async Task<QuerySnackInfoReply> QuerySnackInfo(string UserName, string Password, string CinemaCode, string SnackCode)
+        {
+            QuerySnackInfoReply querySnackInfoReply = new QuerySnackInfoReply();
+            //校验参数
+            if (!querySnackInfoReply.RequestInfoGuard(UserName, Password, CinemaCode, SnackCode))
+            {
+                return querySnackInfoReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                querySnackInfoReply.SetUserCredentialInvalidReply();
+                return querySnackInfoReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                querySnackInfoReply.SetCinemaInvalidReply();
+                return querySnackInfoReply;
+            }
+            var SnackInfo = await _snackService.GetSnackByCinemaCodeAndCodeAsync(CinemaCode, SnackCode);
+
+            querySnackInfoReply.data = new QuerySnackInfoReplySnackInfo();
+
+            if (SnackInfo != null)
+            {
+                querySnackInfoReply.data.MapFrom(SnackInfo);
+            }
+
+            querySnackInfoReply.SetSuccessReply();
+            return querySnackInfoReply;
+        }
+
+        #endregion
     }
 }

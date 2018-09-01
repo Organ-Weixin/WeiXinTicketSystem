@@ -123,11 +123,11 @@ namespace WeiXinTicketSystem.Controllers
             }
 
             MemberChargeSettingEntity memberChargeSetting = new MemberChargeSettingEntity();
-            decimal? ylPrice = 0;
+            //decimal? ylPrice = 0;
             if (model.Id > 0)
             {
                 memberChargeSetting = await _memberChargeSettingService.GetMemberChargeSettingByIdAsync(model.Id);
-                ylPrice = memberChargeSetting.Price;
+                //ylPrice = memberChargeSetting.Price;
             }
 
             memberChargeSetting.MapFrom(model);
@@ -137,24 +137,24 @@ namespace WeiXinTicketSystem.Controllers
 
             if (memberChargeSetting.Id == 0)
             {
-                IList<MemberChargeSettingEntity> memberChargeSettingPrice = await _memberChargeSettingService.GetMemberChargeSettingByCinemaCodeAndPriceAsync(model.CinemaCode, model.Price);
-                if (memberChargeSettingPrice.Count > 0 )
-                {
-                    return ErrorObject("充值金额已存在！请重新填写！");
-                }
+                //IList<MemberChargeSettingEntity> memberChargeSettingPrice = await _memberChargeSettingService.GetMemberChargeSettingByCinemaCodeAndPriceAsync(model.CinemaCode, model.Price);
+                //if (memberChargeSettingPrice.Count > 0 )
+                //{
+                //    return ErrorObject("充值金额已存在！请重新填写！");
+                //}
                 memberChargeSetting.Created = DateTime.Now;
                 await _memberChargeSettingService.InsertAsync(memberChargeSetting);
             }
             else
             {
-                if (ylPrice != model.Price)
-                {
-                    IList<MemberChargeSettingEntity> memberChargeSettingPrice = await _memberChargeSettingService.GetMemberChargeSettingByCinemaCodeAndPriceAsync(model.CinemaCode, model.Price);
-                    if (memberChargeSettingPrice.Count > 0)
-                    {
-                        return ErrorObject("充值金额已存在！请重新填写！");
-                    }
-                }
+                //if (ylPrice != model.Price)
+                //{
+                //    IList<MemberChargeSettingEntity> memberChargeSettingPrice = await _memberChargeSettingService.GetMemberChargeSettingByCinemaCodeAndPriceAsync(model.CinemaCode, model.Price);
+                //    if (memberChargeSettingPrice.Count > 0)
+                //    {
+                //        return ErrorObject("充值金额已存在！请重新填写！");
+                //    }
+                //}
                 memberChargeSetting.Updated = DateTime.Now;
                 await _memberChargeSettingService.UpdateAsync(memberChargeSetting);
             }

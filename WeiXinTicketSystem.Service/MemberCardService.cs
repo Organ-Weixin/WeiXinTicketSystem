@@ -147,5 +147,16 @@ namespace WeiXinTicketSystem.Service
         {
             return await _memberCardRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.OpenID == OpenID).ToListAsync();
         }
+
+        /// <summary>
+        /// 根据影院编码和手机号码获取会员卡信息
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <param name="OpenID"></param>
+        /// <returns></returns>
+        public IList<MemberCardEntity> GetMemberCardByMobilePhoneAsync(string CinemaCode, string MobilePhone)
+        {
+            return _memberCardRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.MobilePhone == MobilePhone).ToList();
+        }
     }
 }

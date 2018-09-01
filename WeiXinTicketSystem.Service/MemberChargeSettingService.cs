@@ -57,7 +57,7 @@ namespace WeiXinTicketSystem.Service
         {
             try
             {
-                var query = _adminMemberChargeSettingViewRepository.Query.OrderByDescending(x => x.Id).Skip(offset).Take(perPage);
+                var query = _adminMemberChargeSettingViewRepository.Query.OrderBy(x => x.Price).Skip(offset).Take(perPage);
                 //影院编码
                 if (!string.IsNullOrEmpty(cinemaCode))
                 {

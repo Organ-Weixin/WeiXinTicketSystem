@@ -44,6 +44,25 @@ namespace WeiXinTicketSystem.WebApi.Models
             snack.Image = entity.Image;
             return snack;
         }
+
+        public static QuerySnackInfoReplySnackInfo MapFrom(this QuerySnackInfoReplySnackInfo snack, SnackEntity entity)
+        {
+            snack.SnackId = entity.Id;
+            snack.CinemaCode = entity.CinemaCode;
+            snack.SnackCode = entity.SnackCode;
+            snack.TypeCode = entity.TypeCode;
+            snack.SnackName = entity.SnackName;
+            snack.Remark = entity.Remark;
+            snack.StandardPrice = entity.StandardPrice;
+            snack.SalePrice = entity.SalePrice;
+            snack.Status = entity.Status.GetDescription();
+            snack.Stock = entity.Stock;
+            snack.ExpDate = entity.ExpDate.ToFormatStringWithT();
+            snack.IsRecommand = entity.IsRecommand.GetDescription();
+            snack.Image = entity.Image;
+            return snack;
+        }
+
         public static BookSnacksReplySnacks MapFrom(this BookSnacksReplySnacks data, SnackOrderViewEntity order)
         {
             data.CinemaCode = order.OrderBaseInfo.CinemaCode;
@@ -653,6 +672,28 @@ namespace WeiXinTicketSystem.WebApi.Models
             memberChargeSetting.Remark = entity.Remark;
             memberChargeSetting.NotUsedNumber = GetNotUsedNumber(entity.CinemaCode, entity.GroupCode);
             return memberChargeSetting;
+        }
+
+
+        public static QueryMemberPhoneReplyPhone MapFrom(this QueryMemberPhoneReplyPhone memberPhone, MemberCardEntity entity)
+        {
+            memberPhone.MemberPhoneId = entity.Id;
+            memberPhone.CinemaCode = entity.CinemaCode;
+            memberPhone.OpenID = entity.OpenID;
+            memberPhone.MobilePhone = entity.MobilePhone;
+            memberPhone.CardNo = entity.CardNo;
+            memberPhone.CardPassword = entity.CardPassword;
+            memberPhone.Balance = entity.Balance;
+            memberPhone.Score = entity.Score;
+            memberPhone.LevelCode = entity.LevelCode;
+            memberPhone.LevelName = entity.LevelName;
+            memberPhone.UserName = entity.UserName;
+            memberPhone.Sex = entity.Sex;
+            memberPhone.CreditNum = entity.CreditNum;
+            memberPhone.Birthday = entity.Birthday;
+            memberPhone.ExpireDate = entity.ExpireDate;
+            memberPhone.Status = entity.Status.GetDescription();
+            return memberPhone;
         }
     }
 }
