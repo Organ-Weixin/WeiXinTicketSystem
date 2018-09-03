@@ -564,6 +564,34 @@ namespace WeiXinTicketSystem.Entity.Models
 	}
 
     /// <summary>
+    /// A class which represents the CinemaPaymentSettings table.
+    /// </summary>
+    [Table("CinemaPaymentSettings")]
+    [SqlLamTable(Name = "CinemaPaymentSettings")]
+    public partial class CinemaPaymentSettingEntity : EntityBase
+    {
+		[Key]
+		public virtual int Id { get; set; }
+		public virtual string CinemaCode { get; set; }
+		public virtual string CinemaName { get; set; }
+		public virtual YesOrNoEnum IsUseAlipay { get; set; }
+		public virtual string AlipaySellerEmail { get; set; }
+		public virtual string AlipayPartner { get; set; }
+		public virtual string AlipayKey { get; set; }
+		public virtual string AlipayAPPID { get; set; }
+		public virtual YesOrNoEnum IsUseBfbpay { get; set; }
+		public virtual string BfbpaySpno { get; set; }
+		public virtual string BfbpayKey { get; set; }
+		public virtual YesOrNoEnum IsUseWxpay { get; set; }
+		public virtual string WxpayAppId { get; set; }
+		public virtual string WxpayMchId { get; set; }
+		public virtual string WxpayKey { get; set; }
+		public virtual string WxpayRefundCert { get; set; }
+		public virtual YesOrNoEnum IsUserMemberCard { get; set; }
+		public virtual bool IsDel { get; set; }
+	}
+
+    /// <summary>
     /// A class which represents the AdminFilmCommentView view.
     /// </summary>
     [Table("AdminFilmCommentView")]
@@ -1323,33 +1351,6 @@ namespace WeiXinTicketSystem.Entity.Models
 		public virtual string ConponCode { get; set; }
 		public virtual decimal? ConponPrice { get; set; }
 		public virtual decimal? ActualPrice { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the CinemaPaymentSettings table.
-    /// </summary>
-    [Table("CinemaPaymentSettings")]
-    [SqlLamTable(Name = "CinemaPaymentSettings")]
-    public partial class CinemaPaymentSettingEntity : EntityBase
-    {
-		[Key]
-		public virtual int Id { get; set; }
-		public virtual string CinemaCode { get; set; }
-		public virtual string CinemaName { get; set; }
-		public virtual YesOrNoEnum IsUseAlipay { get; set; }
-		public virtual string AlipaySellerEmail { get; set; }
-		public virtual string AlipayPartner { get; set; }
-		public virtual string AlipayKey { get; set; }
-		public virtual string AlipayAPPID { get; set; }
-		public virtual YesOrNoEnum IsUseBfbpay { get; set; }
-		public virtual string BfbpaySpno { get; set; }
-		public virtual string BfbpayKey { get; set; }
-		public virtual YesOrNoEnum IsUseWxpay { get; set; }
-		public virtual string WxpayMchId { get; set; }
-		public virtual string WxpayKey { get; set; }
-		public virtual string WxpayRefundCert { get; set; }
-		public virtual YesOrNoEnum IsUserMemberCard { get; set; }
-		public virtual bool IsDel { get; set; }
 	}
 
     /// <summary>

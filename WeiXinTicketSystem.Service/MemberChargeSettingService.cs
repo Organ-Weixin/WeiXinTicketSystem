@@ -146,5 +146,15 @@ namespace WeiXinTicketSystem.Service
         {
             return await _memberChargeSettingRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.Price == price && !x.Deleted).ToListAsync();
         }
+
+        /// <summary>
+        ///  根据影院编码和充值金额获取会员卡充值赠送条件信息(视图异步)
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <returns></returns>
+        public async Task<IList<AdminMemberChargeSettingViewEntity>> GetMemberChargeSettingViewByCinemaCodeAndPriceAsync(string CinemaCode, decimal? price)
+        {
+            return await _adminMemberChargeSettingViewRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.Price == price && !x.Deleted).ToListAsync();
+        }
     }
 }

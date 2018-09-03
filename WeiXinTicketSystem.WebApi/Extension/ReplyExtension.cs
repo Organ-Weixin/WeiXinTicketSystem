@@ -1362,6 +1362,32 @@ namespace WeiXinTicketSystem.WebApi.Extension
             return true;
         }
 
+        public static bool RequestInfoGuard(this QueryMemberChargeSettingReply reply, string Username, string Password, string CinemaCode,string price)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(price))
+            {
+                reply.SetNecessaryParamMissReply(nameof(price));
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool RequestInfoGuard(this QueryMemberPhoneReply reply, string Username, string Password, string CinemaCode, string MobilePhone)
         {
             if (string.IsNullOrEmpty(Username))

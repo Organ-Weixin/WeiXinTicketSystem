@@ -61,6 +61,10 @@ namespace WeiXinTicketSystem.Models
         [Display(Name = "是否使用微信支付")]
         public int IsUseWxpay { get; set; }
 
+        [Display(Name = "微信APPID")]
+        [StringLength(50, ErrorMessage = "{0}最多50个字符")]
+        public string WxpayAppId { get; set; }
+
         [Display(Name = "微信支付商户号")]
         [StringLength(50, ErrorMessage = "{0}最多50个字符")]
         public string WxpayMchId { get; set; }

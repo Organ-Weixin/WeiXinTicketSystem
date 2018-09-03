@@ -34,6 +34,7 @@ namespace WeiXinTicketSystem.Models.CinemaPaySettings
                 BfbpayKey = module.BfbpayKey,
 
                 IsUseWxpay = module.IsUseWxpay.GetDescription(),
+                WxpayAppId = module.WxpayAppId,
                 WxpayMchId = module.WxpayMchId,
                 WxpayKey = module.WxpayKey,
                 WxpayRefundCert = module.WxpayRefundCert,
@@ -62,6 +63,7 @@ namespace WeiXinTicketSystem.Models.CinemaPaySettings
             module.BfbpayKey = model.BfbpayKey;
             //module.IsUseWxpay = model.IsUseWxpay ? YesOrNoEnum.Yes : YesOrNoEnum.No;
             module.IsUseWxpay = (YesOrNoEnum)model.IsUseWxpay;
+            module.WxpayAppId = model.WxpayAppId;
             module.WxpayMchId = model.WxpayMchId;
             module.WxpayKey = model.WxpayKey;
             module.WxpayRefundCert = model.WxpayRefundCert;
@@ -92,6 +94,7 @@ namespace WeiXinTicketSystem.Models.CinemaPaySettings
             model.BfbpayKey = module.BfbpayKey;
             //model.IsUseWxpay = module.IsUseWxpay == YesOrNoEnum.Yes ? true : false;
             model.IsUseWxpay = (int)module.IsUseWxpay;
+            model.WxpayAppId = module.WxpayAppId;
             model.WxpayMchId = module.WxpayMchId;
             model.WxpayKey = module.WxpayKey;
             model.WxpayRefundCert = module.WxpayRefundCert;
