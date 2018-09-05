@@ -183,6 +183,12 @@ namespace WeiXinTicketSystem.WebApi.Models
         /// 优惠券数量小于赠送数量
         /// </summary>
         [Description("优惠券数量小于赠送数量！")]
-        CouponNumberLessThan = 10000028
+        CouponNumberLessThan = 10000028,
+
+        /// <summary>
+        /// 影院支付配置不存在或无权限访问
+        /// </summary>
+        [Description("影院支付配置不存在或无权限访问！")]
+        CinemaPaySettingInvalid = 10000029
     }
 }

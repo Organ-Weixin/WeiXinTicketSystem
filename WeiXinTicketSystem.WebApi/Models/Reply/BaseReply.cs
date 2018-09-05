@@ -73,6 +73,16 @@ namespace WeiXinTicketSystem.WebApi.Models
         }
 
         /// <summary>
+        /// 影院支付配置不存在
+        /// </summary>
+        public void SetCinemaPaySettingInvalidReply()
+        {
+            Status = StatusEnum.Failure.GetDescription();
+            ErrorCode = ErrorCodeEnum.CinemaPaySettingInvalid.GetValueString();
+            ErrorMessage = ErrorCodeEnum.CinemaPaySettingInvalid.GetDescription();
+        }
+
+        /// <summary>
         /// 影厅编码错误
         /// </summary>
         public void SetScreenInvalidReply()

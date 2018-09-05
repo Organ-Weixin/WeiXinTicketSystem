@@ -15,6 +15,7 @@ using WeiXinTicketSystem.Entity.Enum;
 
 using NetSaleSvc.Api.Models;
 using NetSaleSvc.Api.Core;
+using System.Xml.Linq;
 
 namespace WeiXinTicketSystem.WebApi.Controllers
 {
@@ -30,6 +31,8 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         CinemaService _cinemaService = new CinemaService();
         UserCinemaService _userCinemaService = new UserCinemaService();
         MemberCardService _memberCardService = new MemberCardService();
+        CinemaPaySettingsService _cinemaPaySettingsService = new CinemaPaySettingsService();
+        ConponService _conponService = new ConponService();
         #endregion
 
         [HttpPost]
@@ -50,6 +53,234 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         public ReleaseSeatReply ReleaseSeat(NetSaleQueryJson QueryJson)
         {
             return netSaleService.ReleaseSeat(QueryJson.UserName, QueryJson.Password, QueryJson.QueryXml);
+        }
+
+        //暂时都是1分钱
+        [HttpPost]
+        public PrePayOrderReply PrePayOrder(PrePayOrderQueryJson QueryJson)
+        {
+            PrePayOrderReply prePayOrderReply = new PrePayOrderReply();
+            //校验参数
+            if (!prePayOrderReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.OrderCode, QueryJson.Seats))
+            {
+                return prePayOrderReply;
+            }
+            //获取用户信息(渠道)
+            UserInfoEntity UserInfo = _userInfoService.GetUserInfoByUserCredential(QueryJson.UserName, QueryJson.Password);
+            if (UserInfo == null)
+            {
+                prePayOrderReply.SetUserCredentialInvalidReply();
+                return prePayOrderReply;
+            }
+            //获取影院的支付配置
+            var cinemaPaymentSetting = _cinemaPaySettingsService.GetCinemaPaySettingsByCinemaCode(QueryJson.CinemaCode);
+            if (cinemaPaymentSetting == null || cinemaPaymentSetting.WxpayAppId == "" || cinemaPaymentSetting.WxpayMchId == "")
+            {
+                prePayOrderReply.SetCinemaPaySettingInvalidReply();
+                return prePayOrderReply;
+            }
+            //验证订单是否存在
+            var order = _orderService.GetOrderWithLockOrderCode(QueryJson.CinemaCode, QueryJson.OrderCode);
+            if (order == null || (order.orderBaseInfo.OrderStatus != OrderStatusEnum.Locked && order.orderBaseInfo.OrderStatus != OrderStatusEnum.PayFail))
+            {
+                prePayOrderReply.SetOrderNotExistReply();
+                return prePayOrderReply;
+            }
+            //验证座位数量
+            if (QueryJson.Seats.Count != order.orderBaseInfo.TicketCount)
+            {
+                prePayOrderReply.SetSeatCountInvalidReply();
+                return prePayOrderReply;
+            }
+            //验证优惠券是否使用
+            foreach(var seat in QueryJson.Seats)
+            {
+                if(!string.IsNullOrEmpty(seat.ConponCode))
+                {
+                    var conpon = _conponService.GetConponByConponCode(seat.ConponCode);
+                    if(conpon.Status!=ConponStatusEnum.NotUsed)
+                    {
+                        prePayOrderReply.SetConponNotExistOrUsedReply();
+                        return prePayOrderReply;
+                    }
+                }
+            }
+            //更新订单信息
+            order.MapFrom(QueryJson);
+            //开始调用微信支付接口
+            //微信支付统一下单接口
+            string UnifiedOrderUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+            //时间戳
+            string timeStamp = WxPayUtil.getTimestamp();
+            //随机字符串 
+            string nonceStr = WxPayUtil.getNoncestr();
+            //创建支付应答对象
+            var packageReqHandler = new RequestHandler(System.Web.HttpContext.Current);
+            //初始化
+            packageReqHandler.init();
+            //设置package订单参数
+            packageReqHandler.setParameter("appid", cinemaPaymentSetting.WxpayAppId);
+            packageReqHandler.setParameter("body", cinemaPaymentSetting.CinemaName + "-" + order.orderBaseInfo.SessionTime.Month.ToString().PadLeft(2, '0')
+            + "月" + order.orderBaseInfo.SessionTime.Day.ToString().PadLeft(2, '0') + "日" + order.orderBaseInfo.SessionTime.ToString("HH:mm") + " " + order.orderBaseInfo.FilmName
+            + " 电影票（" + order.orderBaseInfo.TicketCount.ToString() + "张）"); //商品信息
+            packageReqHandler.setParameter("mch_id", cinemaPaymentSetting.WxpayMchId);
+            packageReqHandler.setParameter("nonce_str", nonceStr.ToLower());
+            packageReqHandler.setParameter("notify_url", "https://xcx.80piao.com/api/Ticket/WxPayNotify");
+            packageReqHandler.setParameter("openid", order.orderBaseInfo.OpenID);
+            packageReqHandler.setParameter("out_trade_no", DateTime.Now.ToString("yyyyMMddHHmmss") + QueryJson.CinemaCode + order.orderBaseInfo.Id.ToString()); //商家订单号
+            packageReqHandler.setParameter("time_expire", order.orderBaseInfo.AutoUnlockDatetime.Value.ToString("yyyyMMddHHmmss"));
+            packageReqHandler.setParameter("spbill_create_ip", System.Web.HttpContext.Current.Request.UserHostAddress); //用户的公网ip，不是商户服务器IP
+            //总的支付金额=总的销售价格+总的情侣座差价+总的客人支付服务费-总的优惠金额
+            decimal totalPrice = order.orderBaseInfo.TotalSalePrice + order.orderBaseInfo.TotalLoveSeatDifferences ?? 0 + order.orderBaseInfo.TotalGuestPayFee ?? 0 - order.orderBaseInfo.TotalConponPrice ?? 0;
+            //packageReqHandler.setParameter("total_fee", (Convert.ToInt32(totalPrice * 100)).ToString()); //商品金额,以分为单位(money * 100).ToString()
+            packageReqHandler.setParameter("total_fee", "1");
+            packageReqHandler.setParameter("trade_type", "JSAPI");
+            string sign = packageReqHandler.CreateMd5Sign("key", cinemaPaymentSetting.WxpayKey);
+            packageReqHandler.setParameter("sign", sign);
+            //把参数组装成xml
+            string data = packageReqHandler.parseXML();
+            string strPrepayXml = HttpUtil.Send(data, UnifiedOrderUrl);
+            //获取prepay_id
+            XElement prepayXml = XElement.Parse(strPrepayXml.Replace("<![CDATA[", "").Replace("]]>", ""));
+            XElement prepayIdNode = prepayXml.Descendants("prepay_id").SingleOrDefault();
+            if (prepayIdNode == null)
+            {
+                XElement errorCodeNode = prepayXml.Descendants("return_code").SingleOrDefault();
+                XElement errorMsgNode = prepayXml.Descendants("return_msg").SingleOrDefault();
+                string errorCode = errorCodeNode == null ? string.Empty : errorCodeNode.Value;
+                string errorMsg = errorMsgNode == null ? string.Empty : errorMsgNode.Value;
+
+                prePayOrderReply.Status = "Failure";
+                prePayOrderReply.ErrorCode = errorCode;
+                prePayOrderReply.ErrorMessage = errorMsg;
+            }
+            else
+            {
+                string prepayId = prepayIdNode.Value;
+                //支付扩展包
+                string package = string.Format("prepay_id={0}", prepayId);
+                var paySignReqHandler = new RequestHandler(System.Web.HttpContext.Current);
+                paySignReqHandler.setParameter("appId", cinemaPaymentSetting.WxpayAppId);
+                paySignReqHandler.setParameter("timeStamp", timeStamp);
+                paySignReqHandler.setParameter("nonceStr", nonceStr);
+                paySignReqHandler.setParameter("package", package);
+                paySignReqHandler.setParameter("signType", "MD5");
+                string paySign = paySignReqHandler.CreateMd5Sign("key", cinemaPaymentSetting.WxpayKey);
+                //准备返回参数
+                prePayOrderReply.data = new PrePayOrderReplyParameters();
+                prePayOrderReply.data.timeStamp = timeStamp;
+                prePayOrderReply.data.nonceStr = nonceStr;
+                prePayOrderReply.data.package = package;
+                prePayOrderReply.data.signType = "MD5";
+                prePayOrderReply.data.paySign = paySign;
+
+                prePayOrderReply.SetSuccessReply();
+            }
+            //更新订单信息
+            _orderService.Update(order);
+            return prePayOrderReply;
+
+        }
+
+        /// <summary>
+        /// 异步返回接收微信支付返回
+        /// </summary>
+        public void WxPayNotify()
+        {
+            //创建ResponseHandler实例
+            ResponseHandler resHandler = new ResponseHandler(System.Web.HttpContext.Current);
+            //商户系统的订单号，与请求一致。
+            string out_trade_no = resHandler.getParameter("out_trade_no");
+            string CinemaCode = out_trade_no.Substring("yyyyMMddHHmmss".Length, 8);
+            var cinemaPaymentSetting = _cinemaPaySettingsService.GetCinemaPaySettingsByCinemaCode(CinemaCode);
+            resHandler.setKey(cinemaPaymentSetting.WxpayKey); //appkey paysignkey(非appkey 在微信商户平台设置 (md5))
+            //判断签名
+            string error = "";
+            if (resHandler.isWXsign(out error))
+            {
+                #region 协议参数=====================================
+                //--------------协议参数--------------------------------------------------------
+                //SUCCESS/FAIL此字段是通信标识，非交易标识，交易是否成功需要查
+                string return_code = resHandler.getParameter("return_code");
+                //返回信息，如非空，为错误原因签名失败参数格式校验错误
+                string return_msg = resHandler.getParameter("return_msg");
+
+                //以下字段在 return_code 为 SUCCESS 的时候有返回--------------------------------
+                //微信分配的公众账号 ID
+                string appid = resHandler.getParameter("appid");
+                //微信支付分配的商户号
+                string mch_id = resHandler.getParameter("mch_id");
+                //微信支付分配的终端设备号
+                string device_info = resHandler.getParameter("device_info");
+                //微信分配的公众账号 ID
+                string nonce_str = resHandler.getParameter("nonce_str");
+                //业务结果 SUCCESS/FAIL
+                string result_code = resHandler.getParameter("result_code");
+                //错误代码 
+                string err_code = resHandler.getParameter("err_code");
+                //结果信息描述
+                string err_code_des = resHandler.getParameter("err_code_des");
+
+                //以下字段在 return_code 和 result_code 都为 SUCCESS 的时候有返回---------------
+                //-------------业务参数---------------------------------------------------------
+                //用户在商户 appid 下的唯一标识
+                string openid = resHandler.getParameter("openid");
+                //用户是否关注公众账号，Y-关注，N-未关注，仅在公众账号类型支付有效
+                string is_subscribe = resHandler.getParameter("is_subscribe");
+                //JSAPI、NATIVE、MICROPAY、APP
+                string trade_type = resHandler.getParameter("trade_type");
+                //银行类型，采用字符串类型的银行标识
+                string bank_type = resHandler.getParameter("bank_type");
+                //订单总金额，单位为分
+                string total_fee = resHandler.getParameter("total_fee");
+                //货币类型，符合 ISO 4217 标准的三位字母代码，默认人民币：CNY
+                string fee_type = resHandler.getParameter("fee_type");
+                //微信支付订单号
+                string transaction_id = resHandler.getParameter("transaction_id");
+                //商家数据包，原样返回
+                string attach = resHandler.getParameter("attach");
+                //支 付 完 成 时 间 ， 格 式 为yyyyMMddhhmmss，如 2009 年12 月27日 9点 10分 10 秒表示为 20091227091010。时区为 GMT+8 beijing。该时间取自微信支付服务器
+                string time_end = resHandler.getParameter("time_end");
+                #endregion
+
+                int OrderID = int.Parse(out_trade_no.Substring("yyyyMMddHHmmss".Length + 8).Trim());
+                var order = _orderService.GetOrderWithId(OrderID);
+                //支付成功
+                if (return_code.Equals("SUCCESS") && result_code.Equals("SUCCESS"))
+                {
+                    //更新订单主表
+                    if (order.orderBaseInfo.PayFlag != 1)
+                    {
+                        order.orderBaseInfo.OrderStatus = OrderStatusEnum.Payed;
+                        order.orderBaseInfo.Updated = DateTime.Now;
+                        order.orderBaseInfo.OrderPayType = PayTypeEnum.WxPay;
+                        order.orderBaseInfo.PayFlag = 1;
+                        order.orderBaseInfo.PayTime = DateTime.Now;
+                        order.orderBaseInfo.OrderTradeNo = transaction_id;
+                        _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
+                    }
+                    //更新优惠券已使用
+                    foreach(var seat in order.orderSeatDetails)
+                    {
+                        if(!string.IsNullOrEmpty(seat.ConponCode))
+                        {
+                            var conpon = _conponService.GetConponByConponCode(seat.ConponCode);
+                            conpon.Status = ConponStatusEnum.Used;
+                            conpon.Updated = DateTime.Now;
+                            conpon.Price = seat.ConponPrice;
+                            conpon.UseDate = DateTime.Now;
+                            _conponService.Update(conpon);
+                        }
+                    }
+                }
+                else
+                {
+                    order.orderBaseInfo.OrderStatus = OrderStatusEnum.PayFail;
+                    order.orderBaseInfo.Updated = DateTime.Now;
+                    order.orderBaseInfo.ErrorMessage = err_code_des;
+                    _orderService.UpdateOrderBaseInfo(order.orderBaseInfo);
+                }
+            }
         }
 
         [HttpPost]
@@ -119,7 +350,7 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             string pSeatNo = string.Join(",", order.orderSeatDetails.Select(x => x.SeatCode));
             string pMemberPrice = string.Join(",", order.orderSeatDetails.Select(x => x.SalePrice));
             string pFee = string.Join(",", order.orderSeatDetails.Select(x => x.Fee));
-            string pVerifyInfo = MD5Helper.MD5Encrypt(userCinema.RealUserName + QueryJson.CardNo + QueryJson.CardPassword + pFee + QueryJson.LowestPrice.ToString("0.##") + pMemberPrice + order.orderBaseInfo.LockOrderCode + pSeatNo  + userCinema.RealPassword).ToLower();
+            string pVerifyInfo = MD5Helper.MD5Encrypt(userCinema.RealUserName + QueryJson.CardNo + QueryJson.CardPassword + pFee + QueryJson.LowestPrice.ToString("0.##") + pMemberPrice + order.orderBaseInfo.LockOrderCode + pSeatNo + userCinema.RealPassword).ToLower();
             SortedDictionary<string, string> paramDic = new SortedDictionary<string, string>
             {
                 { "pAppCode", userCinema.RealUserName },

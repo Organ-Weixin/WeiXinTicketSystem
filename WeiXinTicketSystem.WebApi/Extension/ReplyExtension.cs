@@ -181,7 +181,7 @@ namespace WeiXinTicketSystem.WebApi.Extension
 
             return true;
         }
-        public static bool RequestInfoGuard(this PaySnackOrderReply reply, string UserName, string Password, string CinemaCode, string OrderCode, string OrderPayType, string OrderPayTime, string OrderTradeNo, string IsUseConpons, string ConponCode, string OpenID)
+        public static bool RequestInfoGuard(this PrePaySnackOrderReply reply, string UserName, string Password, string CinemaCode, string OrderCode,List<PrePaySnackOrderQueryJsonSnack> Snacks)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -203,34 +203,9 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 reply.SetNecessaryParamMissReply(nameof(OrderCode));
                 return false;
             }
-            if (string.IsNullOrEmpty(OrderPayType))
+            if (Snacks.Count <= 0)
             {
-                reply.SetNecessaryParamMissReply(nameof(OrderPayType));
-                return false;
-            }
-            if (string.IsNullOrEmpty(OrderPayTime))
-            {
-                reply.SetNecessaryParamMissReply(nameof(OrderPayTime));
-                return false;
-            }
-            if (string.IsNullOrEmpty(OrderTradeNo))
-            {
-                reply.SetNecessaryParamMissReply(nameof(OrderTradeNo));
-                return false;
-            }
-            if (string.IsNullOrEmpty(IsUseConpons))
-            {
-                reply.SetNecessaryParamMissReply(nameof(IsUseConpons));
-                return false;
-            }
-            //if (string.IsNullOrEmpty(ConponCode))
-            //{
-            //    reply.SetNecessaryParamMissReply(nameof(ConponCode));
-            //    return false;
-            //}
-            if (string.IsNullOrEmpty(OpenID))
-            {
-                reply.SetNecessaryParamMissReply(nameof(OpenID));
+                reply.SetNecessaryParamMissReply(nameof(Snacks));
                 return false;
             }
             return true;
@@ -1301,6 +1276,36 @@ namespace WeiXinTicketSystem.WebApi.Extension
                 return false;
             }
 
+            return true;
+        }
+
+        public static bool RequestInfoGuard(this PrePayOrderReply reply, string Username, string Password, string CinemaCode, string OrderCode,List<PrePayOrderQueryJsonSeat> Seats)
+        {
+            if (string.IsNullOrEmpty(Username))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Username));
+                return false;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                reply.SetNecessaryParamMissReply(nameof(Password));
+                return false;
+            }
+            if (string.IsNullOrEmpty(CinemaCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(CinemaCode));
+                return false;
+            }
+            if (string.IsNullOrEmpty(OrderCode))
+            {
+                reply.SetNecessaryParamMissReply(nameof(OrderCode));
+                return false;
+            }
+            if (Seats.Count <= 0)
+            {
+                reply.SetNecessaryParamMissReply(nameof(Seats));
+                return false;
+            }
             return true;
         }
     }

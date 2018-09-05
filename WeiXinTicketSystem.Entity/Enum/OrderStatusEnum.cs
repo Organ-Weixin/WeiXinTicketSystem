@@ -33,6 +33,12 @@ namespace WeiXinTicketSystem.Entity.Enum
         Complete = 8,
 
         [Description("已退票")]
-        Refund = 9
+        Refund = 9,
+
+        [Description("已支付")]
+        Payed = 10,
+
+        [Description("支付失败")]
+        PayFail = 11
     }
 }

@@ -68,6 +68,9 @@
     <Compile Include="MD5Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomHelper.cs" />
+    <Compile Include="RequestHandler.cs" />
+    <Compile Include="ResponseHandler.cs" />
+    <Compile Include="WxPayUtil.cs" />
     <Compile Include="XMLExtension.cs" />
   </ItemGroup>
   <ItemGroup>

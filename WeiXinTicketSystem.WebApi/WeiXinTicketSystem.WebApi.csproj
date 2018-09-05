@@ -259,9 +259,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Query\BookSnacksQueryJson.cs" />
+    <Compile Include="Models\Query\PrePayOrderQueryJson.cs" />
     <Compile Include="Models\Query\SubmitOrder_1905CardPayQueryJson.cs" />
     <Compile Include="Models\Query\NetSaleQueryJson.cs" />
-    <Compile Include="Models\Query\PaySnackOrderQueryJson.cs" />
+    <Compile Include="Models\Query\PrePaySnackOrderQueryJson.cs" />
     <Compile Include="Models\Query\QueryMobilePhoneQueryJson.cs" />
     <Compile Include="Models\Query\SendConponQueryJson.cs" />
     <Compile Include="Models\Query\SubmitSnacksQueryJson.cs" />
@@ -273,7 +274,7 @@
     <Compile Include="Models\Reply\FetchSnacksReply.cs" />
     <Compile Include="Models\Reply\jscode2sessionReply.cs" />
     <Compile Include="Models\Reply\ModelMapper.cs" />
-    <Compile Include="Models\Reply\PaySnackOrderReply.cs" />
+    <Compile Include="Models\Reply\PrePaySnackOrderReply.cs" />
     <Compile Include="Models\Reply\QueryActivityPopupsReply.cs" />
     <Compile Include="Models\Reply\QueryActivityReply.cs" />
     <Compile Include="Models\Reply\QueryActivitySequenceReply.cs" />
@@ -309,6 +310,7 @@
     <Compile Include="Models\Reply\SignInReply.cs" />
     <Compile Include="Models\Reply\TicketUserLoginReply.cs" />
     <Compile Include="Models\Reply\WxMobilePhoneInfo.cs" />
+    <Compile Include="Models\Reply\PrePayOrderReply.cs" />
     <Compile Include="Models\Reply\WxUserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

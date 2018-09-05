@@ -37,6 +37,25 @@ namespace WeiXinTicketSystem.Service
         {
             return _orderRepository.Query.Where(x => x.LockOrderCode == LockOrderCode).SingleOrDefault();
         }
+        /// <summary>
+        /// 根据id获取订单基本信息
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public OrderViewEntity GetOrderWithId(int Id)
+        {
+            var order = _orderRepository.Query.Where(x => x.Id == Id).SingleOrDefault();
+            if (order == null)
+            {
+                return null;
+            }
+            var orderSeats = _orderSeatRepository.Query.Where(x => x.OrderId == order.Id).ToList();
+            return new OrderViewEntity
+            {
+                orderBaseInfo = order,
+                orderSeatDetails = orderSeats.ToList()
+            };
+        }
 
         /// <summary>
         /// 根据影院编码和锁座返回的订单编码获取订单

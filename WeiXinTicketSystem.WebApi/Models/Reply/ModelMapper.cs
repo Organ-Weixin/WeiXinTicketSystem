@@ -68,16 +68,6 @@ namespace WeiXinTicketSystem.WebApi.Models
                 }).ToList();
             return data;
         }
-        public static PaySnackOrderReplyOrder MapFrom(this PaySnackOrderReplyOrder data, SnackOrderEntity entity)
-        {
-            data.CinemaCode = entity.CinemaCode;
-            data.OrderCode = entity.OrderCode;
-            data.OrderStatus = entity.OrderStatus.GetDescription();
-            data.OrderPayFlag = entity.OrderPayFlag.HasValue ? entity.OrderPayFlag.Value : false;
-            data.OrderTradeNo = entity.OrderTradeNo;
-            data.OrderPayTime = entity.OrderPayTime.ToFormatStringWithT();
-            return data;
-        }
 
         public static SnackOrderViewEntity MapFrom(this SnackOrderViewEntity order, BookSnacksQueryJson Queryjson)
         {
@@ -203,9 +193,6 @@ namespace WeiXinTicketSystem.WebApi.Models
             data.OrderPayType = order.OrderBaseInfo.OrderPayType.HasValue ? order.OrderBaseInfo.OrderPayType.Value.GetDescription() : "";
             data.OrderPayTime = order.OrderBaseInfo.OrderPayTime.ToFormatStringWithT();
             data.OrderTradeNo = order.OrderBaseInfo.OrderTradeNo;
-            data.IsUseConpons = order.OrderBaseInfo.IsUseConpons.HasValue ? order.OrderBaseInfo.IsUseConpons.Value : false;
-            //data.ConponCode = order.OrderBaseInfo.ConponCode;
-            //data.ConponPrice = order.OrderBaseInfo.ConponPrice.HasValue ? order.OrderBaseInfo.ConponPrice.Value : 0;
             data.OpenID = order.OrderBaseInfo.OpenID;
             data.Snacks = order.SnackOrderDetails.Select(
                 x => new QuerySnackOrderReplySnack()
@@ -216,9 +203,7 @@ namespace WeiXinTicketSystem.WebApi.Models
                     Number = x.Number,
                     SubTotalPrice = x.SubTotalPrice,
                     ConponCode = x.ConponCode,
-                    ConponPrice = x.ConponPrice,
-                    ActualPrice = x.ActualPrice
-
+                    ConponPrice = x.ConponPrice
                 }).ToList();
             return data;
         }
@@ -653,6 +638,36 @@ namespace WeiXinTicketSystem.WebApi.Models
             memberChargeSetting.Remark = entity.Remark;
             memberChargeSetting.NotUsedNumber = GetNotUsedNumber(entity.CinemaCode, entity.GroupCode);
             return memberChargeSetting;
+        }
+
+        public static OrderViewEntity MapFrom(this OrderViewEntity order, PrePayOrderQueryJson QueryJson)
+        {
+            order.orderBaseInfo.TotalConponPrice = QueryJson.Seats.Sum(x => x.ConponPrice);
+
+            order.orderSeatDetails.ForEach(x =>
+            {
+                var newInfo = QueryJson.Seats.Where(y => y.SeatCode == x.SeatCode).SingleOrDefault();
+                if (newInfo != null)
+                {
+                    x.ConponCode = newInfo.ConponCode;
+                    x.ConponPrice = newInfo.ConponPrice;
+                }
+            });
+            return order;
+        }
+        public static SnackOrderViewEntity MapFrom(this SnackOrderViewEntity order,PrePaySnackOrderQueryJson QueryJson)
+        {
+            order.OrderBaseInfo.TotalConponPrice= QueryJson.Snacks.Sum(x => x.ConponPrice);
+            order.SnackOrderDetails.ForEach(x =>
+            {
+                var newInfo = QueryJson.Snacks.Where(y => y.SnackCode == x.SnackCode).SingleOrDefault();
+                if (newInfo != null)
+                {
+                    x.ConponCode = newInfo.ConponCode;
+                    x.ConponPrice = newInfo.ConponPrice;
+                }
+            });
+            return order;
         }
     }
 }

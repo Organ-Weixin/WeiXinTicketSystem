@@ -70,6 +70,23 @@ namespace WeiXinTicketSystem.Service
             };
         }
 
+        public SnackOrderViewEntity GetSnacksOrderWithId(string CinemaCode,int Id)
+        {
+            var order = _snackOrderRepository.Query.Where(x => x.Id == Id).SingleOrDefault();
+            if (order == null)
+            {
+                return null;
+            }
+            var orderdetails = _snackOrderDetailRepository.Query.Where(x => x.OrderId == order.Id).ToList();
+            var snacks = _snackRepository.Query.Where(x => x.CinemaCode == CinemaCode).WhereIsIn(x => x.SnackCode, orderdetails.Select(x => x.SnackCode)).ToList();
+            return new SnackOrderViewEntity
+            {
+                OrderBaseInfo = order,
+                SnackOrderDetails = orderdetails.ToList(),
+                Snacks = snacks.ToList()
+            };
+        }
+
         /// <summary>
         /// 添加订单
         /// </summary>

@@ -12,6 +12,7 @@ using WeiXinTicketSystem.Util;
 using WeiXinTicketSystem.WebApi.Models;
 using WeiXinTicketSystem.WebApi.Extension;
 using WeiXinTicketSystem.Entity.Enum;
+using System.Xml.Linq;
 
 namespace WeiXinTicketSystem.WebApi.Controllers
 {
@@ -25,6 +26,8 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         TicketUsersService _ticketUserService;
         BannerService _bannerService;
         ConponService _conponService;
+        UserInfoService _userInfoService;
+        CinemaPaySettingsService _cinemaPaySettingsService;
         #region ctor
         public SnackController()
         {
@@ -36,6 +39,8 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             _ticketUserService = new TicketUsersService();
             _bannerService = new BannerService();
             _conponService = new ConponService();
+            _userInfoService = new UserInfoService();
+            _cinemaPaySettingsService = new CinemaPaySettingsService();
         }
         #endregion
 
@@ -271,78 +276,232 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
         #endregion
 
+        //目前价格为1分
         #region 支付套餐
         [HttpPost]
-        public PaySnackOrderReply PaySnackOrder(PaySnackOrderQueryJson QueryJson)
+        public PrePaySnackOrderReply PrePaySnackOrder(PrePaySnackOrderQueryJson QueryJson)
         {
-            PaySnackOrderReply payOrderReply = new PaySnackOrderReply();
+            PrePaySnackOrderReply prePaySnackOrderReply = new PrePaySnackOrderReply();
             //校验参数
-            if (!payOrderReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.OrderCode, QueryJson.OrderPayType.ToString(), QueryJson.OrderPayTime.ToString(), QueryJson.OrderTradeNo, QueryJson.IsUseConpons.ToString(), QueryJson.ConponCode, QueryJson.OpenID))
+            if (!prePaySnackOrderReply.RequestInfoGuard(QueryJson.UserName, QueryJson.Password, QueryJson.CinemaCode, QueryJson.OrderCode,QueryJson.Snacks))
             {
-                return payOrderReply;
+                return prePaySnackOrderReply;
             }
-            //获取用户信息
-            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(QueryJson.UserName, QueryJson.Password);
+            //获取用户信息(渠道)
+            UserInfoEntity UserInfo = _userInfoService.GetUserInfoByUserCredential(QueryJson.UserName, QueryJson.Password);
             if (UserInfo == null)
             {
-                payOrderReply.SetUserCredentialInvalidReply();
-                return payOrderReply;
+                prePaySnackOrderReply.SetUserCredentialInvalidReply();
+                return prePaySnackOrderReply;
             }
-            //验证影院是否存在且可访问
-            var cinema = _cinemaService.GetCinemaByCinemaCode(QueryJson.CinemaCode);
-            if (cinema == null)
+            //获取影院的支付配置
+            var cinemaPaymentSetting = _cinemaPaySettingsService.GetCinemaPaySettingsByCinemaCode(QueryJson.CinemaCode);
+            if (cinemaPaymentSetting == null || cinemaPaymentSetting.WxpayAppId == "" || cinemaPaymentSetting.WxpayMchId == "")
             {
-                payOrderReply.SetCinemaInvalidReply();
-                return payOrderReply;
+                prePaySnackOrderReply.SetCinemaPaySettingInvalidReply();
+                return prePaySnackOrderReply;
             }
-            //验证卖品套餐是否存在
-            var snackOrder = _snacksOrderService.GetSnackOrderByOrderCode(QueryJson.OrderCode);
-            if (snackOrder == null)
+            //验证订单是否存在
+            var order = _snacksOrderService.GetSnacksOrderWithOrderCode(QueryJson.CinemaCode, QueryJson.OrderCode);
+            if (order == null || (order.OrderBaseInfo.OrderStatus != SnackOrderStatusEnum.Booked && order.OrderBaseInfo.OrderStatus != SnackOrderStatusEnum.PayFail))
             {
-                payOrderReply.SetOrderNotExistReply();
-                return payOrderReply;
+                prePaySnackOrderReply.SetOrderNotExistReply();
+                return prePaySnackOrderReply;
             }
-            //验证用户OpenId是否存在
-            var ticketuser = _ticketUserService.GetTicketUserByOpenID(QueryJson.OpenID);
-            if (ticketuser == null)
+            //验证套餐数量
+            if (QueryJson.Snacks.Count != order.OrderBaseInfo.SnacksCount)
             {
-                payOrderReply.SetOpenIDNotExistReply();
-                return payOrderReply;
+                prePaySnackOrderReply.SetSnackNumberInvalidReply();
+                return prePaySnackOrderReply;
             }
-            var conpon = new ConponEntity();
-            if (QueryJson.IsUseConpons)
+            //验证优惠券是否使用
+            foreach (var snack in QueryJson.Snacks)
             {
-                conpon = _conponService.GetConponByConponCode(QueryJson.ConponCode);
-                if (conpon.Status == ConponStatusEnum.Used || conpon.Deleted)
+                if (!string.IsNullOrEmpty(snack.ConponCode))
                 {
-                    payOrderReply.SetConponNotExistOrUsedReply();
-                    return payOrderReply;
+                    var conpon = _conponService.GetConponByConponCode(snack.ConponCode);
+                    if (conpon.Status != ConponStatusEnum.NotUsed)
+                    {
+                        prePaySnackOrderReply.SetConponNotExistOrUsedReply();
+                        return prePaySnackOrderReply;
+                    }
                 }
             }
+            //更新订单信息
+            order.MapFrom(QueryJson);
+            //开始调用微信支付接口
+            //微信支付统一下单接口
+            string UnifiedOrderUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+            //时间戳
+            string timeStamp = WxPayUtil.getTimestamp();
+            //随机字符串 
+            string nonceStr = WxPayUtil.getNoncestr();
+            //创建支付应答对象
+            var packageReqHandler = new RequestHandler(System.Web.HttpContext.Current);
+            //初始化
+            packageReqHandler.init();
+            //设置package订单参数
+            packageReqHandler.setParameter("appid", cinemaPaymentSetting.WxpayAppId);
+            packageReqHandler.setParameter("body", cinemaPaymentSetting.CinemaName + "-" + order.OrderBaseInfo.SendTime.Month.ToString().PadLeft(2, '0')
+            + "月" + order.OrderBaseInfo.SendTime.Day.ToString().PadLeft(2, '0') + "日" + order.OrderBaseInfo.SendTime.ToString("HH:mm") + " "
+            + " 套餐（" + order.OrderBaseInfo.SnacksCount.ToString() + "个）"); //商品信息
+            packageReqHandler.setParameter("mch_id", cinemaPaymentSetting.WxpayMchId);
+            packageReqHandler.setParameter("nonce_str", nonceStr.ToLower());
+            packageReqHandler.setParameter("notify_url", "https://xcx.80piao.com/api/Snack/WxPayNotify");
+            packageReqHandler.setParameter("openid", order.OrderBaseInfo.OpenID);
+            packageReqHandler.setParameter("out_trade_no", DateTime.Now.ToString("yyyyMMddHHmmss") + QueryJson.CinemaCode + order.OrderBaseInfo.Id.ToString()); //商家订单号
+            packageReqHandler.setParameter("time_expire", order.OrderBaseInfo.AutoUnLockDateTime.ToString("yyyyMMddHHmmss"));
+            packageReqHandler.setParameter("spbill_create_ip", System.Web.HttpContext.Current.Request.UserHostAddress); //用户的公网ip，不是商户服务器IP
+            //总的支付金额=总的销售价格-总的优惠金额
+            decimal totalPrice = order.OrderBaseInfo.TotalPrice - order.OrderBaseInfo.TotalConponPrice ?? 0;
+            //packageReqHandler.setParameter("total_fee", (Convert.ToInt32(totalPrice * 100)).ToString()); //商品金额,以分为单位(money * 100).ToString()
+            packageReqHandler.setParameter("total_fee", "1");
+            packageReqHandler.setParameter("trade_type", "JSAPI");
+            string sign = packageReqHandler.CreateMd5Sign("key", cinemaPaymentSetting.WxpayKey);
+            packageReqHandler.setParameter("sign", sign);
+            //把参数组装成xml
+            string data = packageReqHandler.parseXML();
+            string strPrepayXml = HttpUtil.Send(data, UnifiedOrderUrl);
+            //获取prepay_id
+            XElement prepayXml = XElement.Parse(strPrepayXml.Replace("<![CDATA[", "").Replace("]]>", ""));
+            XElement prepayIdNode = prepayXml.Descendants("prepay_id").SingleOrDefault();
+            if (prepayIdNode == null)
+            {
+                XElement errorCodeNode = prepayXml.Descendants("return_code").SingleOrDefault();
+                XElement errorMsgNode = prepayXml.Descendants("return_msg").SingleOrDefault();
+                string errorCode = errorCodeNode == null ? string.Empty : errorCodeNode.Value;
+                string errorMsg = errorMsgNode == null ? string.Empty : errorMsgNode.Value;
 
-            //更新卖品订单
-            snackOrder.OrderPayFlag = true;
-            snackOrder.OrderPayType = (PayTypeEnum)QueryJson.OrderPayType;
-            snackOrder.OrderPayTime = QueryJson.OrderPayTime;
-            snackOrder.OrderTradeNo = QueryJson.OrderTradeNo;
-            snackOrder.IsUseConpons = QueryJson.IsUseConpons;
-            snackOrder.ConponCode = QueryJson.ConponCode;
-            snackOrder.ConponPrice = QueryJson.ConponPrice;
-            snackOrder.OrderStatus = SnackOrderStatusEnum.Payed;
-            snackOrder.Updated = DateTime.Now;
-            //更新优惠券
-            conpon.Status = ConponStatusEnum.Used;
-            conpon.Updated = DateTime.Now;
-            conpon.Price = QueryJson.ConponPrice;
-            conpon.UseDate = DateTime.Now;
+                prePaySnackOrderReply.Status = "Failure";
+                prePaySnackOrderReply.ErrorCode = errorCode;
+                prePaySnackOrderReply.ErrorMessage = errorMsg;
+            }
+            else
+            {
+                string prepayId = prepayIdNode.Value;
+                //支付扩展包
+                string package = string.Format("prepay_id={0}", prepayId);
+                var paySignReqHandler = new RequestHandler(System.Web.HttpContext.Current);
+                paySignReqHandler.setParameter("appId", cinemaPaymentSetting.WxpayAppId);
+                paySignReqHandler.setParameter("timeStamp", timeStamp);
+                paySignReqHandler.setParameter("nonceStr", nonceStr);
+                paySignReqHandler.setParameter("package", package);
+                paySignReqHandler.setParameter("signType", "MD5");
+                string paySign = paySignReqHandler.CreateMd5Sign("key", cinemaPaymentSetting.WxpayKey);
+                //准备返回参数
+                prePaySnackOrderReply.data = new PrePaySnackOrderReplyParameters();
+                prePaySnackOrderReply.data.timeStamp = timeStamp;
+                prePaySnackOrderReply.data.nonceStr = nonceStr;
+                prePaySnackOrderReply.data.package = package;
+                prePaySnackOrderReply.data.signType = "MD5";
+                prePaySnackOrderReply.data.paySign = paySign;
 
-            _snacksOrderService.Update(snackOrder, conpon);
+                prePaySnackOrderReply.SetSuccessReply();
+            }
+            //更新订单信息
+            _snacksOrderService.Update(order);
+            return prePaySnackOrderReply;
+        }
 
-            payOrderReply.data = new PaySnackOrderReplyOrder();
-            payOrderReply.data.MapFrom(snackOrder);
-            payOrderReply.SetSuccessReply();
+        /// <summary>
+        /// 异步返回接收微信支付返回
+        /// </summary>
+        public void WxPayNotify()
+        {
+            //创建ResponseHandler实例
+            ResponseHandler resHandler = new ResponseHandler(System.Web.HttpContext.Current);
+            //商户系统的订单号，与请求一致。
+            string out_trade_no = resHandler.getParameter("out_trade_no");
+            string CinemaCode = out_trade_no.Substring("yyyyMMddHHmmss".Length, 8);
+            var cinemaPaymentSetting = _cinemaPaySettingsService.GetCinemaPaySettingsByCinemaCode(CinemaCode);
+            resHandler.setKey(cinemaPaymentSetting.WxpayKey); //appkey paysignkey(非appkey 在微信商户平台设置 (md5))
+            //判断签名
+            string error = "";
+            if (resHandler.isWXsign(out error))
+            {
+                #region 协议参数=====================================
+                //--------------协议参数--------------------------------------------------------
+                //SUCCESS/FAIL此字段是通信标识，非交易标识，交易是否成功需要查
+                string return_code = resHandler.getParameter("return_code");
+                //返回信息，如非空，为错误原因签名失败参数格式校验错误
+                string return_msg = resHandler.getParameter("return_msg");
 
-            return payOrderReply;
+                //以下字段在 return_code 为 SUCCESS 的时候有返回--------------------------------
+                //微信分配的公众账号 ID
+                string appid = resHandler.getParameter("appid");
+                //微信支付分配的商户号
+                string mch_id = resHandler.getParameter("mch_id");
+                //微信支付分配的终端设备号
+                string device_info = resHandler.getParameter("device_info");
+                //微信分配的公众账号 ID
+                string nonce_str = resHandler.getParameter("nonce_str");
+                //业务结果 SUCCESS/FAIL
+                string result_code = resHandler.getParameter("result_code");
+                //错误代码 
+                string err_code = resHandler.getParameter("err_code");
+                //结果信息描述
+                string err_code_des = resHandler.getParameter("err_code_des");
+
+                //以下字段在 return_code 和 result_code 都为 SUCCESS 的时候有返回---------------
+                //-------------业务参数---------------------------------------------------------
+                //用户在商户 appid 下的唯一标识
+                string openid = resHandler.getParameter("openid");
+                //用户是否关注公众账号，Y-关注，N-未关注，仅在公众账号类型支付有效
+                string is_subscribe = resHandler.getParameter("is_subscribe");
+                //JSAPI、NATIVE、MICROPAY、APP
+                string trade_type = resHandler.getParameter("trade_type");
+                //银行类型，采用字符串类型的银行标识
+                string bank_type = resHandler.getParameter("bank_type");
+                //订单总金额，单位为分
+                string total_fee = resHandler.getParameter("total_fee");
+                //货币类型，符合 ISO 4217 标准的三位字母代码，默认人民币：CNY
+                string fee_type = resHandler.getParameter("fee_type");
+                //微信支付订单号
+                string transaction_id = resHandler.getParameter("transaction_id");
+                //商家数据包，原样返回
+                string attach = resHandler.getParameter("attach");
+                //支 付 完 成 时 间 ， 格 式 为yyyyMMddhhmmss，如 2009 年12 月27日 9点 10分 10 秒表示为 20091227091010。时区为 GMT+8 beijing。该时间取自微信支付服务器
+                string time_end = resHandler.getParameter("time_end");
+                #endregion
+
+                int OrderID = int.Parse(out_trade_no.Substring("yyyyMMddHHmmss".Length + 8).Trim());
+                var order = _snacksOrderService.GetSnacksOrderWithId(CinemaCode,OrderID);
+                //支付成功
+                if (return_code.Equals("SUCCESS") && result_code.Equals("SUCCESS"))
+                {
+                    //更新订单主表
+                    if (!order.OrderBaseInfo.OrderPayFlag.Value)
+                    {
+                        order.OrderBaseInfo.OrderStatus = SnackOrderStatusEnum.Payed;
+                        order.OrderBaseInfo.Updated = DateTime.Now;
+                        order.OrderBaseInfo.OrderPayType = PayTypeEnum.WxPay;
+                        order.OrderBaseInfo.OrderPayFlag = true;
+                        order.OrderBaseInfo.OrderPayTime = DateTime.Now;
+                        order.OrderBaseInfo.OrderTradeNo = transaction_id;
+                        _snacksOrderService.Update(order.OrderBaseInfo);
+                    }
+                    //更新优惠券已使用
+                    foreach (var snack in order.SnackOrderDetails)
+                    {
+                        if (!string.IsNullOrEmpty(snack.ConponCode))
+                        {
+                            var conpon = _conponService.GetConponByConponCode(snack.ConponCode);
+                            conpon.Status = ConponStatusEnum.Used;
+                            conpon.Updated = DateTime.Now;
+                            conpon.Price = snack.ConponPrice;
+                            conpon.UseDate = DateTime.Now;
+                            _conponService.Update(conpon);
+                        }
+                    }
+                }
+                else
+                {
+                    order.OrderBaseInfo.OrderStatus = SnackOrderStatusEnum.PayFail;
+                    order.OrderBaseInfo.Updated = DateTime.Now;
+                    //order.OrderBaseInfo.ErrorMessage = err_code_des;
+                    _snacksOrderService.Update(order.OrderBaseInfo);
+                }
+            }
         }
         #endregion
 
