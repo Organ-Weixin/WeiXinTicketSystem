@@ -36,9 +36,9 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         }
         #endregion
 
-        #region 获取用户优惠券
+        #region 获取用户优惠券(分页)
         [HttpGet]
-        public async Task<QueryConponsReply> QueryUserConpons(string UserName, string Password, string CinemaCode, string OpenID, string Status, string CurrentPage, string PageSize)
+        public async Task<QueryConponsReply> QueryUserConponsPaged(string UserName, string Password, string CinemaCode, string OpenID, string Status, string CurrentPage, string PageSize)
         {
             QueryConponsReply queryConponsReply = new QueryConponsReply();
             //校验参数
@@ -89,6 +89,63 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             queryConponsReply.SetSuccessReply();
             return queryConponsReply;
         }
+        #endregion
+
+        #region 获取用户优惠券(不分页)
+
+        [HttpGet]
+        public async Task<QueryConponsReply> QueryUserConpons(string UserName, string Password, string CinemaCode, string OpenID, string Status)
+        {
+            QueryConponsReply queryConponsReply = new QueryConponsReply();
+            //校验参数
+            if (!queryConponsReply.RequestInfoGuard(UserName, Password, CinemaCode, OpenID, Status))
+            {
+                return queryConponsReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryConponsReply.SetUserCredentialInvalidReply();
+                return queryConponsReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryConponsReply.SetCinemaInvalidReply();
+                return queryConponsReply;
+            }
+            //验证用户OpenId是否存在
+            var ticketuser = _ticketUserService.GetTicketUserByOpenID(OpenID);
+            if (ticketuser == null)
+            {
+                queryConponsReply.SetOpenIDNotExistReply();
+                return queryConponsReply;
+            }
+            //验证优惠券状态
+            var StatusEnum = Status.CastToEnum<ConponStatusEnum>();
+            if (StatusEnum == default(ConponStatusEnum))
+            {
+                queryConponsReply.SetConponStatusInvalidReply();
+                return queryConponsReply;
+            }
+            var Conpons = await _conponService.QueryConponsAsync(CinemaCode, OpenID, StatusEnum);
+
+            queryConponsReply.data = new QueryConponsReplyConpons();
+            if (Conpons == null || Conpons.Count == 0)
+            {
+                queryConponsReply.data.ConponCount = 0;
+            }
+            else
+            {
+                queryConponsReply.data.ConponCount = Conpons.Count;
+                queryConponsReply.data.Conpons = Conpons.Select(x => new QueryConponsReplyConpon().MapFrom(x)).ToList();
+            }
+            queryConponsReply.SetSuccessReply();
+            return queryConponsReply;
+        }
+
         #endregion
 
         #region 赠送优惠券
@@ -230,6 +287,52 @@ namespace WeiXinTicketSystem.WebApi.Controllers
             }
 
             var memberChargeSetting = await _memberChargeSettingService.GetMemberChargeSettingViewByCinemaCodeAsync(CinemaCode);
+
+            queryMemberChargeSettingsReply.data = new QueryMemberChargeSettingReplySettings();
+            if (memberChargeSetting == null || memberChargeSetting.Count == 0)
+            {
+                queryMemberChargeSettingsReply.data.MemberChargeSettingCount = 0;
+            }
+            else
+            {
+                queryMemberChargeSettingsReply.data.MemberChargeSettingCount = memberChargeSetting.Count;
+                queryMemberChargeSettingsReply.data.MemberChargeSettings = memberChargeSetting.Select(x => new QueryMemberChargeSettingReplySetting().MapFrom(x)).ToList();
+            }
+            queryMemberChargeSettingsReply.SetSuccessReply();
+            return queryMemberChargeSettingsReply;
+        }
+
+
+        #endregion
+
+
+        #region 根据充值金额查询会员卡充值赠送条件
+
+        [HttpGet]
+        public async Task<QueryMemberChargeSettingReply> QueryMemberChargeSettingsByPrice(string UserName, string Password, string CinemaCode,string Price)
+        {
+            QueryMemberChargeSettingReply queryMemberChargeSettingsReply = new QueryMemberChargeSettingReply();
+            //校验参数
+            if (!queryMemberChargeSettingsReply.RequestInfoGuard(UserName, Password, CinemaCode, Price))
+            {
+                return queryMemberChargeSettingsReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryMemberChargeSettingsReply.SetUserCredentialInvalidReply();
+                return queryMemberChargeSettingsReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryMemberChargeSettingsReply.SetCinemaInvalidReply();
+                return queryMemberChargeSettingsReply;
+            }
+
+            var memberChargeSetting = await _memberChargeSettingService.GetMemberChargeSettingViewByCinemaCodeAndPriceAsync(CinemaCode,decimal.Parse(Price));
 
             queryMemberChargeSettingsReply.data = new QueryMemberChargeSettingReplySettings();
             if (memberChargeSetting == null || memberChargeSetting.Count == 0)

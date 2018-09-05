@@ -283,11 +283,13 @@
     <Compile Include="Models\Reply\QueryGiftsReply.cs" />
     <Compile Include="Models\Reply\QueryGivingConditionsReply.cs" />
     <Compile Include="Models\Reply\QueryMemberChargeSettingReply.cs" />
+    <Compile Include="Models\Reply\QueryMemberPhoneReply.cs" />
     <Compile Include="Models\Reply\QueryMobilePhoneReply.cs" />
     <Compile Include="Models\Reply\QueryOrdersReply.cs" />
     <Compile Include="Models\Reply\QueryScreenInfoReply.cs" />
     <Compile Include="Models\Reply\QueryScreenSeatsReply.cs" />
     <Compile Include="Models\Reply\QueryScreensReply.cs" />
+    <Compile Include="Models\Reply\QuerySnackInfoReply.cs" />
     <Compile Include="Models\Reply\QuerySnackOrderReply.cs" />
     <Compile Include="Models\Reply\QuerySnacksReply.cs" />
     <Compile Include="Models\Reply\QuerySnackTypesReply.cs" />

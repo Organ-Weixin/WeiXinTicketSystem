@@ -97,5 +97,49 @@ namespace WeiXinTicketSystem.WebApi.Controllers
         {
             return netSaleService.CardRegister(UserName, Password, CinemaCode, CardPassword, LevelCode, InitialAmount, CardUserName, MobilePhone, IDNumber, Sex);
         }
+
+        #region 根据手机号码查询会员卡信息
+
+        [HttpGet]
+        public QueryMemberPhoneReply QueryMemberCardByPhone(string UserName, string Password, string CinemaCode, string MobilePhone)
+        {
+            QueryMemberPhoneReply queryMemberPhoneReply = new QueryMemberPhoneReply();
+            //校验参数
+            if (!queryMemberPhoneReply.RequestInfoGuard(UserName, Password, CinemaCode, MobilePhone))
+            {
+                return queryMemberPhoneReply;
+            }
+            //获取用户信息
+            SystemUserEntity UserInfo = _userService.GetUserInfoByUserCredential(UserName, Password);
+            if (UserInfo == null)
+            {
+                queryMemberPhoneReply.SetUserCredentialInvalidReply();
+                return queryMemberPhoneReply;
+            }
+            //验证影院是否存在且可访问
+            var cinema = _cinemaService.GetCinemaByCinemaCode(CinemaCode);
+            if (cinema == null)
+            {
+                queryMemberPhoneReply.SetCinemaInvalidReply();
+                return queryMemberPhoneReply;
+            }
+
+            var MemberPhone = _memberCardService.GetMemberCardByMobilePhoneAsync(CinemaCode, MobilePhone);
+
+            queryMemberPhoneReply.data = new QueryMemberPhoneReplyPhones();
+            if (MemberPhone == null || MemberPhone.Count == 0)
+            {
+                queryMemberPhoneReply.data.MemberPhoneCount = 0;
+            }
+            else
+            {
+                queryMemberPhoneReply.data.MemberPhoneCount = MemberPhone.Count;
+                queryMemberPhoneReply.data.MemberPhones = MemberPhone.Select(x => new QueryMemberPhoneReplyPhone().MapFrom(x)).ToList();
+            }
+            queryMemberPhoneReply.SetSuccessReply();
+            return queryMemberPhoneReply;
+        }
+
+        #endregion
     }
 }

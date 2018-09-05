@@ -110,6 +110,17 @@ namespace WeiXinTicketSystem.Service
         }
 
         /// <summary>
+        /// 根据cinemacode和code获取套餐
+        /// </summary>
+        /// <param name="CinemaCode"></param>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public async Task<SnackEntity> GetSnackByCinemaCodeAndCodeAsync(string CinemaCode, string SnackCode)
+        {
+            return await _snackRepository.Query.Where(x => x.CinemaCode == CinemaCode && x.SnackCode == SnackCode && !x.IsDel).SingleOrDefaultAsync();
+        }
+
+        /// <summary>
         /// 更新套餐
         /// </summary>
         /// <param name="entity"></param>

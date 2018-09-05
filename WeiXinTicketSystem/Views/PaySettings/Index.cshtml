@@ -38,6 +38,7 @@
                             <th data-dynatable-no-sort="true">是否使用支付宝</th>
                             <th data-dynatable-no-sort="true">是否使用百度钱包</th>
                             <th data-dynatable-no-sort="true">是否使用微信支付</th>
+                            <th data-dynatable-no-sort="true">是否使用会员卡</th>
                             <th data-dynatable-no-sort="true" width="180px">操作</th>
                         </tr>
                     </thead>
@@ -67,6 +68,7 @@
                     <td style="text-align: left;">{{IsUseAlipay}}</td>
                     <td style="text-align: left;">{{IsUseBfbpay}}</td>
                     <td style="text-align: left;">{{IsUseWxpay}}</td>
+                    <td style="text-align: left;">{{IsUserMemberCard}}</td>
                     <td style="text-align: left;">
 
                         @if (CurrentPermissions.Contains(3))
